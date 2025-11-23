@@ -1,24 +1,94 @@
 {
   "projects": [
     {
-      "id": 1,
+      "id": "HuXN",
       "title": "E-Commerce App",
-      "description": "Full-stack e-commerce application with React, Node.js, and MongoDB",
-      "technologies": ["React", "Node.js", "MongoDB", "Express"],
-      "githubUrl": "https://github.com/yourusername/ecommerce-app",
-      "liveUrl": "https://yourapp.vercel.app",
-      "image": "/images/projects/ecommerce.jpg",
-      "featured": true
+      "summary": "Full-stack e-commerce application with React, Node.js, and MongoDB",
+      "tech": ["React", "Node.js", "MongoDB", "Express"],
+      "gradient": "from-indigo-600/80 via-purple-500/70 to-fuchsia-500/70",
+      "role": "Lead Front-end",
+      "year": "2025",
+      "repo": "https://github.com/yourusername/ecommerce-app",
+      "demo": "https://yourapp.vercel.app",
+      "image": "/images/projects/ecommerce.jpg"
     },
     {
-      "id": 2,
+      "id": "TMA",
       "title": "Task Management App",
-      "description": "Task management application with drag and drop functionality",
-      "technologies": ["React", "CSS", "LocalStorage"],
-      "githubUrl": "https://github.com/yourusername/task-app",
-      "liveUrl": "https://yourtaskapp.netlify.app",
-      "image": "/images/projects/taskapp.jpg",
-      "featured": false
+      "summary": "Task management application with drag and drop functionality",
+      "tech": ["React", "CSS", "LocalStorage"],
+      "gradient": "from-indigo-600/80 via-purple-500/70 to-fuchsia-500/70",
+      "role": "Lead Front-end",
+      "year": "2025",
+      "repo": "https://github.com/yourusername/task-app",
+      "demo": "https://yourtaskapp.netlify.app",
+      "image": "/images/projects/taskapp.jpg"
+    },
+    {
+      "id": "nebula",
+      "title": "Nebula Research Portal",
+      "summary": "Interactive knowledge base for a biotech startup with cinematic scroll scenes, realtime search and role-based dashboards.",
+      "tech": ["React 19", "Framer Motion", "Three.js", "Supabase"],
+      "gradient": "from-indigo-600/80 via-purple-500/70 to-fuchsia-500/70",
+      "role": "Lead Front-end",
+      "year": "2025",
+      "repo": "https://github.com/YOUBAZ/nebula-portal",
+      "demo": "https://nebula.youportfolio.dev"
+    },
+    {
+      "id": "flowcast",
+      "title": "Flowcast Analytics",
+      "summary": "Streaming data analytics UI with adaptive charts, collaborative annotations, and optimistic updates backed by WebSockets.",
+      "tech": ["Vite", "Recharts", "Zustand", "Tailwind"],
+      "gradient": "from-sky-500/80 via-cyan-500/70 to-emerald-500/60",
+      "role": "Product Engineer",
+      "year": "2024",
+      "repo": "https://github.com/YOUBAZ/flowcast",
+      "demo": "https://flowcast.youportfolio.dev"
+    },
+    {
+      "id": "aurora",
+      "title": "Aurora Creative Lab",
+      "summary": "Portfolio CMS for a motion studio featuring draggable timelines, Lottie previews, and themable case study templates.",
+      "tech": ["Next.js", "Sanity", "Lottie", "Lenis"],
+      "gradient": "from-amber-500/80 via-rose-500/70 to-orange-500/60",
+      "role": "Creative Developer",
+      "year": "2024",
+      "repo": "https://github.com/YOUBAZ/aurora-lab",
+      "demo": "https://aurora.youportfolio.dev"
+    },
+    {
+      "id": "atlas",
+      "title": "Atlas Product Ops",
+      "summary": "Command center for product teams with AI assisted notes, kanban interactions, and shareable stakeholder views.",
+      "tech": ["React Query", "Clerk", "D3", "Radix UI"],
+      "gradient": "from-slate-700/90 via-slate-800/70 to-slate-900/60",
+      "role": "Senior Front-end",
+      "year": "2023",
+      "repo": "https://github.com/YOUBAZ/atlas-ops",
+      "demo": "https://atlas.youportfolio.dev"
+    },
+    {
+      "id": "waveform",
+      "title": "Waveform Commerce",
+      "summary": "Headless commerce starter with immersive browsing, 3D product hero, and conversion-focused checkout flows.",
+      "tech": ["Remix", "Shopify", "Stripe", "GSAP"],
+      "gradient": "from-teal-500/70 via-blue-500/70 to-indigo-500/70",
+      "role": "Founding Engineer",
+      "year": "2023",
+      "repo": "https://github.com/YOUBAZ/waveform",
+      "demo": "https://waveform.youportfolio.dev"
+    },
+    {
+      "id": "pulse",
+      "title": "Pulse Health Hub",
+      "summary": "Patient engagement platform with accessibility-first design, biometric dashboards, and automated onboarding journeys.",
+      "tech": ["TypeScript", "GraphQL", "TanStack Router", "Tailwind"],
+      "gradient": "from-lime-500/70 via-emerald-500/70 to-green-500/70",
+      "role": "UI Engineer",
+      "year": "2022",
+      "repo": "https://github.com/YOUBAZ/pulse-hub",
+      "demo": "https://pulse.youportfolio.dev"
     }
   ]
 }
