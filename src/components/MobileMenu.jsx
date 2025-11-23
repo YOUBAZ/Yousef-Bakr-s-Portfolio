@@ -8,6 +8,7 @@ const MobileMenu = ({ isOpen, toggleMenu }) => {
     { name: "Certificates", path: "/certificates" },
     { name: "About", path: "/about" },
     { name: "Contact", path: "/contact" },
+    { name: "Let's Talk", path: "/lets-talk" },
   ];
 
   if (!isOpen) return null;
@@ -46,12 +47,13 @@ const MobileMenu = ({ isOpen, toggleMenu }) => {
 
         <div className="mt-auto space-y-3 text-sm text-slate-400">
           <p>Open for remote collaborations across time zones.</p>
-          <a
-            href="mailto:youbakrzaki@gmail.com"
+          <Link
+            to="/lets-talk"
+            onClick={toggleMenu}
             className="inline-flex w-full items-center justify-center rounded-full bg-gradient-to-r from-sky-500 to-indigo-500 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-500/30 transition"
           >
-            Start a project
-          </a>
+            Let's Talk
+          </Link>
         </div>
       </div>
     </div>

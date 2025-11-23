@@ -21,6 +21,7 @@ const navShortcuts = [
   { label: "Certificates", path: "/certificates" },
   { label: "About", path: "/about" },
   { label: "Contact", path: "/contact" },
+  { label: "Let's Talk", path: "/lets-talk" },
 ];
 
 const capabilityBadges = [

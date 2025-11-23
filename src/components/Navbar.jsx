@@ -50,7 +50,7 @@ const Navbar = ({ toggleMobileMenu }) => {
               </NavLink>
             ))}
             <Link
-              to="/contact"
+              to="/lets-talk"
               className="ml-2 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-sky-500 to-indigo-500 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-indigo-500/30 transition hover:scale-[1.02]"
             >
               Let's Talk

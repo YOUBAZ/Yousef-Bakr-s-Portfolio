@@ -7,6 +7,7 @@ import Projects from "./pages/Projects";
 import Certificates from "./pages/Certificates";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import LetsTalk from "./pages/LetsTalk";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
 import Loading from "./components/Loading";
@@ -46,6 +47,7 @@ function App() {
             <Route path="/certificates" element={<Certificates />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/lets-talk" element={<LetsTalk />} />
           </Routes>
         </main>
 
