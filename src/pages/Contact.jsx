@@ -45,13 +45,12 @@ const Contact = () => {
               Contact
             </p>
             <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">
-              Let&apos;s build animated experiences that users remember.
+              Have a question or need a fast reply?
             </h1>
             <p className="text-slate-300">
-              Whether you need a kinetic portfolio, a data-rich SaaS console, or
-              a design system that moves effortlessly, I partner with teams to
-              make it happen. Introduce your project and I&apos;ll respond within
-              48 hours.
+              This inbox is for general inquiries, quick collaboration checks,
+              press, or speaker requests. For detailed project kickoffs or
+              availability, head to the Let&apos;s Talk page to book a slot.
             </p>
             <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
               <p className="text-xs uppercase tracking-[0.35em] text-slate-400">
