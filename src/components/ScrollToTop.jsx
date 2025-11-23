@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 const ScrollToTop = () => {
@@ -6,8 +6,14 @@ const ScrollToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   // Auto-scroll to top on route change
-  useEffect(() => {
-    window.scrollTo(0, 0);
+  useLayoutEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "auto",
+    });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
   }, [pathname]);
 
   // Show/hide scroll-to-top button based on scroll position

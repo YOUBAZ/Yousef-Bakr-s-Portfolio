@@ -1,5 +1,6 @@
 import { useState } from "react";
 import emailjs from "emailjs-com";
+import emailConfig from "../config/email";
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -23,10 +24,10 @@ const ContactForm = () => {
 
     try {
       await emailjs.send(
-        "service_dc4lhge", // Replace with your EmailJS service ID
-        "template_tkye6wl", // Replace with your EmailJS template ID
+        emailConfig.serviceId,
+        emailConfig.templateId,
         formData,
-        "g9GiXTbWzEMs9vG2p" // Replace with your EmailJS user ID
+        emailConfig.publicKey
       );
 
       setSubmitStatus("success");

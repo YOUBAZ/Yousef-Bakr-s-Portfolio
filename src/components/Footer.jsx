@@ -39,7 +39,11 @@ const Footer = () => {
       <div className="mx-auto max-w-6xl space-y-12 px-6 py-16">
         <div className="grid gap-10 lg:grid-cols-[1.6fr,1fr,1fr]">
           <div>
-            <div className="flex items-center gap-3 text-white">
+            <Link
+              to="/"
+              className="flex items-center gap-3 text-white transition hover:text-sky-200"
+              onClick={() => window.scrollTo({ top: 0, behavior: "auto" })}
+            >
               <span className="rounded-2xl bg-white/10 p-2 text-sky-300">
                 <Sparkles size={18} />
               </span>
@@ -49,7 +53,7 @@ const Footer = () => {
                   creative developer
                 </p>
               </div>
-            </div>
+            </Link>
             <p className="mt-4 max-w-md text-sm text-slate-400">
               A modern, animated portfolio engineered with React, Tailwind, and
               signature brand motion to keep every interaction intentional.

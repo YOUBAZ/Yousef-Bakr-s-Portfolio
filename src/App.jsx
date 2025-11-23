@@ -39,7 +39,7 @@ function App() {
 
         <MobileMenu isOpen={isMobileMenuOpen} toggleMenu={toggleMobileMenu} />
 
-        <main className="pt-32">
+        <main className="pt-20">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/projects" element={<Projects />} />

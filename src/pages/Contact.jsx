@@ -12,8 +12,8 @@ const contactInfo = [
   {
     icon: Phone,
     label: "Phone",
-    value: "+20 (000) 000 0000",
-    href: "tel:+200000000000",
+    value: "+20 (111) 284 9384",
+    href: "tel:+201112849384",
   },
   {
     icon: MapPin,
@@ -32,7 +32,7 @@ const collaborationNotes = [
 const Contact = () => {
   return (
     <div className="bg-slate-950 text-white">
-      <section className="px-6 pt-24 pb-12 sm:px-10 lg:px-16">
+      <section className="px-6 pt-12 pb-12 sm:px-10 lg:px-16">
         <div className="grid gap-8 rounded-3xl border border-white/10 bg-gradient-to-br from-slate-900 to-slate-950 p-6 shadow-2xl shadow-slate-900/40 lg:grid-cols-[1fr,1fr] lg:p-10">
           <motion.div
             className="space-y-6"

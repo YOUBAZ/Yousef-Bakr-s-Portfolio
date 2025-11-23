@@ -64,7 +64,7 @@ const toolset = [
 const About = () => {
   return (
     <div className="bg-slate-950 text-white">
-      <section className="px-6 pt-24 pb-12 sm:px-10 lg:px-16">
+      <section className="px-6 pt-12 pb-12 sm:px-10 lg:px-16">
         <div className="grid gap-8 rounded-3xl border border-white/10 bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 p-6 shadow-2xl shadow-slate-900/30 lg:grid-cols-[1.1fr,0.9fr] lg:p-10">
             <motion.div
               className="space-y-6"

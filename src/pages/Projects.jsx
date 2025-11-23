@@ -48,7 +48,7 @@ const Projects = () => {
 
   return (
     <div className="bg-slate-950 text-white">
-      <section className="px-6 pt-28 pb-12 sm:px-10 lg:px-16">
+      <section className="px-6 pt-12 pb-12 sm:px-10 lg:px-16">
         <motion.p
           className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.4em] text-sky-300"
           initial={{ opacity: 0, y: 10 }}
