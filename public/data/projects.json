@@ -1,0 +1,24 @@
+{
+  "projects": [
+    {
+      "id": 1,
+      "title": "E-Commerce App",
+      "description": "Full-stack e-commerce application with React, Node.js, and MongoDB",
+      "technologies": ["React", "Node.js", "MongoDB", "Express"],
+      "githubUrl": "https://github.com/yourusername/ecommerce-app",
+      "liveUrl": "https://yourapp.vercel.app",
+      "image": "/images/projects/ecommerce.jpg",
+      "featured": true
+    },
+    {
+      "id": 2,
+      "title": "Task Management App",
+      "description": "Task management application with drag and drop functionality",
+      "technologies": ["React", "CSS", "LocalStorage"],
+      "githubUrl": "https://github.com/yourusername/task-app",
+      "liveUrl": "https://yourtaskapp.netlify.app",
+      "image": "/images/projects/taskapp.jpg",
+      "featured": false
+    }
+  ]
+}

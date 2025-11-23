@@ -1,0 +1,20 @@
+{
+  "certificates": [
+    {
+      "id": 1,
+      "title": "MERN Stack Developer Certificate",
+      "issuer": "Coursera",
+      "issueDate": "2023-06-15",
+      "credentialUrl": "https://coursera.org/verify/XYZ123",
+      "image": "/images/certificates/mern-certificate.jpg"
+    },
+    {
+      "id": 2,
+      "title": "React Developer Certification",
+      "issuer": "Udemy",
+      "issueDate": "2023-03-10",
+      "credentialUrl": "https://udemy.com/certificate/ABC456",
+      "image": "/images/certificates/react-certificate.jpg"
+    }
+  ]
+}
