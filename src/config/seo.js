@@ -1,10 +1,9 @@
 export const siteMeta = {
   siteName: "Yousef Bakr - Full-Stack Software Engineer",
-  title:
-    "Yousef Bakr - Software Engineer, Systems Analyst & Cloud Architect",
+  title: "Yousef Bakr - Software Engineer, Systems Analyst & Cloud Architect",
   description:
     "Portfolio for Yousef Bakr, a Cairo-based software engineer delivering full-stack products, resilient APIs, scalable cloud systems, and immersive simulations.",
-  siteUrl: "https://yousefbakr.com",
+  siteUrl: "https://yousef-bakr-s-portfolio.vercel.app",
   locale: "en_US",
   siteLanguage: "en",
   profileImage: "/images/about/profile.jpg",
@@ -31,11 +30,12 @@ export const defaultSchemas = [
     alternateName: ["Yousef Bakr", "Yousef Bakr Zaki"],
     jobTitle:
       "Software Engineer • Systems Analyst • Full-Stack & Cloud Architect",
-    url: "https://yousefbakr.com",
+    url: "https://yousef-bakr-s-portfolio.vercel.app",
     description:
       "Software engineer building LMS platforms, simulation systems, APIs, and immersive front-ends across React, Node.js, and cloud-native stacks.",
     email: "mailto:youbakrzaki@gmail.com",
-    image: "https://yousefbakr.com/images/about/profile.jpg",
+    image:
+      "https://yousef-bakr-s-portfolio.vercel.app/images/about/profile.jpg",
     sameAs: [
       "https://github.com/YOUBAZ",
       "https://www.linkedin.com/in/yousef-bakr/",
@@ -53,13 +53,14 @@ export const defaultSchemas = [
   {
     "@type": "WebSite",
     name: "Yousef Bakr Portfolio",
-    url: "https://yousefbakr.com",
+    url: "https://yousef-bakr-s-portfolio.vercel.app",
     description:
       "Interactive portfolio that showcases end-to-end software builds, cloud automation, data platforms, and immersive UX from Yousef Bakr.",
     inLanguage: "en-US",
     potentialAction: {
       "@type": "SearchAction",
-      target: "https://yousefbakr.com/?q={search_term_string}",
+      target:
+        "https://yousef-bakr-s-portfolio.vercel.app/?q={search_term_string}",
       "query-input": "required name=search_term_string",
     },
   },
