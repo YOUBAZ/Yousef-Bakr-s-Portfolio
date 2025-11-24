@@ -12,6 +12,7 @@ import Tilt from "react-parallax-tilt";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useInView } from "react-intersection-observer";
 import { Canvas, useFrame } from "@react-three/fiber";
+import { Link } from "react-router-dom";
 import {
   Float,
   MeshDistortMaterial,
@@ -42,7 +43,13 @@ const heroAnimationData = {
       nm: "ring",
       sr: 1,
       ks: {
-        o: { a: 1, k: [{ s: 0, e: 100, t: 0 }, { s: 100, e: 0, t: 180 }] },
+        o: {
+          a: 1,
+          k: [
+            { s: 0, e: 100, t: 0 },
+            { s: 100, e: 0, t: 180 },
+          ],
+        },
         r: { a: 0, k: 0 },
         p: { a: 0, k: [100, 100, 0] },
         a: { a: 0, k: [0, 0, 0] },
@@ -128,22 +135,19 @@ const Home = () => {
     () => [
       {
         title: "Immersive Agency Microsite",
-        copy:
-          "Scroll-triggered storytelling powered by Framer Motion, GSAP, and realtime lighting from Three.js.",
+        copy: "Scroll-triggered storytelling powered by Framer Motion, GSAP, and realtime lighting from Three.js.",
         tags: ["Framer Motion", "GSAP", "Three.js"],
         gradient: "from-indigo-500/70 via-purple-500/70 to-fuchsia-500/70",
       },
       {
         title: "Data-Driven Portfolio System",
-        copy:
-          "Auto-animated grids, smart filters, and type-safe content blocks built with Vite and Tailwind.",
+        copy: "Auto-animated grids, smart filters, and type-safe content blocks built with Vite and Tailwind.",
         tags: ["Auto-animate", "Tailwind", "Vite"],
         gradient: "from-emerald-500/70 via-cyan-500/70 to-sky-500/70",
       },
       {
         title: "Creative Lab Dashboard",
-        copy:
-          "Parallax tilt cards, Lottie cues, and smooth Lenis scrolling deliver a tactile product feel.",
+        copy: "Parallax tilt cards, Lottie cues, and smooth Lenis scrolling deliver a tactile product feel.",
         tags: ["Lenis", "Lottie", "Tilt"],
         gradient: "from-amber-500/70 via-rose-500/70 to-orange-500/70",
       },
@@ -161,7 +165,8 @@ const Home = () => {
       {
         period: "2019 -> 2021",
         title: "Freelance Creative Developer",
-        detail: "Delivered 40+ web experiences across fintech, health, and e-commerce.",
+        detail:
+          "Delivered 40+ web experiences across fintech, health, and e-commerce.",
       },
       {
         period: "2017 -> 2019",
@@ -304,17 +309,28 @@ const Home = () => {
               style={{ transform: rippleTransform }}
               className="btn btn-primary gap-2 border-none bg-gradient-to-r from-sky-500 to-indigo-500 text-base font-semibold text-white shadow-lg shadow-indigo-500/30"
             >
-              Let's build together
-              <ArrowUpRight size={18} />
+              <Link
+                to="/lets-talk"
+                className="group flex items-center gap-3 text-base font-semibold tracking-wide"
+                aria-label="Yousef Bakr home"
+              >
+                Let's build together
+                <ArrowUpRight size={18} />
+              </Link>
             </animated.button>
             <motion.a
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.98 }}
-              href="#contact"
               className="btn border-white/20 bg-white/10 text-white backdrop-blur"
             >
-              <Mail size={18} />
-              Contact
+              <Link
+                to="/contact"
+                className="group flex items-center gap-3 text-base font-semibold tracking-wide"
+                aria-label="Yousef Bakr home"
+              >
+                <Mail size={18} />
+                Contact
+              </Link>
             </motion.a>
           </div>
 
@@ -345,7 +361,11 @@ const Home = () => {
               <pointLight position={[10, 10, 10]} intensity={0.6} />
               <Stars radius={8} depth={20} count={500} factor={2} fade />
               <FloatingOrb />
-              <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={0.6} />
+              <OrbitControls
+                enableZoom={false}
+                autoRotate
+                autoRotateSpeed={0.6}
+              />
             </Canvas>
           </div>
           <div className="mx-auto max-w-xs rounded-3xl border border-white/10 bg-white/5 p-4 backdrop-blur">
@@ -374,10 +394,7 @@ const Home = () => {
           </p>
         </div>
 
-        <div
-          ref={gridRef}
-          className="grid gap-6 md:grid-cols-2 xl:grid-cols-3"
-        >
+        <div ref={gridRef} className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {featuredProjects.map((project) => (
             <Tilt key={project.title} glareEnable className="h-full">
               <motion.article
