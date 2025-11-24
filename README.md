@@ -1,12 +1,42 @@
-# React + Vite
+# Yousef Bakr Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Modern animated portfolio built with React 19, Vite, Tailwind, and a curated motion stack (Framer Motion, GSAP, Three.js, etc.).
 
-Currently, two official plugins are available:
+## Requirements
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Node.js 18.17+ (recommended 20.x)
+- npm 9+
 
-## Expanding the ESLint configuration
+## Scripts
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+| Command         | Description                                 |
+| --------------- | ------------------------------------------- |
+| `npm install`   | Install dependencies                        |
+| `npm run dev`   | Start Vite dev server                       |
+| `npm run build` | Create production bundle in `dist/`         |
+| `npm run preview` | Serve the production bundle locally       |
+
+## Deploying to Vercel
+
+This repo includes `vercel.json` so Vercel can treat the build as a Vite SPA and ensure React Router routes resolve via rewrites.
+
+1. **Install dependencies & build**
+   ```bash
+   npm install
+   npm run build
+   ```
+2. **Login to Vercel (CLI)**
+   ```bash
+   npm install -g vercel
+   vercel login
+   ```
+3. **Deploy**
+   ```bash
+   vercel --prod
+   ```
+   - Vercel reads `vercel.json` to run `npm run build`, publish `dist/`, and apply the SPA rewrite (`/(.*) -> /`).
+   - If you use the dashboard instead, set **Framework Preset** to “Vite”, **Build Command** to `npm run build`, and **Output Directory** to `dist`.
+4. **Environment variables**
+   - Add any `VITE_*` secrets (e.g., EmailJS keys) under *Project Settings → Environment Variables*. Re-deploy afterwards.
+
+After the first deploy, pushes to the linked Git branch will automatically trigger new Vercel builds. Use `vercel logs` and `vercel env pull` for troubleshooting and syncing env vars locally.
