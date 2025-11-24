@@ -184,7 +184,10 @@ const Certificates = () => {
             {error}
           </div>
         )}
-        <div ref={gridRef} className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+        <div
+          ref={gridRef}
+          className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3"
+        >
           {isLoading &&
             Array.from({ length: 6 }).map((_, index) => (
               <div
@@ -213,7 +216,9 @@ const Certificates = () => {
                   <p className="text-xs uppercase tracking-[0.35em] text-slate-400">
                     {certificate.category}
                   </p>
-                  <h3 className="text-lg font-semibold">{certificate.title}</h3>
+                  <h3 className="text-lg font-semibold break-words">
+                    {certificate.title}
+                  </h3>
                   <p className="text-sm text-slate-400">
                     Issuer: {certificate.issuer}
                   </p>
