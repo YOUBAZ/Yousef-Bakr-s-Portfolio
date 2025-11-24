@@ -1,7 +1,72 @@
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { BadgeCheck, ExternalLink, Image as ImageIcon, X } from "lucide-react";
+import { useInView } from "react-intersection-observer";
+import {
+  BadgeCheck,
+  ExternalLink,
+  FileText,
+  Image as ImageIcon,
+  X,
+} from "lucide-react";
+
+const CertificateMedia = ({ certificate, onSelectImage }) => {
+  const isImage = certificate.type === "image";
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    rootMargin: "200px 0px",
+  });
+  const [shouldRenderPdf, setShouldRenderPdf] = useState(isImage);
+
+  useEffect(() => {
+    if (inView && !isImage) {
+      setShouldRenderPdf(true);
+    }
+  }, [inView, isImage]);
+
+  const handleView = () => {
+    if (isImage) {
+      onSelectImage?.();
+    } else if (certificate.pdf) {
+      window.open(certificate.pdf, "_blank", "noopener");
+    }
+  };
+
+  return (
+    <div
+      ref={ref}
+      className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 bg-slate-900"
+    >
+      {isImage ? (
+        <img
+          src={certificate.image}
+          alt={certificate.title}
+          className="h-full w-full object-contain object-center transition group-hover:scale-105"
+          loading="lazy"
+        />
+      ) : shouldRenderPdf && certificate.pdf ? (
+        <iframe
+          title={certificate.title}
+          src={`${certificate.pdf}#toolbar=0&view=fitH`}
+          className="h-full w-full scale-[1.02] object-contain"
+          loading="lazy"
+        />
+      ) : (
+        <div className="flex h-full flex-col items-center justify-center gap-3 bg-slate-900">
+          <div className="h-10 w-10 animate-spin rounded-full border-2 border-white/20 border-t-sky-400" />
+          <p className="text-xs text-slate-400">Preparing preview...</p>
+        </div>
+      )}
+      <button
+        onClick={handleView}
+        className="absolute bottom-4 right-4 inline-flex items-center gap-2 rounded-full bg-slate-900/80 px-3 py-2 text-xs font-semibold text-white shadow-lg backdrop-blur transition hover:bg-slate-900"
+      >
+        {isImage ? <ImageIcon size={14} /> : <FileText size={14} />}
+        View
+      </button>
+    </div>
+  );
+};
 
 const Certificates = () => {
   const [certificates, setCertificates] = useState([]);
@@ -140,35 +205,10 @@ const Certificates = () => {
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ duration: 0.5 }}
               >
-                <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 bg-slate-900">
-                  {certificate.type === "image" ? (
-                    <img
-                      src={certificate.image}
-                      alt={certificate.title}
-                      className="h-full w-full object-contain object-center transition group-hover:scale-105"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <iframe
-                      title={certificate.title}
-                      src={`${certificate.pdf}#toolbar=0&view=fitH`}
-                      className="h-full w-full scale-[1.02] object-contain"
-                    />
-                  )}
-                  <button
-                    onClick={() => {
-                      if (certificate.type === "image") {
-                        setSelectedCertificate(certificate);
-                      } else {
-                        window.open(certificate.pdf, "_blank", "noopener");
-                      }
-                    }}
-                    className="absolute bottom-4 right-4 inline-flex items-center gap-2 rounded-full bg-slate-900/80 px-3 py-2 text-xs font-semibold text-white shadow-lg backdrop-blur transition hover:bg-slate-900"
-                  >
-                    <ImageIcon size={14} />
-                    View
-                  </button>
-                </div>
+                <CertificateMedia
+                  certificate={certificate}
+                  onSelectImage={() => setSelectedCertificate(certificate)}
+                />
                 <div className="mt-4 space-y-1">
                   <p className="text-xs uppercase tracking-[0.35em] text-slate-400">
                     {certificate.category}

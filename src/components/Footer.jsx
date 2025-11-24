@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Facebook, Github, Linkedin, Mail, Sparkles } from "lucide-react";
+import { Facebook, Github, Linkedin, Sparkles } from "lucide-react";
 
 const socialLinks = [
   { icon: Github, label: "GitHub", href: "https://github.com/YOUBAZ" },
@@ -13,7 +13,6 @@ const socialLinks = [
     label: "Facebook",
     href: "https://www.facebook.com/yousefbakrzaki/",
   },
-  { icon: Mail, label: "Email", href: "mailto:youbakrzaki@gmail.com" },
 ];
 
 const navShortcuts = [
