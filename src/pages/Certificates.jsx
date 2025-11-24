@@ -1,105 +1,35 @@
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { useInView } from "react-intersection-observer";
 import {
   BadgeCheck,
   ExternalLink,
-  FileText,
   Image as ImageIcon,
   X,
 } from "lucide-react";
 
-const GOOGLE_PDF_VIEWER = "https://docs.google.com/gview?embedded=1&url=";
-
-const isLocalHost = (hostname) => {
-  if (!hostname) return false;
-  return (
-    hostname === "localhost" ||
-    hostname === "0.0.0.0" ||
-    hostname.startsWith("127.") ||
-    hostname.startsWith("192.168.") ||
-    hostname.startsWith("10.") ||
-    /^172\.(1[6-9]|2\d|3[01])\./.test(hostname) ||
-    hostname.endsWith(".local")
-  );
-};
-
-const buildPdfViewerUrl = (pdfPath) => {
-  if (typeof window === "undefined" || !pdfPath) return null;
-  const absoluteUrl = /^https?:\/\//i.test(pdfPath)
-    ? pdfPath
-    : new URL(pdfPath, window.location.origin).href;
-
-  if (isLocalHost(window.location.hostname)) {
-    return absoluteUrl;
+const CertificateMedia = ({ certificate, onSelectImage }) => {
+  if (certificate.type !== "image" || !certificate.image) {
+    return null;
   }
 
-  return `${GOOGLE_PDF_VIEWER}${encodeURIComponent(absoluteUrl)}`;
-};
-
-const CertificateMedia = ({ certificate, onSelectImage }) => {
-  const isImage = certificate.type === "image";
-  const { ref, inView } = useInView({
-    triggerOnce: true,
-    rootMargin: "200px 0px",
-  });
-  const [shouldRenderPdf, setShouldRenderPdf] = useState(isImage);
-  const [pdfViewerUrl, setPdfViewerUrl] = useState(null);
-
-  useEffect(() => {
-    if (inView && !isImage) {
-      setShouldRenderPdf(true);
-    }
-  }, [inView, isImage]);
-
-  useEffect(() => {
-    if (isImage || !certificate.pdf) {
-      setPdfViewerUrl(null);
-      return;
-    }
-    const viewerUrl = buildPdfViewerUrl(certificate.pdf);
-    setPdfViewerUrl(viewerUrl);
-  }, [certificate.pdf, isImage]);
-
   const handleView = () => {
-    if (isImage) {
-      onSelectImage?.();
-    } else if (certificate.pdf) {
-      window.open(certificate.pdf, "_blank", "noopener");
-    }
+    onSelectImage?.();
   };
 
   return (
-    <div
-      ref={ref}
-      className="relative aspect-[4/3] w-full max-w-full overflow-hidden rounded-2xl border border-white/10 bg-slate-900"
-    >
-      {isImage ? (
-        <img
-          src={certificate.image}
-          alt={certificate.title}
-          className="h-full w-full object-contain object-center transition group-hover:scale-105"
-          loading="lazy"
-        />
-      ) : shouldRenderPdf && pdfViewerUrl ? (
-        <iframe
-          title={certificate.title}
-          src={pdfViewerUrl}
-          className="h-full w-full border-0 bg-white"
-          loading="lazy"
-        />
-      ) : (
-        <div className="flex h-full flex-col items-center justify-center gap-3 bg-slate-900">
-          <div className="h-10 w-10 animate-spin rounded-full border-2 border-white/20 border-t-sky-400" />
-          <p className="text-xs text-slate-400">Preparing preview...</p>
-        </div>
-      )}
+    <div className="relative aspect-[4/3] w-full max-w-full overflow-hidden rounded-2xl border border-white/10 bg-slate-900">
+      <img
+        src={certificate.image}
+        alt={certificate.title}
+        className="h-full w-full object-contain object-center transition group-hover:scale-105"
+        loading="lazy"
+      />
       <button
         onClick={handleView}
         className="absolute bottom-4 right-4 inline-flex items-center gap-2 rounded-full bg-slate-900/80 px-3 py-2 text-xs font-semibold text-white shadow-lg backdrop-blur transition hover:bg-slate-900"
       >
-        {isImage ? <ImageIcon size={14} /> : <FileText size={14} />}
+        <ImageIcon size={14} />
         View
       </button>
     </div>
@@ -151,6 +81,10 @@ const Certificates = () => {
     selectedCategory === "all"
       ? certificates
       : certificates.filter((cert) => cert.category === selectedCategory);
+
+  const visibleImageCertificates = visibleCertificates.filter(
+    (cert) => cert.type === "image" && cert.image
+  );
 
   return (
     <div className="bg-slate-950 text-white">
@@ -237,7 +171,7 @@ const Certificates = () => {
             ))}
 
           {!isLoading &&
-            visibleCertificates.map((certificate) => (
+            visibleImageCertificates.map((certificate) => (
               <motion.article
                 key={certificate.id}
                 className="group flex h-full w-full min-w-0 flex-col rounded-3xl border border-white/10 bg-white/5 p-4"
@@ -275,7 +209,7 @@ const Certificates = () => {
               </motion.article>
             ))}
 
-          {!isLoading && !error && visibleCertificates.length === 0 && (
+          {!isLoading && !error && visibleImageCertificates.length === 0 && (
             <div className="rounded-3xl border border-dashed border-white/20 p-8 text-center text-slate-400">
               No certificates in this category yet.
             </div>
