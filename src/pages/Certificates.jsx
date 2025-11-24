@@ -10,6 +10,34 @@ import {
   X,
 } from "lucide-react";
 
+const GOOGLE_PDF_VIEWER = "https://docs.google.com/gview?embedded=1&url=";
+
+const isLocalHost = (hostname) => {
+  if (!hostname) return false;
+  return (
+    hostname === "localhost" ||
+    hostname === "0.0.0.0" ||
+    hostname.startsWith("127.") ||
+    hostname.startsWith("192.168.") ||
+    hostname.startsWith("10.") ||
+    /^172\.(1[6-9]|2\d|3[01])\./.test(hostname) ||
+    hostname.endsWith(".local")
+  );
+};
+
+const buildPdfViewerUrl = (pdfPath) => {
+  if (typeof window === "undefined" || !pdfPath) return null;
+  const absoluteUrl = /^https?:\/\//i.test(pdfPath)
+    ? pdfPath
+    : new URL(pdfPath, window.location.origin).href;
+
+  if (isLocalHost(window.location.hostname)) {
+    return absoluteUrl;
+  }
+
+  return `${GOOGLE_PDF_VIEWER}${encodeURIComponent(absoluteUrl)}`;
+};
+
 const CertificateMedia = ({ certificate, onSelectImage }) => {
   const isImage = certificate.type === "image";
   const { ref, inView } = useInView({
@@ -17,12 +45,22 @@ const CertificateMedia = ({ certificate, onSelectImage }) => {
     rootMargin: "200px 0px",
   });
   const [shouldRenderPdf, setShouldRenderPdf] = useState(isImage);
+  const [pdfViewerUrl, setPdfViewerUrl] = useState(null);
 
   useEffect(() => {
     if (inView && !isImage) {
       setShouldRenderPdf(true);
     }
   }, [inView, isImage]);
+
+  useEffect(() => {
+    if (isImage || !certificate.pdf) {
+      setPdfViewerUrl(null);
+      return;
+    }
+    const viewerUrl = buildPdfViewerUrl(certificate.pdf);
+    setPdfViewerUrl(viewerUrl);
+  }, [certificate.pdf, isImage]);
 
   const handleView = () => {
     if (isImage) {
@@ -35,7 +73,7 @@ const CertificateMedia = ({ certificate, onSelectImage }) => {
   return (
     <div
       ref={ref}
-      className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 bg-slate-900"
+      className="relative aspect-[4/3] w-full max-w-full overflow-hidden rounded-2xl border border-white/10 bg-slate-900"
     >
       {isImage ? (
         <img
@@ -44,11 +82,11 @@ const CertificateMedia = ({ certificate, onSelectImage }) => {
           className="h-full w-full object-contain object-center transition group-hover:scale-105"
           loading="lazy"
         />
-      ) : shouldRenderPdf && certificate.pdf ? (
+      ) : shouldRenderPdf && pdfViewerUrl ? (
         <iframe
           title={certificate.title}
-          src={`${certificate.pdf}#toolbar=0&view=fitH`}
-          className="h-full w-full scale-[1.02] object-contain"
+          src={pdfViewerUrl}
+          className="h-full w-full border-0 bg-white"
           loading="lazy"
         />
       ) : (
@@ -202,7 +240,7 @@ const Certificates = () => {
             visibleCertificates.map((certificate) => (
               <motion.article
                 key={certificate.id}
-                className="group flex h-full flex-col rounded-3xl border border-white/10 bg-white/5 p-4"
+                className="group flex h-full w-full min-w-0 flex-col rounded-3xl border border-white/10 bg-white/5 p-4"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.2 }}
