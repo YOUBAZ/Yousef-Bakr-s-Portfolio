@@ -7,6 +7,8 @@ import {
   Image as ImageIcon,
   X,
 } from "lucide-react";
+import Seo from "../components/Seo";
+import { siteMeta } from "../config/seo";
 
 const CertificateMedia = ({ certificate, onSelectImage }) => {
   if (certificate.type !== "image" || !certificate.image) {
@@ -86,10 +88,73 @@ const Certificates = () => {
     (cert) => cert.type === "image" && cert.image
   );
 
+  const certificateSchema = useMemo(() => {
+    const locale = (siteMeta.locale || "en_US").replace("_", "-");
+    const baseSchema = [
+      {
+        "@type": "WebPage",
+        "@id": `${siteMeta.siteUrl}/certificates`,
+        url: `${siteMeta.siteUrl}/certificates`,
+        name: "Certificates & Credentials",
+        description:
+          "Verified software engineering, cloud, LMS, simulation, and business credentials from ALX, IBM Skillbuild, edX, Coursera, and more curated by Yousef Bakr.",
+        inLanguage: locale,
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: `${siteMeta.siteUrl}/`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Certificates",
+            item: `${siteMeta.siteUrl}/certificates`,
+          },
+        ],
+      },
+    ];
+
+    if (certificates.length) {
+      baseSchema.push({
+        "@type": "ItemList",
+        name: "Professional Certificates",
+        itemListElement: certificates.slice(0, 12).map((certificate, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          name: certificate.title,
+          description: `${certificate.issuer} · ${certificate.category}`,
+          url:
+            certificate.credentialUrl ||
+            `${siteMeta.siteUrl}/certificates#${certificate.id}`,
+        })),
+      });
+    }
+
+    return baseSchema;
+  }, [certificates]);
+
   return (
-    <div className="bg-slate-950 text-white">
-      <section className="px-6 pt-24 pb-12 sm:px-10 lg:px-16">
-        <div className="grid gap-10 rounded-3xl border border-white/10 bg-gradient-to-br from-slate-900 to-slate-950 p-6 shadow-2xl shadow-slate-900/30 lg:grid-cols-[1.1fr,0.9fr] lg:p-10">
+    <>
+      <Seo
+        title="Certificates & Credentials"
+        description="Archive of software engineering, cloud, LMS, simulation, AI, and business certificates earned by Yousef Bakr from ALX, IBM, Coursera, edX, and more."
+        keywords={[
+          "ALX certificate",
+          "IBM Skillbuild badge",
+          "Coursera cloud credential",
+          "edX LMS and simulation training",
+        ]}
+        url="/certificates"
+        schema={certificateSchema}
+      />
+      <div className="bg-slate-950 text-white">
+        <section className="px-6 pt-24 pb-12 sm:px-10 lg:px-16">
+          <div className="grid gap-10 rounded-3xl border border-white/10 bg-gradient-to-br from-slate-900 to-slate-950 p-6 shadow-2xl shadow-slate-900/30 lg:grid-cols-[1.1fr,0.9fr] lg:p-10">
           <motion.div
             className="space-y-6"
             initial={{ opacity: 0, y: 20 }}
@@ -101,12 +166,12 @@ const Certificates = () => {
               Credentials
             </p>
             <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">
-              Certified growth across AI, product, and creative technology.
+              Certified growth across software engineering, cloud, LMS, and simulations.
             </h1>
             <p className="text-slate-300">
               A collection of verified badges, diplomas, and completion
-              certificates from ALX, IBM, Coursera, and more—covering AI,
-              entrepreneurship, business communications, and automation stacks.
+              certificates from ALX, IBM, Coursera, and more covering software
+              development, data/AI, AWS cloud, LMS strategy, simulation design, and business operations.
             </p>
           </motion.div>
 
@@ -115,18 +180,9 @@ const Certificates = () => {
               Highlights
             </p>
             <ul className="mt-4 space-y-3">
-              <li>
-                • Multi-disciplinary credentials spanning AI, product, and
-                business.
-              </li>
-              <li>
-                • Verified by leading platforms (ALX, IBM Skillbuild, Coursera,
-                edX).
-              </li>
-              <li>
-                • Constant upskilling in automation tools, design systems, and
-                storytelling.
-              </li>
+              <li>- Multi-disciplinary credentials spanning full-stack engineering, cloud, and LMS innovation.</li>
+              <li>- Verified by leading platforms (ALX, IBM Skillbuild, Coursera, edX).</li>
+              <li>- Constant upskilling in simulations, AI integrations, product strategy, and communication.</li>
             </ul>
           </div>
         </div>
@@ -253,6 +309,7 @@ const Certificates = () => {
         </div>
       )}
     </div>
+  </>
   );
 };
 

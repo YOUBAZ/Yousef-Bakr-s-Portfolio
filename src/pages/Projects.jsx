@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import Tilt from "react-parallax-tilt";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { Github, ExternalLink, Sparkles } from "lucide-react";
+import Seo from "../components/Seo";
+import { siteMeta } from "../config/seo";
 
 const Projects = () => {
   const [projects, setProjects] = useState([]);
@@ -10,11 +12,59 @@ const Projects = () => {
   const [loadError, setLoadError] = useState(null);
   const [gridRef] = useAutoAnimate({ duration: 240 });
   const stats = [
-    { label: "Avg delivery", value: "6 weeks" },
-    { label: "Teams supported", value: "15+" },
-    { label: "UX audits", value: "32" },
-    { label: "Stack coverage", value: "WebGL / SaaS" },
+    { label: "Mission-critical releases", value: "45+" },
+    { label: "APIs & data products", value: "120+" },
+    { label: "Simulation labs shipped", value: "14" },
+    { label: "LMS learners served", value: "180K+" },
   ];
+
+  const projectsSchema = useMemo(() => {
+    const locale = (siteMeta.locale || "en_US").replace("_", "-");
+    const baseSchema = [
+      {
+        "@type": "WebPage",
+        "@id": `${siteMeta.siteUrl}/projects`,
+        url: `${siteMeta.siteUrl}/projects`,
+        name: "Projects & Case Studies",
+        description:
+          "A curated playlist of multi-sector builds blending React, motion, and WebGL for SaaS, agencies, and product teams.",
+        inLanguage: locale,
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: `${siteMeta.siteUrl}/`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Projects",
+            item: `${siteMeta.siteUrl}/projects`,
+          },
+        ],
+      },
+    ];
+    if (projects.length) {
+      baseSchema.push({
+        "@type": "ItemList",
+        name: "Featured Projects",
+        itemListElement: projects.slice(0, 8).map((project, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          name: project.title,
+          description: project.summary,
+          url:
+            project.demo ||
+            `${siteMeta.siteUrl}/projects#${project.id ?? index + 1}`,
+        })),
+      });
+    }
+    return baseSchema;
+  }, [projects]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -47,29 +97,40 @@ const Projects = () => {
   }, []);
 
   return (
-    <div className="bg-slate-950 text-white">
-      <section className="px-6 pt-12 pb-12 sm:px-10 lg:px-16">
-        <motion.p
-          className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.4em] text-sky-300"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          <Sparkles size={16} />
-          Case studies
-        </motion.p>
-        <div className="mt-6 grid gap-8 lg:grid-cols-[1.2fr,0.8fr]">
+    <>
+      <Seo
+        title="Projects & Case Studies"
+        description="Full-stack SaaS, LMS, and simulation work spanning React, Next.js, Node.js, GraphQL, REST, AWS, Docker, and Kubernetes by Yousef Bakr."
+        keywords={[
+          "Full-stack engineering portfolio",
+          "Node.js and Express case studies",
+          "AWS and Kubernetes projects",
+          "LMS and simulation systems",
+        ]}
+        url="/projects"
+        schema={projectsSchema}
+      />
+      <div className="bg-slate-950 text-white">
+        <section className="px-6 pt-12 pb-12 sm:px-10 lg:px-16">
+          <motion.p
+            className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.4em] text-sky-300"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <Sparkles size={16} />
+            Case studies
+          </motion.p>
+          <div className="mt-6 grid gap-8 lg:grid-cols-[1.2fr,0.8fr]">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
             <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">
-              Interfaces engineered for motion, clarity, and measurable impact.
+              Full-stack platforms engineered for reliability, realtime insight, and measurable business impact.
             </h1>
             <p className="mt-4 text-slate-300">
-              Each build pairs a tailored motion system with resilient code to
-              keep teams shipping faster—from immersive marketing canvases to
-              data-dense SaaS consoles.
+              From LMS ecosystems and telehealth suites to digital twins and commerce platforms, every module blends React or Next.js on the front with Node.js, Express, GraphQL/REST APIs, SQL or NoSQL data, and AWS-native infrastructure hardened with Docker and Kubernetes.
             </p>
           </motion.div>
           <motion.div
@@ -98,10 +159,10 @@ const Projects = () => {
       <section className="px-6 pb-24 sm:px-10 lg:px-16">
         <div className="mb-8 space-y-3">
           <p className="text-sm uppercase tracking-[0.35em] text-slate-400">
-            Featured Builds
+            Featured builds across LMS, simulations, fintech, and SaaS.
           </p>
           <h2 className="text-3xl font-semibold sm:text-4xl">
-            Animated cards detailing the craft, stack, and outcomes.
+            Quick reads on scope, stacks, outcomes, and cloud topology.
           </h2>
         </div>
         <div ref={gridRef} className="grid gap-6 lg:grid-cols-2">
@@ -187,6 +248,7 @@ const Projects = () => {
         </div>
       </section>
     </div>
+  </>
   );
 };
 

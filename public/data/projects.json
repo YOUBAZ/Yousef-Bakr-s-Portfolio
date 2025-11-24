@@ -1,94 +1,178 @@
 {
   "projects": [
     {
-      "id": "HuXN",
-      "title": "E-Commerce App",
-      "summary": "Full-stack e-commerce application with React, Node.js, and MongoDB",
-      "tech": ["React", "Node.js", "MongoDB", "Express"],
-      "gradient": "from-indigo-600/80 via-purple-500/70 to-fuchsia-500/70",
-      "role": "Lead Front-end",
+      "id": "helix-lms",
+      "title": "Helix LMS Cloud",
+      "summary": "Multi-tenant learning management platform where Next.js orchestration, Node.js/Express.js services, and PostgreSQL/GraphQL APIs deliver SCORM ingestion, cohort management, and AI copilots for instructors.",
+      "tech": [
+        "Next.js",
+        "React.js",
+        "Node.js",
+        "Express.js",
+        "PostgreSQL",
+        "GraphQL APIs",
+        "Docker",
+        "AWS",
+        "Kubernetes"
+      ],
+      "gradient": "from-sky-500/80 via-indigo-500/80 to-purple-500/70",
+      "role": "Full-stack Lead",
       "year": "2025",
-      "repo": "https://github.com/yourusername/ecommerce-app",
-      "demo": "https://yourapp.vercel.app",
-      "image": "/images/projects/ecommerce.jpg"
+      "repo": "https://github.com/YOUBAZ/helix-lms",
+      "demo": "https://helix.youportfolio.dev",
+      "image": "/images/projects/helix-lms.jpg"
     },
     {
-      "id": "TMA",
-      "title": "Task Management App",
-      "summary": "Task management application with drag and drop functionality",
-      "tech": ["React", "CSS", "LocalStorage"],
-      "gradient": "from-indigo-600/80 via-purple-500/70 to-fuchsia-500/70",
-      "role": "Lead Front-end",
+      "id": "orion-sim",
+      "title": "Orion Simulation Control",
+      "summary": "Simulation and digital-twin control room powering real-time telemetry playback for manufacturing labs using React, Three.js, Socket.io streams, and Kafka-backed microservices deployed on Kubernetes.",
+      "tech": [
+        "React 19",
+        "Three.js",
+        "Socket.io",
+        "Kafka",
+        "NestJS",
+        "TypeScript",
+        "Redis",
+        "Kubernetes",
+        "WebGL"
+      ],
+      "gradient": "from-slate-900/90 via-blue-900/70 to-emerald-700/60",
+      "role": "Systems Engineer",
       "year": "2025",
-      "repo": "https://github.com/yourusername/task-app",
-      "demo": "https://yourtaskapp.netlify.app",
-      "image": "/images/projects/taskapp.jpg"
+      "repo": "https://github.com/YOUBAZ/orion-sim",
+      "demo": "https://orion.youportfolio.dev",
+      "image": "/images/projects/orion-sim.jpg"
     },
     {
-      "id": "nebula",
-      "title": "Nebula Research Portal",
-      "summary": "Interactive knowledge base for a biotech startup with cinematic scroll scenes, realtime search and role-based dashboards.",
-      "tech": ["React 19", "Framer Motion", "Three.js", "Supabase"],
-      "gradient": "from-indigo-600/80 via-purple-500/70 to-fuchsia-500/70",
-      "role": "Lead Front-end",
-      "year": "2025",
-      "repo": "https://github.com/YOUBAZ/nebula-portal",
-      "demo": "https://nebula.youportfolio.dev"
+      "id": "pulsecare",
+      "title": "PulseCare Telehealth Platform",
+      "summary": "Full-stack healthcare suite with secure RESTful APIs, HIPAA-ready workflows, and AI triage assistants built on Node.js, Express.js, MongoDB, Docker, and real-time Socket.io consultations.",
+      "tech": [
+        "React.js",
+        "Node.js",
+        "Express.js",
+        "MongoDB",
+        "RESTful APIs",
+        "Socket.io",
+        "AI Integrations",
+        "Docker",
+        "OOP"
+      ],
+      "gradient": "from-emerald-500/80 via-teal-500/70 to-sky-500/60",
+      "role": "Software Engineer",
+      "year": "2024",
+      "repo": "https://github.com/YOUBAZ/pulsecare",
+      "demo": "https://pulsecare.youportfolio.dev",
+      "image": "/images/projects/pulsecare.jpg"
     },
     {
       "id": "flowcast",
       "title": "Flowcast Analytics",
-      "summary": "Streaming data analytics UI with adaptive charts, collaborative annotations, and optimistic updates backed by WebSockets.",
-      "tech": ["Vite", "Recharts", "Zustand", "Tailwind"],
-      "gradient": "from-sky-500/80 via-cyan-500/70 to-emerald-500/60",
+      "summary": "Event-driven analytics fabric blending React dashboards, SQL-based transformations, and Hasura GraphQL APIs over MySQL to surface predictive insights for ops teams.",
+      "tech": [
+        "Vite",
+        "React Query",
+        "MySQL",
+        "SQL",
+        "Hasura",
+        "GraphQL APIs",
+        "Docker",
+        "Serverless",
+        "Socket.io"
+      ],
+      "gradient": "from-cyan-500/80 via-emerald-500/70 to-lime-500/60",
       "role": "Product Engineer",
       "year": "2024",
       "repo": "https://github.com/YOUBAZ/flowcast",
-      "demo": "https://flowcast.youportfolio.dev"
+      "demo": "https://flowcast.youportfolio.dev",
+      "image": "/images/projects/flowcast.jpg"
     },
     {
-      "id": "aurora",
-      "title": "Aurora Creative Lab",
-      "summary": "Portfolio CMS for a motion studio featuring draggable timelines, Lottie previews, and themable case study templates.",
-      "tech": ["Next.js", "Sanity", "Lottie", "Lenis"],
-      "gradient": "from-amber-500/80 via-rose-500/70 to-orange-500/60",
-      "role": "Creative Developer",
+      "id": "nebula",
+      "title": "Nebula Research Portal",
+      "summary": "Knowledge base and experiment tracker coupling React motion canvases with Supabase, GraphQL, and AWS Bedrock AI integrations to summarize lab results for distributed R&D teams.",
+      "tech": [
+        "React 19",
+        "Framer Motion",
+        "Supabase",
+        "GraphQL",
+        "AI Integrations",
+        "RESTful APIs",
+        "AWS",
+        "Tailwind CSS"
+      ],
+      "gradient": "from-indigo-600/80 via-purple-500/70 to-fuchsia-500/70",
+      "role": "Lead Software Engineer",
       "year": "2024",
-      "repo": "https://github.com/YOUBAZ/aurora-lab",
-      "demo": "https://aurora.youportfolio.dev"
+      "repo": "https://github.com/YOUBAZ/nebula-portal",
+      "demo": "https://nebula.youportfolio.dev",
+      "image": "/images/projects/nebula.jpg"
     },
     {
       "id": "atlas",
       "title": "Atlas Product Ops",
-      "summary": "Command center for product teams with AI assisted notes, kanban interactions, and shareable stakeholder views.",
-      "tech": ["React Query", "Clerk", "D3", "Radix UI"],
+      "summary": "Operations cockpit with AI-assisted meeting notes, GraphQL + REST services, and PostgreSQL event sourcing distributed through Kafka topics for business-critical automations.",
+      "tech": [
+        "Node.js",
+        "Express.js",
+        "PostgreSQL",
+        "Kafka",
+        "GraphQL",
+        "RESTful APIs",
+        "Docker",
+        "Kubernetes",
+        "OOP"
+      ],
       "gradient": "from-slate-700/90 via-slate-800/70 to-slate-900/60",
-      "role": "Senior Front-end",
+      "role": "Senior Software Engineer",
       "year": "2023",
       "repo": "https://github.com/YOUBAZ/atlas-ops",
-      "demo": "https://atlas.youportfolio.dev"
+      "demo": "https://atlas.youportfolio.dev",
+      "image": "/images/projects/atlas.jpg"
     },
     {
       "id": "waveform",
       "title": "Waveform Commerce",
-      "summary": "Headless commerce starter with immersive browsing, 3D product hero, and conversion-focused checkout flows.",
-      "tech": ["Remix", "Shopify", "Stripe", "GSAP"],
+      "summary": "Headless commerce starter powering B2B marketplaces with Remix, Stripe, and domain-driven services backed by MySQL and Redis, all containerized with Docker for fast rollouts.",
+      "tech": [
+        "Remix",
+        "React",
+        "MySQL",
+        "RESTful APIs",
+        "Stripe",
+        "Redis",
+        "Docker",
+        "AWS"
+      ],
       "gradient": "from-teal-500/70 via-blue-500/70 to-indigo-500/70",
       "role": "Founding Engineer",
       "year": "2023",
       "repo": "https://github.com/YOUBAZ/waveform",
-      "demo": "https://waveform.youportfolio.dev"
+      "demo": "https://waveform.youportfolio.dev",
+      "image": "/images/projects/waveform.jpg"
     },
     {
-      "id": "pulse",
-      "title": "Pulse Health Hub",
-      "summary": "Patient engagement platform with accessibility-first design, biometric dashboards, and automated onboarding journeys.",
-      "tech": ["TypeScript", "GraphQL", "TanStack Router", "Tailwind"],
-      "gradient": "from-lime-500/70 via-emerald-500/70 to-green-500/70",
-      "role": "UI Engineer",
+      "id": "lumen-simlab",
+      "title": "Lumen SimLab",
+      "summary": "Web-based simulation lab used for onboarding field engineers; blends React-powered UIs, WebGL scenes, MongoDB models, and GraphQL/REST gateways with AI-generated scenarios.",
+      "tech": [
+        "React.js",
+        "WebGL",
+        "Socket.io",
+        "MongoDB",
+        "GraphQL APIs",
+        "RESTful APIs",
+        "AI Integrations",
+        "Docker",
+        "Kubernetes"
+      ],
+      "gradient": "from-rose-500/80 via-amber-500/70 to-orange-500/60",
+      "role": "Simulation Engineer",
       "year": "2022",
-      "repo": "https://github.com/YOUBAZ/pulse-hub",
-      "demo": "https://pulse.youportfolio.dev"
+      "repo": "https://github.com/YOUBAZ/lumen-simlab",
+      "demo": "https://lumen.youportfolio.dev",
+      "image": "/images/projects/lumen-simlab.jpg"
     }
   ]
 }

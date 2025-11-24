@@ -24,6 +24,8 @@ import { useGesture } from "@use-gesture/react";
 import { useSpring as useButtonSpring, animated } from "@react-spring/web";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Seo from "../components/Seo";
+import { siteMeta } from "../config/seo";
 
 const heroAnimationData = {
   v: "5.7.6",
@@ -124,9 +126,9 @@ const FloatingOrb = () => {
 const Home = () => {
   const heroHighlights = useMemo(
     () => [
-      { label: "Focus", value: "React / Motion / WebGL" },
-      { label: "Projects Delivered", value: "24+" },
-      { label: "Avg. NPS", value: "9.6 / 10" },
+      { label: "Platforms shipped", value: "50+" },
+      { label: "Cloud workloads", value: "AWS / Docker / K8s" },
+      { label: "LMS & sims launched", value: "20+" },
     ],
     []
   );
@@ -134,22 +136,22 @@ const Home = () => {
   const featuredProjects = useMemo(
     () => [
       {
-        title: "Immersive Agency Microsite",
-        copy: "Scroll-triggered storytelling powered by Framer Motion, GSAP, and realtime lighting from Three.js.",
-        tags: ["Framer Motion", "GSAP", "Three.js"],
-        gradient: "from-indigo-500/70 via-purple-500/70 to-fuchsia-500/70",
+        title: "Helix LMS Cloud",
+        copy: "Multi-tenant LMS with AI mentors, SCORM import, and analytics powered by Next.js, Node.js/Express.js, PostgreSQL, and GraphQL APIs on AWS.",
+        tags: ["Next.js", "Express.js", "PostgreSQL", "GraphQL", "AWS"],
+        gradient: "from-sky-500/70 via-indigo-500/70 to-purple-500/70",
       },
       {
-        title: "Data-Driven Portfolio System",
-        copy: "Auto-animated grids, smart filters, and type-safe content blocks built with Vite and Tailwind.",
-        tags: ["Auto-animate", "Tailwind", "Vite"],
+        title: "Orion Simulation Control",
+        copy: "Digital-twin dashboard streaming sensor data over Socket.io and Kafka with React, Three.js, and Kubernetes orchestration.",
+        tags: ["React", "Socket.io", "Kafka", "Three.js", "Kubernetes"],
+        gradient: "from-slate-900/70 via-blue-900/70 to-emerald-700/70",
+      },
+      {
+        title: "Flowcast Analytics Fabric",
+        copy: "Node.js microservices + SQL/GraphQL data layer powering realtime dashboards, alerting, and AI summaries for ops teams.",
+        tags: ["Node.js", "SQL", "GraphQL", "AI Integrations", "Docker"],
         gradient: "from-emerald-500/70 via-cyan-500/70 to-sky-500/70",
-      },
-      {
-        title: "Creative Lab Dashboard",
-        copy: "Parallax tilt cards, Lottie cues, and smooth Lenis scrolling deliver a tactile product feel.",
-        tags: ["Lenis", "Lottie", "Tilt"],
-        gradient: "from-amber-500/70 via-rose-500/70 to-orange-500/70",
       },
     ],
     []
@@ -158,24 +160,63 @@ const Home = () => {
   const timeline = useMemo(
     () => [
       {
-        period: "2021 -> Present",
-        title: "Senior Front-end Engineer",
-        detail: "Leading interactive brand builds for SaaS scale-ups.",
-      },
-      {
-        period: "2019 -> 2021",
-        title: "Freelance Creative Developer",
+        period: "2022 -> Present",
+        title: "Principal Software Engineer & Systems Analyst",
         detail:
-          "Delivered 40+ web experiences across fintech, health, and e-commerce.",
+          "Architecting LMS ecosystems, AI copilots, and simulation control rooms across React/Next.js, Node.js, and AWS.",
       },
       {
-        period: "2017 -> 2019",
-        title: "Design Technologist",
-        detail: "Bridged product design and engineering for startup launches.",
+        period: "2020 -> 2022",
+        title: "Senior Full-Stack Developer",
+        detail:
+          "Scaled fintech and gov-tech platforms with Express.js, GraphQL, PostgreSQL, and Kubernetes pipelines.",
+      },
+      {
+        period: "2017 -> 2020",
+        title: "Software Developer & Product Engineer",
+        detail:
+          "Built SaaS MVPs, automation scripts, and WebGL training simulators with strong OOP fundamentals.",
       },
     ],
     []
   );
+
+  const homeSchema = useMemo(() => {
+    const locale = (siteMeta.locale || "en_US").replace("_", "-");
+    const primaryImage = `${siteMeta.siteUrl}${siteMeta.profileImage}`;
+    return [
+      {
+        "@type": "WebPage",
+        "@id": `${siteMeta.siteUrl}/#home`,
+        url: `${siteMeta.siteUrl}/`,
+        name: "Full-Stack Software Engineer Portfolio",
+        description:
+          "Explore the work of Yousef Bakr, a Cairo-based software engineer delivering LMS, simulation, and SaaS platforms across React, Next.js, Node.js, and AWS.",
+        inLanguage: locale,
+        primaryImageOfPage: {
+          "@type": "ImageObject",
+          url: primaryImage,
+          caption: "Portrait of Yousef Bakr",
+        },
+        about: {
+          "@type": "Person",
+          name: "Yousef Bakr",
+          jobTitle: "Full-Stack Software Engineer & Systems Analyst",
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: `${siteMeta.siteUrl}/`,
+          },
+        ],
+      },
+    ];
+  }, []);
 
   const cardsRef = useRef(null);
   const [gridRef] = useAutoAnimate({ duration: 240 });
@@ -266,16 +307,29 @@ const Home = () => {
   );
 
   return (
-    <div className="bg-slate-950 text-white">
-      <section className="relative isolate overflow-hidden px-6 py-24 sm:px-10 lg:flex lg:items-center lg:gap-16 lg:px-16">
-        <motion.div
-          className="absolute inset-0 -z-10 opacity-90 blur-3xl"
-          style={{ backgroundImage: spotlight }}
-        />
-        <div className="space-y-8 text-balance lg:max-w-xl">
+    <>
+      <Seo
+        title="Full-Stack Software Engineer & Systems Analyst"
+        description="Yousef Bakr architected LMS platforms, simulation systems, SaaS apps, and cloud-native services across React.js, Next.js, Node.js, Express.js, SQL/NoSQL, AWS, Docker, Kubernetes, and AI integrations."
+        keywords={[
+          "Full-stack software engineer",
+          "Systems analyst for LMS and simulations",
+          "React, Next.js, Node.js developer",
+          "AWS Docker Kubernetes engineer",
+        ]}
+        url="/"
+        schema={homeSchema}
+      />
+      <div className="bg-slate-950 text-white">
+        <section className="relative isolate overflow-hidden px-6 py-24 sm:px-10 lg:flex lg:items-center lg:gap-16 lg:px-16">
+          <motion.div
+            className="absolute inset-0 -z-10 opacity-90 blur-3xl"
+            style={{ backgroundImage: spotlight }}
+          />
+          <div className="space-y-8 text-balance lg:max-w-xl">
           <p className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm uppercase tracking-[0.3em] text-sky-300">
             <Sparkles size={16} />
-            Portfolio 2025
+            Software engineering 2025
           </p>
           <div className="space-y-4">
             <motion.h1
@@ -284,14 +338,14 @@ const Home = () => {
               transition={{ duration: 0.8 }}
               className="text-4xl font-semibold leading-tight text-white sm:text-5xl lg:text-6xl"
             >
-              Crafting animated experiences for the modern web.
+              Building LMS, simulation, and SaaS systems end to end.
             </motion.h1>
             <p className="text-lg text-slate-300 sm:text-xl">
               <Typewriter
                 words={[
-                  "React specialist focused on delightful UI motion.",
-                  "I combine Tailwind, Framer Motion, and Three.js for immersive products.",
-                  "Let's design interfaces people remember.",
+                  "Software engineer shipping LMS and simulation systems with React.js, Next.js, and Express.js.",
+                  "I pair Node.js, Socket.io, Kafka, and AI integrations to sync data over RESTful and GraphQL APIs.",
+                  "MySQL, SQL, MongoDB, PostgreSQL, AWS, Docker, Kubernetes, and disciplined OOP keep releases production ready.",
                 ]}
                 loop={0}
                 cursor
@@ -386,11 +440,10 @@ const Home = () => {
             Selected Work
           </p>
           <h2 className="text-3xl font-semibold text-white sm:text-4xl">
-            Interactive canvases engineered for performance.
+            Full-stack canvases engineered for realtime reliability.
           </h2>
           <p className="text-slate-400">
-            Smooth Lenis scrolling, auto-animated layouts, and tactile tilt
-            states keep each screen alive without sacrificing accessibility.
+            Each initiative pairs immersive UI with resilient services: Node.js/Express.js or Next.js APIs, SQL and NoSQL storage, AWS and Docker pipelines, plus observability and testing so LMS cohorts, telehealth patients, and simulation teams can trust every action.
           </p>
         </div>
 
@@ -429,20 +482,22 @@ const Home = () => {
         <div className="grid gap-10 lg:grid-cols-2">
           <div className="space-y-6">
             <h2 className="text-3xl font-semibold sm:text-4xl">
-              Built for scale, tuned for feel.
+              Engineered for uptime, insight, and user trust.
             </h2>
             <p className="text-slate-400">
-              From rapid prototypes to production portals, I choreograph every
-              interaction with GSAP timelines, Framer Motion transitions, and
-              WebGL shaders so your product feels alive everywhere.
+              I move between systems analysis, API design, and experience craft:
+              diagramming event flows, modeling data in SQL or MongoDB, wiring
+              Node.js/Express.js or Next.js routes, then layering React, Three.js,
+              and GSAP motion so dashboards, LMS portals, and simulated workspaces
+              feel intuitive yet auditable.
             </p>
 
             <div className="grid gap-6 sm:grid-cols-2">
               {[
-                { label: "Design Systems Launched", value: 6 },
-                { label: "Animated UI Kits", value: 18 },
-                { label: "Accessibility Score", value: 98 },
-                { label: "Avg. page speed", value: "98/100" },
+                { label: "APIs & services shipped", value: 120 },
+                { label: "Realtime sims / twins delivered", value: 14 },
+                { label: "LMS & training launches", value: 9 },
+                { label: "Avg. uptime", value: "99.98%" },
               ].map((stat, index) => (
                 <motion.div
                   key={stat.label}
@@ -484,6 +539,7 @@ const Home = () => {
         </div>
       </section>
     </div>
+  </>
   );
 };
 

@@ -1,71 +1,123 @@
 import { motion } from "framer-motion";
 import { Sparkles, Workflow, Code2, Compass } from "lucide-react";
+import Seo from "../components/Seo";
+import { siteMeta } from "../config/seo";
 
 const principles = [
   {
-    icon: Sparkles,
-    label: "Motion-first systems",
+    icon: Compass,
+    label: "Systems-first architecture",
     copy:
-      "Micro-interactions choreographed to support comprehension, performance, and delight without sacrificing focus.",
+      "Translate LMS journeys, simulation loops, and compliance requirements into domain models, KPIs, and service blueprints before writing code.",
   },
   {
     icon: Code2,
-    label: "Scale-ready frontend",
+    label: "Full-stack delivery",
     copy:
-      "Typed React with reusable composition patterns, ensuring design system parity and rapid iteration.",
+      "React.js/Next.js fronts paired with Node.js, Express.js, RESTful + GraphQL APIs, and SQL or MongoDB storage governed by clean OOP patterns.",
   },
   {
     icon: Workflow,
-    label: "Collaborative flow",
+    label: "Cloud & DevOps",
     copy:
-      "Tight feedback loops with design, product, and data stakeholders so each release lands on time.",
+      "Docker, Kubernetes, and AWS pipelines with IaC, logging, and automated testing keep releases observable, secure, and rollback ready.",
   },
   {
-    icon: Compass,
-    label: "Product empathy",
+    icon: Sparkles,
+    label: "Experience intelligence",
     copy:
-      "Every screen maps back to KPIs—conversion lifts, onboarding velocity, or qualitative user delight.",
+      "AI integrations, telemetry, and UX research personalize training, simulate edge cases, and make complex data approachable.",
   },
 ];
 
 const timeline = [
   {
-    period: "2024 - Present",
-    title: "Senior Front-end Engineer · Studio Nebula",
+    period: "2022 - Present",
+    title: "Principal Software Engineer · Multi-cloud partners",
     detail:
-      "Leading motion-heavy marketing sites and data-rich SaaS frontends for VC-backed startups.",
+      "Leading cross-functional squads delivering LMS platforms, telehealth suites, and simulation control rooms across React/Next.js, Node.js, and AWS.",
   },
   {
-    period: "2021 - 2024",
-    title: "Creative Developer · Independent",
+    period: "2020 - 2022",
+    title: "Senior Full-Stack & Systems Analyst · Helix Labs",
     detail:
-      "Partnered with agencies and founders to ship immersive portfolios, knowledge bases, and bespoke dashboards.",
+      "Introduced GraphQL, Socket.io, and event-driven services powering fintech, gov-tech, and enterprise knowledge systems.",
   },
   {
-    period: "2018 - 2021",
-    title: "Product Engineer · Atlas Labs",
+    period: "2017 - 2020",
+    title: "Software Developer · Product studios",
     detail:
-      "Built design systems, analytics tooling, and developer experience improvements for internal teams.",
+      "Shipped SaaS MVPs, LMS pilots, and 3D simulations while modernizing legacy stacks with modular OOP and CI/CD.",
   },
 ];
 
 const toolset = [
-  "React 19 / Vite",
-  "TypeScript",
-  "Framer Motion",
-  "Three.js & R3F",
-  "Tailwind CSS",
-  "GSAP / Lenis",
-  "Radix / Headless UI",
-  "GraphQL / REST",
-  "Testing Library",
+  "React.js / Next.js / Remix",
+  "Node.js / Express.js / NestJS",
+  "Socket.io & realtime streaming",
+  "RESTful APIs / GraphQL APIs",
+  "PostgreSQL / MySQL / SQL Server",
+  "MongoDB / Redis / Supabase",
+  "Docker / Kubernetes / AWS",
+  "Kafka / Event-driven systems",
+  "OOP / Clean Architecture / Testing",
 ];
 
 const About = () => {
+  const aboutSchema = [
+    {
+      "@type": "WebPage",
+      "@id": `${siteMeta.siteUrl}/about`,
+      url: `${siteMeta.siteUrl}/about`,
+      name: "About Yousef Bakr",
+      description:
+        "Bio, guiding principles, and experience timeline of Yousef Bakr, a full-stack software engineer and systems analyst building LMS platforms, simulations, and SaaS products.",
+      about: {
+        "@type": "Person",
+        name: "Yousef Bakr",
+        jobTitle: "Full-stack Software Engineer & Systems Analyst",
+        worksFor: {
+          "@type": "Organization",
+          name: "Independent / Studio Collaborations",
+        },
+      },
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: `${siteMeta.siteUrl}/`,
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "About",
+          item: `${siteMeta.siteUrl}/about`,
+        },
+      ],
+    },
+  ];
+
   return (
-    <div className="bg-slate-950 text-white">
-      <section className="px-6 pt-12 pb-12 sm:px-10 lg:px-16">
-        <div className="grid gap-8 rounded-3xl border border-white/10 bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 p-6 shadow-2xl shadow-slate-900/30 lg:grid-cols-[1.1fr,0.9fr] lg:p-10">
+    <>
+      <Seo
+        title="About"
+        description="Inside look at Yousef Bakr's systems mindset, multi-stack toolset, and experience building LMS platforms, simulations, and SaaS products."
+        keywords={[
+          "About Yousef Bakr",
+          "full-stack software engineer",
+          "systems analyst Egypt",
+          "LMS and simulation developer",
+        ]}
+        url="/about"
+        schema={aboutSchema}
+      />
+      <div className="bg-slate-950 text-white">
+        <section className="px-6 pt-12 pb-12 sm:px-10 lg:px-16">
+          <div className="grid gap-8 rounded-3xl border border-white/10 bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 p-6 shadow-2xl shadow-slate-900/30 lg:grid-cols-[1.1fr,0.9fr] lg:p-10">
             <motion.div
               className="space-y-6"
               initial={{ opacity: 0, x: -20 }}
@@ -76,19 +128,18 @@ const About = () => {
                 About
               </p>
               <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">
-                Crafting immersive web experiences that move with purpose.
+                Engineering LMS, simulation, and SaaS systems with measurable rigor.
               </h1>
               <p className="text-slate-300">
-                I am Yousef Bakr, a creative developer focused on translating
-                brand stories and product complexity into motion-rich,
-                high-performance interfaces. My work blends systems thinking,
-                design acuity, and engineering rigor to unlock faster launches
-                and more memorable customer moments.
+                I am Yousef Bakr, a software engineer, backend engineer, and systems analyst who translates
+                complex requirements into resilient architectures. As a full-stack web developer, front-end engineer,
+                and AWS engineer, I move between user research, system diagrams, and implementation to connect
+                React.js/Next.js experiences with Node.js, Express.js, SQL, and cloud-native services.
               </p>
               <p className="text-slate-300">
-                From marketing front doors to production-grade dashboards,
-                every pixel is backed by design tokens, accessible patterns,
-                and measurable outcomes.
+                Whether it is a multi-tenant LMS, a telehealth hub, or a simulation control room,
+                I balance performance and governance with Socket.io, GraphQL, Kafka, AWS, Docker,
+                Kubernetes, and AI integrations so teams can ship faster without sacrificing trust.
               </p>
             </motion.div>
 
@@ -128,7 +179,7 @@ const About = () => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent" />
                 <p className="absolute bottom-4 left-4 text-sm uppercase tracking-[0.35em] text-white">
-                  Cairo · Remote
+                  Cairo / Remote
                 </p>
               </div>
             </div>
@@ -205,14 +256,16 @@ const About = () => {
               ))}
             </div>
             <div className="rounded-2xl border border-dashed border-white/20 p-5 text-slate-300">
-              Currently exploring WebGPU transitions and AI-assisted prototyping
-              workflows. Open to collaborating with teams that value craft,
-              measurable outcomes, and rapid iteration.
+              Currently exploring WebGPU-driven simulations, AWS Bedrock copilots,
+              and automated compliance checks for regulated LMS programs. Open to
+              partnering with teams that value measurable outcomes, documentation,
+              and sustainable iteration.
             </div>
           </div>
         </div>
       </section>
     </div>
+  </>
   );
 };
 

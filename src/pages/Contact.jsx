@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin, Sparkles } from "lucide-react";
 import ContactForm from "../components/ContactForm";
+import Seo from "../components/Seo";
+import { siteMeta } from "../config/seo";
 
 const contactInfo = [
   {
@@ -18,22 +20,73 @@ const contactInfo = [
   {
     icon: MapPin,
     label: "Location",
-    value: "Based in Egypt · Remote worldwide",
+    value: "Based in Egypt / Remote worldwide",
   },
 ];
 
 const collaborationNotes = [
-  "Motion-first marketing site collaborations",
-  "Product teams shipping dashboards or platforms",
-  "Design system audits and component libraries",
-  "Consulting on performance, DX, and WebGL storytelling",
+  "LMS, simulation, or SaaS platforms blending React/Next.js with Node.js or Express.js services",
+  "API modernization (RESTful + GraphQL), SQL/MongoDB data migrations, or systems analysis retainers",
+  "Realtime Socket.io, Kafka, or WebSocket initiatives needing observability and compliance",
+  "AWS, Docker, and Kubernetes automation for secure releases plus developer experience coaching",
 ];
 
 const Contact = () => {
+  const contactSchema = [
+    {
+      "@type": "ContactPage",
+      "@id": `${siteMeta.siteUrl}/contact`,
+      url: `${siteMeta.siteUrl}/contact`,
+      name: "Contact Yousef Bakr",
+      description:
+        "Direct line for collaborations, inquiries, and speaking requests for software engineer and systems analyst Yousef Bakr.",
+      contactPoint: [
+        {
+          "@type": "ContactPoint",
+          telephone: "+201112849384",
+          contactType: "sales",
+          email: "youbakrzaki@gmail.com",
+          areaServed: "Worldwide",
+          availableLanguage: ["English", "Arabic"],
+        },
+      ],
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: `${siteMeta.siteUrl}/`,
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Contact",
+          item: `${siteMeta.siteUrl}/contact`,
+        },
+      ],
+    },
+  ];
+
   return (
-    <div className="bg-slate-950 text-white">
-      <section className="px-6 pt-12 pb-12 sm:px-10 lg:px-16">
-        <div className="grid gap-8 rounded-3xl border border-white/10 bg-gradient-to-br from-slate-900 to-slate-950 p-6 shadow-2xl shadow-slate-900/40 lg:grid-cols-[1fr,1fr] lg:p-10">
+    <>
+      <Seo
+        title="Contact"
+        description="Start a project conversation, request availability, or invite software engineer Yousef Bakr to help with full-stack builds, LMS launches, simulations, or API modernization."
+        keywords={[
+          "contact Yousef Bakr",
+          "full-stack software engineer inquiry",
+          "systems analyst Egypt",
+          "LMS simulation consultant",
+        ]}
+        url="/contact"
+        schema={contactSchema}
+      />
+      <div className="bg-slate-950 text-white">
+        <section className="px-6 pt-12 pb-12 sm:px-10 lg:px-16">
+          <div className="grid gap-8 rounded-3xl border border-white/10 bg-gradient-to-br from-slate-900 to-slate-950 p-6 shadow-2xl shadow-slate-900/40 lg:grid-cols-[1fr,1fr] lg:p-10">
           <motion.div
             className="space-y-6"
             initial={{ opacity: 0, y: 20 }}
@@ -45,12 +98,12 @@ const Contact = () => {
               Contact
             </p>
             <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">
-              Have a question or need a fast reply?
+              Need a software engineer, systems analyst, or API partner?
             </h1>
             <p className="text-slate-300">
-              This inbox is for general inquiries, quick collaboration checks,
-              press, or speaker requests. For detailed project kickoffs or
-              availability, head to the Let&apos;s Talk page to book a slot.
+              Share a few lines about the stack or outcomes you&apos;re targeting, from LMS deployments and simulation labs
+              to Node.js/Express.js migrations, RESTful or GraphQL APIs, data modernization, and AWS/Docker/Kubernetes pipelines.
+              I respond with availability, discovery recommendations, and a sober delivery plan.
             </p>
             <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
               <p className="text-xs uppercase tracking-[0.35em] text-slate-400">
@@ -124,6 +177,7 @@ const Contact = () => {
         </div>
       </section>
     </div>
+  </>
   );
 };
 

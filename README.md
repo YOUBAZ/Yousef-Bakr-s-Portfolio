@@ -40,3 +40,9 @@ This repo includes `vercel.json` so Vercel can treat the build as a Vite SPA and
    - Add any `VITE_*` secrets (e.g., EmailJS keys) under *Project Settings → Environment Variables*. Re-deploy afterwards.
 
 After the first deploy, pushes to the linked Git branch will automatically trigger new Vercel builds. Use `vercel logs` and `vercel env pull` for troubleshooting and syncing env vars locally.
+
+## SEO & Metadata
+
+- Update `src/config/seo.js` with your production domain, contact handles, and structured data details. The reusable `<Seo />` helper pulls from this file to set page titles, meta tags, and JSON-LD.
+- Refresh `public/sitemap.xml` whenever you add or remove routes. Submit the sitemap URL (`https://yousefbakr.com/sitemap.xml`) to Google Search Console.
+- `public/robots.txt` already references the sitemap and allows all crawlers, but feel free to narrow the rules if you introduce staging routes.

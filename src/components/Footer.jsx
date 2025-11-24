@@ -24,10 +24,10 @@ const navShortcuts = [
 ];
 
 const capabilityBadges = [
-  "Motion-first builds",
-  "Experience strategy",
-  "WebGL / R3F",
-  "Design systems",
+  "Full-stack delivery",
+  "LMS & simulations",
+  "Cloud automation",
+  "AI integrations",
 ];
 
 const Footer = () => {
@@ -50,13 +50,14 @@ const Footer = () => {
               <div>
                 <p className="text-lg font-semibold">Yousef Bakr</p>
                 <p className="text-xs uppercase tracking-[0.35em] text-slate-400">
-                  creative developer
+                  software engineer
                 </p>
               </div>
             </Link>
             <p className="mt-4 max-w-md text-sm text-slate-400">
-              A modern, animated portfolio engineered with React, Tailwind, and
-              signature brand motion to keep every interaction intentional.
+              A multi-stack portfolio engineered with React, Next.js, Node.js, Express.js,
+              SQL/NoSQL data, and AWS/Docker/Kubernetes pipelines so LMS, simulation,
+              and SaaS partners can see how I bridge UX and systems analysis.
             </p>
             <div className="mt-5 flex flex-wrap gap-2">
               {capabilityBadges.map((badge) => (
@@ -109,17 +110,18 @@ const Footer = () => {
               })}
             </div>
             <p className="mt-5 text-sm text-slate-400">
-              Based in Egypt, collaborating remotely with teams worldwide.
+              Based in Egypt, collaborating remotely with teams worldwide on software engineering,
+              system analysis, and platform modernization.
             </p>
           </div>
         </div>
 
         <div className="flex flex-col gap-4 border-t border-white/10 pt-6 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
           <p>
-            &copy; {currentYear} Yousef Bakr. Built with React, Tailwind, and
-            bespoke motion.
+            &copy; {currentYear} Yousef Bakr. Built with React, Next.js, Node.js,
+            Tailwind, and a healthy dose of automation.
           </p>
-          <p>Performance-first, accessibility minded craft.</p>
+          <p>Reliability-first craft with accessibility, security, and observability baked in.</p>
         </div>
       </div>
     </footer>
