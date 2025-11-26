@@ -18,6 +18,7 @@ const socialLinks = [
 const navShortcuts = [
   { label: "Projects", path: "/projects" },
   { label: "Certificates", path: "/certificates" },
+  { label: "CV", path: "/cv" },
   { label: "About", path: "/about" },
   { label: "Contact", path: "/contact" },
   { label: "Let's Talk", path: "/lets-talk" },

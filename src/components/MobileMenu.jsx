@@ -6,9 +6,9 @@ const MobileMenu = ({ isOpen, toggleMenu }) => {
     { name: "Home", path: "/" },
     { name: "Projects", path: "/projects" },
     { name: "Certificates", path: "/certificates" },
+    { name: "CV", path: "/cv" },
     { name: "About", path: "/about" },
     { name: "Contact", path: "/contact" },
-    { name: "Let's Talk", path: "/lets-talk" },
   ];
 
   if (!isOpen) return null;
