@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://yousefbakr.com/sitemap.xml
+Sitemap: https://yousef-bakr-s-portfolio.vercel.app/sitemap.xml

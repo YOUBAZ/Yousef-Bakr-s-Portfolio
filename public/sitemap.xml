@@ -1,33 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://yousefbakr.com/</loc>
-    <lastmod>2025-11-24</lastmod>
+    <loc>https://yousef-bakr-s-portfolio.vercel.app/</loc>
+    <lastmod>2025-11-26</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>1.00</priority>
   </url>
   <url>
-    <loc>https://yousefbakr.com/about</loc>
-    <lastmod>2025-11-24</lastmod>
+    <loc>https://yousef-bakr-s-portfolio.vercel.app/about</loc>
+    <lastmod>2025-11-26</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://yousefbakr.com/projects</loc>
-    <lastmod>2025-11-24</lastmod>
+    <loc>https://yousef-bakr-s-portfolio.vercel.app/projects</loc>
+    <lastmod>2025-11-26</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.90</priority>
   </url>
   <url>
-    <loc>https://yousefbakr.com/certificates</loc>
-    <lastmod>2025-11-24</lastmod>
+    <loc>https://yousef-bakr-s-portfolio.vercel.app/certificates</loc>
+    <lastmod>2025-11-26</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://yousefbakr.com/contact</loc>
-    <lastmod>2025-11-24</lastmod>
+    <loc>https://yousef-bakr-s-portfolio.vercel.app/cv</loc>
+    <lastmod>2025-11-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://yousef-bakr-s-portfolio.vercel.app/contact</loc>
+    <lastmod>2025-11-26</lastmod>
+    <changefreq>yearly</changefreq>
     <priority>0.70</priority>
   </url>
   <url>
-    <loc>https://yousefbakr.com/lets-talk</loc>
-    <lastmod>2025-11-24</lastmod>
+    <loc>https://yousef-bakr-s-portfolio.vercel.app/lets-talk</loc>
+    <lastmod>2025-11-26</lastmod>
+    <changefreq>yearly</changefreq>
     <priority>0.70</priority>
   </url>
 </urlset>
