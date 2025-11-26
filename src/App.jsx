@@ -1,20 +1,22 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import MobileMenu from "./components/MobileMenu";
 import ErrorBoundary from "./components/ErrorBoundary";
-import Home from "./pages/Home";
-import Projects from "./pages/Projects";
-import Certificates from "./pages/Certificates";
-import About from "./pages/About";
-import Contact from "./pages/Contact";
-import LetsTalk from "./pages/LetsTalk";
-import Cv from "./pages/CV";
-import NotFound from "./pages/NotFound";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
 import Loading from "./components/Loading";
 import { validateEnvVars } from "./utils/validateEnv";
+
+// Lazy load all page components for code splitting
+const Home = lazy(() => import("./pages/Home"));
+const Projects = lazy(() => import("./pages/Projects"));
+const Certificates = lazy(() => import("./pages/Certificates"));
+const About = lazy(() => import("./pages/About"));
+const Contact = lazy(() => import("./pages/Contact"));
+const LetsTalk = lazy(() => import("./pages/LetsTalk"));
+const Cv = lazy(() => import("./pages/CV"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -55,16 +57,18 @@ function App() {
           <MobileMenu isOpen={isMobileMenuOpen} toggleMenu={toggleMobileMenu} />
 
           <main className="pt-20">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/projects" element={<Projects />} />
-              <Route path="/certificates" element={<Certificates />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/lets-talk" element={<LetsTalk />} />
-              <Route path="/cv" element={<Cv />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+            <Suspense fallback={<Loading />}>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/projects" element={<Projects />} />
+                <Route path="/certificates" element={<Certificates />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/lets-talk" element={<LetsTalk />} />
+                <Route path="/cv" element={<Cv />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
           </main>
 
           <ScrollToTop />
