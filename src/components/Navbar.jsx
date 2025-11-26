@@ -1,4 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
+import PropTypes from "prop-types";
 import { Menu, Sparkles } from "lucide-react";
 
 const navItems = [
@@ -69,6 +70,10 @@ const Navbar = ({ toggleMobileMenu }) => {
       </div>
     </header>
   );
+};
+
+Navbar.propTypes = {
+  toggleMobileMenu: PropTypes.func.isRequired,
 };
 
 export default Navbar;

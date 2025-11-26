@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import PropTypes from "prop-types";
 import { defaultSchemas, siteMeta } from "../config/seo";
 
 const toAbsoluteUrl = (path = "") => {
@@ -42,9 +43,9 @@ const Seo = ({
   const structuredData =
     schemaGraph.length > 0
       ? {
-          "@context": "https://schema.org",
-          "@graph": schemaGraph,
-        }
+        "@context": "https://schema.org",
+        "@graph": schemaGraph,
+      }
       : null;
 
   useEffect(() => {
@@ -138,6 +139,30 @@ const Seo = ({
   ]);
 
   return null;
+};
+
+Seo.propTypes = {
+  title: PropTypes.string,
+  description: PropTypes.string,
+  keywords: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+  ]),
+  image: PropTypes.string,
+  url: PropTypes.string,
+  type: PropTypes.string,
+  noindex: PropTypes.bool,
+  schema: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.arrayOf(PropTypes.object),
+  ]),
+};
+
+Seo.defaultProps = {
+  keywords: [],
+  url: "/",
+  type: "website",
+  noindex: false,
 };
 
 export default Seo;

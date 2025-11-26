@@ -1,7 +1,21 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 import { X } from "lucide-react";
+import useFocusTrap from "../hooks/useFocusTrap";
 
 const MobileMenu = ({ isOpen, toggleMenu }) => {
+  const focusTrapRef = useFocusTrap(isOpen);
+
+  // Handle escape key
+  useEffect(() => {
+    const handleEscape = () => toggleMenu();
+    const container = focusTrapRef.current;
+
+    container?.addEventListener("escape-trap", handleEscape);
+    return () => container?.removeEventListener("escape-trap", handleEscape);
+  }, [toggleMenu, focusTrapRef]);
+
   const navItems = [
     { name: "Home", path: "/" },
     { name: "Projects", path: "/projects" },
@@ -14,8 +28,18 @@ const MobileMenu = ({ isOpen, toggleMenu }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur md:hidden">
-      <div className="absolute inset-y-0 right-0 flex h-full w-3/4 flex-col gap-8 rounded-l-3xl border-l border-white/15 bg-slate-950/95 p-6 shadow-2xl">
+    <div
+      className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur md:hidden"
+      onClick={toggleMenu}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Mobile navigation"
+    >
+      <div
+        ref={focusTrapRef}
+        className="absolute inset-y-0 right-0 flex h-full w-3/4 flex-col gap-8 rounded-l-3xl border-l border-white/15 bg-slate-950/95 p-6 shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="flex items-center justify-between">
           <div>
             <p className="text-lg font-semibold text-white">Yousef Bakr</p>
@@ -58,6 +82,11 @@ const MobileMenu = ({ isOpen, toggleMenu }) => {
       </div>
     </div>
   );
+};
+
+MobileMenu.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  toggleMenu: PropTypes.func.isRequired,
 };
 
 export default MobileMenu;
