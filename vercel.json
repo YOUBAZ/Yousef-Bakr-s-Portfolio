@@ -6,14 +6,6 @@
   "devCommand": "npm run dev",
   "rewrites": [
     {
-      "source": "/sitemap.xml",
-      "destination": "/sitemap.xml"
-    },
-    {
-      "source": "/robots.txt",
-      "destination": "/robots.txt"
-    },
-    {
       "source": "/((?!sitemap.xml|robots.txt).*)",
       "destination": "/index.html"
     }
