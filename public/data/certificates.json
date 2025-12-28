@@ -1,19 +1,9 @@
 {
   "certificates": [
     {
-      "id": "109-founder-academy-6-week-certificate-yousef-bakr",
-      "title": "109-founder-academy-6-week-certificate-yousef-bakr",
-      "category": "ALX AICI",
-      "issuer": "ALX AICI",
-      "issueDate": "",
-      "credentialUrl": "",
-      "image": "/images/certificates/ALX AICI/109-founder-academy-6-week-certificate-yousef-bakr.png",
-      "type": "image"
-    },
-    {
       "id": "66-alx-aice-ai-career-essentials-certificate-yousef-bakr-zaki-alsaidi",
-      "title": "66-alx-aice-ai-career-essentials-certificate-yousef-bakr-zaki-alsaidi",
-      "category": "ALX AICI",
+      "title": "ALX AI Career Essentials",
+      "category": "Artificial Intelligence",
       "issuer": "ALX AICI",
       "issueDate": "",
       "credentialUrl": "",
@@ -21,19 +11,9 @@
       "type": "image"
     },
     {
-      "id": "completion-badge-v2",
-      "title": "Completion badge V2",
-      "category": "ALX AICI",
-      "issuer": "ALX AICI",
-      "issueDate": "",
-      "credentialUrl": "",
-      "image": "/images/certificates/ALX AICI/Completion badge V2.gif",
-      "type": "image"
-    },
-    {
       "id": "yousefb80802@gmail.com",
-      "title": "yousefb80802@gmail.com",
-      "category": "ALX AICI",
+      "title": "AI Completion Badge",
+      "category": "Artificial Intelligence",
       "issuer": "ALX AICI",
       "issueDate": "",
       "credentialUrl": "",
@@ -41,130 +21,170 @@
       "type": "image"
     },
     {
-      "id": "business-english-networking",
-      "title": "Business English Networking",
-      "category": "Business English Diploma",
-      "issuer": "Business English Diploma",
+      "id": "completion-badge-v2",
+      "title": "AI Completion Badge V2",
+      "category": "Artificial Intelligence",
+      "issuer": "ALX AICI",
       "issueDate": "",
       "credentialUrl": "",
-      "pdf": "/images/certificates/Business English Diploma/Business English Networking.pdf",
-      "type": "pdf"
+      "image": "/images/certificates/ALX AICI/Completion badge V2.gif",
+      "type": "image"
+    },
+    {
+      "id": "business-english-networking",
+      "title": "Business English: Networking",
+      "category": "Business & Communication",
+      "issuer": "Coursera",
+      "issueDate": "",
+      "credentialUrl": "",
+      "image": "/images/certificates/Business English Diploma/Business English Networking.png",
+      "type": "image"
     },
     {
       "id": "coursera-business-english-planning-&-negotiating",
-      "title": "Coursera Business English Planning & Negotiating",
-      "category": "Business English Diploma",
-      "issuer": "Business English Diploma",
+      "title": "Business English: Planning & Negotiating",
+      "category": "Business & Communication",
+      "issuer": "Coursera",
       "issueDate": "",
       "credentialUrl": "",
-      "pdf": "/images/certificates/Business English Diploma/Coursera Business English Planning & Negotiating.pdf",
-      "type": "pdf"
+      "image": "/images/certificates/Business English Diploma/Coursera Business English Planning & Negotiating.png",
+      "type": "image"
     },
     {
       "id": "coursera-daeqw2tbuslb",
-      "title": "Coursera DAEQW2TBUSLB",
-      "category": "Business English Diploma",
-      "issuer": "Business English Diploma",
+      "title": "Business English Fundamentals",
+      "category": "Business & Communication",
+      "issuer": "Coursera",
       "issueDate": "",
       "credentialUrl": "",
-      "pdf": "/images/certificates/Business English Diploma/Coursera DAEQW2TBUSLB.pdf",
-      "type": "pdf"
+      "image": "/images/certificates/Business English Diploma/Coursera DAEQW2TBUSLB.png",
+      "type": "image"
     },
     {
-      "id": "camscanner-09-04-2024-18.22",
-      "title": "CamScanner 09-04-2024 18.22",
-      "category": "DECI",
-      "issuer": "DECI",
+      "id": "emotional-intelligence-(arabic)",
+      "title": "Emotional Intelligence",
+      "category": "Business & Communication",
+      "issuer": "Professional Development",
       "issueDate": "",
       "credentialUrl": "",
-      "pdf": "/images/certificates/DECI/CamScanner 09-04-2024 18.22.pdf",
-      "type": "pdf"
+      "image": "/images/certificates/Single Courses/Emotional Intelligence/Emotional Intelligence (Arabic).png",
+      "type": "image"
     },
     {
-      "id": "yousef-bakr-zaki-alsaidi",
-      "title": "Yousef Bakr Zaki Alsaidi",
-      "category": "DECI",
-      "issuer": "DECI",
+      "id": "109-founder-academy-6-week-certificate-yousef-bakr",
+      "title": "Founder Academy 6-Week Program",
+      "category": "Entrepreneurship",
+      "issuer": "ALX",
       "issueDate": "",
       "credentialUrl": "",
-      "pdf": "/images/certificates/DECI/Yousef Bakr Zaki Alsaidi.pdf",
-      "type": "pdf"
-    },
-    {
-      "id": "certificate",
-      "title": "certificate",
-      "category": "Digital Marketing",
-      "issuer": "Digital Marketing",
-      "issueDate": "",
-      "credentialUrl": "",
-      "pdf": "/images/certificates/Digital Marketing/certificate.pdf",
-      "type": "pdf"
-    },
-    {
-      "id": "mr_course-certificate-en",
-      "title": "MR_Course Certificate En",
-      "category": "Digital Marketing",
-      "issuer": "Digital Marketing",
-      "issueDate": "",
-      "credentialUrl": "",
-      "pdf": "/images/certificates/Digital Marketing/MR_Course Certificate En.pdf",
-      "type": "pdf"
+      "image": "/images/certificates/ALX AICI/109-founder-academy-6-week-certificate-yousef-bakr.png",
+      "type": "image"
     },
     {
       "id": "usmx-enes461x-certificate-_-edx",
-      "title": "USMx ENES461x Certificate _ edX",
-      "category": "Entrepreneurship EDX + Founder Academy",
-      "issuer": "Entrepreneurship EDX + Founder Academy",
+      "title": "Entrepreneurship Fundamentals",
+      "category": "Entrepreneurship",
+      "issuer": "edX (USMx)",
       "issueDate": "",
       "credentialUrl": "",
-      "pdf": "/images/certificates/Entrepreneurship EDX + Founder Academy/USMx ENES461x Certificate _ edX.pdf",
-      "type": "pdf"
+      "image": "/images/certificates/Entrepreneurship EDX + Founder Academy/USMx ENES461x Certificate _ edX.png",
+      "type": "image"
     },
     {
       "id": "usmx-enes662x-certificate-_-edx",
-      "title": "USMx ENES662x Certificate _ edX",
-      "category": "Entrepreneurship EDX + Founder Academy",
-      "issuer": "Entrepreneurship EDX + Founder Academy",
+      "title": "Advanced Entrepreneurship",
+      "category": "Entrepreneurship",
+      "issuer": "edX (USMx)",
       "issueDate": "",
       "credentialUrl": "",
-      "pdf": "/images/certificates/Entrepreneurship EDX + Founder Academy/USMx ENES662x Certificate _ edX.pdf",
-      "type": "pdf"
+      "image": "/images/certificates/Entrepreneurship EDX + Founder Academy/USMx ENES662x Certificate _ edX.png",
+      "type": "image"
+    },
+    {
+      "id": "camscanner-09-04-2024-18.22",
+      "title": "Digital Egypt Builders Initiative (DEBI)",
+      "category": "Entrepreneurship",
+      "issuer": "DECI",
+      "issueDate": "",
+      "credentialUrl": "",
+      "image": "/images/certificates/DECI/CamScanner 09-04-2024 18.22.png",
+      "type": "image"
+    },
+    {
+      "id": "yousef-bakr-zaki-alsaidi",
+      "title": "Entrepreneurship Certificate",
+      "category": "Entrepreneurship",
+      "issuer": "DECI",
+      "issueDate": "",
+      "credentialUrl": "",
+      "image": "/images/certificates/DECI/Yousef Bakr Zaki Alsaidi.png",
+      "type": "image"
+    },
+    {
+      "id": "certificate",
+      "title": "Digital Marketing Fundamentals",
+      "category": "Marketing",
+      "issuer": "Digital Marketing Academy",
+      "issueDate": "",
+      "credentialUrl": "",
+      "image": "/images/certificates/Digital Marketing/certificate.png",
+      "type": "image"
+    },
+    {
+      "id": "mr_course-certificate-en",
+      "title": "Digital Marketing Course",
+      "category": "Marketing",
+      "issuer": "MR Course",
+      "issueDate": "",
+      "credentialUrl": "",
+      "image": "/images/certificates/Digital Marketing/MR_Course Certificate En.png",
+      "type": "image"
+    },
+    {
+      "id": "coursera-introduction-to-marketing",
+      "title": "Introduction to Marketing",
+      "category": "Marketing",
+      "issuer": "Coursera (MBA)",
+      "issueDate": "",
+      "credentialUrl": "",
+      "image": "/images/certificates/Master of Business Administrator   (MBA Diploma)/Coursera Introduction to Marketing.png",
+      "type": "image"
     },
     {
       "id": "uc-7fe9862a-b8d1-4b40-8199-72e067500804",
-      "title": "UC-7fe9862a-b8d1-4b40-8199-72e067500804",
-      "category": "IBM Skillbuild",
-      "issuer": "IBM Skillbuild",
+      "title": "Web Development Fundamentals",
+      "category": "Web Development",
+      "issuer": "IBM SkillsBuild",
       "issueDate": "",
       "credentialUrl": "",
-      "pdf": "/images/certificates/IBM Skillbuild/Web Development/UC-7fe9862a-b8d1-4b40-8199-72e067500804.pdf",
-      "type": "pdf"
+      "image": "/images/certificates/IBM Skillbuild/Web Development/UC-7fe9862a-b8d1-4b40-8199-72e067500804.png",
+      "type": "image"
     },
     {
       "id": "webdevelopmentfundamentals_badge20230725-28-gplgm2",
-      "title": "WebDevelopmentFundamentals_Badge20230725-28-gplgm2",
-      "category": "IBM Skillbuild",
-      "issuer": "IBM Skillbuild",
+      "title": "Web Development Fundamentals Badge",
+      "category": "Web Development",
+      "issuer": "IBM SkillsBuild",
       "issueDate": "",
       "credentialUrl": "",
-      "pdf": "/images/certificates/IBM Skillbuild/Web Development/WebDevelopmentFundamentals_Badge20230725-28-gplgm2.pdf",
-      "type": "pdf"
+      "image": "/images/certificates/IBM Skillbuild/Web Development/WebDevelopmentFundamentals_Badge20230725-28-gplgm2.png",
+      "type": "image"
     },
     {
       "id": "yousef_alsaidi[1]",
-      "title": "Yousef_Alsaidi[1]",
-      "category": "IBM Skillbuild",
-      "issuer": "IBM Skillbuild",
+      "title": "Web Development Certificate",
+      "category": "Web Development",
+      "issuer": "IBM SkillsBuild",
       "issueDate": "",
       "credentialUrl": "",
-      "pdf": "/images/certificates/IBM Skillbuild/Web Development/Yousef_Alsaidi[1].pdf",
-      "type": "pdf"
+      "image": "/images/certificates/IBM Skillbuild/Web Development/Yousef_Alsaidi[1].png",
+      "type": "image"
     },
     {
       "id": "explore-emerging-tech",
-      "title": "explore-emerging-tech",
-      "category": "IBM Skillbuild",
-      "issuer": "IBM Skillbuild",
+      "title": "Exploring Emerging Technologies",
+      "category": "Web Development",
+      "issuer": "IBM SkillsBuild",
       "issueDate": "",
       "credentialUrl": "",
       "image": "/images/certificates/IBM Skillbuild/Web Foundations/explore-emerging-tech.png",
@@ -172,79 +192,49 @@
     },
     {
       "id": "explore_emerging_tech_badge20240806-7-ro6zal",
-      "title": "Explore_Emerging_Tech_Badge20240806-7-ro6zal",
-      "category": "IBM Skillbuild",
-      "issuer": "IBM Skillbuild",
+      "title": "Emerging Technologies Badge",
+      "category": "Web Development",
+      "issuer": "IBM SkillsBuild",
       "issueDate": "",
       "credentialUrl": "",
-      "pdf": "/images/certificates/IBM Skillbuild/Web Foundations/Explore_Emerging_Tech_Badge20240806-7-ro6zal.pdf",
-      "type": "pdf"
+      "image": "/images/certificates/IBM Skillbuild/Web Foundations/Explore_Emerging_Tech_Badge20240806-7-ro6zal.png",
+      "type": "image"
     },
     {
-      "id": "coursera-introduction-to-marketing",
-      "title": "Coursera Introduction to Marketing",
-      "category": "Master of Business Administrator   (MBA Diploma)",
-      "issuer": "Master of Business Administrator   (MBA Diploma)",
+      "id": "linux-essentials",
+      "title": "Linux Essentials",
+      "category": "Linux & DevOps",
+      "issuer": "Linux Professional Institute",
       "issueDate": "",
       "credentialUrl": "",
-      "pdf": "/images/certificates/Master of Business Administrator   (MBA Diploma)/Coursera Introduction to Marketing.pdf",
-      "type": "pdf"
+      "image": "/images/certificates/Single Courses/linux-essentials.png",
+      "type": "image"
     },
     {
-      "id": "68",
-      "title": "68",
-      "category": "Single Courses",
-      "issuer": "Single Courses",
+      "id": "linux-essentials-certificate",
+      "title": "Linux Essentials Certificate",
+      "category": "Linux & DevOps",
+      "issuer": "Linux Professional Institute",
       "issueDate": "",
       "credentialUrl": "",
-      "pdf": "/images/certificates/Single Courses/68.pdf",
-      "type": "pdf"
+      "image": "/images/certificates/Single Courses/Linux_Essentials_certificate_yousefb80802-gmail-com_c64d8082-644b-4846-811d-936f29d201f7-1.png",
+      "type": "image"
     },
     {
       "id": "coursera-design-&-make-inforgraphics",
-      "title": "Coursera Design & Make Inforgraphics",
-      "category": "Single Courses",
-      "issuer": "Single Courses",
+      "title": "Design & Make Infographics",
+      "category": "Design & Creativity",
+      "issuer": "Coursera",
       "issueDate": "",
       "credentialUrl": "",
-      "pdf": "/images/certificates/Single Courses/Coursera Design & Make Inforgraphics.pdf",
-      "type": "pdf"
-    },
-    {
-      "id": "edx-vsfo01-certificate-_-edx",
-      "title": "edX VSFO01 Certificate _ edX",
-      "category": "Single Courses",
-      "issuer": "Single Courses",
-      "issueDate": "",
-      "credentialUrl": "",
-      "pdf": "/images/certificates/Single Courses/edX VSFO01 Certificate _ edX.pdf",
-      "type": "pdf"
-    },
-    {
-      "id": "emotional-intelligence-(arabic)",
-      "title": "Emotional Intelligence (Arabic)",
-      "category": "Single Courses",
-      "issuer": "Single Courses",
-      "issueDate": "",
-      "credentialUrl": "",
-      "pdf": "/images/certificates/Single Courses/Emotional Intelligence/Emotional Intelligence (Arabic).pdf",
-      "type": "pdf"
-    },
-    {
-      "id": "emotional-intelligence",
-      "title": "Emotional Intelligence",
-      "category": "Single Courses",
-      "issuer": "Single Courses",
-      "issueDate": "",
-      "credentialUrl": "",
-      "pdf": "/images/certificates/Single Courses/Emotional Intelligence/Emotional Intelligence.pdf",
-      "type": "pdf"
+      "image": "/images/certificates/Single Courses/Coursera Design & Make Inforgraphics.png",
+      "type": "image"
     },
     {
       "id": "make-basics",
-      "title": "make-basics",
-      "category": "Single Courses",
-      "issuer": "Single Courses",
+      "title": "Make.com Basics",
+      "category": "Automation & Integration",
+      "issuer": "Make Academy",
       "issueDate": "",
       "credentialUrl": "",
       "image": "/images/certificates/Single Courses/Make Academy/make-basics.png",
@@ -252,9 +242,9 @@
     },
     {
       "id": "make-foundation.1",
-      "title": "make-foundation.1",
-      "category": "Single Courses",
-      "issuer": "Single Courses",
+      "title": "Make.com Foundation",
+      "category": "Automation & Integration",
+      "issuer": "Make Academy",
       "issueDate": "",
       "credentialUrl": "",
       "image": "/images/certificates/Single Courses/Make Academy/make-foundation.1.png",
@@ -262,33 +252,53 @@
     },
     {
       "id": "makecertificatedefault20240720-7-c9vipn",
-      "title": "MakeCertificateDefault20240720-7-c9vipn",
-      "category": "Single Courses",
-      "issuer": "Single Courses",
+      "title": "Make.com Advanced Integration",
+      "category": "Automation & Integration",
+      "issuer": "Make Academy",
       "issueDate": "",
       "credentialUrl": "",
-      "pdf": "/images/certificates/Single Courses/Make Academy/MakeCertificateDefault20240720-7-c9vipn.pdf",
-      "type": "pdf"
+      "image": "/images/certificates/Single Courses/Make Academy/MakeCertificateDefault20240720-7-c9vipn.png",
+      "type": "image"
     },
     {
       "id": "makecertificatedefault20240802-7-b8o6z5",
-      "title": "MakeCertificateDefault20240802-7-b8o6z5",
-      "category": "Single Courses",
-      "issuer": "Single Courses",
+      "title": "Make.com Expert Certification",
+      "category": "Automation & Integration",
+      "issuer": "Make Academy",
       "issueDate": "",
       "credentialUrl": "",
-      "pdf": "/images/certificates/Single Courses/Make Academy/MakeCertificateDefault20240802-7-b8o6z5.pdf",
-      "type": "pdf"
+      "image": "/images/certificates/Single Courses/Make Academy/MakeCertificateDefault20240802-7-b8o6z5.png",
+      "type": "image"
+    },
+    {
+      "id": "edx-vsfo01-certificate-_-edx",
+      "title": "Entrepreneurship & Innovation",
+      "category": "Professional Development",
+      "issuer": "edX",
+      "issueDate": "",
+      "credentialUrl": "",
+      "image": "/images/certificates/Single Courses/edX VSFO01 Certificate _ edX.png",
+      "type": "image"
+    },
+    {
+      "id": "68",
+      "title": "Professional Certificate",
+      "category": "Professional Development",
+      "issuer": "Professional Training",
+      "issueDate": "",
+      "credentialUrl": "",
+      "image": "/images/certificates/Single Courses/68.png",
+      "type": "image"
     },
     {
       "id": "yousef-bakr-zaki-certificate",
-      "title": "Yousef Bakr Zaki Certificate",
-      "category": "Single Courses",
-      "issuer": "Single Courses",
+      "title": "Professional Development Certificate",
+      "category": "Professional Development",
+      "issuer": "Training Institute",
       "issueDate": "",
       "credentialUrl": "",
-      "pdf": "/images/certificates/Single Courses/Yousef Bakr Zaki Certificate.pdf",
-      "type": "pdf"
+      "image": "/images/certificates/Single Courses/Yousef Bakr Zaki Certificate.png",
+      "type": "image"
     }
   ]
 }
