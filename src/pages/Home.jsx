@@ -25,6 +25,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Seo from "../components/Seo";
 import { siteMeta } from "../config/seo";
+import { experienceTimeline } from "../data/experience";
 
 const _motion = motion;
 const _animated = animated;
@@ -57,9 +58,10 @@ const FloatingOrb = () => {
 const Home = () => {
   const heroHighlights = useMemo(
     () => [
-      { label: "Platforms shipped", value: "50+" },
-      { label: "Cloud workloads", value: "AWS / Docker / K8s" },
-      { label: "LMS & sims launched", value: "20+" },
+      { label: "GitHub repos", value: "51" },
+      { label: "Thumbnail-led cards", value: "10" },
+      { label: "Live demos", value: "3" },
+      { label: "Source-linked", value: "100%" },
     ],
     []
   );
@@ -94,28 +96,20 @@ const Home = () => {
     []
   );
 
-  const timeline = useMemo(
-    () => [
-      {
-        period: "2022 -> Present",
-        title: "Principal Software Engineer & Systems Analyst",
-        detail:
-          "Architecting LMS ecosystems, AI copilots, and simulation control rooms across React/Next.js, Node.js, and AWS.",
-      },
-      {
-        period: "2020 -> 2022",
-        title: "Senior Full-Stack Developer",
-        detail:
-          "Scaled fintech and gov-tech platforms with Express.js, GraphQL, PostgreSQL, and Kubernetes pipelines.",
-      },
-      {
-        period: "2017 -> 2020",
-        title: "Software Developer & Product Engineer",
-        detail:
-          "Built SaaS MVPs, automation scripts, and WebGL training simulators with strong OOP fundamentals.",
-      },
-    ],
-    []
+  const timeline = experienceTimeline;
+  const homeTimeline = useMemo(
+    () =>
+      timeline.map((item) => {
+        const roleTitle = item.companyLabel
+          ? item.title.replace(` · ${item.companyLabel}`, "")
+          : item.title;
+
+        return {
+          ...item,
+          roleTitle,
+        };
+      }),
+    [timeline]
   );
 
   const homeSchema = useMemo(() => {
@@ -325,7 +319,7 @@ const Home = () => {
               </motion.a>
             </div>
 
-            <dl className="grid gap-4 sm:grid-cols-3">
+            <dl className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {heroHighlights.map((item) => (
                 <motion.div
                   key={item.label}
@@ -371,7 +365,7 @@ const Home = () => {
               Featured GitHub work
             </p>
             <h2 className="text-3xl font-semibold text-white sm:text-4xl">
-              Four source-driven projects with the same stack-first discipline.
+              The portfolio&apos;s strongest work, organized around the four GitHub repos you asked to feature.
             </h2>
             <p className="text-slate-400">
               Promptopia, Blog Post, E-commerce App, and IMDB Clone keep the portfolio focused on the GitHub repos you asked to feature.
@@ -454,15 +448,35 @@ const Home = () => {
             </div>
 
             <div className="space-y-6">
-              {timeline.map((item) => (
+              {homeTimeline.map((item) => (
                 <div
-                  key={item.period}
+                  key={item.title}
                   className="timeline-step rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur"
                 >
+                  {item.companyLabel && (
+                    <div className="mb-4 flex items-center gap-3">
+                      <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-white p-2 shadow-lg shadow-sky-400/15">
+                        <img
+                          src={item.companyLogo}
+                          alt={`${item.companyLabel} logo`}
+                          className="h-full w-full object-contain"
+                          loading="lazy"
+                        />
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold uppercase tracking-[0.3em] text-white">
+                          {item.companyLabel}
+                        </p>
+                        <p className="text-xs uppercase tracking-[0.35em] text-slate-400">
+                          Current experience
+                        </p>
+                      </div>
+                    </div>
+                  )}
                   <p className="text-xs uppercase tracking-[0.3em] text-slate-400">
                     {item.period}
                   </p>
-                  <h3 className="mt-2 text-xl font-semibold">{item.title}</h3>
+                  <h3 className="mt-2 text-xl font-semibold">{item.roleTitle}</h3>
                   <p className="mt-2 text-slate-300">{item.detail}</p>
                 </div>
               ))}

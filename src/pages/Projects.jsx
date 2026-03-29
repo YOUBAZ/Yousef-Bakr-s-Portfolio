@@ -15,9 +15,9 @@ const Projects = () => {
   const [loadError, setLoadError] = useState(null);
   const [gridRef] = useAutoAnimate({ duration: 240 });
   const stats = [
-    { label: "GitHub repos", value: "4" },
-    { label: "Thumbnail-led cards", value: "4" },
-    { label: "Live demos", value: "0" },
+    { label: "GitHub repos", value: "51" },
+    { label: "Thumbnail-led cards", value: "10" },
+    { label: "Live demos", value: "3" },
     { label: "Source-linked", value: "100%" },
   ];
 

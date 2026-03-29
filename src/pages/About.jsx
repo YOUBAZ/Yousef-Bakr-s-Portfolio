@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Sparkles, Workflow, Code2, Compass } from "lucide-react";
 import Seo from "../components/Seo";
 import { siteMeta } from "../config/seo";
+import { experienceTimeline } from "../data/experience";
 
 const _motion = motion;
 
@@ -30,27 +31,6 @@ const principles = [
     label: "Experience intelligence",
     copy:
       "AI integrations, telemetry, and UX research personalize training, simulate edge cases, and make complex data approachable.",
-  },
-];
-
-const timeline = [
-  {
-    period: "2022 - Present",
-    title: "Principal Software Engineer · Multi-cloud partners",
-    detail:
-      "Leading cross-functional squads delivering LMS platforms, telehealth suites, and simulation control rooms across React/Next.js, Node.js, and AWS.",
-  },
-  {
-    period: "2020 - 2022",
-    title: "Senior Full-Stack & Systems Analyst · Helix Labs",
-    detail:
-      "Introduced GraphQL, Socket.io, and event-driven services powering fintech, gov-tech, and enterprise knowledge systems.",
-  },
-  {
-    period: "2017 - 2020",
-    title: "Software Developer · Product studios",
-    detail:
-      "Shipped SaaS MVPs, LMS pilots, and 3D simulations while modernizing legacy stacks with modular OOP and CI/CD.",
   },
 ];
 
@@ -93,6 +73,7 @@ const aboutGallery = [
 const About = () => {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const activeImage = aboutGallery[activeImageIndex];
+  const timeline = experienceTimeline;
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -306,9 +287,35 @@ const About = () => {
             <div className="space-y-6">
               {timeline.map((entry) => (
                 <div
-                  key={entry.period}
+                  key={entry.title}
                   className="rounded-2xl border border-white/5 bg-white/5 p-5"
                 >
+                  {entry.companyLabel && (
+                    <div className="mb-3 flex items-center gap-3">
+                      {entry.companyLogo ? (
+                        <div className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-3xl border border-sky-300/30 bg-white p-3 shadow-xl shadow-sky-400/30 ring-1 ring-white/10 sm:h-20 sm:w-20">
+                          <img
+                            src={entry.companyLogo}
+                            alt={`${entry.companyLabel} logo`}
+                            className="h-full w-full object-contain drop-shadow-[0_10px_20px_rgba(14,165,233,0.25)]"
+                            loading="lazy"
+                          />
+                        </div>
+                      ) : (
+                        <div className="flex h-16 w-16 items-center justify-center rounded-3xl bg-gradient-to-br from-sky-400 via-cyan-400 to-indigo-500 text-xs font-bold tracking-[0.35em] text-slate-950 shadow-xl shadow-sky-400/30 ring-1 ring-white/10 sm:h-20 sm:w-20">
+                          {entry.companyBadge}
+                        </div>
+                      )}
+                      <div>
+                        <p className="text-sm font-semibold uppercase tracking-[0.3em] text-white">
+                          {entry.companyLabel}
+                        </p>
+                        <p className="text-xs uppercase tracking-[0.35em] text-slate-400">
+                          Current experience
+                        </p>
+                      </div>
+                    </div>
+                  )}
                   <p className="text-xs uppercase tracking-[0.35em] text-slate-400">
                     {entry.period}
                   </p>
