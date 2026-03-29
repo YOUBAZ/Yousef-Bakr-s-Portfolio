@@ -1,7 +1,10 @@
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import { Sparkles, Workflow, Code2, Compass } from "lucide-react";
 import Seo from "../components/Seo";
 import { siteMeta } from "../config/seo";
+
+const _motion = motion;
 
 const principles = [
   {
@@ -63,7 +66,42 @@ const toolset = [
   "OOP / Clean Architecture / Testing",
 ];
 
+const aboutGallery = [
+  {
+    src: "/images/about/profile.jpg",
+    alt: "Yousef Bakr portrait",
+    label: "Portrait",
+    featured: true,
+  },
+  {
+    src: "/images/about/WhatsApp Image 2026-03-29 at 9.32.54 PM.jpeg",
+    alt: "Yousef Bakr at the AI Everything event in Cairo",
+    label: "AI Everything",
+  },
+  {
+    src: "/images/about/WhatsApp Image 2026-03-29 at 9.32.54 PM (1).jpeg",
+    alt: "Yousef Bakr illustrated event poster variant one",
+    label: "Poster 01",
+  },
+  {
+    src: "/images/about/WhatsApp Image 2026-03-29 at 9.32.54 PM (2).jpeg",
+    alt: "Yousef Bakr illustrated event poster variant two",
+    label: "Poster 02",
+  },
+];
+
 const About = () => {
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const activeImage = aboutGallery[activeImageIndex];
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setActiveImageIndex((prev) => (prev + 1) % aboutGallery.length);
+    }, 4500);
+
+    return () => window.clearInterval(timer);
+  }, []);
+
   const aboutSchema = [
     {
       "@type": "WebPage",
@@ -149,7 +187,7 @@ const About = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="flex flex-col gap-6 lg:flex-row lg:items-center">
+            <div className="grid gap-6 xl:grid-cols-[0.85fr,1.15fr] xl:items-start">
               <div className="space-y-4 text-sm text-slate-200 lg:flex-1">
                 <p className="text-xs uppercase tracking-[0.35em] text-slate-400">
                   Highlights
@@ -170,17 +208,59 @@ const About = () => {
                 </div>
               </div>
 
-              <div className="relative mx-auto w-full max-w-xs overflow-hidden rounded-2xl border border-white/10 lg:flex-1">
-                <img
-                  src="/images/about/profile.jpg"
-                  alt="Yousef Bakr portrait"
-                  className="w-full rounded-2xl object-contain"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent" />
-                <p className="absolute bottom-4 left-4 text-sm uppercase tracking-[0.35em] text-white">
-                  Cairo / Remote
-                </p>
+              <div className="space-y-3">
+                <div className="flex items-center justify-between gap-3">
+                  <p className="text-xs uppercase tracking-[0.35em] text-slate-400">
+                    Visuals
+                  </p>
+                  <p className="text-[11px] uppercase tracking-[0.3em] text-slate-500">
+                    Auto-playing carousel
+                  </p>
+                </div>
+
+                <div className="relative aspect-[4/5] overflow-hidden rounded-3xl border border-white/10 bg-slate-950/90">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={activeImage.src}
+                      className="absolute inset-0 flex items-center justify-center p-4 sm:p-6"
+                      initial={{ opacity: 0, x: 18 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -18 }}
+                      transition={{ duration: 0.35 }}
+                    >
+                      <img
+                        src={activeImage.src}
+                        alt={activeImage.alt}
+                        className="max-h-full max-w-full object-contain"
+                        loading="lazy"
+                      />
+                    </motion.div>
+                  </AnimatePresence>
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent pointer-events-none" />
+                  <div className="absolute left-4 top-4 rounded-full border border-white/15 bg-slate-950/70 px-3 py-1 text-[11px] uppercase tracking-[0.3em] text-white backdrop-blur">
+                    {activeImage.label}
+                  </div>
+                  <div className="absolute bottom-4 right-4 rounded-full border border-white/15 bg-slate-950/70 px-3 py-1 text-[11px] uppercase tracking-[0.3em] text-white backdrop-blur">
+                    {activeImageIndex + 1}/{aboutGallery.length}
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-center gap-2">
+                  {aboutGallery.map((image, index) => (
+                    <button
+                      key={image.src}
+                      type="button"
+                      onClick={() => setActiveImageIndex(index)}
+                      className={[
+                        "h-2.5 rounded-full transition-all duration-300",
+                        activeImageIndex === index
+                          ? "w-8 bg-sky-300"
+                          : "w-2.5 bg-white/30 hover:bg-white/50",
+                      ].join(" ")}
+                      aria-label={`Show ${image.label}`}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
           </motion.div>

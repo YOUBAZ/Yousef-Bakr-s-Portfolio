@@ -2,10 +2,12 @@ import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import Tilt from "react-parallax-tilt";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { Github, ExternalLink, Sparkles } from "lucide-react";
+import { Github, Sparkles } from "lucide-react";
 import Seo from "../components/Seo";
 import LoadingSkeleton from "../components/LoadingSkeleton";
 import { siteMeta } from "../config/seo";
+
+const _motion = motion;
 
 const Projects = () => {
   const [projects, setProjects] = useState([]);
@@ -13,10 +15,10 @@ const Projects = () => {
   const [loadError, setLoadError] = useState(null);
   const [gridRef] = useAutoAnimate({ duration: 240 });
   const stats = [
-    { label: "Mission-critical releases", value: "45+" },
-    { label: "APIs & data products", value: "120+" },
-    { label: "Simulation labs shipped", value: "14" },
-    { label: "LMS learners served", value: "180K+" },
+    { label: "GitHub repos", value: "4" },
+    { label: "Thumbnail-led cards", value: "4" },
+    { label: "Live demos", value: "0" },
+    { label: "Source-linked", value: "100%" },
   ];
 
   const projectsSchema = useMemo(() => {
@@ -28,7 +30,7 @@ const Projects = () => {
         url: `${siteMeta.siteUrl}/projects`,
         name: "Projects & Case Studies",
         description:
-          "A curated playlist of multi-sector builds blending React, motion, and WebGL for SaaS, agencies, and product teams.",
+          "A curated set of GitHub-hosted projects with screenshot thumbnails spanning AI prompts, blogs, commerce, and movie browsing.",
         inLanguage: locale,
       },
       {
@@ -58,9 +60,7 @@ const Projects = () => {
           position: index + 1,
           name: project.title,
           description: project.summary,
-          url:
-            project.demo ||
-            `${siteMeta.siteUrl}/projects#${project.id ?? index + 1}`,
+          url: project.repo || `${siteMeta.siteUrl}/projects#${project.id ?? index + 1}`,
         })),
       });
     }
@@ -101,12 +101,12 @@ const Projects = () => {
     <>
       <Seo
         title="Projects & Case Studies"
-        description="Full-stack SaaS, LMS, and simulation work spanning React, Next.js, Node.js, GraphQL, REST, AWS, Docker, and Kubernetes by Yousef Bakr."
+        description="Four GitHub projects by Yousef Bakr, presented with thumbnail-led cards and source links for Promptopia, Blog Post, E-commerce App, and IMDB Clone."
         keywords={[
-          "Full-stack engineering portfolio",
-          "Node.js and Express case studies",
-          "AWS and Kubernetes projects",
-          "LMS and simulation systems",
+          "GitHub projects",
+          "React and Next.js portfolio",
+          "Blog Post project",
+          "E-commerce app project",
         ]}
         url="/projects"
         schema={projectsSchema}
@@ -119,7 +119,7 @@ const Projects = () => {
             animate={{ opacity: 1, y: 0 }}
           >
             <Sparkles size={16} />
-            Case studies
+            GitHub repos
           </motion.p>
           <div className="mt-6 grid gap-8 lg:grid-cols-[1.2fr,0.8fr]">
             <motion.div
@@ -128,10 +128,10 @@ const Projects = () => {
               transition={{ duration: 0.6 }}
             >
               <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">
-                Full-stack platforms engineered for reliability, realtime insight, and measurable business impact.
+                Four GitHub projects presented with full-page thumbnails and source-code links.
               </h1>
               <p className="mt-4 text-slate-300">
-                From LMS ecosystems and telehealth suites to digital twins and commerce platforms, every module blends React or Next.js on the front with Node.js, Express, GraphQL/REST APIs, SQL or NoSQL data, and AWS-native infrastructure hardened with Docker and Kubernetes.
+                Each card keeps the screenshot intact, avoids cropping, and routes straight to the repository because there are no live deployments.
               </p>
             </motion.div>
             <motion.div
@@ -160,10 +160,10 @@ const Projects = () => {
         <section className="px-6 pb-24 sm:px-10 lg:px-16">
           <div className="mb-8 space-y-3">
             <p className="text-sm uppercase tracking-[0.35em] text-slate-400">
-              Featured builds across LMS, simulations, fintech, and SaaS.
+              Selected GitHub builds with screenshot-led previews.
             </p>
             <h2 className="text-3xl font-semibold sm:text-4xl">
-              Quick reads on scope, stacks, outcomes, and cloud topology.
+              Source-first cards for Promptopia, Blog Post, E-commerce App, and IMDB Clone.
             </h2>
           </div>
           <div ref={gridRef} className="grid gap-6 lg:grid-cols-2">
@@ -185,51 +185,51 @@ const Projects = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.3 }}
                     transition={{ duration: 0.6, delay: index * 0.05 }}
-                    className={`flex h-full flex-col rounded-3xl border border-white/10 bg-gradient-to-br ${project.gradient} p-6`}
+                    className={`group flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br ${project.gradient}`}
                   >
-                    <div className="flex flex-wrap items-center justify-between gap-3">
-                      <p className="text-xs uppercase tracking-[0.4em] text-white/80">
-                        {project.year}
-                      </p>
-                      <span className="rounded-full border border-white/20 px-3 py-1 text-xs text-white/80">
-                        {project.role}
-                      </span>
-                    </div>
-                    <h3 className="mt-4 text-2xl font-semibold">{project.title}</h3>
-                    <p className="mt-3 text-sm text-white/90">{project.summary}</p>
-                    <div className="mt-6 flex flex-wrap gap-2 text-xs font-medium">
-                      {project.tech?.map((tag) => (
-                        <span
-                          key={tag}
-                          className="rounded-full bg-white/25 px-3 py-1 text-white/90"
-                        >
-                          {tag}
+                    <div className="relative aspect-[16/10] overflow-hidden bg-slate-950/80">
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        className="h-full w-full object-contain p-4 transition duration-500 group-hover:scale-[1.01]"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
+                      <div className="absolute left-4 top-4 flex flex-wrap gap-2">
+                        <span className="rounded-full border border-white/20 bg-slate-950/70 px-3 py-1 text-[11px] uppercase tracking-[0.3em] text-white backdrop-blur">
+                          {project.year}
                         </span>
-                      ))}
+                        <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] uppercase tracking-[0.3em] text-white backdrop-blur">
+                          {project.role}
+                        </span>
+                      </div>
                     </div>
-                    <div className="mt-8 flex items-center gap-3 text-sm font-semibold text-white">
-                      {project.repo && (
-                        <a
-                          href={project.repo}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-4 py-2 transition hover:bg-white/20"
-                        >
-                          <Github size={16} />
-                          Repo
-                        </a>
-                      )}
-                      {project.demo && (
-                        <a
-                          href={project.demo}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 rounded-full border border-white/0 bg-white/25 px-4 py-2 transition hover:bg-white/40"
-                        >
-                          <ExternalLink size={16} />
-                          Live
-                        </a>
-                      )}
+                    <div className="flex flex-1 flex-col p-6 text-white">
+                      <h3 className="text-2xl font-semibold">{project.title}</h3>
+                      <p className="mt-3 text-sm text-white/90">{project.summary}</p>
+                      <div className="mt-6 flex flex-wrap gap-2 text-xs font-medium">
+                        {project.tech?.map((tag) => (
+                          <span
+                            key={tag}
+                            className="rounded-full bg-white/20 px-3 py-1 text-white/90"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                      <div className="mt-8">
+                        {project.repo && (
+                          <a
+                            href={project.repo}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-4 py-2 text-sm font-semibold transition hover:bg-white/20"
+                          >
+                            <Github size={16} />
+                            Source on GitHub
+                          </a>
+                        )}
+                      </div>
                     </div>
                   </motion.article>
                 </Tilt>
@@ -237,7 +237,7 @@ const Projects = () => {
 
             {!isLoadingProjects && !loadError && projects.length === 0 && (
               <div className="rounded-3xl border border-dashed border-white/20 p-10 text-center text-slate-400">
-                New prototypes are in progress. Check back soon for fresh case studies.
+                No GitHub repos were found. Check the project data source.
               </div>
             )}
 

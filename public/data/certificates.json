@@ -31,6 +31,26 @@
       "type": "image"
     },
     {
+      "id": "ai-fundamentals",
+      "title": "AI Fundamentals",
+      "category": "Artificial Intelligence",
+      "issuer": "Cisco",
+      "issueDate": "",
+      "credentialUrl": "",
+      "image": "/images/certificates/Single Courses/CISCO/AI_Fundamentals.png",
+      "type": "image"
+    },
+    {
+      "id": "introduction-to-modern-ai",
+      "title": "Introduction to Modern AI",
+      "category": "Artificial Intelligence",
+      "issuer": "Cisco",
+      "issueDate": "",
+      "credentialUrl": "",
+      "image": "/images/certificates/Single Courses/CISCO/Intoduction_to_modern_AI.png",
+      "type": "image"
+    },
+    {
       "id": "business-english-networking",
       "title": "Business English: Networking",
       "category": "Business & Communication",
@@ -61,13 +81,33 @@
       "type": "image"
     },
     {
+      "id": "english-for-it-1",
+      "title": "English for IT 1",
+      "category": "Business & Communication",
+      "issuer": "Cisco",
+      "issueDate": "",
+      "credentialUrl": "",
+      "image": "/images/certificates/Single Courses/CISCO/English_for_IT_1.png",
+      "type": "image"
+    },
+    {
+      "id": "english-for-it-2",
+      "title": "English for IT 2",
+      "category": "Business & Communication",
+      "issuer": "Cisco",
+      "issueDate": "",
+      "credentialUrl": "",
+      "image": "/images/certificates/Single Courses/CISCO/English_for_IT_2.png",
+      "type": "image"
+    },
+    {
       "id": "emotional-intelligence-(arabic)",
       "title": "Emotional Intelligence",
       "category": "Business & Communication",
       "issuer": "Professional Development",
       "issueDate": "",
       "credentialUrl": "",
-      "image": "/images/certificates/Single Courses/Emotional Intelligence/Emotional Intelligence (Arabic).png",
+      "image": "/images/certificates/Single Courses/Emotional Intelligence/Screenshot 2026-03-29 212844.png",
       "type": "image"
     },
     {
@@ -176,7 +216,7 @@
       "category": "Web Development",
       "issuer": "IBM SkillsBuild",
       "issueDate": "",
-      "credentialUrl": "",
+      "credentialUrl": "https://skills.yourlearning.ibm.com/certificate/share/7cec59d08dewogICJvYmplY3RJZCIgOiAiVVJMLUI4MzVFM0MzRTIwRiIsCiAgImxlYXJuZXJDTlVNIiA6ICIxNzQzOTQ1UkVHIiwKICAib2JqZWN0VHlwZSIgOiAiQUNUSVZJVFkiCn0e9252b6ad8-10",
       "image": "/images/certificates/IBM Skillbuild/Web Development/Yousef_Alsaidi[1].png",
       "type": "image"
     },
@@ -207,7 +247,7 @@
       "issuer": "Linux Professional Institute",
       "issueDate": "",
       "credentialUrl": "",
-      "image": "/images/certificates/Single Courses/linux-essentials.png",
+      "image": "/images/certificates/Single Courses/CISCO/linux-essentials.png",
       "type": "image"
     },
     {
@@ -217,7 +257,7 @@
       "issuer": "Linux Professional Institute",
       "issueDate": "",
       "credentialUrl": "",
-      "image": "/images/certificates/Single Courses/Linux_Essentials_certificate_yousefb80802-gmail-com_c64d8082-644b-4846-811d-936f29d201f7-1.png",
+      "image": "/images/certificates/Single Courses/CISCO/Linux_Essentials_certificate_yousefb80802-gmail-com_c64d8082-644b-4846-811d-936f29d201f7-1.png",
       "type": "image"
     },
     {
@@ -278,6 +318,16 @@
       "issueDate": "",
       "credentialUrl": "",
       "image": "/images/certificates/Single Courses/edX VSFO01 Certificate _ edX.png",
+      "type": "image"
+    },
+    {
+      "id": "elibrary-usa-online-training",
+      "title": "eLibrary USA Online Training",
+      "category": "Professional Development",
+      "issuer": "eLibrary USA",
+      "issueDate": "",
+      "credentialUrl": "",
+      "image": "/images/certificates/Single Courses/eLibrary_USA_online_training.png",
       "type": "image"
     },
     {

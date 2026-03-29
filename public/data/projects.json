@@ -1,178 +1,72 @@
 {
   "projects": [
     {
-      "id": "helix-lms",
-      "title": "Helix LMS Cloud",
-      "summary": "Multi-tenant learning management platform where Next.js orchestration, Node.js/Express.js services, and PostgreSQL/GraphQL APIs deliver SCORM ingestion, cohort management, and AI copilots for instructors.",
+      "id": "promptopia",
+      "title": "Promptopia",
+      "summary": "AI prompt-sharing platform built with Next.js, React, NextAuth, and MongoDB for creating, browsing, and managing prompts in a clean social feed.",
       "tech": [
         "Next.js",
-        "React.js",
-        "Node.js",
-        "Express.js",
-        "PostgreSQL",
-        "GraphQL APIs",
-        "Docker",
-        "AWS",
-        "Kubernetes"
-      ],
-      "gradient": "from-sky-500/80 via-indigo-500/80 to-purple-500/70",
-      "role": "Full-stack Lead",
-      "year": "2025",
-      "repo": "https://github.com/YOUBAZ/helix-lms",
-      "demo": "https://helix.youportfolio.dev",
-      "image": "/images/projects/helix-lms.jpg"
-    },
-    {
-      "id": "orion-sim",
-      "title": "Orion Simulation Control",
-      "summary": "Simulation and digital-twin control room powering real-time telemetry playback for manufacturing labs using React, Three.js, Socket.io streams, and Kafka-backed microservices deployed on Kubernetes.",
-      "tech": [
-        "React 19",
-        "Three.js",
-        "Socket.io",
-        "Kafka",
-        "NestJS",
-        "TypeScript",
-        "Redis",
-        "Kubernetes",
-        "WebGL"
-      ],
-      "gradient": "from-slate-900/90 via-blue-900/70 to-emerald-700/60",
-      "role": "Systems Engineer",
-      "year": "2025",
-      "repo": "https://github.com/YOUBAZ/orion-sim",
-      "demo": "https://orion.youportfolio.dev",
-      "image": "/images/projects/orion-sim.jpg"
-    },
-    {
-      "id": "pulsecare",
-      "title": "PulseCare Telehealth Platform",
-      "summary": "Full-stack healthcare suite with secure RESTful APIs, HIPAA-ready workflows, and AI triage assistants built on Node.js, Express.js, MongoDB, Docker, and real-time Socket.io consultations.",
-      "tech": [
-        "React.js",
-        "Node.js",
-        "Express.js",
+        "React",
+        "NextAuth",
         "MongoDB",
-        "RESTful APIs",
-        "Socket.io",
-        "AI Integrations",
-        "Docker",
-        "OOP"
-      ],
-      "gradient": "from-emerald-500/80 via-teal-500/70 to-sky-500/60",
-      "role": "Software Engineer",
-      "year": "2024",
-      "repo": "https://github.com/YOUBAZ/pulsecare",
-      "demo": "https://pulsecare.youportfolio.dev",
-      "image": "/images/projects/pulsecare.jpg"
-    },
-    {
-      "id": "flowcast",
-      "title": "Flowcast Analytics",
-      "summary": "Event-driven analytics fabric blending React dashboards, SQL-based transformations, and Hasura GraphQL APIs over MySQL to surface predictive insights for ops teams.",
-      "tech": [
-        "Vite",
-        "React Query",
-        "MySQL",
-        "SQL",
-        "Hasura",
-        "GraphQL APIs",
-        "Docker",
-        "Serverless",
-        "Socket.io"
-      ],
-      "gradient": "from-cyan-500/80 via-emerald-500/70 to-lime-500/60",
-      "role": "Product Engineer",
-      "year": "2024",
-      "repo": "https://github.com/YOUBAZ/flowcast",
-      "demo": "https://flowcast.youportfolio.dev",
-      "image": "/images/projects/flowcast.jpg"
-    },
-    {
-      "id": "nebula",
-      "title": "Nebula Research Portal",
-      "summary": "Knowledge base and experiment tracker coupling React motion canvases with Supabase, GraphQL, and AWS Bedrock AI integrations to summarize lab results for distributed R&D teams.",
-      "tech": [
-        "React 19",
-        "Framer Motion",
-        "Supabase",
-        "GraphQL",
-        "AI Integrations",
-        "RESTful APIs",
-        "AWS",
         "Tailwind CSS"
       ],
-      "gradient": "from-indigo-600/80 via-purple-500/70 to-fuchsia-500/70",
-      "role": "Lead Software Engineer",
-      "year": "2024",
-      "repo": "https://github.com/YOUBAZ/nebula-portal",
-      "demo": "https://nebula.youportfolio.dev",
-      "image": "/images/projects/nebula.jpg"
+      "gradient": "from-orange-500/80 via-amber-500/70 to-fuchsia-500/70",
+      "role": "Prompt Platform",
+      "year": "GitHub",
+      "repo": "https://github.com/YOUBAZ/Promptopia",
+      "image": "/images/projects/Promptopia.png"
     },
     {
-      "id": "atlas",
-      "title": "Atlas Product Ops",
-      "summary": "Operations cockpit with AI-assisted meeting notes, GraphQL + REST services, and PostgreSQL event sourcing distributed through Kafka topics for business-critical automations.",
+      "id": "blog-post",
+      "title": "Blog Post",
+      "summary": "Content-focused blog dashboard with posts, users, and admin views powered by React, Node.js, Express.js, and MongoDB.",
       "tech": [
+        "React",
         "Node.js",
         "Express.js",
-        "PostgreSQL",
-        "Kafka",
-        "GraphQL",
-        "RESTful APIs",
-        "Docker",
-        "Kubernetes",
-        "OOP"
-      ],
-      "gradient": "from-slate-700/90 via-slate-800/70 to-slate-900/60",
-      "role": "Senior Software Engineer",
-      "year": "2023",
-      "repo": "https://github.com/YOUBAZ/atlas-ops",
-      "demo": "https://atlas.youportfolio.dev",
-      "image": "/images/projects/atlas.jpg"
-    },
-    {
-      "id": "waveform",
-      "title": "Waveform Commerce",
-      "summary": "Headless commerce starter powering B2B marketplaces with Remix, Stripe, and domain-driven services backed by MySQL and Redis, all containerized with Docker for fast rollouts.",
-      "tech": [
-        "Remix",
-        "React",
-        "MySQL",
-        "RESTful APIs",
-        "Stripe",
-        "Redis",
-        "Docker",
-        "AWS"
-      ],
-      "gradient": "from-teal-500/70 via-blue-500/70 to-indigo-500/70",
-      "role": "Founding Engineer",
-      "year": "2023",
-      "repo": "https://github.com/YOUBAZ/waveform",
-      "demo": "https://waveform.youportfolio.dev",
-      "image": "/images/projects/waveform.jpg"
-    },
-    {
-      "id": "lumen-simlab",
-      "title": "Lumen SimLab",
-      "summary": "Web-based simulation lab used for onboarding field engineers; blends React-powered UIs, WebGL scenes, MongoDB models, and GraphQL/REST gateways with AI-generated scenarios.",
-      "tech": [
-        "React.js",
-        "WebGL",
-        "Socket.io",
         "MongoDB",
-        "GraphQL APIs",
-        "RESTful APIs",
-        "AI Integrations",
-        "Docker",
-        "Kubernetes"
+        "Tailwind CSS"
       ],
-      "gradient": "from-rose-500/80 via-amber-500/70 to-orange-500/60",
-      "role": "Simulation Engineer",
-      "year": "2022",
-      "repo": "https://github.com/YOUBAZ/lumen-simlab",
-      "demo": "https://lumen.youportfolio.dev",
-      "image": "/images/projects/lumen-simlab.jpg"
+      "gradient": "from-fuchsia-500/70 via-cyan-500/70 to-indigo-500/70",
+      "role": "Blog Platform",
+      "year": "GitHub",
+      "repo": "https://github.com/YOUBAZ/Blog-Post",
+      "image": "/images/projects/Blog Post.png"
+    },
+    {
+      "id": "e-commerce-app-youtube",
+      "title": "E-commerce App",
+      "summary": "Commerce storefront with product browsing, responsive layouts, and cart-driven interactions using React and a Node.js backend.",
+      "tech": [
+        "React",
+        "Node.js",
+        "Express.js",
+        "MongoDB",
+        "Tailwind CSS"
+      ],
+      "gradient": "from-emerald-500/80 via-cyan-500/70 to-blue-500/70",
+      "role": "Commerce Store",
+      "year": "GitHub",
+      "repo": "https://github.com/YOUBAZ/E-commerce-App-youtube-",
+      "image": "/images/projects/E-commerce App.png"
+    },
+    {
+      "id": "imdb-next-js",
+      "title": "IMDB Clone",
+      "summary": "Movie discovery interface with trending lists, rich cards, and responsive navigation built on Next.js and API-driven data.",
+      "tech": [
+        "Next.js",
+        "React",
+        "API Integration",
+        "Responsive UI",
+        "Tailwind CSS"
+      ],
+      "gradient": "from-slate-800/90 via-indigo-700/70 to-slate-950/60",
+      "role": "Movie Explorer",
+      "year": "GitHub",
+      "repo": "https://github.com/YOUBAZ/imdb-next.js",
+      "image": "/images/projects/IMDB Clone.png"
     }
   ]
 }

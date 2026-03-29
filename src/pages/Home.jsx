@@ -5,7 +5,6 @@ import {
   useMotionTemplate,
   useSpring as useFramerSpring,
 } from "framer-motion";
-import Lottie from "lottie-react";
 import { Typewriter } from "react-simple-typewriter";
 import { ArrowUpRight, Mail, Sparkles } from "lucide-react";
 import Tilt from "react-parallax-tilt";
@@ -26,8 +25,9 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Seo from "../components/Seo";
 import { siteMeta } from "../config/seo";
-import { heroAnimationData } from "../data/animations";
 
+const _motion = motion;
+const _animated = animated;
 
 const FloatingOrb = () => {
   const meshRef = useRef(null);
@@ -67,22 +67,28 @@ const Home = () => {
   const featuredProjects = useMemo(
     () => [
       {
-        title: "Helix LMS Cloud",
-        copy: "Multi-tenant LMS with AI mentors, SCORM import, and analytics powered by Next.js, Node.js/Express.js, PostgreSQL, and GraphQL APIs on AWS.",
-        tags: ["Next.js", "Express.js", "PostgreSQL", "GraphQL", "AWS"],
-        gradient: "from-sky-500/70 via-indigo-500/70 to-purple-500/70",
+        title: "Promptopia",
+        copy: "AI prompt-sharing platform built with Next.js, React, NextAuth, and MongoDB.",
+        tags: ["Next.js", "React", "NextAuth", "MongoDB"],
+        gradient: "from-orange-500/70 via-amber-500/70 to-fuchsia-500/70",
       },
       {
-        title: "Orion Simulation Control",
-        copy: "Digital-twin dashboard streaming sensor data over Socket.io and Kafka with React, Three.js, and Kubernetes orchestration.",
-        tags: ["React", "Socket.io", "Kafka", "Three.js", "Kubernetes"],
-        gradient: "from-slate-900/70 via-blue-900/70 to-emerald-700/70",
+        title: "Blog Post",
+        copy: "Content dashboard with posts, users, and admin flows powered by React, Node.js, Express.js, and MongoDB.",
+        tags: ["React", "Node.js", "Express.js", "MongoDB"],
+        gradient: "from-fuchsia-500/70 via-cyan-500/70 to-indigo-500/70",
       },
       {
-        title: "Flowcast Analytics Fabric",
-        copy: "Node.js microservices + SQL/GraphQL data layer powering realtime dashboards, alerting, and AI summaries for ops teams.",
-        tags: ["Node.js", "SQL", "GraphQL", "AI Integrations", "Docker"],
-        gradient: "from-emerald-500/70 via-cyan-500/70 to-sky-500/70",
+        title: "E-commerce App",
+        copy: "Commerce storefront with responsive product browsing and cart flows built on React and Node.js.",
+        tags: ["React", "Node.js", "Express.js", "MongoDB"],
+        gradient: "from-emerald-500/70 via-cyan-500/70 to-blue-500/70",
+      },
+      {
+        title: "IMDB Clone",
+        copy: "Movie discovery interface with trending lists and API-driven cards built on Next.js.",
+        tags: ["Next.js", "React", "API Integration", "Tailwind CSS"],
+        gradient: "from-slate-800/80 via-indigo-700/70 to-slate-950/60",
       },
     ],
     []
@@ -353,12 +359,6 @@ const Home = () => {
                 />
               </Canvas>
             </div>
-            <div className="mx-auto max-w-xs rounded-3xl border border-white/10 bg-white/5 p-4 backdrop-blur">
-              <Lottie animationData={heroAnimationData} loop autoplay />
-              <p className="mt-4 text-center text-slate-300">
-                Micro-interactions cue user intent and reward progress.
-              </p>
-            </div>
           </div>
         </section>
 
@@ -368,17 +368,17 @@ const Home = () => {
         >
           <div className="space-y-3">
             <p className="text-sm uppercase tracking-[0.3em] text-sky-300">
-              Selected Work
+              Featured GitHub work
             </p>
             <h2 className="text-3xl font-semibold text-white sm:text-4xl">
-              Full-stack canvases engineered for realtime reliability.
+              Four source-driven projects with the same stack-first discipline.
             </h2>
             <p className="text-slate-400">
-              Each initiative pairs immersive UI with resilient services: Node.js/Express.js or Next.js APIs, SQL and NoSQL storage, AWS and Docker pipelines, plus observability and testing so LMS cohorts, telehealth patients, and simulation teams can trust every action.
+              Promptopia, Blog Post, E-commerce App, and IMDB Clone keep the portfolio focused on the GitHub repos you asked to feature.
             </p>
           </div>
 
-          <div ref={gridRef} className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          <div ref={gridRef} className="grid gap-6 md:grid-cols-2 xl:grid-cols-2">
             {featuredProjects.map((project) => (
               <Tilt key={project.title} glareEnable className="h-full">
                 <motion.article
