@@ -7,6 +7,30 @@ import useFocusTrap from "../hooks/useFocusTrap";
 const MobileMenu = ({ isOpen, toggleMenu }) => {
   const focusTrapRef = useFocusTrap(isOpen);
 
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const scrollY = window.scrollY;
+    const { body } = document;
+
+    body.style.position = "fixed";
+    body.style.top = `-${scrollY}px`;
+    body.style.left = "0";
+    body.style.right = "0";
+    body.style.width = "100%";
+    body.style.overflow = "hidden";
+
+    return () => {
+      body.style.position = "";
+      body.style.top = "";
+      body.style.left = "";
+      body.style.right = "";
+      body.style.width = "";
+      body.style.overflow = "";
+      window.scrollTo(0, scrollY);
+    };
+  }, [isOpen]);
+
   // Handle escape key
   useEffect(() => {
     const handleEscape = () => toggleMenu();
@@ -30,7 +54,7 @@ const MobileMenu = ({ isOpen, toggleMenu }) => {
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur md:hidden"
+      className="fixed inset-0 z-50 overflow-hidden bg-slate-950/80 backdrop-blur md:hidden"
       onClick={toggleMenu}
       role="dialog"
       aria-modal="true"
@@ -38,7 +62,7 @@ const MobileMenu = ({ isOpen, toggleMenu }) => {
     >
       <div
         ref={focusTrapRef}
-        className="absolute inset-y-0 right-0 flex h-full w-3/4 flex-col gap-8 rounded-l-3xl border-l border-white/15 bg-slate-950/95 p-6 shadow-2xl"
+        className="absolute inset-y-0 right-0 flex h-[100dvh] w-3/4 flex-col gap-8 overflow-y-auto overscroll-contain rounded-l-3xl border-l border-white/15 bg-slate-950/95 p-6 shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between">
