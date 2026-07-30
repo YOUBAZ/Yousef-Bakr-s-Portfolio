@@ -1,71 +1,70 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { Sparkles, Workflow, Code2, Compass } from "lucide-react";
 import Seo from "../components/Seo";
+import StackRail from "../components/StackRail";
 import { siteMeta } from "../config/seo";
+import { BRAND, PROOF_STACK } from "../config/brand";
 import { experienceTimeline } from "../data/experience";
 
 const _motion = motion;
 
+/**
+ * Section 8: evidence before opinion. Each principle names a mechanism rather
+ * than an adjective — the previous version described "experience intelligence"
+ * and "measurable rigor", which cannot be checked.
+ */
 const principles = [
   {
-    icon: Compass,
-    label: "Systems-first architecture",
-    copy:
-      "Translate LMS journeys, simulation loops, and compliance requirements into domain models, KPIs, and service blueprints before writing code.",
+    label: "The boundary comes first",
+    copy: "Where a responsibility ends decides more than which framework holds it. Get the seam wrong and every later choice pays interest on it.",
   },
   {
-    icon: Code2,
-    label: "Full-stack delivery",
-    copy:
-      "React.js/Next.js fronts paired with Node.js, Express.js, RESTful + GraphQL APIs, and SQL or MongoDB storage governed by clean OOP patterns.",
+    label: "State belongs on the server",
+    copy: "SafeStay's contract signing runs as a server-side state machine, so a half-signed agreement cannot exist in the database. The client renders state; it does not own it.",
   },
   {
-    icon: Workflow,
-    label: "Cloud & DevOps",
-    copy:
-      "Docker, Kubernetes, and AWS pipelines with IaC, logging, and automated testing keep releases observable, secure, and rollback ready.",
+    label: "Reversibility over correctness",
+    copy: "A decision you can undo in a day is worth more than one you are 90% sure about. Most architecture arguments dissolve once you cost the rollback.",
   },
   {
-    icon: Sparkles,
-    label: "Experience intelligence",
-    copy:
-      "AI integrations, telemetry, and UX research personalize training, simulate edge cases, and make complex data approachable.",
+    label: "Publish the reasoning, not the result",
+    copy: "A migration that worked teaches nothing on its own. The signal that justified it, and the one that would have stopped it, are the part worth writing down.",
   },
 ];
 
+// Section 1 permits the stack in prose and in the About section, where it is a
+// searchable detail rather than a claim — never as a list on an asset.
 const toolset = [
-  "React.js / Next.js / Remix",
-  "Node.js / Express.js / NestJS",
-  "Socket.io & realtime streaming",
-  "RESTful APIs / GraphQL APIs",
-  "PostgreSQL / MySQL / SQL Server",
-  "MongoDB / Redis / Supabase",
-  "Docker / Kubernetes / AWS",
-  "Kafka / Event-driven systems",
-  "OOP / Clean Architecture / Testing",
+  "TypeScript",
+  "NestJS",
+  "Next.js",
+  "React",
+  "PostgreSQL",
+  "Docker",
+  "Node.js / Express.js",
+  "MongoDB / Redis",
+  "REST & GraphQL APIs",
 ];
 
 const aboutGallery = [
   {
     src: "/images/about/profile.jpg",
-    alt: "Yousef Bakr portrait",
+    alt: "Yousef Bakr",
     label: "Portrait",
-    featured: true,
   },
   {
     src: "/images/about/WhatsApp Image 2026-03-29 at 9.32.54 PM.jpeg",
-    alt: "Yousef Bakr at the AI Everything event in Cairo",
+    alt: "Yousef Bakr at the AI Everything event",
     label: "AI Everything",
   },
   {
     src: "/images/about/WhatsApp Image 2026-03-29 at 9.32.54 PM (1).jpeg",
-    alt: "Yousef Bakr illustrated event poster variant one",
+    alt: "Event poster, variant one",
     label: "Poster 01",
   },
   {
     src: "/images/about/WhatsApp Image 2026-03-29 at 9.32.54 PM (2).jpeg",
-    alt: "Yousef Bakr illustrated event poster variant two",
+    alt: "Event poster, variant two",
     label: "Poster 02",
   },
 ];
@@ -88,16 +87,15 @@ const About = () => {
       "@type": "WebPage",
       "@id": `${siteMeta.siteUrl}/about`,
       url: `${siteMeta.siteUrl}/about`,
-      name: "About Yousef Bakr",
-      description:
-        "Bio, guiding principles, and experience timeline of Yousef Bakr, a full-stack software engineer and systems analyst building LMS platforms, simulations, and SaaS products.",
+      name: `About ${BRAND.name}`,
+      description: BRAND.positioning,
       about: {
         "@type": "Person",
-        name: "Yousef Bakr",
-        jobTitle: "Full-stack Software Engineer & Systems Analyst",
+        name: BRAND.name,
+        jobTitle: BRAND.role,
         worksFor: {
           "@type": "Organization",
-          name: "Independent / Studio Collaborations",
+          name: BRAND.employer,
         },
       },
     },
@@ -124,246 +122,211 @@ const About = () => {
     <>
       <Seo
         title="About"
-        description="Inside look at Yousef Bakr's systems mindset, multi-stack toolset, and experience building LMS platforms, simulations, and SaaS products."
-        keywords={[
-          "About Yousef Bakr",
-          "full-stack software engineer",
-          "systems analyst Egypt",
-          "LMS and simulation developer",
-        ]}
+        description={BRAND.positioning}
+        keywords={["about", "software engineer", "NestJS", "Next.js"]}
         url="/about"
         schema={aboutSchema}
       />
-      <div className="relative overflow-x-hidden bg-slate-950 text-white">
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-64 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.18),_transparent_58%)]" />
-        <div className="pointer-events-none absolute left-[-6rem] top-40 h-64 w-64 rounded-full bg-sky-500/10 blur-3xl" />
-        <div className="pointer-events-none absolute right-[-5rem] top-[34rem] h-72 w-72 rounded-full bg-indigo-500/10 blur-3xl" />
+      <div className="relative overflow-x-hidden bg-ink text-slate-body">
+        <section className="relative isolate overflow-hidden px-4 pb-10 pt-8 sm:px-6 lg:px-8">
+          <div className="ybz-bloom pointer-events-none absolute inset-0 -z-10" />
+          <StackRail className="left-1 sm:left-3" />
 
-        <section className="mx-auto max-w-7xl px-4 pt-6 pb-6 sm:px-6 sm:pt-8 sm:pb-8 lg:px-8 lg:pt-10 lg:pb-10">
-          <div className="grid gap-6 rounded-[2rem] border border-white/10 bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 p-5 shadow-2xl shadow-slate-900/30 sm:gap-8 sm:p-6 lg:grid-cols-[1.1fr,0.9fr] lg:p-10">
+          <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1.1fr_0.9fr]">
             <motion.div
-              className="space-y-5 sm:space-y-6"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
+              className="space-y-6"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: [0, 0, 0.2, 1] }}
             >
-              <p className="text-xs uppercase tracking-[0.45em] text-sky-300 sm:text-sm">
-                About
-              </p>
-              <h1 className="max-w-2xl text-3xl font-semibold leading-tight sm:text-4xl lg:text-5xl">
-                Engineering LMS, simulation, and SaaS systems with measurable rigor.
+              <p className="ybz-eyebrow">About</p>
+              <h1 className="max-w-2xl font-display text-3xl leading-tight text-bone sm:text-4xl lg:text-5xl">
+                {BRAND.positioning}
               </h1>
-              <div className="space-y-4 text-sm leading-7 text-slate-300 sm:text-base">
-                <p className="max-w-2xl">
-                  I am Yousef Bakr, a software engineer, backend engineer, and systems analyst who translates
-                  complex requirements into resilient architectures. As a full-stack web developer, front-end engineer,
-                  and AWS engineer, I move between user research, system diagrams, and implementation to connect
-                  React.js/Next.js experiences with Node.js, Express.js, SQL, and cloud-native services.
+              <hr className="ybz-rule" />
+
+              {/* Section 11's About copy, which is already written and on-voice. */}
+              <div className="max-w-2xl space-y-4 leading-8">
+                <p>
+                  I build production software: APIs that carry real traffic,
+                  front-ends that survive contact with real users, and the
+                  boundaries between them.
                 </p>
-                <p className="max-w-2xl">
-                  Whether it is a multi-tenant LMS, a telehealth hub, or a simulation control room,
-                  I balance performance and governance with Socket.io, GraphQL, Kafka, AWS, Docker,
-                  Kubernetes, and AI integrations so teams can ship faster without sacrificing trust.
+                <p>
+                  Currently a software engineer at {BRAND.employer}, working
+                  full-stack across {BRAND.stackShort}, and building SafeStay. I
+                  took my first engineering role at eighteen and have spent the
+                  time since shipping, breaking and repairing systems in
+                  production.
+                </p>
+                <p>
+                  I write here about the decisions rather than the tools — why a
+                  boundary went where it went, what it cost when it went in the
+                  wrong place, and what the traces looked like afterwards. If
+                  you lead a team and want a second opinion on an architecture
+                  call, my inbox is open.
                 </p>
               </div>
             </motion.div>
 
             <motion.div
-              className="rounded-[1.75rem] border border-white/10 bg-white/5 p-4 sm:p-5"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
+              className="ybz-card p-5"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1, ease: [0, 0, 0.2, 1] }}
             >
-              <div className="space-y-5">
-                <div className="space-y-3 text-sm text-slate-200">
-                  <p className="text-xs uppercase tracking-[0.35em] text-slate-400">
-                    Highlights
-                  </p>
-                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-                    <div className="rounded-2xl border border-white/10 bg-slate-950/50 p-4 text-center">
-                      <p className="text-3xl font-semibold text-white sm:text-4xl">8+</p>
-                      <p className="mt-1 text-xs uppercase tracking-[0.25em] text-slate-400 sm:text-sm sm:tracking-[0.2em]">
-                        Years shipping for the web
-                      </p>
-                    </div>
-                    <div className="rounded-2xl border border-white/10 bg-slate-950/50 p-4 text-center">
-                      <p className="text-3xl font-semibold text-white sm:text-4xl">40+</p>
-                      <p className="mt-1 text-xs uppercase tracking-[0.25em] text-slate-400 sm:text-sm sm:tracking-[0.2em]">
-                        Products & launches
-                      </p>
-                    </div>
-                    <div className="rounded-2xl border border-white/10 bg-slate-950/50 p-4 text-center">
-                      <p className="text-3xl font-semibold text-white sm:text-4xl">98</p>
-                      <p className="mt-1 text-xs uppercase tracking-[0.25em] text-slate-400 sm:text-sm sm:tracking-[0.2em]">
-                        Lighthouse QA average
-                      </p>
-                    </div>
-                  </div>
+              <div className="mb-3 flex items-center justify-between">
+                <p className="ybz-eyebrow">Visuals</p>
+                <p className="ybz-figure text-xs text-muted">
+                  {activeImageIndex + 1}/{aboutGallery.length}
+                </p>
+              </div>
+
+              <div
+                className="relative aspect-[4/5] overflow-hidden border border-edge bg-ink lg:aspect-[16/10]"
+                style={{ borderRadius: "var(--ybz-r-md)" }}
+              >
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeImage.src}
+                    className="absolute inset-0 flex items-center justify-center p-3"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.35 }}
+                  >
+                    <img
+                      src={activeImage.src}
+                      alt={activeImage.alt}
+                      className="max-h-full max-w-full object-contain"
+                      loading="lazy"
+                    />
+                  </motion.div>
+                </AnimatePresence>
+                <div className="absolute left-3 top-3">
+                  <span className="ybz-meta border border-edge bg-ink/80 px-3 py-1 backdrop-blur">
+                    {activeImage.label}
+                  </span>
                 </div>
+              </div>
 
-                <div className="space-y-3">
-                  <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
-                    <p className="text-xs uppercase tracking-[0.35em] text-slate-400">
-                      Visuals
-                    </p>
-                    <p className="text-[11px] uppercase tracking-[0.3em] text-slate-500">
-                      Auto-playing carousel
-                    </p>
-                  </div>
-
-                  <div className="relative aspect-[4/5] overflow-hidden rounded-[1.75rem] border border-white/10 bg-slate-950/90 sm:aspect-[4/5] lg:aspect-[16/10]">
-                    <AnimatePresence mode="wait">
-                      <motion.div
-                        key={activeImage.src}
-                        className="absolute inset-0 flex items-center justify-center p-3 sm:p-4"
-                        initial={{ opacity: 0, x: 18 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -18 }}
-                        transition={{ duration: 0.35 }}
-                      >
-                        <img
-                          src={activeImage.src}
-                          alt={activeImage.alt}
-                          className="max-h-full max-w-full object-contain"
-                          loading="lazy"
-                        />
-                      </motion.div>
-                    </AnimatePresence>
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/75 via-transparent to-transparent" />
-                    <div className="absolute left-3 top-3 rounded-full border border-white/15 bg-slate-950/70 px-3 py-1 text-[11px] uppercase tracking-[0.28em] text-white backdrop-blur sm:left-4 sm:top-4">
-                      {activeImage.label}
-                    </div>
-                    <div className="absolute bottom-3 right-3 rounded-full border border-white/15 bg-slate-950/70 px-3 py-1 text-[11px] uppercase tracking-[0.28em] text-white backdrop-blur sm:bottom-4 sm:right-4">
-                      {activeImageIndex + 1}/{aboutGallery.length}
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-center gap-2">
-                    {aboutGallery.map((image, index) => (
-                      <button
-                        key={image.src}
-                        type="button"
-                        onClick={() => setActiveImageIndex(index)}
-                        className={[
-                          "h-2.5 rounded-full transition-all duration-300",
-                          activeImageIndex === index
-                            ? "w-8 bg-sky-300"
-                            : "w-2.5 bg-white/30 hover:bg-white/50",
-                        ].join(" ")}
-                        aria-label={`Show ${image.label}`}
-                      />
-                    ))}
-                  </div>
-                </div>
+              <div className="mt-4 flex items-center justify-center gap-2">
+                {aboutGallery.map((image, index) => (
+                  <button
+                    key={image.src}
+                    type="button"
+                    onClick={() => setActiveImageIndex(index)}
+                    className="h-[3px] transition-all duration-300"
+                    style={{
+                      width: activeImageIndex === index ? 32 : 12,
+                      background:
+                        activeImageIndex === index
+                          ? "var(--ybz-accent-rule)"
+                          : "var(--ybz-edge)",
+                    }}
+                    aria-label={`Show ${image.label}`}
+                  />
+                ))}
               </div>
             </motion.div>
           </div>
         </section>
 
-        <section className="mx-auto max-w-7xl px-4 pb-6 sm:px-6 sm:pb-8 lg:px-8 lg:pb-10">
-          <div className="grid gap-4 sm:gap-6 lg:grid-cols-2">
-            {principles.map((principle) => {
-              const Icon = principle.icon;
-              return (
+        {/* Proof, with sources. */}
+        <section className="border-y border-edge bg-obsidian px-4 py-16 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl space-y-8">
+            <div className="space-y-4">
+              <p className="ybz-eyebrow">Proof</p>
+              <h2 className="font-display text-3xl text-bone">
+                Four claims, each with a source.
+              </h2>
+              <hr className="ybz-rule" />
+            </div>
+            <dl className="grid gap-4 sm:grid-cols-2">
+              {PROOF_STACK.map((item) => (
+                <div key={item.source} className="ybz-card p-5">
+                  <dt className="leading-7 text-bone">{item.claim}</dt>
+                  <dd className="ybz-meta mt-3 normal-case tracking-normal">
+                    {item.source}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </section>
+
+        <section className="px-4 py-16 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl space-y-8">
+            <div className="space-y-4">
+              <p className="ybz-eyebrow">How I work</p>
+              <h2 className="font-display text-3xl text-bone">
+                Four positions I would defend in review.
+              </h2>
+              <hr className="ybz-rule" />
+            </div>
+
+            <div className="grid gap-4 sm:gap-6 lg:grid-cols-2">
+              {principles.map((principle) => (
                 <motion.div
                   key={principle.label}
-                  className="rounded-[1.75rem] border border-white/10 bg-white/5 p-5 sm:p-6"
+                  className="ybz-card p-6"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 0.6, ease: [0, 0, 0.2, 1] }}
                 >
-                  <div className="mb-4 flex items-center gap-3">
-                    <span className="rounded-2xl bg-white/10 p-2 text-sky-300">
-                      <Icon size={18} />
-                    </span>
-                    <p className="text-xs uppercase tracking-[0.35em] text-slate-400 sm:text-sm">
-                      Focus
-                    </p>
-                  </div>
-                  <h3 className="text-xl font-semibold text-white sm:text-2xl">
+                  <h3 className="font-display text-xl text-bone">
                     {principle.label}
                   </h3>
-                  <p className="mt-3 text-sm leading-7 text-slate-300 sm:text-base">
-                    {principle.copy}
-                  </p>
+                  <p className="mt-3 text-sm leading-7">{principle.copy}</p>
                 </motion.div>
-              );
-            })}
+              ))}
+            </div>
           </div>
         </section>
 
-        <section className="mx-auto max-w-7xl px-4 pb-10 sm:px-6 sm:pb-14 lg:px-8 lg:pb-16">
-          <div className="grid gap-6 lg:grid-cols-[1.1fr,0.9fr]">
-            <div className="space-y-5 rounded-[1.75rem] border border-white/10 bg-white/5 p-5 sm:space-y-6 sm:p-6">
-              <p className="text-xs uppercase tracking-[0.4em] text-slate-400 sm:text-sm">
-                Timeline
-              </p>
-              <div className="space-y-4 sm:space-y-6">
+        <section className="border-t border-edge bg-obsidian px-4 py-16 sm:px-6 lg:px-8">
+          <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+            <div className="ybz-card space-y-6 p-6">
+              <p className="ybz-eyebrow">Timeline</p>
+              <div className="space-y-5">
                 {timeline.map((entry) => (
                   <div
                     key={entry.title}
-                    className="rounded-2xl border border-white/5 bg-white/5 p-4 sm:p-5"
+                    className="border-l-2 border-hairline pl-5"
                   >
-                    {entry.companyLabel && (
-                      <div className="mb-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
-                        {entry.companyLogo ? (
-                          <div className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-3xl border border-sky-300/30 bg-white p-3 shadow-xl shadow-sky-400/30 ring-1 ring-white/10 sm:h-16 sm:w-16 md:h-20 md:w-20">
-                            <img
-                              src={entry.companyLogo}
-                              alt={`${entry.companyLabel} logo`}
-                              className="h-full w-full object-contain drop-shadow-[0_10px_20px_rgba(14,165,233,0.25)]"
-                              loading="lazy"
-                            />
-                          </div>
-                        ) : (
-                          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-3xl bg-gradient-to-br from-sky-400 via-cyan-400 to-indigo-500 text-xs font-bold tracking-[0.35em] text-slate-950 shadow-xl shadow-sky-400/30 ring-1 ring-white/10 sm:h-16 sm:w-16 md:h-20 md:w-20">
-                            {entry.companyBadge}
-                          </div>
-                        )}
-                        <div className="min-w-0">
-                          <p className="text-sm font-semibold uppercase tracking-[0.28em] text-white sm:text-[0.95rem] sm:tracking-[0.3em]">
-                            {entry.companyLabel}
-                          </p>
-                          <p className="text-xs uppercase tracking-[0.3em] text-slate-400">
-                            Current experience
-                          </p>
-                        </div>
-                      </div>
-                    )}
-                    <p className="text-xs uppercase tracking-[0.35em] text-slate-400">
-                      {entry.period}
-                    </p>
-                    <h4 className="mt-2 text-lg font-semibold text-white sm:text-xl">
+                    <p className="ybz-meta">{entry.period}</p>
+                    <h3 className="mt-2 font-display text-lg text-bone">
                       {entry.title}
-                    </h4>
-                    <p className="mt-2 text-sm leading-7 text-slate-300 sm:text-base">
-                      {entry.detail}
+                    </h3>
+                    <p className="mt-2 text-sm leading-7">{entry.detail}</p>
+                    <p className="ybz-meta mt-3 normal-case tracking-normal">
+                      {entry.source}
                     </p>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="space-y-5 rounded-[1.75rem] border border-white/10 bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 p-5 sm:space-y-6 sm:p-6">
-              <p className="text-xs uppercase tracking-[0.4em] text-slate-400 sm:text-sm">
-                Toolset & Workflow
-              </p>
+            <div className="ybz-card space-y-6 p-6">
+              <p className="ybz-eyebrow">Toolset</p>
               <div className="flex flex-wrap gap-2">
                 {toolset.map((tool) => (
                   <span
                     key={tool}
-                    className="rounded-full border border-white/15 bg-white/5 px-3 py-2 text-xs text-slate-200 sm:px-4 sm:text-sm"
+                    className="border border-edge px-3 py-2 font-mono text-xs text-muted"
+                    style={{ borderRadius: "var(--ybz-r-sm)" }}
                   >
                     {tool}
                   </span>
                 ))}
               </div>
-              <div className="rounded-2xl border border-dashed border-white/20 p-4 text-sm leading-7 text-slate-300 sm:p-5 sm:text-base">
-                Currently exploring WebGPU-driven simulations, AWS Bedrock copilots,
-                and automated compliance checks for regulated LMS programs. Open to
-                partnering with teams that value measurable outcomes, documentation,
-                and sustainable iteration.
-              </div>
+              <hr className="ybz-rule" />
+              <p className="text-sm leading-7">
+                Next on the list: .NET and MAUI, Spring Boot, and embedded
+                firmware — chosen because they force different trade-offs than
+                the ones I already know how to make.
+              </p>
             </div>
           </div>
         </section>
