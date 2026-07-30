@@ -1,5 +1,5 @@
 import { useState } from "react";
-import emailjs from "emailjs-com";
+import emailjs from "@emailjs/browser";
 import { AlertCircle, Check } from "lucide-react";
 import emailConfig from "../config/email";
 import { BRAND } from "../config/brand";
