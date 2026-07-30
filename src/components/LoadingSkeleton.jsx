@@ -15,13 +15,13 @@ const LoadingSkeleton = ({ variant = "card", count = 1, className = "" }) => {
             case "card":
                 return (
                     <div
-                        className={`bg-slate-800 rounded-xl overflow-hidden animate-pulse ${className}`}
+                        className={`bg-card rounded-xl overflow-hidden animate-pulse ${className}`}
                     >
-                        <div className="h-48 bg-slate-700" />
+                        <div className="h-48 bg-card" />
                         <div className="p-6 space-y-3">
-                            <div className="h-4 bg-slate-700 rounded w-3/4" />
-                            <div className="h-3 bg-slate-700 rounded w-full" />
-                            <div className="h-3 bg-slate-700 rounded w-5/6" />
+                            <div className="h-4 bg-card rounded w-3/4" />
+                            <div className="h-3 bg-card rounded w-full" />
+                            <div className="h-3 bg-card rounded w-5/6" />
                         </div>
                     </div>
                 );
@@ -29,12 +29,12 @@ const LoadingSkeleton = ({ variant = "card", count = 1, className = "" }) => {
             case "list":
                 return (
                     <div
-                        className={`flex items-center gap-4 p-4 bg-slate-800 rounded-lg animate-pulse ${className}`}
+                        className={`flex items-center gap-4 p-4 bg-card rounded-lg animate-pulse ${className}`}
                     >
-                        <div className="w-12 h-12 bg-slate-700 rounded-full" />
+                        <div className="w-12 h-12 bg-card rounded-full" />
                         <div className="flex-1 space-y-2">
-                            <div className="h-4 bg-slate-700 rounded w-1/2" />
-                            <div className="h-3 bg-slate-700 rounded w-3/4" />
+                            <div className="h-4 bg-card rounded w-1/2" />
+                            <div className="h-3 bg-card rounded w-3/4" />
                         </div>
                     </div>
                 );
@@ -42,16 +42,16 @@ const LoadingSkeleton = ({ variant = "card", count = 1, className = "" }) => {
             case "text":
                 return (
                     <div className={`space-y-2 animate-pulse ${className}`}>
-                        <div className="h-4 bg-slate-700 rounded w-full" />
-                        <div className="h-4 bg-slate-700 rounded w-5/6" />
-                        <div className="h-4 bg-slate-700 rounded w-4/5" />
+                        <div className="h-4 bg-card rounded w-full" />
+                        <div className="h-4 bg-card rounded w-5/6" />
+                        <div className="h-4 bg-card rounded w-4/5" />
                     </div>
                 );
 
             case "circle":
                 return (
                     <div
-                        className={`w-12 h-12 bg-slate-700 rounded-full animate-pulse ${className}`}
+                        className={`w-12 h-12 bg-card rounded-full animate-pulse ${className}`}
                     />
                 );
 

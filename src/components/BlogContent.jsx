@@ -1,9 +1,67 @@
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import PropTypes from 'prop-types';
+
+/**
+ * The section 3.4 syntax ramp, built only from palette colours. This replaces
+ * vscDarkPlus, whose green/violet/sky ramp was retired in v2.4 — six colours in
+ * a code block is exactly the drift section 3.6 warns about.
+ *
+ *   comment  muted      #7C8698
+ *   string   slate      #A8B0BE
+ *   number   gold deep  #E0A906
+ *   function bone       #F5F3EF
+ *   keyword  gold light #F2CC5A
+ *   punct    muted      #7C8698
+ */
+const CODE_GROUND = '#0D0F16';
+
+const brandSyntaxTheme = {
+    'code[class*="language-"]': {
+        color: '#C9D1E1',
+        background: 'none',
+        fontFamily: 'var(--ybz-mono)',
+        textAlign: 'left',
+        whiteSpace: 'pre',
+        wordSpacing: 'normal',
+        tabSize: 4,
+        hyphens: 'none',
+    },
+    'pre[class*="language-"]': {
+        color: '#C9D1E1',
+        background: CODE_GROUND,
+        fontFamily: 'var(--ybz-mono)',
+        overflow: 'auto',
+    },
+    comment: { color: '#7C8698', fontStyle: 'italic' },
+    prolog: { color: '#7C8698' },
+    doctype: { color: '#7C8698' },
+    cdata: { color: '#7C8698' },
+    punctuation: { color: '#7C8698' },
+    operator: { color: '#7C8698' },
+    string: { color: '#A8B0BE' },
+    char: { color: '#A8B0BE' },
+    'attr-value': { color: '#A8B0BE' },
+    regex: { color: '#A8B0BE' },
+    number: { color: '#E0A906' },
+    boolean: { color: '#E0A906' },
+    constant: { color: '#E0A906' },
+    symbol: { color: '#E0A906' },
+    function: { color: '#F5F3EF' },
+    'class-name': { color: '#F5F3EF' },
+    'attr-name': { color: '#F5F3EF' },
+    property: { color: '#F5F3EF' },
+    variable: { color: '#F5F3EF' },
+    keyword: { color: '#F2CC5A' },
+    atrule: { color: '#F2CC5A' },
+    selector: { color: '#F2CC5A' },
+    tag: { color: '#F2CC5A' },
+    important: { color: '#F2CC5A', fontWeight: 'bold' },
+    bold: { fontWeight: 'bold' },
+    italic: { fontStyle: 'italic' },
+};
 
 /**
  * Blog content component for rendering markdown with custom styling
@@ -17,29 +75,29 @@ const BlogContent = ({ content }) => {
                 components={{
                     // Custom heading styles
                     h1: ({ children }) => (
-                        <h1 className="text-4xl font-bold text-white mb-6 mt-8 pb-3 border-b border-slate-700">
+                        <h1 className="text-4xl font-bold text-bone mb-6 mt-8 pb-3 border-b border-edge">
                             {children}
                         </h1>
                     ),
                     h2: ({ children }) => (
-                        <h2 className="text-3xl font-bold text-white mb-4 mt-8">
+                        <h2 className="text-3xl font-bold text-bone mb-4 mt-8">
                             {children}
                         </h2>
                     ),
                     h3: ({ children }) => (
-                        <h3 className="text-2xl font-semibold text-cyan-400 mb-3 mt-6">
+                        <h3 className="text-2xl font-semibold text-accent mb-3 mt-6">
                             {children}
                         </h3>
                     ),
                     h4: ({ children }) => (
-                        <h4 className="text-xl font-semibold text-slate-200 mb-3 mt-4">
+                        <h4 className="text-xl font-semibold text-bone mb-3 mt-4">
                             {children}
                         </h4>
                     ),
 
                     // Custom paragraph
                     p: ({ children }) => (
-                        <p className="text-slate-300 leading-relaxed mb-4">
+                        <p className="text-slate-body leading-relaxed mb-4">
                             {children}
                         </p>
                     ),
@@ -48,7 +106,7 @@ const BlogContent = ({ content }) => {
                     a: ({ href, children }) => (
                         <a
                             href={href}
-                            className="text-cyan-400 hover:text-cyan-300 underline decoration-cyan-500/30 hover:decoration-cyan-400 transition-colors"
+                            className="text-accent hover:opacity-80 underline decoration-[var(--ybz-hairline)] transition-colors"
                             target={href?.startsWith('http') ? '_blank' : undefined}
                             rel={href?.startsWith('http') ? 'noopener noreferrer' : undefined}
                         >
@@ -62,13 +120,13 @@ const BlogContent = ({ content }) => {
                         const language = match ? match[1] : '';
 
                         return !inline && match ? (
-                            <div className="my-6 rounded-xl overflow-hidden border border-slate-700 bg-slate-900">
-                                <div className="bg-slate-800 px-4 py-2 text-sm text-slate-400 font-mono border-b border-slate-700 flex items-center justify-between">
+                            <div className="my-6 rounded-xl overflow-hidden border border-edge bg-obsidian">
+                                <div className="bg-card px-4 py-2 text-sm text-muted font-mono border-b border-edge flex items-center justify-between">
                                     <span>{language}</span>
                                 </div>
-                                <div className="overflow-x-auto bg-[#1e1e1e]">
+                                <div className="overflow-x-auto" style={{ background: CODE_GROUND }}>
                                     <SyntaxHighlighter
-                                        style={vscDarkPlus}
+                                        style={brandSyntaxTheme}
                                         language={language}
                                         PreTag="div"
                                         wrapperStyle={{
@@ -78,7 +136,7 @@ const BlogContent = ({ content }) => {
                                         customStyle={{
                                             margin: 0,
                                             padding: '1.25rem',
-                                            background: '#1e1e1e',
+                                            background: CODE_GROUND,
                                             fontSize: '0.875rem',
                                             lineHeight: '1.7',
                                             border: 'none',
@@ -90,7 +148,7 @@ const BlogContent = ({ content }) => {
                                                 border: 'none',
                                                 outline: 'none',
                                                 boxShadow: 'none',
-                                                fontFamily: 'ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace'
+                                                fontFamily: 'var(--ybz-mono)'
                                             }
                                         }}
                                         lineProps={{
@@ -108,7 +166,7 @@ const BlogContent = ({ content }) => {
                             </div>
                         ) : (
                             <code
-                                className="px-1.5 py-0.5 text-sm font-mono text-cyan-400 bg-slate-800 rounded border border-slate-700"
+                                className="px-1.5 py-0.5 text-sm font-mono text-accent bg-card rounded border border-edge"
                                 {...props}
                             >
                                 {children}
@@ -118,58 +176,58 @@ const BlogContent = ({ content }) => {
 
                     // Custom lists
                     ul: ({ children }) => (
-                        <ul className="list-disc list-inside space-y-2 mb-4 text-slate-300 ml-4">
+                        <ul className="list-disc list-inside space-y-2 mb-4 text-slate-body ml-4">
                             {children}
                         </ul>
                     ),
                     ol: ({ children }) => (
-                        <ol className="list-decimal list-inside space-y-2 mb-4 text-slate-300 ml-4">
+                        <ol className="list-decimal list-inside space-y-2 mb-4 text-slate-body ml-4">
                             {children}
                         </ol>
                     ),
                     li: ({ children }) => (
-                        <li className="text-slate-300 leading-relaxed">
+                        <li className="text-slate-body leading-relaxed">
                             {children}
                         </li>
                     ),
 
                     // Custom blockquote
                     blockquote: ({ children }) => (
-                        <blockquote className="border-l-4 border-cyan-500 bg-slate-800/50 pl-6 pr-4 py-3 my-6 rounded-r-lg">
-                            <div className="text-slate-300 italic">{children}</div>
+                        <blockquote className="border-l-4 border-hairline bg-card/50 pl-6 pr-4 py-3 my-6 rounded-r-lg">
+                            <div className="text-slate-body italic">{children}</div>
                         </blockquote>
                     ),
 
                     // Custom table
                     table: ({ children }) => (
                         <div className="overflow-x-auto my-6">
-                            <table className="min-w-full border border-slate-700 rounded-lg overflow-hidden">
+                            <table className="min-w-full border border-edge rounded-lg overflow-hidden">
                                 {children}
                             </table>
                         </div>
                     ),
                     thead: ({ children }) => (
-                        <thead className="bg-slate-800">
+                        <thead className="bg-card">
                             {children}
                         </thead>
                     ),
                     tbody: ({ children }) => (
-                        <tbody className="divide-y divide-slate-700">
+                        <tbody className="divide-y divide-[var(--ybz-edge)]">
                             {children}
                         </tbody>
                     ),
                     tr: ({ children }) => (
-                        <tr className="hover:bg-slate-800/30 transition-colors">
+                        <tr className="hover:bg-obsidian transition-colors">
                             {children}
                         </tr>
                     ),
                     th: ({ children }) => (
-                        <th className="px-4 py-3 text-left text-sm font-semibold text-cyan-400 border-b border-slate-700">
+                        <th className="px-4 py-3 text-left text-sm font-semibold text-accent border-b border-edge">
                             {children}
                         </th>
                     ),
                     td: ({ children }) => (
-                        <td className="px-4 py-3 text-sm text-slate-300">
+                        <td className="px-4 py-3 text-sm text-slate-body">
                             {children}
                         </td>
                     ),
@@ -180,11 +238,11 @@ const BlogContent = ({ content }) => {
                             <img
                                 src={src}
                                 alt={alt}
-                                className="rounded-xl w-full border border-slate-700 shadow-2xl"
+                                className="rounded-xl w-full border border-edge shadow-2xl"
                                 loading="lazy"
                             />
                             {alt && (
-                                <figcaption className="text-center text-sm text-slate-500 mt-3">
+                                <figcaption className="text-center text-sm text-muted mt-3">
                                     {alt}
                                 </figcaption>
                             )}
@@ -193,19 +251,19 @@ const BlogContent = ({ content }) => {
 
                     // Custom horizontal rule
                     hr: () => (
-                        <hr className="my-8 border-slate-700" />
+                        <hr className="my-8 border-edge" />
                     ),
 
                     // Custom strong/bold
                     strong: ({ children }) => (
-                        <strong className="font-bold text-white">
+                        <strong className="font-bold text-bone">
                             {children}
                         </strong>
                     ),
 
                     // Custom emphasis/italic
                     em: ({ children }) => (
-                        <em className="italic text-slate-200">
+                        <em className="italic text-bone">
                             {children}
                         </em>
                     ),

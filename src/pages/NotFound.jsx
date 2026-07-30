@@ -1,98 +1,81 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Home, ArrowLeft, FileQuestion } from "lucide-react";
+import { ArrowLeft, Home } from "lucide-react";
 import Seo from "../components/Seo";
+import Signet from "../components/Signet";
+
+const _motion = motion;
+
+const quickLinks = [
+    { label: "Projects", to: "/projects" },
+    { label: "Writing", to: "/blog" },
+    { label: "Certificates", to: "/certificates" },
+    { label: "About", to: "/about" },
+    { label: "Contact", to: "/contact" },
+];
 
 const NotFound = () => {
     return (
         <>
             <Seo
-                title="404 - Page Not Found"
-                description="The page you're looking for doesn't exist."
-                noindex={true}
+                title="404"
+                description="That page does not exist."
+                url="/404"
+                noindex
             />
 
-            <div className="min-h-screen bg-slate-950 flex items-center justify-center px-4 py-20">
+            <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-ink px-4 py-20">
+                <div className="ybz-bloom pointer-events-none absolute inset-0" />
+
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
-                    className="max-w-lg w-full text-center"
+                    transition={{ duration: 0.6, ease: [0, 0, 0.2, 1] }}
+                    className="relative w-full max-w-lg text-center"
                 >
-                    {/* 404 Illustration */}
-                    <motion.div
-                        initial={{ scale: 0.8 }}
-                        animate={{ scale: 1 }}
-                        transition={{ delay: 0.2, type: "spring", stiffness: 100 }}
-                        className="inline-flex items-center justify-center w-32 h-32 bg-slate-900 border border-white/10 rounded-full mb-8"
-                    >
-                        <FileQuestion className="text-sky-400" size={64} />
-                    </motion.div>
+                    <div className="mb-8 flex justify-center">
+                        <Signet size={56} />
+                    </div>
 
-                    {/* 404 Text */}
-                    <h1 className="text-6xl md:text-8xl font-bold text-white mb-4">
-                        404
+                    <p className="ybz-figure text-6xl text-bone md:text-7xl">404</p>
+
+                    <h1 className="mt-4 font-display text-3xl text-bone">
+                        That page does not exist.
                     </h1>
 
-                    <h2 className="text-2xl md:text-3xl font-semibold text-white mb-4">
-                        Page Not Found
-                    </h2>
+                    <hr className="ybz-rule mx-auto mt-6" />
 
-                    <p className="text-slate-400 mb-8">
-                        Oops! The page you're looking for doesn't exist. It might have been
-                        moved or deleted, or you may have mistyped the URL.
+                    <p className="mt-6 leading-8 text-slate-body">
+                        Either the URL is mistyped or the route was removed. Both are
+                        recoverable.
                     </p>
 
-                    {/* Action Buttons */}
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <Link
-                            to="/"
-                            className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-sky-500 to-indigo-500 text-white font-semibold py-3 px-6 rounded-lg shadow-lg shadow-indigo-500/30 transition hover:scale-[1.02]"
-                        >
-                            <Home size={20} />
-                            Go Home
+                    <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
+                        <Link to="/" className="ybz-btn-primary justify-center">
+                            <Home size={18} />
+                            Home
                         </Link>
-
                         <button
                             onClick={() => window.history.back()}
-                            className="inline-flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-700 text-white font-semibold py-3 px-6 rounded-lg border border-white/10 transition"
+                            className="ybz-btn-ghost justify-center"
                         >
-                            <ArrowLeft size={20} />
-                            Go Back
+                            <ArrowLeft size={18} />
+                            Back
                         </button>
                     </div>
 
-                    {/* Quick Links */}
-                    <div className="mt-12 pt-8 border-t border-white/10">
-                        <p className="text-sm text-slate-500 mb-4">Explore other pages:</p>
-                        <div className="flex flex-wrap gap-3 justify-center text-sm">
-                            <Link
-                                to="/projects"
-                                className="text-slate-400 hover:text-white transition"
-                            >
-                                Projects
-                            </Link>
-                            <span className="text-slate-700">•</span>
-                            <Link
-                                to="/certificates"
-                                className="text-slate-400 hover:text-white transition"
-                            >
-                                Certificates
-                            </Link>
-                            <span className="text-slate-700">•</span>
-                            <Link
-                                to="/about"
-                                className="text-slate-400 hover:text-white transition"
-                            >
-                                About
-                            </Link>
-                            <span className="text-slate-700">•</span>
-                            <Link
-                                to="/contact"
-                                className="text-slate-400 hover:text-white transition"
-                            >
-                                Contact
-                            </Link>
+                    <div className="mt-12 border-t border-edge pt-8">
+                        <p className="ybz-eyebrow">Elsewhere</p>
+                        <div className="mt-4 flex flex-wrap justify-center gap-x-4 gap-y-2 text-sm">
+                            {quickLinks.map((link) => (
+                                <Link
+                                    key={link.to}
+                                    to={link.to}
+                                    className="text-muted transition-colors hover:text-bone"
+                                >
+                                    {link.label}
+                                </Link>
+                            ))}
                         </div>
                     </div>
                 </motion.div>
