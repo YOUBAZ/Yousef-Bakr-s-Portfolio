@@ -28,13 +28,17 @@ const Seo = ({
   type = "website",
   noindex = false,
   schema,
+  publishDate,
+  lastModified,
+  author,
 }) => {
   const pageTitle = title
     ? `${title} | ${siteMeta.siteName}`
     : siteMeta.title;
   const pageDescription = description || siteMeta.description;
   const canonicalUrl = toAbsoluteUrl(url);
-  const pageImage = toAbsoluteUrl(image || siteMeta.profileImage);
+  // Defaults to the generated OG card, never a portrait — BRAND.md section 17.
+  const pageImage = toAbsoluteUrl(image || siteMeta.ogImage);
   const mergedKeywords = Array.from(
     new Set([...(siteMeta.keywords || []), ...ensureArray(keywords)])
   ).join(", ");
@@ -112,7 +116,11 @@ const Seo = ({
     upsertMeta("property", "og:title", pageTitle);
     upsertMeta("property", "og:description", pageDescription);
     upsertMeta("property", "og:image", pageImage);
-    upsertMeta("property", "og:image:alt", pageDescription);
+    upsertMeta(
+      "property",
+      "og:image:alt",
+      "Yousef Bakr — Engineering that earns its complexity."
+    );
 
     upsertMeta("name", "twitter:card", "summary_large_image");
     upsertMeta("name", "twitter:site", siteMeta.twitterHandle || "");
@@ -122,6 +130,22 @@ const Seo = ({
 
     upsertMeta("name", "theme-color", "#020617");
     upsertMeta("name", "application-name", siteMeta.siteName);
+
+    // Article tags are set only on articles, and cleared when leaving one —
+    // otherwise a blog post's publish date follows the reader onto the next page.
+    const articleTags = {
+      "article:published_time": type === "article" ? publishDate : null,
+      "article:modified_time": type === "article" ? lastModified : null,
+      "article:author": type === "article" ? author : null,
+    };
+    Object.entries(articleTags).forEach(([key, value]) => {
+      const existing = document.head.querySelector(`meta[property="${key}"]`);
+      if (value) {
+        upsertMeta("property", key, value);
+      } else if (existing) {
+        existing.remove();
+      }
+    });
 
     upsertLink("canonical", canonicalUrl);
 
@@ -135,6 +159,9 @@ const Seo = ({
     pageImage,
     type,
     noindex,
+    publishDate,
+    lastModified,
+    author,
     JSON.stringify(structuredData),
   ]);
 
@@ -156,13 +183,9 @@ Seo.propTypes = {
     PropTypes.object,
     PropTypes.arrayOf(PropTypes.object),
   ]),
-};
-
-Seo.defaultProps = {
-  keywords: [],
-  url: "/",
-  type: "website",
-  noindex: false,
+  publishDate: PropTypes.string,
+  lastModified: PropTypes.string,
+  author: PropTypes.string,
 };
 
 export default Seo;
