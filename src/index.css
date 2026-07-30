@@ -227,17 +227,47 @@
     transform: translateY(-2px);
   }
 
+  /* The blue CTA from the kit. Retained because it is a kit primitive, but no
+     longer used on this site — see .ybz-btn-accent below for why. If it is ever
+     reinstated, hold the 16px floor: the sky end of the gradient reads 4.10:1
+     against white, which needs large-text size to clear AA. */
   .ybz-btn-nav{               /* navigation and contact only */
     background: var(--ybz-grad-cta); color: #fff;
     font-family: var(--ybz-body); font-weight: 600;
-    font-size: 1rem;           /* 16px minimum — the CTA gradient clears contrast
-                                  at large-text size, so never set this smaller */
+    font-size: 1rem;
     border: 0; border-radius: var(--ybz-r-sm); padding: .9rem 1.5rem;
     display: inline-flex; align-items: center; gap: .5rem;
     transition: box-shadow .3s, transform .3s;
   }
   .ybz-btn-nav:hover{
     box-shadow: 0 8px 24px rgba(79,70,229,.35);
+    transform: translateY(-2px);
+  }
+
+  /* The persistent navigation CTA.
+     Gold, because blue in the header read as a foreign element on a midnight
+     and gold page — technically permitted by rule 2, but it was the only blue
+     object on the site and it looked borrowed.
+     Outlined rather than filled, because .ybz-btn-primary is "the one gold
+     action per screen" and the navbar is on every screen: a filled navbar CTA
+     would compete with the hero's action on the page beneath it. Same accent
+     family, one step down in weight.
+     Contrast: gold on midnight 11.92:1, antique on paper 5.03:1. On hover it
+     fills and the label flips to ink, which reads 11.92:1 in both themes. */
+  .ybz-btn-accent{
+    background: transparent;
+    color: var(--ybz-accent-type);
+    font-family: var(--ybz-body); font-weight: 600;
+    font-size: 1rem;
+    border: 1px solid var(--ybz-accent-rule);
+    border-radius: var(--ybz-r-sm); padding: .9rem 1.5rem;
+    display: inline-flex; align-items: center; gap: .5rem;
+    transition: background-color .3s, color .3s, box-shadow .3s, transform .3s;
+  }
+  .ybz-btn-accent:hover{
+    background: var(--ybz-accent-rule);
+    color: var(--ybz-ink);
+    box-shadow: var(--ybz-glow);
     transform: translateY(-2px);
   }
 

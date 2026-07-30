@@ -1,8 +1,11 @@
 import { Link, NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
 import { Menu } from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
 import Signet from "./Signet";
 import { BRAND } from "../config/brand";
+
+const _motion = motion;
 
 const navItems = [
   { name: "Home", path: "/" },
@@ -20,6 +23,8 @@ const navItems = [
  * +0.14em, which is the section 4 scale.
  */
 const Navbar = ({ toggleMobileMenu }) => {
+  const reduceMotion = useReducedMotion();
+
   return (
     <header className="pointer-events-none fixed inset-x-0 top-0 z-50 px-4 pt-4">
       <div className="pointer-events-auto mx-auto max-w-6xl">
@@ -60,20 +65,35 @@ const Navbar = ({ toggleMobileMenu }) => {
                     "relative px-3 py-2 transition-colors",
                     // Active state is a gold rule, not a filled pill —
                     // section 16 lists "everything rounded into pills" as off-brand.
-                    isActive
-                      ? "text-bone after:absolute after:inset-x-3 after:bottom-0 after:h-[2px] after:bg-[var(--ybz-accent-rule)]"
-                      : "text-slate-body hover:text-bone",
+                    isActive ? "text-bone" : "text-slate-body hover:text-bone",
                   ].join(" ")
                 }
               >
-                {item.name}
+                {({ isActive }) => (
+                  <>
+                    {item.name}
+                    {/* A single shared element, so the rule slides between items
+                        rather than blinking out and back in. It is the same gold
+                        rule from section 5, just told which heading it marks. */}
+                    {isActive && (
+                      <motion.span
+                        layoutId="nav-active-rule"
+                        className="absolute inset-x-3 bottom-0 h-[2px]"
+                        style={{ background: "var(--ybz-accent-rule)" }}
+                        transition={
+                          reduceMotion
+                            ? { duration: 0 }
+                            : { duration: 0.35, ease: [0, 0, 0.2, 1] }
+                        }
+                      />
+                    )}
+                  </>
+                )}
               </NavLink>
             ))}
-            {/* Blue lives here and nowhere else: section 3.5 rule 2 permits it
-                only on something a person can click. Padding may shrink; the
-                16px font size may not — below it the CTA gradient stops
-                clearing contrast, which is why the token file pins it. */}
-            <Link to="/lets-talk" className="ybz-btn-nav ml-3 !px-4 !py-2.5">
+            {/* Gold outline, not the gold fill: .ybz-btn-primary is the one
+                gold action per screen, and this bar sits on every screen. */}
+            <Link to="/lets-talk" className="ybz-btn-accent ml-3 !px-4 !py-2.5">
               Let&apos;s talk
             </Link>
           </nav>

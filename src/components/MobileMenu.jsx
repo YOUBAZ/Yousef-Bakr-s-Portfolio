@@ -6,6 +6,7 @@ import useFocusTrap from "../hooks/useFocusTrap";
 import Signet from "./Signet";
 import StackRail from "./StackRail";
 import { BRAND } from "../config/brand";
+import GoldRule from "./GoldRule";
 
 const MobileMenu = ({ isOpen, toggleMenu }) => {
   const focusTrapRef = useFocusTrap(isOpen);
@@ -112,11 +113,11 @@ const MobileMenu = ({ isOpen, toggleMenu }) => {
         </div>
 
         <div className="mt-auto space-y-4">
-          <hr className="ybz-rule" />
+          <GoldRule />
           <Link
             to="/lets-talk"
             onClick={toggleMenu}
-            className="ybz-btn-nav w-full justify-center"
+            className="ybz-btn-accent w-full justify-center"
           >
             Let&apos;s talk
           </Link>
