@@ -1,34 +1,40 @@
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, Sparkles } from "lucide-react";
+import { Mail, Linkedin, Github } from "lucide-react";
+import { Link } from "react-router-dom";
 import schedulingConfig from "../config/scheduling";
 import Seo from "../components/Seo";
+import StackRail from "../components/StackRail";
 import { siteMeta } from "../config/seo";
+import { BRAND } from "../config/brand";
+
+const _motion = motion;
 
 const contactInfo = [
   {
     icon: Mail,
     label: "Email",
-    value: "youbakrzaki@gmail.com",
-    href: "mailto:youbakrzaki@gmail.com",
+    value: BRAND.email,
+    href: `mailto:${BRAND.email}`,
   },
   {
-    icon: Phone,
-    label: "Phone",
-    value: "+20 (111) 284 9384",
-    href: "tel:+201112849384",
+    icon: Linkedin,
+    label: "LinkedIn",
+    value: BRAND.linkedin,
+    href: BRAND.linkedinUrl,
   },
   {
-    icon: MapPin,
-    label: "Location",
-    value: "Based in Egypt / Remote worldwide",
+    icon: Github,
+    label: "GitHub",
+    value: "github.com/YOUBAZ",
+    href: BRAND.github,
   },
 ];
 
 const collaborationNotes = [
-  "LMS, simulation, or SaaS builds blending React/Next.js with Node.js or Express.js services",
-  "RESTful + GraphQL API modernization, SQL/MongoDB migrations, or systems analysis retainers",
-  "Realtime Socket.io, Kafka, or telemetry-heavy initiatives needing reliability audits",
-  "AWS, Docker, and Kubernetes automation plus developer experience coaching for platform teams",
+  "A second opinion on an architecture call you are unsure about",
+  "A boundary that is leaking — service seams, data ownership, or state that drifted to the client",
+  "API design and migrations where the rollback plan matters more than the rewrite",
+  "Production work on TypeScript, NestJS, Next.js and PostgreSQL systems",
 ];
 
 const availability = [
@@ -46,9 +52,9 @@ const LetsTalk = () => {
       "@type": "WebPage",
       "@id": `${siteMeta.siteUrl}/lets-talk`,
       url: `${siteMeta.siteUrl}/lets-talk`,
-      name: "Book a project chat with Yousef Bakr",
+      name: `Book a call with ${BRAND.name}`,
       description:
-        "Schedule a discovery call with software engineer and systems analyst Yousef Bakr. Share LMS, simulation, SaaS, or API requirements and receive a tailored plan.",
+        "Schedule a call to discuss an architecture decision, a boundary that is leaking, or a migration you are weighing.",
     },
     {
       "@type": "BreadcrumbList",
@@ -68,18 +74,18 @@ const LetsTalk = () => {
         {
           "@type": "ListItem",
           position: 3,
-          name: "Let's Talk",
+          name: "Let's talk",
           item: `${siteMeta.siteUrl}/lets-talk`,
         },
       ],
     },
     {
       "@type": "Service",
-      name: "Product discovery call",
+      name: "Architecture review call",
       areaServed: "Worldwide",
       provider: {
         "@type": "Person",
-        name: "Yousef Bakr",
+        name: BRAND.name,
       },
       availableChannel: {
         "@type": "ServiceChannel",
@@ -92,174 +98,166 @@ const LetsTalk = () => {
   return (
     <>
       <Seo
-        title="Let's Talk"
-        description="Book a call with Yousef Bakr to discuss software architecture, LMS launches, simulation systems, API and data roadmaps, or AWS/Docker/Kubernetes automation."
+        title="Let's talk"
+        description="Book a call to discuss an architecture decision, a boundary that is leaking, or a migration you are weighing."
         keywords={[
-          "book yousef bakr",
-          "schedule software engineering consultation",
-          "LMS discovery call",
-          "full-stack project kickoff",
+          "book a call",
+          "architecture review",
+          "system design consultation",
         ]}
         url="/lets-talk"
         schema={bookingSchema}
       />
-      <div className="bg-slate-950 text-white">
-        <section className="px-6 pt-24 pb-12 sm:px-10 lg:px-16">
-          <div className="grid gap-8 rounded-3xl border border-white/10 bg-gradient-to-br from-slate-900 to-slate-950 p-6 shadow-2xl shadow-slate-900/40 lg:grid-cols-[1fr,1fr] lg:p-10">
-          <motion.div
-            className="space-y-6"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <p className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.4em] text-sky-300">
-              <Sparkles size={16} />
-              Let&apos;s Talk
-            </p>
-            <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">
-              Pick a slot, and I&apos;ll send the Meet or Zoom invite.
-            </h1>
-            <p className="text-slate-300">
-              Use the scheduler to choose a time that works best for deep dives into LMS builds, simulation control rooms, API modernization, data migrations, or AWS/Docker/Kubernetes automation. Once it&apos;s confirmed, you will receive a calendar invite with the video conference link automatically generated by the booking service.
-            </p>
-            <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
-              <p className="text-xs uppercase tracking-[0.35em] text-slate-400">
-                Collaboration fit
-              </p>
-              <ul className="mt-4 space-y-3 text-sm text-slate-300">
-                {collaborationNotes.map((note) => (
-                  <li key={note} className="flex items-start gap-3">
-                    <span className="mt-1 h-2 w-2 rounded-full bg-sky-300" />
-                    {note}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </motion.div>
+      <div className="bg-ink text-slate-body">
+        <section className="relative isolate overflow-hidden px-6 pb-12 pt-16 sm:px-10 lg:px-16">
+          <div className="ybz-bloom pointer-events-none absolute inset-0 -z-10" />
+          <StackRail className="left-2 sm:left-4 lg:left-6" />
 
-          <motion.div
-            className="rounded-3xl border border-white/10 bg-white/5 p-6"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            <h2 className="text-xl font-semibold text-white">
-              Weekly availability
-            </h2>
-            <p className="mt-2 text-sm text-slate-300">
-              Pick a slot below. The scheduler handles time zones and sends the
-              Google Meet link once confirmed. All hours are shown in GMT.
-            </p>
-            <div className="mt-4 grid gap-3 text-sm text-slate-200 sm:grid-cols-2">
-              {availability.map((slot) => (
-                <div
-                  key={slot.day}
-                  className="rounded-2xl border border-white/10 bg-white/5 p-3"
-                >
-                  <p className="text-xs uppercase tracking-[0.35em] text-slate-400">
-                    {slot.day}
-                  </p>
-                  <p className="text-lg font-semibold text-white">
-                    {slot.slots}
-                  </p>
-                </div>
-              ))}
-            </div>
-            <p className="mt-4 text-xs text-slate-400">
-              Need a different time zone? Mention it and I&apos;ll attempt to
-              accommodate.
-            </p>
-            <div className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-2">
-              {bookingUrl ? (
-                <iframe
-                  title="Schedule a call"
-                  src={bookingUrl}
-                  className="h-[540px] w-full rounded-2xl border-0"
-                  loading="lazy"
-                />
-              ) : (
-                <div className="rounded-2xl border border-dashed border-white/10 p-6 text-sm text-slate-300">
-                  Provide `VITE_SCHEDULER_URL` in your .env to embed your booking
-                  widget (Calendly, Cal.com, etc.). Until then, use the contact
-                  form below to request a time.
-                </div>
-              )}
-            </div>
-            {!bookingUrl && (
-              <div className="mt-4 text-sm text-slate-400">
-                <p className="text-xs uppercase tracking-[0.35em] text-slate-400">
-                  Manual request
-                </p>
-                <p className="mt-2">
-                  Fill out the form and I&apos;ll coordinate a slot manually with a
-                  Google Meet link.
-                </p>
-              </div>
-            )}
-          </motion.div>
-        </div>
-      </section>
-
-      <section className="px-6 pb-12 sm:px-10 lg:px-16">
-        <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
-          <p className="text-xs uppercase tracking-[0.35em] text-slate-400">
-            Need a bespoke time?
-          </p>
-          <p className="mt-3 text-sm text-slate-300">
-            If none of the available windows work, or you need to coordinate
-            under NDA, message me via the{" "}
-            <a
-              href="/contact"
-              className="text-sky-300 underline underline-offset-4"
+          <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-2">
+            <motion.div
+              className="space-y-6"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: [0, 0, 0.2, 1] }}
             >
-              contact page
-            </a>
-            . I&apos;ll propose alternatives manually and send a Meet/Zoom link
-            once we agree on a slot.
-          </p>
-        </div>
-      </section>
+              <p className="ybz-eyebrow">Let&apos;s talk</p>
+              <h1 className="max-w-2xl font-display text-4xl leading-tight text-bone sm:text-5xl">
+                Pick a slot. Bring the decision, not the ticket.
+              </h1>
+              <hr className="ybz-rule" />
+              <p className="max-w-xl leading-8">
+                The scheduler handles time zones and sends the invite once
+                confirmed. Come with the constraint you are working against and
+                what you have already ruled out — that is where the useful part
+                of the conversation starts.
+              </p>
 
-      <section className="px-6 pb-16 sm:px-10 lg:px-16">
-        <div className="grid gap-6 lg:grid-cols-3">
-          {contactInfo.map((item) => {
-            const Icon = item.icon;
-            return (
-              <motion.div
-                key={item.label}
-                className="rounded-3xl border border-white/10 bg-white/5 p-6"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.5 }}
-              >
-                <div className="flex items-center gap-3">
-                  <span className="rounded-2xl bg-white/10 p-2 text-sky-300">
-                    <Icon size={18} />
-                  </span>
-                  <p className="text-xs uppercase tracking-[0.35em] text-slate-400">
-                    {item.label}
-                  </p>
-                </div>
-                {item.href ? (
-                  <a
-                    href={item.href}
-                    className="mt-4 block text-lg font-semibold text-white hover:text-sky-300"
+              <div className="ybz-card p-6">
+                <p className="ybz-eyebrow">Good fit</p>
+                <ul className="mt-4 space-y-3 text-sm leading-7">
+                  {collaborationNotes.map((note) => (
+                    <li key={note} className="flex items-start gap-3">
+                      <span
+                        className="mt-2.5 h-px w-4 shrink-0"
+                        style={{ background: "var(--ybz-accent-rule)" }}
+                      />
+                      {note}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </motion.div>
+
+            <motion.div
+              className="ybz-card p-6"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1, ease: [0, 0, 0.2, 1] }}
+            >
+              <h2 className="font-display text-xl text-bone">
+                Weekly availability
+              </h2>
+              <p className="ybz-meta mt-2 normal-case tracking-normal">
+                All hours in GMT
+              </p>
+
+              <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                {availability.map((slot) => (
+                  <div
+                    key={slot.day}
+                    className="border border-edge p-3"
+                    style={{ borderRadius: "var(--ybz-r-sm)" }}
                   >
-                    {item.value}
-                  </a>
+                    <p className="ybz-eyebrow">{slot.day}</p>
+                    <p className="ybz-figure mt-2 text-sm">{slot.slots}</p>
+                  </div>
+                ))}
+              </div>
+
+              <div
+                className="mt-6 border border-edge p-2"
+                style={{ borderRadius: "var(--ybz-r-md)" }}
+              >
+                {bookingUrl ? (
+                  <iframe
+                    title="Schedule a call"
+                    src={bookingUrl}
+                    className="h-[540px] w-full border-0"
+                    style={{ borderRadius: "var(--ybz-r-sm)" }}
+                    loading="lazy"
+                  />
                 ) : (
-                  <p className="mt-4 text-lg font-semibold text-white">
+                  <div className="border border-dashed border-edge p-6 text-sm leading-7">
+                    Set <code className="font-mono">VITE_SCHEDULER_URL</code> in
+                    your .env to embed the booking widget. Until then, use the{" "}
+                    <Link
+                      to="/contact"
+                      className="text-[var(--ybz-accent-type)] underline underline-offset-4"
+                    >
+                      contact form
+                    </Link>{" "}
+                    to request a time.
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        <section className="px-6 pb-12 sm:px-10 lg:px-16">
+          <div className="ybz-card mx-auto max-w-6xl p-6">
+            <p className="ybz-eyebrow">Another time</p>
+            <p className="mt-3 text-sm leading-7">
+              If none of the windows work, or you need to coordinate under NDA,
+              message me through the{" "}
+              <Link
+                to="/contact"
+                className="text-[var(--ybz-accent-type)] underline underline-offset-4"
+              >
+                contact page
+              </Link>{" "}
+              and I will propose alternatives.
+            </p>
+          </div>
+        </section>
+
+        <section className="px-6 pb-16 sm:px-10 lg:px-16">
+          <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-3">
+            {contactInfo.map((item) => {
+              const Icon = item.icon;
+              return (
+                <motion.a
+                  key={item.label}
+                  href={item.href}
+                  target={item.href.startsWith("http") ? "_blank" : undefined}
+                  rel={
+                    item.href.startsWith("http")
+                      ? "noopener noreferrer"
+                      : undefined
+                  }
+                  className="ybz-card ybz-card-interactive block p-6"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 0.5, ease: [0, 0, 0.2, 1] }}
+                >
+                  <div className="flex items-center gap-3">
+                    <Icon
+                      size={18}
+                      style={{ color: "var(--ybz-accent-type)" }}
+                    />
+                    <p className="ybz-eyebrow">{item.label}</p>
+                  </div>
+                  <p className="mt-4 break-all font-mono text-sm text-bone">
                     {item.value}
                   </p>
-                )}
-              </motion.div>
-            );
-          })}
-        </div>
-      </section>
-    </div>
-  </>
+                </motion.a>
+              );
+            })}
+          </div>
+        </section>
+      </div>
+    </>
   );
 };
 

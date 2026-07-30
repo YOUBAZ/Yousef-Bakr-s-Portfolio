@@ -1,6 +1,8 @@
 import { useState } from "react";
 import emailjs from "emailjs-com";
+import { AlertCircle, Check } from "lucide-react";
 import emailConfig from "../config/email";
+import { BRAND } from "../config/brand";
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -40,13 +42,14 @@ const ContactForm = () => {
     }
   };
 
+  const fieldClass =
+    "mt-2 block w-full border border-edge bg-ink p-3 text-bone placeholder:text-muted focus:border-hairline focus:outline-none";
+  const fieldStyle = { borderRadius: "var(--ybz-r-sm)" };
+
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-5">
       <div>
-        <label
-          htmlFor="name"
-          className="block text-sm font-medium text-gray-300"
-        >
+        <label htmlFor="name" className="ybz-eyebrow">
           Name
         </label>
         <input
@@ -56,15 +59,13 @@ const ContactForm = () => {
           value={formData.name}
           onChange={handleChange}
           required
-          className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white p-3"
+          className={fieldClass}
+          style={fieldStyle}
         />
       </div>
 
       <div>
-        <label
-          htmlFor="email"
-          className="block text-sm font-medium text-gray-300"
-        >
+        <label htmlFor="email" className="ybz-eyebrow">
           Email
         </label>
         <input
@@ -74,45 +75,60 @@ const ContactForm = () => {
           value={formData.email}
           onChange={handleChange}
           required
-          className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white p-3"
+          className={fieldClass}
+          style={fieldStyle}
         />
       </div>
 
       <div>
-        <label
-          htmlFor="message"
-          className="block text-sm font-medium text-gray-300"
-        >
+        <label htmlFor="message" className="ybz-eyebrow">
           Message
         </label>
         <textarea
           id="message"
           name="message"
-          rows={4}
+          rows={5}
           value={formData.message}
           onChange={handleChange}
           required
-          className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white p-3"
+          className={fieldClass}
+          style={fieldStyle}
         />
       </div>
 
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full bg-blue-600 text-white py-3 px-4 rounded-md hover:bg-blue-700 transition-colors disabled:opacity-50"
+        className="ybz-btn-primary w-full justify-center disabled:opacity-50"
       >
-        {isSubmitting ? "Sending..." : "Send Message"}
+        {isSubmitting ? "Sending" : "Send"}
       </button>
 
+      {/* Section 3.5 rule 1 has no red and no green. State is carried by an
+          icon and the wording, not by a colour outside the palette. */}
       {submitStatus === "success" && (
-        <div className="text-green-400 mt-4">
-          Message sent successfully! I'll get back to you soon.
+        <div className="flex items-start gap-3 text-sm leading-7 text-bone">
+          <Check
+            size={18}
+            className="mt-1 shrink-0"
+            style={{ color: "var(--ybz-accent-type)" }}
+          />
+          Sent. I read every one of these and reply to the ones I can be useful
+          on.
         </div>
       )}
 
       {submitStatus === "error" && (
-        <div className="text-red-400 mt-4">
-          Failed to send message. Please try again or email me directly.
+        <div className="flex items-start gap-3 text-sm leading-7 text-muted">
+          <AlertCircle size={18} className="mt-1 shrink-0" />
+          That did not send. Try again, or email me directly at{" "}
+          <a
+            href={`mailto:${BRAND.email}`}
+            className="text-[var(--ybz-accent-type)] underline underline-offset-4"
+          >
+            {BRAND.email}
+          </a>
+          .
         </div>
       )}
     </form>

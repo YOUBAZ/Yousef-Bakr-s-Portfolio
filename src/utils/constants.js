@@ -77,25 +77,22 @@ export const STAGGER_ITEM_VARIANT = {
  * Application constants
  */
 
-// Social media links
-export const SOCIAL_LINKS = {
-    GITHUB: "https://github.com/YOUBAZ",
-    LINKEDIN: "https://www.linkedin.com/in/yousef-bakr/",
-    FACEBOOK: "https://www.facebook.com/yousefbakrzaki/",
-    EMAIL: "mailto:youbakrzaki@gmail.com",
-};
-
-// Contact information
-export const CONTACT_INFO = {
-    EMAIL: "youbakrzaki@gmail.com",
-    LOCATION: "Cairo, Egypt",
-    TIMEZONE: "Africa/Cairo",
-};
+/**
+ * Identity, contact and social links now live in src/config/brand.js, mirrored
+ * from the brand kit's brand.json. Section 1 keeps those facts in exactly one
+ * place; a second copy here is how they drifted apart before.
+ *
+ * The location and timezone that used to sit here are gone: section 1 treats
+ * the location as private and lets the structured homeLocation field in
+ * config/seo.js carry it. The Facebook link is gone with them — the brand's
+ * contact block is site, LinkedIn, email, in that order.
+ */
 
 // Navigation routes
 export const ROUTES = {
     HOME: "/",
     PROJECTS: "/projects",
+    BLOG: "/blog",
     CERTIFICATES: "/certificates",
     CV: "/cv",
     ABOUT: "/about",
