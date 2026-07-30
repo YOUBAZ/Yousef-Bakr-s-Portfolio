@@ -303,6 +303,18 @@
     transform: translateY(-2px);
   }
 
+  /* Skip link. Off-screen until focused, then it lands as a normal gold action
+     in the top-left — visible, in-palette, and not a surprise element. */
+  .ybz-skip-link{
+    position: absolute; left: -9999px; top: 0; z-index: 100;
+    background: var(--ybz-grad-gold); color: var(--ybz-ink);
+    font-family: var(--ybz-body); font-weight: 600; font-size: 1rem;
+    padding: .75rem 1.25rem; border-radius: var(--ybz-r-sm);
+  }
+  .ybz-skip-link:focus{
+    left: 1rem; top: 1rem;
+  }
+
   /* Ambient purple bloom. Background only — never type, never a border. */
   .ybz-bloom{
     background: var(--ybz-grad-bloom);

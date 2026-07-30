@@ -47,6 +47,12 @@ function App() {
     <ErrorBoundary>
       <Router>
         <div className="min-h-screen bg-ink text-slate-body">
+          {/* Seven nav items sit before the content on every page. Without this a
+              keyboard or screen-reader user tabs through all of them each time. */}
+          <a href="#main" className="ybz-skip-link">
+            Skip to content
+          </a>
+
           {/* One rail per page, pinned to the viewport edge, doubling as a
               scroll-progress indicator — section 5's second job for the device. */}
           <StackRail fixed progress animate={false} />
@@ -59,7 +65,7 @@ function App() {
 
           <MobileMenu isOpen={isMobileMenuOpen} toggleMenu={toggleMobileMenu} />
 
-          <main className="pt-20">
+          <main id="main" className="pt-20">
             <Suspense fallback={<Loading />}>
               <Routes>
                 <Route path="/" element={<Home />} />
