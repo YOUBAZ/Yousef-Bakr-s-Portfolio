@@ -58,7 +58,7 @@ const MobileMenu = ({ isOpen, toggleMenu }) => {
   return (
     <div
       className="fixed inset-0 z-50 overflow-hidden backdrop-blur md:hidden"
-      style={{ background: "rgba(2,6,23,.85)" }}
+      style={{ background: "var(--ybz-scrim)" }}
       onClick={toggleMenu}
       role="dialog"
       aria-modal="true"

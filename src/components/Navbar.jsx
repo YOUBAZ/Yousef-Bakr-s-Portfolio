@@ -1,6 +1,7 @@
 import { Link, NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
 import { Menu } from "lucide-react";
+import ThemeToggle from "./ThemeToggle";
 import Signet from "./Signet";
 import { BRAND } from "../config/brand";
 
@@ -19,14 +20,14 @@ const navItems = [
  * signet + name + role on the left. Name in Playfair, role in JetBrains Mono at
  * +0.14em, which is the section 4 scale.
  */
-const Navbar = ({ toggleMobileMenu }) => {
+const Navbar = ({ toggleMobileMenu, theme, toggleTheme }) => {
   return (
     <header className="pointer-events-none fixed inset-x-0 top-0 z-50 px-4 pt-4">
       <div className="pointer-events-auto mx-auto max-w-6xl">
         <div
           className="flex items-center justify-between border border-edge px-5 py-3 backdrop-blur"
           style={{
-            background: "rgba(2,6,23,.72)",
+            background: "var(--ybz-chrome)",
             borderRadius: "var(--ybz-r-md)",
           }}
         >
@@ -76,16 +77,24 @@ const Navbar = ({ toggleMobileMenu }) => {
             <Link to="/lets-talk" className="ybz-btn-nav ml-3 !px-4 !py-2.5">
               Let&apos;s talk
             </Link>
+            <ThemeToggle
+              theme={theme}
+              onToggle={toggleTheme}
+              className="ml-2"
+            />
           </nav>
 
-          <button
-            onClick={toggleMobileMenu}
-            className="border border-edge p-2 text-bone transition-colors hover:border-hairline md:hidden"
-            style={{ borderRadius: "var(--ybz-r-sm)" }}
-            aria-label="Open navigation"
-          >
-            <Menu size={20} />
-          </button>
+          <div className="flex items-center gap-2 md:hidden">
+            <ThemeToggle theme={theme} onToggle={toggleTheme} />
+            <button
+              onClick={toggleMobileMenu}
+              className="border border-edge p-2 text-bone transition-colors hover:border-hairline"
+              style={{ borderRadius: "var(--ybz-r-sm)" }}
+              aria-label="Open navigation"
+            >
+              <Menu size={20} />
+            </button>
+          </div>
         </div>
       </div>
     </header>
@@ -94,6 +103,8 @@ const Navbar = ({ toggleMobileMenu }) => {
 
 Navbar.propTypes = {
   toggleMobileMenu: PropTypes.func.isRequired,
+  theme: PropTypes.oneOf(["dark", "light"]).isRequired,
+  toggleTheme: PropTypes.func.isRequired,
 };
 
 export default Navbar;
