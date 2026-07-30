@@ -1,6 +1,5 @@
 import { useState, useEffect, lazy, Suspense } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { HelmetProvider } from "react-helmet-async";
 import Navbar from "./components/Navbar";
 import MobileMenu from "./components/MobileMenu";
 import ErrorBoundary from "./components/ErrorBoundary";
@@ -26,7 +25,6 @@ const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Validate environment variables on mount
@@ -38,84 +36,69 @@ function App() {
     ]);
   }, []);
 
-  // Simulate loading time
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1500);
-
-    return () => clearTimeout(timer);
-  }, []);
-
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen((prev) => !prev);
   };
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
   return (
     <ErrorBoundary>
-      <HelmetProvider>
-        <Router>
-          <div className="min-h-screen bg-slate-950 text-white">
-            <Navbar toggleMobileMenu={toggleMobileMenu} />
+      <Router>
+        <div className="min-h-screen bg-ink text-slate-body">
+          <Navbar toggleMobileMenu={toggleMobileMenu} />
 
-            <MobileMenu isOpen={isMobileMenuOpen} toggleMenu={toggleMobileMenu} />
+          <MobileMenu isOpen={isMobileMenuOpen} toggleMenu={toggleMobileMenu} />
 
-            <main className="pt-20">
-              <Suspense fallback={<Loading />}>
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/projects" element={<Projects />} />
-                  <Route path="/certificates" element={<Certificates />} />
-                  <Route path="/about" element={<About />} />
-                  <Route path="/contact" element={<Contact />} />
-                  <Route path="/lets-talk" element={<LetsTalk />} />
-                  <Route path="/cv" element={<Cv />} />
+          <main className="pt-20">
+            <Suspense fallback={<Loading />}>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/projects" element={<Projects />} />
+                <Route path="/certificates" element={<Certificates />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/lets-talk" element={<LetsTalk />} />
+                <Route path="/cv" element={<Cv />} />
 
-                  {/* Blog Routes */}
-                  <Route path="/blog" element={<BlogList />} />
-                  <Route path="/blog/:id" element={<BlogPost />} />
+                {/* Blog Routes */}
+                <Route path="/blog" element={<BlogList />} />
+                <Route path="/blog/:id" element={<BlogPost />} />
 
-                  {/* Admin Routes */}
-                  <Route path="/admin/login" element={<AdminLogin />} />
-                  <Route
-                    path="/admin/dashboard"
-                    element={
-                      <ProtectedRoute>
-                        <AdminDashboard />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/admin/blog/new"
-                    element={
-                      <ProtectedRoute>
-                        <BlogEditor mode="create" />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/admin/blog/edit/:id"
-                    element={
-                      <ProtectedRoute>
-                        <BlogEditor mode="edit" />
-                      </ProtectedRoute>
-                    }
-                  />
+                {/* Admin Routes */}
+                <Route path="/admin/login" element={<AdminLogin />} />
+                <Route
+                  path="/admin/dashboard"
+                  element={
+                    <ProtectedRoute>
+                      <AdminDashboard />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/blog/new"
+                  element={
+                    <ProtectedRoute>
+                      <BlogEditor mode="create" />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/blog/edit/:id"
+                  element={
+                    <ProtectedRoute>
+                      <BlogEditor mode="edit" />
+                    </ProtectedRoute>
+                  }
+                />
 
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </Suspense>
-            </main>
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
+          </main>
 
-            <ScrollToTop />
-            <Footer />
-          </div>
-        </Router>
-      </HelmetProvider>
+          <ScrollToTop />
+          <Footer />
+        </div>
+      </Router>
     </ErrorBoundary>
   );
 }
