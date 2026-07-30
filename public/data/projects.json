@@ -11,7 +11,6 @@
         "MongoDB",
         "Tailwind CSS"
       ],
-      "gradient": "from-orange-500/80 via-amber-500/70 to-fuchsia-500/70",
       "role": "Prompt Platform",
       "year": "GitHub",
       "repo": "https://github.com/YOUBAZ/Promptopia",
@@ -28,7 +27,6 @@
         "MongoDB",
         "Tailwind CSS"
       ],
-      "gradient": "from-fuchsia-500/70 via-cyan-500/70 to-indigo-500/70",
       "role": "Blog Platform",
       "year": "GitHub",
       "repo": "https://github.com/YOUBAZ/Blog-Post",
@@ -45,7 +43,6 @@
         "MongoDB",
         "Tailwind CSS"
       ],
-      "gradient": "from-emerald-500/80 via-cyan-500/70 to-blue-500/70",
       "role": "Commerce Store",
       "year": "GitHub",
       "repo": "https://github.com/YOUBAZ/E-commerce-App-youtube-",
@@ -62,7 +59,6 @@
         "Responsive UI",
         "Tailwind CSS"
       ],
-      "gradient": "from-slate-800/90 via-indigo-700/70 to-slate-950/60",
       "role": "Movie Explorer",
       "year": "GitHub",
       "repo": "https://github.com/YOUBAZ/imdb-next.js",
