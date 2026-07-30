@@ -8,7 +8,6 @@ import ScrollToTop from "./components/ScrollToTop";
 import StackRail from "./components/StackRail";
 import Loading from "./components/Loading";
 import ProtectedRoute from "./components/ProtectedRoute";
-import BlogEditor from "./components/BlogEditor";
 import { validateEnvVars } from "./utils/validateEnv";
 import useTheme from "./hooks/useTheme";
 
@@ -25,6 +24,7 @@ const BlogPost = lazy(() => import("./pages/BlogPost"));
 const AdminLogin = lazy(() => import("./pages/AdminLogin"));
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
 const NotFound = lazy(() => import("./pages/NotFound"));
+const BlogEditor = lazy(() => import("./components/BlogEditor"));
 
 function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
