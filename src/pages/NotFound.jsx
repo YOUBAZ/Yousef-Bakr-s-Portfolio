@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft, Home } from "lucide-react";
 import Seo from "../components/Seo";
 import Signet from "../components/Signet";
+import GoldRule from "../components/GoldRule";
 
 const _motion = motion;
 
@@ -43,7 +44,7 @@ const NotFound = () => {
                         That page does not exist.
                     </h1>
 
-                    <hr className="ybz-rule mx-auto mt-6" />
+                    <GoldRule className="mx-auto mt-6" />
 
                     <p className="mt-6 leading-8 text-slate-body">
                         Either the URL is mistyped or the route was removed. Both are

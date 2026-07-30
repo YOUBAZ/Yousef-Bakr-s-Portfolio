@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Github, Linkedin, Mail } from "lucide-react";
 import Signet from "./Signet";
 import { BRAND, CONTACT_BLOCK } from "../config/brand";
+import GoldRule from "./GoldRule";
 
 const socialLinks = [
   { icon: Github, label: "GitHub", href: BRAND.github },
@@ -54,7 +55,7 @@ const Footer = () => {
               </div>
             </Link>
 
-            <hr className="ybz-rule mt-6" />
+            <GoldRule className="mt-6" />
 
             <p className="mt-5 max-w-md text-sm leading-7">
               {BRAND.positioning}

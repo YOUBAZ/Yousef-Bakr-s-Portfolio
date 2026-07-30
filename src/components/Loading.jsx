@@ -1,6 +1,7 @@
 import Signet from "./Signet";
 import StackRail from "./StackRail";
 import { BRAND } from "../config/brand";
+import GoldRule from "./GoldRule";
 
 const Loading = () => {
   return (
@@ -25,7 +26,7 @@ const Loading = () => {
             {BRAND.descriptorLockup}
           </p>
         </div>
-        <hr className="ybz-rule" />
+        <GoldRule />
         <span className="sr-only">Loading</span>
       </div>
     </div>
