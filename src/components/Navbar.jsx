@@ -1,36 +1,50 @@
 import { Link, NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
-import { Menu, Sparkles } from "lucide-react";
+import { Menu } from "lucide-react";
+import Signet from "./Signet";
+import { BRAND } from "../config/brand";
 
 const navItems = [
   { name: "Home", path: "/" },
   { name: "Projects", path: "/projects" },
-  { name: "Blog", path: "/blog" },
+  { name: "Writing", path: "/blog" },
   { name: "Certificates", path: "/certificates" },
   { name: "CV", path: "/cv" },
   { name: "About", path: "/about" },
   { name: "Contact", path: "/contact" },
 ];
 
+/**
+ * The footer strip composition from BRAND.md section 5, reused as the header:
+ * signet + name + role on the left. Name in Playfair, role in JetBrains Mono at
+ * +0.14em, which is the section 4 scale.
+ */
 const Navbar = ({ toggleMobileMenu }) => {
   return (
-    <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4 pointer-events-none">
-      <div className="mx-auto max-w-6xl pointer-events-auto">
-        <div className="flex items-center justify-between rounded-3xl border border-white/10 bg-slate-950/60 px-5 py-3 text-white shadow-xl shadow-slate-950/20 backdrop-blur">
+    <header className="pointer-events-none fixed inset-x-0 top-0 z-50 px-4 pt-4">
+      <div className="pointer-events-auto mx-auto max-w-6xl">
+        <div
+          className="flex items-center justify-between border border-edge px-5 py-3 backdrop-blur"
+          style={{
+            background: "rgba(2,6,23,.72)",
+            borderRadius: "var(--ybz-r-md)",
+          }}
+        >
           <Link
             to="/"
-            className="group flex items-center gap-3 text-base font-semibold tracking-wide"
-            aria-label="Yousef Bakr home"
+            className="group flex items-center gap-3"
+            aria-label={`${BRAND.name} — home`}
           >
-            <span className="rounded-2xl bg-white/10 p-2 text-sky-300 transition group-hover:bg-white/20">
-              <Sparkles size={18} />
-            </span>
+            <Signet size={34} />
             <div className="leading-tight">
-              <p className="text-white group-hover:text-sky-200 transition">
-                Yousef Bakr
+              <p className="font-display text-base font-bold text-bone">
+                {BRAND.name}
               </p>
-              <p className="hidden text-xs font-normal uppercase tracking-[0.35em] text-slate-400 sm:block">
-                portfolio
+              <p
+                className="hidden font-mono text-[0.6rem] uppercase text-muted sm:block"
+                style={{ letterSpacing: "0.14em" }}
+              >
+                {BRAND.descriptorLockup}
               </p>
             </div>
           </Link>
@@ -40,29 +54,34 @@ const Navbar = ({ toggleMobileMenu }) => {
               <NavLink
                 key={item.name}
                 to={item.path}
+                end={item.path === "/"}
                 className={({ isActive }) =>
                   [
-                    "rounded-full px-4 py-2 transition",
+                    "relative px-3 py-2 transition-colors",
+                    // Active state is a gold rule, not a filled pill —
+                    // section 16 lists "everything rounded into pills" as off-brand.
                     isActive
-                      ? "bg-white/15 text-white shadow-sm"
-                      : "text-slate-300 hover:text-white hover:bg-white/10",
+                      ? "text-bone after:absolute after:inset-x-3 after:bottom-0 after:h-[2px] after:bg-[var(--ybz-accent-rule)]"
+                      : "text-slate-body hover:text-bone",
                   ].join(" ")
                 }
               >
                 {item.name}
               </NavLink>
             ))}
-            <Link
-              to="/lets-talk"
-              className="ml-2 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-sky-500 to-indigo-500 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-indigo-500/30 transition hover:scale-[1.02]"
-            >
-              Let's Talk
+            {/* Blue lives here and nowhere else: section 3.5 rule 2 permits it
+                only on something a person can click. Padding may shrink; the
+                16px font size may not — below it the CTA gradient stops
+                clearing contrast, which is why the token file pins it. */}
+            <Link to="/lets-talk" className="ybz-btn-nav ml-3 !px-4 !py-2.5">
+              Let&apos;s talk
             </Link>
           </nav>
 
           <button
             onClick={toggleMobileMenu}
-            className="rounded-full border border-white/15 bg-white/5 p-2 text-white shadow-sm backdrop-blur md:hidden"
+            className="border border-edge p-2 text-bone transition-colors hover:border-hairline md:hidden"
+            style={{ borderRadius: "var(--ybz-r-sm)" }}
             aria-label="Open navigation"
           >
             <Menu size={20} />

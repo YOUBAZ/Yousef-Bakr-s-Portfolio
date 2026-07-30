@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { X } from "lucide-react";
 import useFocusTrap from "../hooks/useFocusTrap";
+import Signet from "./Signet";
+import StackRail from "./StackRail";
+import { BRAND } from "../config/brand";
 
 const MobileMenu = ({ isOpen, toggleMenu }) => {
   const focusTrapRef = useFocusTrap(isOpen);
@@ -43,7 +46,7 @@ const MobileMenu = ({ isOpen, toggleMenu }) => {
   const navItems = [
     { name: "Home", path: "/" },
     { name: "Projects", path: "/projects" },
-    { name: "Blog", path: "/blog" },
+    { name: "Writing", path: "/blog" },
     { name: "Certificates", path: "/certificates" },
     { name: "CV", path: "/cv" },
     { name: "About", path: "/about" },
@@ -54,7 +57,8 @@ const MobileMenu = ({ isOpen, toggleMenu }) => {
 
   return (
     <div
-      className="fixed inset-0 z-50 overflow-hidden bg-slate-950/80 backdrop-blur md:hidden"
+      className="fixed inset-0 z-50 overflow-hidden backdrop-blur md:hidden"
+      style={{ background: "rgba(2,6,23,.85)" }}
       onClick={toggleMenu}
       role="dialog"
       aria-modal="true"
@@ -62,46 +66,59 @@ const MobileMenu = ({ isOpen, toggleMenu }) => {
     >
       <div
         ref={focusTrapRef}
-        className="absolute inset-y-0 right-0 flex h-[100dvh] w-3/4 flex-col gap-8 overflow-y-auto overscroll-contain rounded-l-3xl border-l border-white/15 bg-slate-950/95 p-6 shadow-2xl"
+        className="absolute inset-y-0 right-0 flex h-[100dvh] w-4/5 flex-col gap-8 overflow-y-auto overscroll-contain border-l border-hairline bg-ink p-6"
         onClick={(e) => e.stopPropagation()}
       >
+        {/* Section 5 flips the rail to the mirrored edge; this panel enters
+            from the right, so the rail sits on its leading edge. */}
+        <StackRail />
+
         <div className="flex items-center justify-between">
-          <div>
-            <p className="text-lg font-semibold text-white">Yousef Bakr</p>
-            <p className="text-xs uppercase tracking-[0.35em] text-slate-400">
-              portfolio
-            </p>
+          <div className="flex items-center gap-3">
+            <Signet size={34} />
+            <div>
+              <p className="font-display text-lg font-bold text-bone">
+                {BRAND.name}
+              </p>
+              <p
+                className="font-mono text-[0.6rem] uppercase text-muted"
+                style={{ letterSpacing: "0.14em" }}
+              >
+                {BRAND.descriptorLockup}
+              </p>
+            </div>
           </div>
           <button
             onClick={toggleMenu}
-            className="rounded-full border border-white/15 bg-white/5 p-2 text-white"
+            className="border border-edge p-2 text-bone transition-colors hover:border-hairline"
+            style={{ borderRadius: "var(--ybz-r-sm)" }}
             aria-label="Close menu"
           >
             <X size={20} />
           </button>
         </div>
 
-        <div className="flex flex-col space-y-6 text-lg font-medium text-white">
+        <div className="flex flex-col gap-1 text-lg font-medium">
           {navItems.map((item) => (
             <Link
               key={item.name}
               to={item.path}
               onClick={toggleMenu}
-              className="rounded-2xl border border-transparent px-4 py-3 transition hover:border-white/10 hover:bg-white/5"
+              className="border-l-2 border-transparent px-4 py-3 text-slate-body transition-colors hover:border-[var(--ybz-accent-rule)] hover:text-bone"
             >
               {item.name}
             </Link>
           ))}
         </div>
 
-        <div className="mt-auto space-y-3 text-sm text-slate-400">
-          <p>Open for remote collaborations across time zones.</p>
+        <div className="mt-auto space-y-4">
+          <hr className="ybz-rule" />
           <Link
             to="/lets-talk"
             onClick={toggleMenu}
-            className="inline-flex w-full items-center justify-center rounded-full bg-gradient-to-r from-sky-500 to-indigo-500 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-500/30 transition"
+            className="ybz-btn-nav w-full justify-center"
           >
-            Let's Talk
+            Let&apos;s talk
           </Link>
         </div>
       </div>
