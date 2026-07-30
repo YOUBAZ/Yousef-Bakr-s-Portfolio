@@ -1,273 +1,186 @@
-# Yousef Bakr's Portfolio
+# Yousef Bakr — portfolio
 
-> Full-stack software engineer specializing in LMS platforms, simulations, and SaaS products
+> I build production software — and publish the architecture decisions behind it.
 
-[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://yousef-bakr-s-portfolio.vercel.app)
-[![React](https://img.shields.io/badge/React-19-blue)](https://react.dev)
-[![Vite](https://img.shields.io/badge/Vite-Latest-purple)](https://vitejs.dev)
-[![WCAG AA](https://img.shields.io/badge/Accessibility-WCAG%20AA-green)](./ACCESSIBILITY-AUDIT.md)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+[![Live](https://img.shields.io/badge/live-vercel-020617)](https://yousef-bakr-s-portfolio.vercel.app)
+[![React 19](https://img.shields.io/badge/React-19-020617)](https://react.dev)
+[![Vite 7](https://img.shields.io/badge/Vite-7-020617)](https://vitejs.dev)
+[![License: MIT](https://img.shields.io/badge/License-MIT-020617)](./LICENSE)
 
-## 🚀 Overview
+A React portfolio built against a written brand system. Every colour, typeface and
+identity string in this repo derives from that system, and a build gate fails the
+project if one drifts.
 
-A modern, performant portfolio showcasing full-stack engineering work across React, Next.js, Node.js, and AWS. Built with accessibility, performance, and user experience as core priorities.
+## The brand system
 
-### ✨ Key Features
+The design is not a set of preferences held in someone's head. It is
+[`CLAUDE.md`](./CLAUDE.md) in this repo, generated from a `brand.json` that lives
+outside it, and it governs colour, typography, layout, voice and a set of red lines.
 
-- **🎨 Modern UI/UX**: Gradient designs, micro-animations, and glassmorphism effects
-- **⚡ High Performance**: Code splitting, lazy loading, optimized bundles (~40% faster load)
-- **♿ Accessible**: 100% WCAG AA compliant with full keyboard navigation
-- **📱 Responsive**: Mobile-first design that works on all devices
-- **🔍 SEO Optimized**: Structured data, meta tags, sitemap, and robots.txt
-- **🛡️ Robust**: Error boundaries, 404 handling, environment validation
-- **🎭 Rich Animations**: Framer Motion, GSAP scroll triggers, Lottie, Three.js WebGL
+Three rules explain most of what the code looks like:
 
-## 📸 Screenshots
+- **One accent.** Midnight `#020617` on 85% of every surface, gold `#F4C025` on the
+  15% that matters. Purple appears only as an ambient bloom, never as type or a
+  border. No teal, no fuchsia, no emerald.
+- **Gold is never a text colour on a light ground.** It reads 1.55:1 on paper. Every
+  accent applied to type goes through `--ybz-accent-type`, which rebinds to antique
+  `#8A6206` in light mode. That single indirection is the whole light-theme contract.
+- **Three typefaces, each in one role.** Playfair Display for headlines and nothing
+  else, Montserrat for all running text, JetBrains Mono for code, metrics and
+  counters. Cairo replaces both in RTL.
 
-![Homepage](file:///C:/Users/SI/.gemini/antigravity/brain/dd84e9cd-5498-43a4-9d36-e4d1b87a0d80/homepage_after_fixes_1764150834664.png)
-*Modern hero section with interactive animations*
+Tokens live in [`src/index.css`](./src/index.css) and are bridged into Tailwind with
+`@theme inline`, so `bg-ink` emits `var(--ybz-ink)` rather than a baked hex — which is
+what lets the light theme override it.
 
-![404 Page](file:///C:/Users/SI/.gemini/antigravity/brain/dd84e9cd-5498-43a4-9d36-e4d1b87a0d80/404_page_test_1764150846592.png)
-*Custom 404 page with helpful navigation*
+Identity strings live in exactly one place, [`src/config/brand.js`](./src/config/brand.js).
+A second copy is how a retired name once ended up in the JSON-LD while the footer said
+something else.
 
-## 🛠️ Tech Stack
+### Layout signatures
 
-### Core
-- **React 19** - UI library with latest features
-- **Vite** - Lightning-fast build tool
-- **React Router** - Client-side routing with lazy loading
-- **Tailwind CSS** - Utility-first styling
-- **DaisyUI** - Component library
+Three devices carry the identity, and no others are invented:
 
-### Animation & Graphics
-- **Framer Motion** - Declarative animations
-- **GSAP** - Advanced scroll animations
-- **Lottie** - Vector animations
-- **Three.js** - WebGL 3D graphics
-- **React Three Fiber** - Three.js for React
+| Device | Where |
+|---|---|
+| The stack rail | One per page, pinned to the viewport edge, doubling as a scroll-progress indicator |
+| The gold rule | Under every headline, drawing itself in on first entry |
+| The footer strip | Signet, name, role — reused as the header composition |
 
-### Additional Libraries
-- **EmailJS** - Contact form handling
-- **Lucide Icons** - Beautiful icon set
-- **Auto Animate** - Zero-config animations
-- **React Parallax Tilt** - 3D tilt effects
-
-## 📦 Installation
-
-### Prerequisites
-- Node.js 18+ and npm
-- Git
-
-### Setup
+## Verification
 
 ```bash
-# Clone the repository
+npm run brand:check
+```
+
+Fails the build on any colour outside the palette, any retired identity string, and on
+the location appearing anywhere but the structured `homeLocation` field. It exists
+because a stale value looks authoritative — the same reason the brand kit ships its own
+verifier.
+
+## Stack
+
+| Layer | Choice |
+|---|---|
+| Build | Vite 7 |
+| UI | React 19, React Router 7 |
+| Styling | Tailwind CSS 4, CSS-first via `@theme` |
+| Motion | Framer Motion, GSAP ScrollTrigger |
+| Content | react-markdown, remark-gfm, react-syntax-highlighter |
+| Forms | EmailJS |
+| Icons | Lucide |
+
+No component library. daisyUI was removed because it claims the `data-theme`
+attribute, which the light theme keys on — one attribute cannot drive two systems.
+
+## Setup
+
+Requires Node 18+.
+
+```bash
 git clone https://github.com/YOUBAZ/Yousef-Bakr-s-Portfolio.git
 cd Yousef-Bakr-s-Portfolio
-
-# Install dependencies
 npm install
 
-# Create environment file
-cp .env.example .env
-
-# Add your EmailJS credentials to .env
-# VITE_EMAILJS_SERVICE_ID=your_service_id
-# VITE_EMAILJS_TEMPLATE_ID=your_template_id  
-# VITE_EMAILJS_PUBLIC_KEY=your_public_key
-
-# Start development server
+cp .env.example .env    # then add your EmailJS credentials
 npm run dev
 ```
 
-The app will be available at `http://localhost:5173`
-
-## 🚀 Available Scripts
+## Scripts
 
 ```bash
-# Development
-npm run dev          # Start dev server with hot reload
-
-# Production
-npm run build        # Build for production
-npm run preview      # Preview production build locally
-
-# Code Quality
-npm run lint         # Run ESLint
+npm run dev           # dev server with hot reload
+npm run build         # production build
+npm run preview       # serve the production build
+npm run lint          # eslint
+npm run brand:check   # palette, identity and location gate
 ```
 
-## 📁 Project Structure
+## Structure
 
 ```
 src/
-├── components/      # Reusable React components
-│   ├── ErrorBoundary.jsx
-│   ├── LoadingSkeleton.jsx
-│   ├── MobileMenu.jsx
-│   ├── Navbar.jsx
-│   ├── OptimizedImage.jsx
-│   └── Seo.jsx
-├── pages/           # Route pages (lazy loaded)
-│   ├── Home.jsx
-│   ├── Projects.jsx
-│   ├── Certificates.jsx
-│   ├── About.jsx
-│   ├── Contact.jsx
-│   ├── LetsTalk.jsx
-│   ├── CV.jsx
-│   └── NotFound.jsx
-├── hooks/           # Custom React hooks
+├── components/
+│   ├── Signet.jsx       the mark; guards the 24px floor
+│   ├── StackRail.jsx    layout signature 1, also scroll progress
+│   ├── GoldRule.jsx     layout signature 2
+│   ├── ThemeToggle.jsx
+│   ├── Seo.jsx          all metadata and JSON-LD, one component
+│   ├── Navbar.jsx  MobileMenu.jsx  Footer.jsx
+│   ├── BlogCard.jsx  BlogContent.jsx  BlogEditor.jsx
+│   ├── ContactForm.jsx  ErrorBoundary.jsx  Loading.jsx  ScrollToTop.jsx
+│   └── ProtectedRoute.jsx
+├── pages/               every route lazy-loaded
+├── config/
+│   ├── brand.js         identity strings, single source
+│   ├── seo.js           site metadata and default schemas
+│   ├── email.js  scheduling.js
+├── hooks/
+│   ├── useTheme.js      theme state; dark is the default
 │   └── useFocusTrap.js
-├── utils/           # Utility functions
-│   ├── constants.js
-│   ├── formatting.js
-│   └── validateEnv.js
-├── data/            # Static data & animations
-│   └── animations.js
-├── config/          # Configuration files
-│   ├── email.js
-│   └── seo.js
-└── App.jsx          # Main app component
+├── data/                experience timeline, animation variants
+├── utils/               blog helpers, env validation
+└── index.css            brand tokens, both themes, and the primitives
 ```
 
-## ⚡ Performance Optimizations
+Content lives in `public/data/` as JSON: `blogs.json`, `projects.json`,
+`certificates.json`. Brand assets — favicons, the OG card, logo SVGs — are generated
+output and sit in `public/` and `public/brand/`.
 
-### Before vs After
+## Themes
 
-| Metric | Before | After | Improvement |
-|--------|--------|-------|-------------|
-| Initial Bundle | ~500KB | ~300KB | **40% smaller** |
-| Time to Interactive | ~2.5s | ~1.5s | **40% faster** |
-| Accessibility | 85% | 100% | **WCAG AA** |
+Both grounds are specified: midnight `#020617` and paper `#F7F5F0`, never black, never
+white. Dark is the default and carries no attribute, so `:root` stays the base case.
+An explicit choice persists to `localStorage` and always beats the OS preference; an
+inline script in `index.html` resolves the theme before first paint.
 
-### Implemented Optimizations
+Measured against paper, matching the brand's own figures: headings 18.51:1, body
+9.11:1, captions 5.54:1, antique accents 5.03:1, bronze rules 3.30:1.
 
-- ✅ **Code Splitting**: Routes loaded on-demand with React.lazy()
-- ✅ **Lazy Loading**: Components and images load when needed
-- ✅ **Resource Preloading**: Critical assets preloaded
-- ✅ **Optimized Images**: Lazy loading with loading="lazy"
-- ✅ **Bundle Analysis**: Vite's built-in optimization
+Code blocks stay midnight on light pages. One dark object per light page is the
+signature — a light code block belongs to anyone.
 
-## ♿ Accessibility Features
+## Bundle
 
-- ✅ **WCAG AA Compliant**: All color contrasts meet standards
-- ✅ **Keyboard Navigation**: Full site navigable via keyboard
-- ✅ **Focus Management**: Visible focus indicators, focus traps
-- ✅ **Screen Reader Support**: Semantic HTML, ARIA labels
-- ✅ **Alt Text**: All images have descriptive alt attributes
+Measured against the pre-brand build:
 
-See [ACCESSIBILITY-AUDIT.md](./ACCESSIBILITY-AUDIT.md) for detailed audit results.
+| | Before | After |
+|---|---|---|
+| Built assets | 2688 KB | 1660 KB |
+| Main chunk | 1320 KB | 364 KB |
+| Home chunk | 1076 KB | 191 KB |
 
-## 🔍 SEO Features
+Three.js, react-parallax-tilt, react-simple-typewriter, lottie-react, daisyUI and
+react-helmet-async were removed rather than restyled. The syntax highlighter loads with
+the blog routes, which are the only ones that render code.
 
-- **Meta Tags**: Comprehensive meta tags for all pages
-- **Open Graph**: Social media sharing optimization
-- **Twitter Cards**: Twitter-specific metadata
-- **Structured Data**: JSON-LD schemas for rich snippets
-- **Sitemap**: Auto-generated sitemap.xml
-- **Robots.txt**: Search engine crawler instructions
-- **Canonical URLs**: Prevent duplicate content issues
+## Accessibility
 
-## 🛡️ Error Handling
+Every palette pair is contrast-checked against WCAG 2.1 rather than estimated; the
+figures are in [ACCESSIBILITY-AUDIT.md](./ACCESSIBILITY-AUDIT.md). Focus indicators use
+the accent and are visible in both themes. `prefers-reduced-motion` drops every
+animation except the scroll-progress rail, which still tracks because progress is
+information rather than decoration.
 
-- **Error Boundaries**: Graceful error recovery with user-friendly UI
-- **404 Page**: Custom not-found page with navigation
-- **Environment Validation**: Startup checks for required variables
-- **Loading States**: Skeleton screens for async operations
+## Deployment
 
-## 🎨 Design System
+Vercel, with `vercel.json` handling SPA rewrites and the sitemap content type. Any
+static host works — build and serve `dist/`.
 
-### Colors
-```css
-Background: slate-950 (#020617)
-Primary Text: white (#ffffff)
-Secondary: slate-300 (#cbd5e1)
-Accent: sky-400 (#38bdf8)
-```
+Environment variables go in the host's dashboard, not in the repo:
+`VITE_EMAILJS_SERVICE_ID`, `VITE_EMAILJS_TEMPLATE_ID`, `VITE_EMAILJS_PUBLIC_KEY`,
+and optionally `VITE_SCHEDULER_URL`.
 
-### Typography
-- Font Family: System fonts (optimized for performance)
-- Headings: font-semibold
-- Body: Regular weight
+## Contributing
 
-### Spacing
-- Based on Tailwind's spacing scale (4px increments)
-- Consistent padding/margins throughout
+See [CONTRIBUTING.md](./CONTRIBUTING.md). Anything touching colour, type or identity
+has to pass `npm run brand:check`, and the reasoning for those rules is in
+[CLAUDE.md](./CLAUDE.md).
 
-## 📧 Contact Form Setup
+## Licence
 
-The contact form uses EmailJS. To set it up:
+MIT — see [LICENSE](./LICENSE).
 
-1. Create an account at [EmailJS.com](https://www.emailjs.com/)
-2. Create an email service
-3. Create an email template
-4. Get your credentials:
-   - Service ID
-   - Template ID
-   - Public Key
-5. Add them to your `.env` file
+## Contact
 
-## 🚢 Deployment
-
-### Vercel (Recommended)
-
-This project is optimized for Vercel deployment:
-
-```bash
-# Install Vericel CLI
-npm i -g vercel
-
-# Deploy
-vercel
-```
-
-Or use the Vercel dashboard:
-1. Import your GitHub repository
-2. Vercel auto-detects Vite configuration
-3. Add environment variables in dashboard
-4. Deploy!
-
-### Other Platforms
-
-The project works on any static hosting:
-- Netlify
-- GitHub Pages  
-- AWS S3 + CloudFront
-- Cloudflare Pages
-
-Just run `npm run build` and deploy the `dist/` folder.
-
-## 🤝 Contributing
-
-Contributions are welcome! Please read [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
-
-### Development Workflow
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- **Design Inspiration**: Modern portfolio trends and glassmorphism
-- **Icons**: [Lucide Icons](https://lucide.dev/)
-- **Animations**: [Framer Motion](https://www.framer.com/motion/), [GSAP](https://greensock.com/gsap/)
-- **3D Graphics**: [Three.js](https://threejs.org/), [React Three Fiber](https://docs.pmnd.rs/react-three-fiber/)
-
-## 📞 Contact
-
-**Yousef Bakr**
-- Portfolio: [yousef-bakr-s-portfolio.vercel.app](https://yousef-bakr-s-portfolio.vercel.app)
-- Email: youbakrzaki@gmail.com
-- LinkedIn: [linkedin.com/in/yousef-bakr](https://www.linkedin.com/in/yousef-bakr/)
-- GitHub: [github.com/YOUBAZ](https://github.com/YOUBAZ)
-
----
-
-<p align="center">Built with ❤️ by Yousef Bakr</p>
+yousef-bakr-s-portfolio.vercel.app · [linkedin.com/in/yousef-bakr](https://www.linkedin.com/in/yousef-bakr) · youbakrzaki@gmail.com
