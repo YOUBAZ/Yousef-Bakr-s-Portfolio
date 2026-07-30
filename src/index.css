@@ -322,6 +322,53 @@
   box-shadow:0 6px 30px rgba(2,6,23,.14);
 }
 
+/* ==========================================================================
+   THE CODE BLOCK
+   Rule 5 makes this the one dark object on a light page — so the WHOLE object
+   is dark, chrome included. Built from fixed palette values rather than the
+   theme tokens: --ybz-card resolves to #FFFFFF in light mode, so a language bar
+   painted with it turned white and glued itself to a midnight body, splitting
+   the block in two. Anything inside this component is midnight in both themes.
+
+   Only the outer frame is theme-aware, because the frame is what touches the
+   page: a hairline on midnight, a border plus a lift on paper.
+   ========================================================================== */
+
+.ybz-code{
+  margin: 1.5rem 0;
+  border: 1px solid var(--ybz-edge);
+  border-radius: var(--ybz-r-sm);
+  overflow: hidden;
+  background: linear-gradient(135deg, #0D0F16, #101218);   /* code_ground_dark */
+}
+
+[data-theme="light"] .ybz-code, .ybz-light .ybz-code{
+  border-color: rgba(2,6,23,.12);
+  box-shadow: 0 6px 30px rgba(2,6,23,.14);
+  background: linear-gradient(135deg, #191B24, #0E1017);   /* code_ground_light */
+}
+
+/* The language label. Section 4 gives mono the job of carrying code, metrics
+   and timestamps — a filename is one of those, and it never carries a sentence. */
+.ybz-code__bar{
+  display: flex; align-items: center; justify-content: space-between;
+  padding: .5rem 1rem;
+  font-family: var(--ybz-mono); font-size: .75rem;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: #7C8698;                                 /* muted, 5.5:1 on this ground */
+  background: #14161F;                            /* card, the dark value, pinned */
+  border-bottom: 1px solid rgba(245,243,239,.07);
+}
+
+[data-theme="light"] .ybz-code__bar, .ybz-light .ybz-code__bar{
+  background: #191B24;   /* the light-page code ground's top stop, one step up */
+}
+
+.ybz-code__body{
+  overflow-x: auto;
+  background: transparent;   /* the ground belongs to .ybz-code, so it can flip */
+}
+
 /* ---------- code syntax ramp: built only from palette colours ---------- */
 .ybz-tok-comment{  color:#7C8698 }
 .ybz-tok-string{   color:#A8B0BE }

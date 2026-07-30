@@ -16,8 +16,8 @@ import PropTypes from 'prop-types';
  *   keyword  gold light #F2CC5A
  *   punct    muted      #7C8698
  */
-const CODE_GROUND = '#0D0F16';
-
+/* The ground lives in .ybz-code in index.css, not here: section 3.3 defines a
+   different code ground for light pages, and only CSS can see the theme. */
 const brandSyntaxTheme = {
     'code[class*="language-"]': {
         color: '#C9D1E1',
@@ -31,7 +31,9 @@ const brandSyntaxTheme = {
     },
     'pre[class*="language-"]': {
         color: '#C9D1E1',
-        background: CODE_GROUND,
+        // Transparent so .ybz-code's ground shows through — section 3.3 gives
+        // light pages a different code ground, and only the wrapper knows the theme.
+        background: 'transparent',
         fontFamily: 'var(--ybz-mono)',
         overflow: 'auto',
     },
@@ -120,11 +122,14 @@ const BlogContent = ({ content }) => {
                         const language = match ? match[1] : '';
 
                         return !inline && match ? (
-                            <div className="my-6 rounded-xl overflow-hidden border border-edge bg-obsidian">
-                                <div className="bg-card px-4 py-2 text-sm text-muted font-mono border-b border-edge flex items-center justify-between">
+                            // .ybz-code owns the ground so it can differ per theme
+                            // (section 3.3 gives light pages their own code ground).
+                            // Everything inside it stays midnight in both themes.
+                            <div className="ybz-code">
+                                <div className="ybz-code__bar">
                                     <span>{language}</span>
                                 </div>
-                                <div className="overflow-x-auto" style={{ background: CODE_GROUND }}>
+                                <div className="ybz-code__body">
                                     <SyntaxHighlighter
                                         style={brandSyntaxTheme}
                                         language={language}
@@ -136,7 +141,7 @@ const BlogContent = ({ content }) => {
                                         customStyle={{
                                             margin: 0,
                                             padding: '1.25rem',
-                                            background: CODE_GROUND,
+                                            background: 'transparent',
                                             fontSize: '0.875rem',
                                             lineHeight: '1.7',
                                             border: 'none',
