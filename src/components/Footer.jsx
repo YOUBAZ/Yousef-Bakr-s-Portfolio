@@ -1,87 +1,78 @@
 import { Link } from "react-router-dom";
-import { Facebook, Github, Linkedin, Sparkles } from "lucide-react";
+import { Github, Linkedin, Mail } from "lucide-react";
+import Signet from "./Signet";
+import { BRAND, CONTACT_BLOCK } from "../config/brand";
+import GoldRule from "./GoldRule";
 
 const socialLinks = [
-  { icon: Github, label: "GitHub", href: "https://github.com/YOUBAZ" },
-  {
-    icon: Linkedin,
-    label: "LinkedIn",
-    href: "https://www.linkedin.com/in/yousef-bakr/",
-  },
-  {
-    icon: Facebook,
-    label: "Facebook",
-    href: "https://www.facebook.com/yousefbakrzaki/",
-  },
+  { icon: Github, label: "GitHub", href: BRAND.github },
+  { icon: Linkedin, label: "LinkedIn", href: BRAND.linkedinUrl },
+  { icon: Mail, label: "Email", href: `mailto:${BRAND.email}` },
 ];
 
 const navShortcuts = [
   { label: "Projects", path: "/projects" },
+  { label: "Writing", path: "/blog" },
   { label: "Certificates", path: "/certificates" },
   { label: "CV", path: "/cv" },
   { label: "About", path: "/about" },
   { label: "Contact", path: "/contact" },
-  { label: "Let's Talk", path: "/lets-talk" },
 ];
 
-const capabilityBadges = [
-  "Full-stack delivery",
-  "LMS & simulations",
-  "Cloud automation",
-  "AI integrations",
-];
-
+/**
+ * The footer strip — BRAND.md section 5, device 3. Hairline top border, signet
+ * + name + role on the left, mono counter on the right in gold.
+ *
+ * What used to live here and does not any more: four unsourced capability
+ * badges, a line volunteering the location (section 1 keeps it private), and a
+ * "Built with React, Next.js, Node.js…" sign-off — a stack list on an asset,
+ * naming two frameworks this site does not use.
+ */
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative mt-24 border-t border-white/10 bg-slate-950 text-slate-300">
-      <div className="pointer-events-none absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-sky-500/40 to-transparent" />
+    <footer className="relative mt-24 border-t border-hairline bg-ink text-slate-body">
       <div className="mx-auto max-w-6xl space-y-12 px-6 py-16">
-        <div className="grid gap-10 lg:grid-cols-[1.6fr,1fr,1fr]">
+        <div className="grid gap-10 lg:grid-cols-[1.6fr_1fr_1fr]">
           <div>
             <Link
               to="/"
-              className="flex items-center gap-3 text-white transition hover:text-sky-200"
+              className="flex items-center gap-3"
               onClick={() => window.scrollTo({ top: 0, behavior: "auto" })}
             >
-              <span className="rounded-2xl bg-white/10 p-2 text-sky-300">
-                <Sparkles size={18} />
-              </span>
+              <Signet size={40} />
               <div>
-                <p className="text-lg font-semibold">Yousef Bakr</p>
-                <p className="text-xs uppercase tracking-[0.35em] text-slate-400">
-                  software engineer
+                <p className="font-display text-lg font-bold text-bone">
+                  {BRAND.name}
+                </p>
+                <p
+                  className="font-mono text-[0.65rem] uppercase text-muted"
+                  style={{ letterSpacing: "0.14em" }}
+                >
+                  {BRAND.descriptorLockup}
                 </p>
               </div>
             </Link>
-            <p className="mt-4 max-w-md text-sm text-slate-400">
-              A multi-stack portfolio engineered with React, Next.js, Node.js, Express.js,
-              SQL/NoSQL data, and AWS/Docker/Kubernetes pipelines so LMS, simulation,
-              and SaaS partners can see how I bridge UX and systems analysis.
+
+            <GoldRule className="mt-6" />
+
+            <p className="mt-5 max-w-md text-sm leading-7">
+              {BRAND.positioning}
             </p>
-            <div className="mt-5 flex flex-wrap gap-2">
-              {capabilityBadges.map((badge) => (
-                <span
-                  key={badge}
-                  className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs uppercase tracking-wide text-slate-300"
-                >
-                  {badge}
-                </span>
-              ))}
-            </div>
+            <p className="mt-3 max-w-md text-sm italic text-muted">
+              {BRAND.tagline}
+            </p>
           </div>
 
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-400">
-              Navigate
-            </p>
+            <p className="ybz-eyebrow">Navigate</p>
             <div className="mt-4 flex flex-col gap-3 text-sm">
               {navShortcuts.map((link) => (
                 <Link
                   key={link.label}
                   to={link.path}
-                  className="text-slate-300 transition hover:text-white"
+                  className="text-slate-body transition-colors hover:text-bone"
                 >
                   {link.label}
                 </Link>
@@ -90,9 +81,7 @@ const Footer = () => {
           </div>
 
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-400">
-              Connect
-            </p>
+            <p className="ybz-eyebrow">Connect</p>
             <div className="mt-4 flex flex-wrap gap-3 text-sm">
               {socialLinks.map((link) => {
                 const Icon = link.icon;
@@ -102,7 +91,8 @@ const Footer = () => {
                     href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white transition hover:-translate-y-0.5 hover:bg-white/15"
+                    className="inline-flex items-center gap-2 border border-edge px-4 py-3 text-bone transition-all hover:-translate-y-0.5 hover:border-hairline"
+                    style={{ borderRadius: "var(--ybz-r-sm)" }}
                   >
                     <Icon size={18} />
                     {link.label}
@@ -110,19 +100,27 @@ const Footer = () => {
                 );
               })}
             </div>
-            <p className="mt-5 text-sm text-slate-400">
-              Based in Egypt, collaborating remotely with teams worldwide on software engineering,
-              system analysis, and platform modernization.
-            </p>
+
+            {/* Section 11's contact block, in its fixed order. */}
+            <div className="mt-6 flex flex-col gap-1.5 text-xs">
+              {CONTACT_BLOCK.map((entry) => (
+                <a
+                  key={entry.href}
+                  href={entry.href}
+                  className="text-muted transition-colors hover:text-[var(--ybz-accent-type)]"
+                >
+                  {entry.label}
+                </a>
+              ))}
+            </div>
           </div>
         </div>
 
-        <div className="flex flex-col gap-4 border-t border-white/10 pt-6 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
-          <p>
-            &copy; {currentYear} Yousef Bakr. Built with React, Next.js, Node.js,
-            Tailwind, and a healthy dose of automation.
+        <div className="flex flex-col gap-4 border-t border-edge pt-6 sm:flex-row sm:items-center sm:justify-between">
+          <p className="ybz-meta">
+            © {currentYear} {BRAND.name}
           </p>
-          <p>Reliability-first craft with accessibility, security, and observability baked in.</p>
+          <p className="ybz-meta">{BRAND.role}</p>
         </div>
       </div>
     </footer>

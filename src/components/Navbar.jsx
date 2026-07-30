@@ -1,36 +1,56 @@
 import { Link, NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
-import { Menu, Sparkles } from "lucide-react";
+import { Menu } from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
+import ThemeToggle from "./ThemeToggle";
+import Signet from "./Signet";
+import { BRAND } from "../config/brand";
+
+const _motion = motion;
 
 const navItems = [
   { name: "Home", path: "/" },
   { name: "Projects", path: "/projects" },
-  { name: "Blog", path: "/blog" },
+  { name: "Writing", path: "/blog" },
   { name: "Certificates", path: "/certificates" },
   { name: "CV", path: "/cv" },
   { name: "About", path: "/about" },
   { name: "Contact", path: "/contact" },
 ];
 
-const Navbar = ({ toggleMobileMenu }) => {
+/**
+ * The footer strip composition from BRAND.md section 5, reused as the header:
+ * signet + name + role on the left. Name in Playfair, role in JetBrains Mono at
+ * +0.14em, which is the section 4 scale.
+ */
+const Navbar = ({ toggleMobileMenu, theme, toggleTheme }) => {
+  const reduceMotion = useReducedMotion();
+
   return (
-    <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4 pointer-events-none">
-      <div className="mx-auto max-w-6xl pointer-events-auto">
-        <div className="flex items-center justify-between rounded-3xl border border-white/10 bg-slate-950/60 px-5 py-3 text-white shadow-xl shadow-slate-950/20 backdrop-blur">
+    <header className="pointer-events-none fixed inset-x-0 top-0 z-50 px-4 pt-4">
+      <div className="pointer-events-auto mx-auto max-w-6xl">
+        <div
+          className="flex items-center justify-between border border-edge px-5 py-3 backdrop-blur"
+          style={{
+            background: "var(--ybz-chrome)",
+            borderRadius: "var(--ybz-r-md)",
+          }}
+        >
           <Link
             to="/"
-            className="group flex items-center gap-3 text-base font-semibold tracking-wide"
-            aria-label="Yousef Bakr home"
+            className="group flex items-center gap-3"
+            aria-label={`${BRAND.name} — home`}
           >
-            <span className="rounded-2xl bg-white/10 p-2 text-sky-300 transition group-hover:bg-white/20">
-              <Sparkles size={18} />
-            </span>
+            <Signet size={34} />
             <div className="leading-tight">
-              <p className="text-white group-hover:text-sky-200 transition">
-                Yousef Bakr
+              <p className="font-display text-base font-bold text-bone">
+                {BRAND.name}
               </p>
-              <p className="hidden text-xs font-normal uppercase tracking-[0.35em] text-slate-400 sm:block">
-                portfolio
+              <p
+                className="hidden font-mono text-[0.6rem] uppercase text-muted sm:block"
+                style={{ letterSpacing: "0.14em" }}
+              >
+                {BRAND.descriptorLockup}
               </p>
             </div>
           </Link>
@@ -40,33 +60,61 @@ const Navbar = ({ toggleMobileMenu }) => {
               <NavLink
                 key={item.name}
                 to={item.path}
+                end={item.path === "/"}
                 className={({ isActive }) =>
                   [
-                    "rounded-full px-4 py-2 transition",
-                    isActive
-                      ? "bg-white/15 text-white shadow-sm"
-                      : "text-slate-300 hover:text-white hover:bg-white/10",
+                    "relative px-3 py-2 transition-colors",
+                    // Active state is a gold rule, not a filled pill —
+                    // section 16 lists "everything rounded into pills" as off-brand.
+                    isActive ? "text-bone" : "text-slate-body hover:text-bone",
                   ].join(" ")
                 }
               >
-                {item.name}
+                {({ isActive }) => (
+                  <>
+                    {item.name}
+                    {/* A single shared element, so the rule slides between items
+                        rather than blinking out and back in. It is the same gold
+                        rule from section 5, just told which heading it marks. */}
+                    {isActive && (
+                      <motion.span
+                        layoutId="nav-active-rule"
+                        className="absolute inset-x-3 bottom-0 h-[2px]"
+                        style={{ background: "var(--ybz-accent-rule)" }}
+                        transition={
+                          reduceMotion
+                            ? { duration: 0 }
+                            : { duration: 0.35, ease: [0, 0, 0.2, 1] }
+                        }
+                      />
+                    )}
+                  </>
+                )}
               </NavLink>
             ))}
-            <Link
-              to="/lets-talk"
-              className="ml-2 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-sky-500 to-indigo-500 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-indigo-500/30 transition hover:scale-[1.02]"
-            >
-              Let's Talk
+            {/* Gold outline, not the gold fill: .ybz-btn-primary is the one
+                gold action per screen, and this bar sits on every screen. */}
+            <Link to="/lets-talk" className="ybz-btn-accent ml-3 !px-4 !py-2.5">
+              Let&apos;s talk
             </Link>
+            <ThemeToggle
+              theme={theme}
+              onToggle={toggleTheme}
+              className="ml-2"
+            />
           </nav>
 
-          <button
-            onClick={toggleMobileMenu}
-            className="rounded-full border border-white/15 bg-white/5 p-2 text-white shadow-sm backdrop-blur md:hidden"
-            aria-label="Open navigation"
-          >
-            <Menu size={20} />
-          </button>
+          <div className="flex items-center gap-2 md:hidden">
+            <ThemeToggle theme={theme} onToggle={toggleTheme} />
+            <button
+              onClick={toggleMobileMenu}
+              className="border border-edge p-2 text-bone transition-colors hover:border-hairline"
+              style={{ borderRadius: "var(--ybz-r-sm)" }}
+              aria-label="Open navigation"
+            >
+              <Menu size={20} />
+            </button>
+          </div>
         </div>
       </div>
     </header>
@@ -75,6 +123,8 @@ const Navbar = ({ toggleMobileMenu }) => {
 
 Navbar.propTypes = {
   toggleMobileMenu: PropTypes.func.isRequired,
+  theme: PropTypes.oneOf(["dark", "light"]).isRequired,
+  toggleTheme: PropTypes.func.isRequired,
 };
 
 export default Navbar;

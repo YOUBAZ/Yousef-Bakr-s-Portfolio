@@ -1,278 +1,137 @@
-# Google Search Optimization Guide
+# Search indexing
 
-## 🎯 Goal
-Get your portfolio to appear in Google search results for:
-- "Yousef Bakr"
-- "software engineer Egypt"
-- "software engineer Cairo"  
-- "React developer Egypt"
-- "full-stack developer Egypt"
+How to get the site indexed, and what the brand system will and will not do to rank.
 
----
+## What this replaced, and why
 
-## ✅ Already Done (SEO Optimizations)
+The previous version of this file targeted "software engineer Cairo", "React developer
+Egypt" and similar. Its ranking advice was to put the location everywhere: a "Based in
+Cairo, Egypt" line in the footer, the city repeated through the About page, posts
+titled "Building LMS Platforms in Cairo", and a block of `geo.region`,
+`geo.placename` and `geo.position` meta tags pinning coordinates.
 
-Your portfolio is already well-optimized:
+That is the strategy the brand retired. `BRAND.md` section 1 marks the location private
+and gives the reason: a city in a descriptor does not read as a fact, it reads as a
+**boundary**. To a CTO in Berlin or Toronto scanning the page, it answers a question
+they had not asked and narrows the answer before the work is seen.
 
-1. ✅ **Sitemap.xml** - Updated with correct URL
-2. ✅ **Robots.txt** - Configured to allow crawling
-3. ✅ **Structured Data** - JSON-LD schemas for Person, WebSite
-4. ✅ **Meta Tags** - Title, description, keywords on all pages
-5. ✅ **Open Graph** - Social sharing optimization
-6. ✅ **Keywords** - Targeted Egypt/Cairo searches
-7. ✅ **Mobile-Friendly** - Responsive design
-8. ✅ **Fast Loading** - Optimized performance
-9. ✅ **HTTPS** - Vercel provides SSL
+Nothing is hidden. The location stays in the structured `homeLocation` field in
+`src/config/seo.js` — where a recruiter filtering by region actually looks, and the
+same role LinkedIn's own location field plays. It is out of the visible copy, the
+title, the description and the keywords.
 
----
+The trade is deliberate: less regional search volume, no ceiling on who reads the work.
 
-## 📝 Step-by-Step Google Indexing
+## Before anything else
 
-### Step 1: Submit to Google Search Console
+`BRAND.md` section 17 lists this as issue 1, priority P0:
 
-1. **Go to Google Search Console**
-   - Visit: https://search.google.com/search-console
-   - Sign in with your Google account
+> Site is on a platform subdomain (`yousef-bakr-s-portfolio.vercel.app`) with a stray
+> possessive in the URL.
 
-2. **Add Your Property**
-   - Click "Add Property"
-   - Choose "URL prefix"
-   - Enter: `https://yousef-bakr-s-portfolio.vercel.app`
-   - Click "Continue"
+Every canonical, every `og:url` and every generated brand asset bakes that string in.
+Registering a domain is a bigger credibility move than anything below, and doing it
+after indexing means a migration. Do it first.
 
-3. **Verify Ownership**
-   - **Recommended Method**: HTML file upload
-     1. Download the verification file
-     2. Upload to `/public` folder in your project
-     3. Deploy to Vercel
-     4. Click "Verify" in Search Console
-   
-   - **Alternative**: HTML tag method
-     1. Copy the meta tag
-     2. Add to `index.html` in `<head>` section
-     3. Deploy to Vercel
-     4. Click "Verify"
+When it changes: update `brand.json`, re-run the kit's build, then update
+`BRAND.siteUrl` in `src/config/brand.js`. Everything else derives from there.
 
-4. **Submit Sitemap**
-   - Once verified, go to "Sitemaps" in left menu
-   - Enter: `sitemap.xml`
-   - Click "Submit"
-   - Google will start crawling your pages!
+## Getting indexed
 
-### Step 2: Request Immediate Indexing
+**1 · Search Console.** Add the property at
+[search.google.com/search-console](https://search.google.com/search-console) using the
+URL-prefix option. Verify by HTML file upload — drop the file in `public/` and deploy.
+Confirm it resolves before clicking verify: `vercel.json` rewrites everything except
+`sitemap.xml` and `robots.txt` to `index.html`, so a verification file will be served
+correctly only because it is a real file in `public/`.
 
-1. **In Google Search Console**
-   - Go to "URL Inspection" tool
-   - Enter each of your URLs:
-     - `https://yousef-bakr-s-portfolio.vercel.app/`
-     - `https://yousef-bakr-s-portfolio.vercel.app/about`
-     - `https://yousef-bakr-s-portfolio.vercel.app/projects`
-     - etc.
-   - Click "Request Indexing" for each one
+**2 · Submit the sitemap.** Enter `sitemap.xml` under Sitemaps.
 
-2. **This speeds up the process** from weeks to days!
+**3 · Request indexing** per route rather than waiting for a crawl:
 
-### Step 3: Check Indexing Status
+```
+/  /about  /projects  /blog  /certificates  /cv  /contact  /lets-talk
+```
 
-After 3-7 days, check if you're indexed:
+`public/sitemap.xml` is maintained by hand, so adding a route means adding it there.
+`/blog` was missing for months because nothing enforced it.
+
+**4 · Confirm.**
 
 ```
 site:yousef-bakr-s-portfolio.vercel.app
 ```
 
-Search this in Google. You should see your pages!
+Expect discovery in days and most pages indexed within a few weeks.
 
----
+Submit to [Bing Webmaster Tools](https://www.bing.com/webmasters) as well — it takes
+minutes and also feeds DuckDuckGo.
 
-## 🚀 Quick Wins for Better Ranking
+## What the site already does
 
-### 1. Add Your Location Everywhere
+- JSON-LD `Person` and `WebSite` on every page, plus `WebPage`, `BreadcrumbList` and
+  `ItemList` per route, merged into one `@graph` by `src/components/Seo.jsx`
+- `BlogPosting` schema with `article:published_time` and `article:modified_time`,
+  cleared when the reader leaves an article so a post's date does not follow them
+- Canonical URLs, Open Graph and Twitter cards, pointing at the generated 1200x630
+  card rather than a portrait
+- `robots.txt` allowing crawl, and `theme-color` matching the page ground
 
-Already done in structured data, but also add to:
-- Footer: "Based in Cairo, Egypt"
-- About page: Mention Cairo/Egypt multiple times
-- Contact page: "Available for projects in Egypt and remote"
+All of it derives from `src/config/seo.js` and `src/config/brand.js`. There is one SEO
+component; there used to be two, and their identity strings had drifted apart — one
+said "Software Engineer Portfolio", the other "Full-Stack ... & Systems Analyst".
 
-### 2. Create Content with Target Keywords
+## Monitoring
 
-Add a blog or  articles section with posts like:
-- "My Journey as a Software Engineer in Egypt"
-- "Building LMS Platforms in Cairo"
-- "React Development Tips from an Egyptian Developer"
+Search Console for impressions, position and indexing status. What is worth checking is
+which *queries* bring people, not the count — a rising number of impressions on a term
+the brand does not want to own is a signal to change the content, not to celebrate.
 
-### 3. Get Backlinks
+## How this brand ranks
 
-**Free Methods:**
-1. **LinkedIn**: Add portfolio link to your profile, post about it
-2. **GitHub**: Pin repository, add link to bio
-3. **Dev.to**: Write articles, link to portfolio
-4. **Medium**: Cross-post content
-5. **Twitter**: Share projects, link in bio
-6. **Stack Overflow**: Add to profile
-7. **Reddit**: Share in programming communities (r/webdev, r/reactjs)
+Not on keyword density. `BRAND.md` section 10 sets the mechanism: depth and
+consistency, on the same days every week, aimed at one reader.
 
-### 4. Social Signals
+| Pillar | Share | What it does |
+|---|---|---|
+| The Decision Log | 60% | Architecture calls and their reasoning. What a senior engineer searches for, and what earns a link |
+| The First Year | 25% | For juniors, held to the same evidence standard |
+| The Operator | 15% | Method, never mood |
 
-Share your portfolio on:
-- LinkedIn (tag #SoftwareEngineer #Egypt)
-- Twitter/X with hashtags
-- Facebook developer groups
-- Egyptian tech communities
+Section 9 rules out humour, trends and personal content — the three cheapest routes to
+reach. That is a deliberate choice, and it means the site cannot compete on volume. It
+competes on being worth a tech lead's four minutes.
 
-### 5. Google My Business (Optional)
+Links follow from published work: LinkedIn, the GitHub profile README, and articles
+cross-posted where engineers already read. Not from directory submissions or drops into
+community forums.
 
-If you freelance:
-1. Create Google My Business profile
-2. Select "Service Area Business"
-3. Add portfolio website
-4. Get reviews from clients
+Hashtags: three to five, at the end, never inside a sentence.
+`#SoftwareArchitecture` `#NestJS` `#SystemDesign` `#SaaS` `#WebDevelopment`
 
----
+## Troubleshooting
 
-## ⏱️ Timeline Expectations
+**Not indexed after two weeks.** Re-check ownership verification, look for crawl errors
+in Search Console, confirm `robots.txt` is not blocking, and request indexing again.
 
-| Time Frame | What to Expect |
-|------------|----------------|
-| **1-3 days** | Google discovers your site |
-| **3-7 days** | Some pages indexed |
-| **2-4 weeks** | Most pages indexed |
-| **1-3 months** | Start ranking for "Yousef Bakr" |
-| **3-6 months** | Rank for "software engineer Egypt" |
+**Only the homepage is indexed.** Confirm the sitemap submitted cleanly and that every
+route is linked from somewhere in the navigation. Request the individual pages.
 
----
+**Nothing ranks for a generic role term.** Expected. That is not a target here, and
+pursuing it means writing content this brand does not publish.
 
-## 📊 Monitor Your Progress
+## What not to do
 
-### Tools to Use
+Nothing in search advice overrides the brand:
 
-1. **Google Search Console** (Free)
-   - Track impressions, clicks, position
-   - See which keywords bring traffic
-   - Monitor indexing status
+- Do not reintroduce the location to visible copy, titles, descriptions or keywords,
+  and do not add `geo.*` meta tags
+- Do not title a post around a city or nationality
+- Do not reintroduce a retired role noun — "Full-Stack Engineer", "Systems Analyst" and
+  "Cloud Architect" are out of metadata as much as out of prose
 
-2. **Google Analytics** (Free)
-   - Add tracking code to see visitors
-   - Understand user behavior
-
-3. **Bing Webmaster Tools** (Free)
-   - Don't forget Bing! Submit there too
-   - https://www.bing.com/webmasters
-
-### What to Check Weekly
-
-- Number of indexed pages
-- Search impressions
-- Average position for target keywords
-- Click-through rate (CTR)
-
----
-
-## 🎯 Keyword Optimization Strategy
-
-### Primary Keywords (Easiest to Rank)
-- "Yousef Bakr" ← Should be #1 in 2-4 weeks
-- "Yousef Bakr software engineer"
-- "Yousef Bakr portfolio"
-
-### Secondary Keywords (Medium Difficulty)
-- "software engineer Cairo"
-- "React developer Egypt"
-- "full-stack developer Egypt"
-- "Node.js engineer Cairo"
-
-### Long-tail Keywords (Good for Conversions)
-- "hire software engineer Egypt"
-- "React developer for hire Cairo"
-- "LMS developer Egypt"
-
----
-
-## 📝 Update Your index.html Meta Tags
-
-Add to `public/index.html` for even better SEO:
-
-```html
-<head>
-  <!-- Existing meta tags -->
-  
-  <!-- Add these for better local SEO -->
-  <meta name="geo.region" content="EG-C" />
-  <meta name="geo.placename" content="Cairo" />
-  <meta name="geo.position" content="30.0444;31.2357" />
-  <meta name="ICBM" content="30.0444, 31.2357" />
-  
-  <!-- Author -->
-  <meta name="author" content="Yousef Bakr" />
-  
-  <!-- Copyright -->
-  <meta name="copyright" content="Yousef Bakr" />
-</head>
+```bash
+npm run brand:check
 ```
 
----
-
-## 🔗 Quick Action Checklist
-
-**Do This Today:**
-- [ ] Deploy updated sitemap and robots.txt
-- [ ] Submit to Google Search Console
-- [ ] Request indexing for all pages
-- [ ] Add portfolio link to LinkedIn profile
-- [ ] Add portfolio link to GitHub bio
-- [ ] Share on social media with hashtags
-
-**This Week:**
-- [ ] Submit to Bing Webmaster Tools
-- [ ] Write a LinkedIn post about your portfolio
-- [ ] Share on Twitter with #WebDev #Egypt tags
-- [ ] Add to Dev.to profile
-
-**This Month:**
-- [ ] Write 1-2 blog posts with Egypt/Cairo mentions
-- [ ] Get 3-5 backlinks from developer communities
-- [ ] Monitor Google Search Console data
-- [ ] Optimize based on early results
-
----
-
-## 🆘 Troubleshooting
-
-### "My site isn't showing up after 2 weeks"
-
-1. Check if indexed: `site:yousef-bakr-s-portfolio.vercel.app`
-2. If not indexed:
-   - Verify Search Console ownership again
-   - Check for crawl errors in Search Console
-   - Make sure robots.txt isn't blocking Google
-   - Request indexing again
-
-### "I'm not ranking for 'software engineer Egypt'"
-
-This is normal! It takes 3-6 months for competitive keywords.
-Focus on:
-- Creating more content
-- Getting backlinks
-- Being patient
-
-### "Only homepage is indexed"
-
-- Check sitemap submission in Search Console
-- Request indexing for individual pages
-- Make sure all pages are linked from homepage
-- Wait 1-2 more weeks
-
----
-
-## 📞 Next Steps
-
-1. **Deploy your updated code** (sitemap + robots.txt fixes)
-2. **Set up Google Search Console** (15 minutes)
-3. **Request indexing** for all pages (10 minutes)
-4. **Share on social media** (5 minutes)
-5. **Add to LinkedIn/GitHub** (5 minutes)
-
-**Total time investment: ~45 minutes today = Permanent Google visibility!**
-
----
-
-Need help with any step? Let me know! 🚀
+enforces the first and third mechanically. The second needs eyes.

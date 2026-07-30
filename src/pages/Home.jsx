@@ -1,139 +1,60 @@
 import { useEffect, useMemo, useRef } from "react";
-import {
-  motion,
-  useMotionValue,
-  useMotionTemplate,
-  useSpring as useFramerSpring,
-} from "framer-motion";
-import { Typewriter } from "react-simple-typewriter";
-import { ArrowUpRight, Mail, Sparkles } from "lucide-react";
-import Tilt from "react-parallax-tilt";
+import { motion } from "framer-motion";
+import { ArrowUpRight, Mail } from "lucide-react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { useInView } from "react-intersection-observer";
-import { Canvas, useFrame } from "@react-three/fiber";
 import { Link } from "react-router-dom";
-import {
-  Float,
-  MeshDistortMaterial,
-  OrbitControls,
-  Sphere,
-  Stars,
-} from "@react-three/drei";
 import { useGesture } from "@use-gesture/react";
 import { useSpring as useButtonSpring, animated } from "@react-spring/web";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Seo from "../components/Seo";
 import { siteMeta } from "../config/seo";
+import { BRAND, PROOF_STACK } from "../config/brand";
 import { experienceTimeline } from "../data/experience";
+import GoldRule from "../components/GoldRule";
 
 const _motion = motion;
 const _animated = animated;
 
-const FloatingOrb = () => {
-  const meshRef = useRef(null);
-
-  useFrame((_, delta) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y += delta * 0.4;
-      meshRef.current.rotation.x += delta * 0.2;
-    }
-  });
-
-  return (
-    <Float speed={2} rotationIntensity={1.2} floatIntensity={1.5}>
-      <Sphere args={[1.4, 64, 64]} ref={meshRef}>
-        <MeshDistortMaterial
-          color="#a78bfa"
-          attach="material"
-          distort={0.4}
-          speed={2}
-          roughness={0.2}
-        />
-      </Sphere>
-    </Float>
-  );
-};
-
 const Home = () => {
-  const heroHighlights = useMemo(
-    () => [
-      { label: "GitHub repos", value: "51" },
-      { label: "Thumbnail-led cards", value: "10" },
-      { label: "Live demos", value: "3" },
-      { label: "Source-linked", value: "100%" },
-    ],
-    []
-  );
-
   const featuredProjects = useMemo(
     () => [
       {
+        title: "SafeStay",
+        copy: "Three-tier platform for verified student housing. Server-side state machines drive multi-party contract signing, so a half-signed contract cannot exist in the database.",
+        tags: ["NestJS", "Next.js", "Flutter", "PostgreSQL"],
+      },
+      {
+        title: "EduShift AI",
+        copy: "Configurable prompt-engineering platform with versioned AI simulations and automated competency scoring. One simulation became four production products.",
+        tags: ["TypeScript", "Next.js", "PostgreSQL", "Docker"],
+      },
+      {
         title: "Promptopia",
-        copy: "AI prompt-sharing platform built with Next.js, React, NextAuth, and MongoDB.",
+        copy: "AI prompt-sharing platform. NextAuth sessions over MongoDB, with the create/browse/manage loop kept to a single social feed.",
         tags: ["Next.js", "React", "NextAuth", "MongoDB"],
-        gradient: "from-orange-500/70 via-amber-500/70 to-fuchsia-500/70",
       },
       {
         title: "Blog Post",
-        copy: "Content dashboard with posts, users, and admin flows powered by React, Node.js, Express.js, and MongoDB.",
+        copy: "Content dashboard separating posts, users and admin flows behind an Express API rather than letting the client hold authorisation.",
         tags: ["React", "Node.js", "Express.js", "MongoDB"],
-        gradient: "from-fuchsia-500/70 via-cyan-500/70 to-indigo-500/70",
-      },
-      {
-        title: "E-commerce App",
-        copy: "Commerce storefront with responsive product browsing and cart flows built on React and Node.js.",
-        tags: ["React", "Node.js", "Express.js", "MongoDB"],
-        gradient: "from-emerald-500/70 via-cyan-500/70 to-blue-500/70",
-      },
-      {
-        title: "IMDB Clone",
-        copy: "Movie discovery interface with trending lists and API-driven cards built on Next.js.",
-        tags: ["Next.js", "React", "API Integration", "Tailwind CSS"],
-        gradient: "from-slate-800/80 via-indigo-700/70 to-slate-950/60",
       },
     ],
     []
   );
 
   const timeline = experienceTimeline;
-  const homeTimeline = useMemo(
-    () =>
-      timeline.map((item) => {
-        const roleTitle = item.companyLabel
-          ? item.title.replace(` · ${item.companyLabel}`, "")
-          : item.title;
-
-        return {
-          ...item,
-          roleTitle,
-        };
-      }),
-    [timeline]
-  );
 
   const homeSchema = useMemo(() => {
     const locale = (siteMeta.locale || "en_US").replace("_", "-");
-    const primaryImage = `${siteMeta.siteUrl}${siteMeta.profileImage}`;
     return [
       {
         "@type": "WebPage",
         "@id": `${siteMeta.siteUrl}/#home`,
         url: `${siteMeta.siteUrl}/`,
-        name: "Full-Stack Software Engineer Portfolio",
-        description:
-          "Explore the work of Yousef Bakr, a Cairo-based software engineer delivering LMS, simulation, and SaaS platforms across React, Next.js, Node.js, and AWS.",
+        name: `${BRAND.name} — ${BRAND.role}`,
+        description: BRAND.positioning,
         inLanguage: locale,
-        primaryImageOfPage: {
-          "@type": "ImageObject",
-          url: primaryImage,
-          caption: "Portrait of Yousef Bakr",
-        },
-        about: {
-          "@type": "Person",
-          name: "Yousef Bakr",
-          jobTitle: "Full-Stack Software Engineer & Systems Analyst",
-        },
       },
       {
         "@type": "BreadcrumbList",
@@ -151,15 +72,7 @@ const Home = () => {
 
   const cardsRef = useRef(null);
   const [gridRef] = useAutoAnimate({ duration: 240 });
-  const statsSectionRef = useRef(null);
-  const { ref: statsInViewRef, inView: statsInView } = useInView({
-    threshold: 0.3,
-    triggerOnce: true,
-  });
-  const setStatsSectionRef = (node) => {
-    statsSectionRef.current = node;
-    statsInViewRef(node);
-  };
+  const timelineRef = useRef(null);
 
   const [magneticSpring, magneticApi] = useButtonSpring(() => ({
     xys: [0, 0, 1],
@@ -172,7 +85,7 @@ const Home = () => {
       const target = event.currentTarget.getBoundingClientRect();
       const x = event.clientX - (target.left + target.width / 2);
       const y = event.clientY - (target.top + target.height / 2);
-      magneticApi.start({ xys: [x / 8, y / 8, 1.05] });
+      magneticApi.start({ xys: [x / 10, y / 10, 1.03] });
     },
     onHover: ({ active }) => {
       if (!active) {
@@ -184,54 +97,32 @@ const Home = () => {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
     const ctx = gsap.context(() => {
+      // One motion rule, 600ms ease-out, no bounce — see index.css.
       if (cardsRef.current) {
         gsap.from(".feature-card", {
           opacity: 0,
-          y: 64,
-          duration: 1,
-          ease: "power3.out",
-          stagger: 0.15,
-          scrollTrigger: {
-            trigger: cardsRef.current,
-            start: "top 80%",
-          },
+          y: 32,
+          duration: 0.6,
+          ease: "power2.out",
+          stagger: 0.12,
+          scrollTrigger: { trigger: cardsRef.current, start: "top 80%" },
         });
       }
 
-      if (statsSectionRef.current) {
+      if (timelineRef.current) {
         gsap.from(".timeline-step", {
-          x: -80,
           opacity: 0,
-          duration: 0.8,
-          stagger: 0.2,
-          scrollTrigger: {
-            trigger: statsSectionRef.current,
-            start: "top 75%",
-          },
+          y: 32,
+          duration: 0.6,
+          ease: "power2.out",
+          stagger: 0.12,
+          scrollTrigger: { trigger: timelineRef.current, start: "top 75%" },
         });
       }
     });
 
     return () => ctx.revert();
   }, []);
-
-  const cursorX = useMotionValue(50);
-  const cursorY = useMotionValue(50);
-  const smoothX = useFramerSpring(cursorX, { stiffness: 120, damping: 20 });
-  const smoothY = useFramerSpring(cursorY, { stiffness: 120, damping: 20 });
-  const spotlight = useMotionTemplate`radial-gradient(circle at ${smoothX}% ${smoothY}%, rgba(59,130,246,0.35), transparent 55%)`;
-
-  useEffect(() => {
-    const handlePointerMove = (event) => {
-      const x = (event.clientX / window.innerWidth) * 100;
-      const y = (event.clientY / window.innerHeight) * 100;
-      cursorX.set(x);
-      cursorY.set(y);
-    };
-
-    window.addEventListener("pointermove", handlePointerMove);
-    return () => window.removeEventListener("pointermove", handlePointerMove);
-  }, [cursorX, cursorY]);
 
   const rippleTransform = magneticSpring.xys.to(
     (x, y, scale) => `translate3d(${x}px, ${y}px, 0) scale(${scale})`
@@ -240,222 +131,188 @@ const Home = () => {
   return (
     <>
       <Seo
-        title="Full-Stack Software Engineer & Systems Analyst"
-        description="Yousef Bakr architected LMS platforms, simulation systems, SaaS apps, and cloud-native services across React.js, Next.js, Node.js, Express.js, SQL/NoSQL, AWS, Docker, Kubernetes, and AI integrations."
+        title={BRAND.role}
+        description={BRAND.positioning}
         keywords={[
-          "Full-stack software engineer",
-          "Systems analyst for LMS and simulations",
-          "React, Next.js, Node.js developer",
-          "AWS Docker Kubernetes engineer",
+          "software engineer",
+          "architecture decisions",
+          "NestJS",
+          "Next.js",
+          "system design",
         ]}
         url="/"
         schema={homeSchema}
       />
-      <div className="bg-slate-950 text-white">
-        <section className="relative isolate overflow-hidden px-6 py-24 sm:px-10 lg:flex lg:items-center lg:gap-16 lg:px-16">
-          <motion.div
-            className="absolute inset-0 -z-10 opacity-90 blur-3xl"
-            style={{ backgroundImage: spotlight }}
-          />
-          <div className="space-y-8 text-balance lg:max-w-xl">
-            <p className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm uppercase tracking-[0.3em] text-sky-300">
-              <Sparkles size={16} />
-              Software engineering 2025
-            </p>
-            <div className="space-y-4">
+      <div className="bg-ink text-slate-body">
+        {/* ---------------------------------------------------------------
+            Hero. Section 5's three devices carry the identity: the stack
+            rail, the gold rule under the headline, and the footer strip
+            (which lives in Footer.jsx). Purple appears only as the bloom.
+            --------------------------------------------------------------- */}
+        <section className="relative isolate overflow-hidden px-6 py-24 sm:px-10 lg:px-16">
+          <div className="ybz-bloom pointer-events-none absolute inset-0 -z-10" />
+
+          <div className="mx-auto max-w-5xl space-y-8">
+            <p className="ybz-eyebrow">{BRAND.descriptorLockup}</p>
+
+            <div className="space-y-6">
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                className="text-4xl font-semibold leading-tight text-white sm:text-5xl lg:text-6xl"
+                transition={{ duration: 0.6, ease: [0, 0, 0.2, 1] }}
+                className="max-w-4xl font-display text-4xl leading-[1.15] text-bone sm:text-5xl lg:text-6xl"
               >
-                Building LMS, simulation, and SaaS systems end to end.
+                {BRAND.positioning}
               </motion.h1>
-              <p className="text-lg text-slate-300 sm:text-xl">
-                <Typewriter
-                  words={[
-                    "Software engineer shipping LMS and simulation systems with React.js, Next.js, and Express.js.",
-                    "I pair Node.js, Socket.io, Kafka, and AI integrations to sync data over RESTful and GraphQL APIs.",
-                    "MySQL, SQL, MongoDB, PostgreSQL, AWS, Docker, Kubernetes, and disciplined OOP keep releases production ready.",
-                  ]}
-                  loop={0}
-                  cursor
-                  cursorStyle="_"
-                  typeSpeed={40}
-                  deleteSpeed={18}
-                  delaySpeed={2200}
-                />
+
+              <GoldRule />
+
+              <p className="max-w-2xl text-lg leading-8 sm:text-xl">
+                {BRAND.tagline} I work across{" "}
+                <span className="text-bone">{BRAND.stackFull}</span> — but the
+                stack is the least interesting part. What a boundary costs when
+                it goes in the wrong place is the part worth writing down.
               </p>
             </div>
 
-            <div className="flex flex-wrap gap-4">
-              <animated.button
+            <div className="flex flex-wrap items-center gap-4">
+              {/* The one gold action per screen. */}
+              <animated.div
                 {...bindMagnetic()}
                 style={{ transform: rippleTransform }}
-                className="btn btn-primary gap-2 border-none bg-gradient-to-r from-sky-500 to-indigo-500 text-base font-semibold text-white shadow-lg shadow-indigo-500/30"
+                className="inline-flex"
               >
-                <Link
-                  to="/lets-talk"
-                  className="group flex items-center gap-3 text-base font-semibold tracking-wide"
-                  aria-label="Yousef Bakr home"
-                >
-                  Let's build together
+                <Link to="/lets-talk" className="ybz-btn-primary">
+                  Start a conversation
                   <ArrowUpRight size={18} />
                 </Link>
-              </animated.button>
-              <motion.a
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.98 }}
-                className="btn border-white/20 bg-white/10 text-white backdrop-blur"
-              >
-                <Link
-                  to="/contact"
-                  className="group flex items-center gap-3 text-base font-semibold tracking-wide"
-                  aria-label="Yousef Bakr home"
-                >
-                  <Mail size={18} />
-                  Contact
-                </Link>
-              </motion.a>
+              </animated.div>
+
+              <Link to="/contact" className="ybz-btn-ghost">
+                <Mail size={18} />
+                Contact
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* ---------------------------------------------------------------
+            Proof. Every line carries its source — that is what turns a
+            claim into evidence, and section 8 accepts nothing less.
+            --------------------------------------------------------------- */}
+        <section className="border-y border-edge bg-obsidian px-6 py-20 sm:px-10 lg:px-16">
+          <div className="mx-auto max-w-6xl space-y-10">
+            <div className="space-y-4">
+              <p className="ybz-eyebrow">Proof</p>
+              <h2 className="max-w-3xl font-display text-3xl text-bone sm:text-4xl">
+                Four claims, each with a source.
+              </h2>
+              <GoldRule />
             </div>
 
-            <dl className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {heroHighlights.map((item) => (
+            <dl className="grid gap-6 md:grid-cols-2">
+              {PROOF_STACK.map((item) => (
                 <motion.div
-                  key={item.label}
+                  key={item.source}
+                  initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  initial={{ opacity: 0, y: 16 }}
-                  transition={{ duration: 0.6 }}
-                  className="rounded-2xl border border-white/10 bg-white/5 p-4"
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 0.6, ease: [0, 0, 0.2, 1] }}
+                  className="ybz-card p-6"
                 >
-                  <dt className="text-sm uppercase text-slate-400">
-                    {item.label}
-                  </dt>
-                  <dd className="text-2xl font-semibold text-white">
-                    {item.value}
+                  <div className="flex items-baseline gap-4">
+                    <span className="ybz-figure text-3xl">{item.figure}</span>
+                    <span className="ybz-meta">{item.figureLabel}</span>
+                  </div>
+                  <dt className="mt-4 leading-7 text-bone">{item.claim}</dt>
+                  <dd className="ybz-meta mt-3 normal-case tracking-normal">
+                    {item.source}
                   </dd>
                 </motion.div>
               ))}
             </dl>
           </div>
-
-          <div className="mt-16 flex flex-1 flex-col gap-8 lg:mt-0">
-            <div className="relative h-72 overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-              <Canvas camera={{ position: [0, 0, 4] }}>
-                <ambientLight intensity={0.3} />
-                <pointLight position={[10, 10, 10]} intensity={0.6} />
-                <Stars radius={8} depth={20} count={500} factor={2} fade />
-                <FloatingOrb />
-                <OrbitControls
-                  enableZoom={false}
-                  autoRotate
-                  autoRotateSpeed={0.6}
-                />
-              </Canvas>
-            </div>
-          </div>
         </section>
 
+        {/* --------------------------------------------------------------- */}
         <section
           ref={cardsRef}
-          className="space-y-10 px-6 pb-16 pt-6 sm:px-10 lg:px-16"
+          className="space-y-10 px-6 py-20 sm:px-10 lg:px-16"
         >
-          <div className="space-y-3">
-            <p className="text-sm uppercase tracking-[0.3em] text-sky-300">
-              Featured GitHub work
-            </p>
-            <h2 className="text-3xl font-semibold text-white sm:text-4xl">
-              The portfolio&apos;s strongest work, organized around the four GitHub repos you asked to feature.
+          <div className="mx-auto max-w-6xl space-y-4">
+            <p className="ybz-eyebrow">Selected work</p>
+            <h2 className="max-w-3xl font-display text-3xl text-bone sm:text-4xl">
+              What I built, and the decision inside it.
             </h2>
-            <p className="text-slate-400">
-              Promptopia, Blog Post, E-commerce App, and IMDB Clone keep the portfolio focused on the GitHub repos you asked to feature.
-            </p>
+            <GoldRule />
           </div>
 
-          <div ref={gridRef} className="grid gap-6 md:grid-cols-2 xl:grid-cols-2">
+          <div
+            ref={gridRef}
+            className="mx-auto grid max-w-6xl gap-6 md:grid-cols-2"
+          >
             {featuredProjects.map((project) => (
-              <Tilt key={project.title} glareEnable className="h-full">
-                <motion.article
-                  whileHover={{ y: -6 }}
-                  className={`feature-card flex h-full flex-col rounded-3xl border border-white/10 bg-gradient-to-br ${project.gradient} p-6 text-white`}
-                >
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-xl font-semibold">{project.title}</h3>
-                    <Sparkles className="text-white/70" size={20} />
-                  </div>
-                  <p className="mt-4 text-sm text-white/90">{project.copy}</p>
-                  <div className="mt-6 flex flex-wrap gap-2 text-sm font-medium">
-                    {project.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="rounded-full bg-white/20 px-3 py-1 text-white/90"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </motion.article>
-              </Tilt>
+              <article
+                key={project.title}
+                className="feature-card ybz-card ybz-card-interactive flex h-full flex-col p-6"
+              >
+                <h3 className="font-display text-xl text-bone">
+                  {project.title}
+                </h3>
+                <p className="mt-4 flex-1 text-sm leading-7">{project.copy}</p>
+                <div className="mt-6 flex flex-wrap gap-2">
+                  {project.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="border border-edge px-3 py-1 font-mono text-xs text-muted"
+                      style={{ borderRadius: "var(--ybz-r-sm)" }}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </article>
             ))}
+          </div>
+
+          <div className="mx-auto max-w-6xl">
+            <Link
+              to="/projects"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--ybz-accent-type)] transition-opacity hover:opacity-80"
+            >
+              All projects
+              <ArrowUpRight size={16} />
+            </Link>
           </div>
         </section>
 
+        {/* --------------------------------------------------------------- */}
         <section
-          ref={setStatsSectionRef}
-          className="space-y-12 px-6 pb-24 sm:px-10 lg:px-16"
+          ref={timelineRef}
+          className="border-t border-edge bg-obsidian px-6 py-20 sm:px-10 lg:px-16"
         >
-          <div className="grid gap-10 lg:grid-cols-2">
-            <div className="space-y-6">
-              <h2 className="text-3xl font-semibold sm:text-4xl">
-                Engineered for uptime, insight, and user trust.
+          <div className="mx-auto max-w-6xl space-y-10">
+            <div className="space-y-4">
+              <p className="ybz-eyebrow">Now</p>
+              <h2 className="max-w-3xl font-display text-3xl text-bone sm:text-4xl">
+                Where the work happens.
               </h2>
-              <p className="text-slate-400">
-                I move between systems analysis, API design, and experience craft:
-                diagramming event flows, modeling data in SQL or MongoDB, wiring
-                Node.js/Express.js or Next.js routes, then layering React, Three.js,
-                and GSAP motion so dashboards, LMS portals, and simulated workspaces
-                feel intuitive yet auditable.
-              </p>
-
-              <div className="grid gap-6 sm:grid-cols-2">
-                {[
-                  { label: "APIs & services shipped", value: 120 },
-                  { label: "Realtime sims / twins delivered", value: 14 },
-                  { label: "LMS & training launches", value: 9 },
-                  { label: "Avg. uptime", value: "99.98%" },
-                ].map((stat, index) => (
-                  <motion.div
-                    key={stat.label}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={
-                      statsInView
-                        ? { opacity: 1, y: 0, transition: { delay: index * 0.1 } }
-                        : {}
-                    }
-                    className="rounded-2xl border border-white/5 bg-white/5 p-5"
-                  >
-                    <p className="text-sm uppercase text-slate-400">
-                      {stat.label}
-                    </p>
-                    <p className="text-3xl font-semibold text-white">
-                      {statsInView && typeof stat.value === "number"
-                        ? `${stat.value}+`
-                        : stat.value}
-                    </p>
-                  </motion.div>
-                ))}
-              </div>
+              <GoldRule />
             </div>
 
-            <div className="space-y-6">
-              {homeTimeline.map((item) => (
-                <div
-                  key={item.title}
-                  className="timeline-step rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur"
-                >
-                  {item.companyLabel && (
-                    <div className="mb-4 flex items-center gap-3">
-                      <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-white p-2 shadow-lg shadow-sky-400/15">
+            <div className="grid gap-6 lg:grid-cols-2">
+              {timeline.map((item) => (
+                <div key={item.title} className="timeline-step ybz-card p-6">
+                  <div className="mb-5 flex items-center gap-4">
+                    {item.companyLogo ? (
+                      <div
+                        // A dedicated plate token, not --ybz-bone: bone inverts
+                        // to midnight in light mode, and these third-party logos
+                        // are drawn for a light ground. Never pure white either
+                        // — section 3.5 rule 4.
+                        className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden border border-edge bg-logo-plate p-2"
+                        style={{ borderRadius: "var(--ybz-r-sm)" }}
+                      >
                         <img
                           src={item.companyLogo}
                           alt={`${item.companyLabel} logo`}
@@ -463,21 +320,32 @@ const Home = () => {
                           loading="lazy"
                         />
                       </div>
-                      <div>
-                        <p className="text-sm font-semibold uppercase tracking-[0.3em] text-white">
-                          {item.companyLabel}
-                        </p>
-                        <p className="text-xs uppercase tracking-[0.35em] text-slate-400">
-                          Current experience
-                        </p>
+                    ) : (
+                      <div
+                        className="flex h-14 w-14 shrink-0 items-center justify-center border border-hairline font-mono text-sm text-[var(--ybz-accent-type)]"
+                        style={{
+                          borderRadius: "var(--ybz-r-sm)",
+                          letterSpacing: "0.14em",
+                        }}
+                      >
+                        {item.companyBadge}
                       </div>
+                    )}
+                    <div className="min-w-0">
+                      <p className="font-display text-lg text-bone">
+                        {item.companyLabel}
+                      </p>
+                      <p className="ybz-meta">{item.period}</p>
                     </div>
-                  )}
-                  <p className="text-xs uppercase tracking-[0.3em] text-slate-400">
-                    {item.period}
+                  </div>
+
+                  <h3 className="font-display text-lg text-bone">
+                    {item.role}
+                  </h3>
+                  <p className="mt-2 text-sm leading-7">{item.detail}</p>
+                  <p className="ybz-meta mt-4 normal-case tracking-normal">
+                    {item.source}
                   </p>
-                  <h3 className="mt-2 text-xl font-semibold">{item.roleTitle}</h3>
-                  <p className="mt-2 text-slate-300">{item.detail}</p>
                 </div>
               ))}
             </div>

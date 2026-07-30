@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Search, Filter, X } from 'lucide-react';
 import BlogCard from '../components/BlogCard';
-import SEOHead from '../components/SEOHead';
+import Seo from '../components/Seo';
 import { getBlogPosts, getAllTags, filterBlogsByTag, searchBlogs } from '../utils/blogUtils';
 import { motion } from 'framer-motion';
+
+const _motion = motion;
 
 /**
  * Blog listing page
@@ -53,18 +55,17 @@ const BlogList = () => {
 
     return (
         <>
-            <SEOHead
-                title="Blog - Yousef Bakr | AI, DevOps & Software Engineering"
-                description="Read articles about AI engineering, DevOps practices, microservices architecture, and modern software development by Yousef Bakr."
-                keywords="blog, AI, DevOps, software engineering, microservices, Node.js, Python, tutorials"
-                canonicalUrl="/blog"
-                ogImage="/images/blog/blog-cover.jpg"
+            <Seo
+                title="Writing"
+                description="The decisions rather than the tools — why a boundary went where it went, what it cost when it went in the wrong place, and what the traces looked like afterwards."
+                keywords={["architecture decisions", "system design", "trade-offs", "NestJS", "Next.js"]}
+                url="/blog"
             />
 
-            <div className="min-h-screen bg-slate-950 text-white">
+            <div className="min-h-screen bg-ink text-bone">
                 {/* Hero Section */}
                 <section className="relative py-20 px-4 overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-transparent to-blue-500/10" />
+                    <div className="absolute inset-0" />
 
                     <div className="max-w-7xl mx-auto relative z-10">
                         <motion.div
@@ -73,10 +74,10 @@ const BlogList = () => {
                             transition={{ duration: 0.6 }}
                             className="text-center"
                         >
-                            <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+                            <h1 className="text-5xl md:text-6xl font-bold mb-6 text-bone">
                                 Blog & Articles
                             </h1>
-                            <p className="text-xl text-slate-400 max-w-3xl mx-auto">
+                            <p className="text-xl text-muted max-w-3xl mx-auto">
                                 Insights on AI, DevOps, software architecture, and modern development practices
                             </p>
                         </motion.div>
@@ -86,24 +87,24 @@ const BlogList = () => {
                 {/* Filters Section */}
                 <section className="px-4 pb-8">
                     <div className="max-w-7xl mx-auto">
-                        <div className="bg-slate-900 rounded-2xl p-6 border border-slate-800">
+                        <div className="bg-obsidian rounded-2xl p-6 border border-edge">
                             {/* Search Bar */}
                             <div className="mb-6">
                                 <div className="relative">
-                                    <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-500" size={20} />
+                                    <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted" size={20} />
                                     <input
                                         type="text"
                                         placeholder="Search articles..."
                                         value={searchQuery}
                                         onChange={(e) => setSearchQuery(e.target.value)}
-                                        className="w-full pl-12 pr-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition-colors"
+                                        className="w-full pl-12 pr-4 py-3 bg-card border border-edge rounded-lg text-bone placeholder:text-muted focus:outline-none focus:border-hairline transition-colors"
                                     />
                                 </div>
                             </div>
 
                             {/* Tag Filters */}
                             <div className="flex items-center gap-3 flex-wrap">
-                                <div className="flex items-center gap-2 text-slate-400">
+                                <div className="flex items-center gap-2 text-muted">
                                     <Filter size={18} />
                                     <span className="text-sm font-medium">Filter by:</span>
                                 </div>
@@ -111,8 +112,8 @@ const BlogList = () => {
                                 <button
                                     onClick={() => handleTagClick('all')}
                                     className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${selectedTag === 'all'
-                                            ? 'bg-cyan-500 text-white'
-                                            : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
+                                            ? 'bg-card text-bone'
+                                            : 'bg-card text-muted hover:border-hairline'
                                         }`}
                                 >
                                     All
@@ -123,8 +124,8 @@ const BlogList = () => {
                                         key={tag}
                                         onClick={() => handleTagClick(tag)}
                                         className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${selectedTag === tag
-                                                ? 'bg-cyan-500 text-white'
-                                                : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
+                                                ? 'bg-card text-bone'
+                                                : 'bg-card text-muted hover:border-hairline'
                                             }`}
                                     >
                                         {tag}
@@ -134,7 +135,7 @@ const BlogList = () => {
                                 {(selectedTag !== 'all' || searchQuery) && (
                                     <button
                                         onClick={clearFilters}
-                                        className="ml-auto px-4 py-2 rounded-lg text-sm font-medium bg-slate-800 text-slate-400 hover:bg-slate-700 transition-all flex items-center gap-2"
+                                        className="ml-auto px-4 py-2 rounded-lg text-sm font-medium bg-card text-muted hover:border-hairline transition-all flex items-center gap-2"
                                     >
                                         <X size={16} />
                                         Clear Filters
@@ -150,11 +151,11 @@ const BlogList = () => {
                     <div className="max-w-7xl mx-auto">
                         {isLoading ? (
                             <div className="flex items-center justify-center py-20">
-                                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-cyan-500"></div>
+                                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-hairline"></div>
                             </div>
                         ) : filteredBlogs.length > 0 ? (
                             <>
-                                <div className="mb-6 text-slate-400">
+                                <div className="mb-6 text-muted">
                                     Showing {filteredBlogs.length} article{filteredBlogs.length !== 1 ? 's' : ''}
                                 </div>
                                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -166,11 +167,11 @@ const BlogList = () => {
                         ) : (
                             <div className="text-center py-20">
                                 <div className="text-6xl mb-4">📝</div>
-                                <h3 className="text-2xl font-bold text-white mb-2">No articles found</h3>
-                                <p className="text-slate-400 mb-6">Try adjusting your search or filters</p>
+                                <h3 className="text-2xl font-bold text-bone mb-2">No articles found</h3>
+                                <p className="text-muted mb-6">Try adjusting your search or filters</p>
                                 <button
                                     onClick={clearFilters}
-                                    className="px-6 py-3 bg-cyan-500 hover:bg-cyan-600 text-white rounded-lg transition-colors"
+                                    className="px-6 py-3 bg-card hover:border-hairline text-bone rounded-lg transition-colors"
                                 >
                                     Clear Filters
                                 </button>

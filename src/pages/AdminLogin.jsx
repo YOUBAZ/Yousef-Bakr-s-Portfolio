@@ -4,6 +4,8 @@ import { Lock, Eye, EyeOff } from 'lucide-react';
 import { authenticateAdmin } from '../utils/blogUtils';
 import { motion } from 'framer-motion';
 
+const _motion = motion;
+
 /**
  * Admin login page
  */
@@ -35,38 +37,38 @@ const AdminLogin = () => {
     };
 
     return (
-        <div className="min-h-screen bg-slate-950 text-white flex items-center justify-center px-4">
+        <div className="min-h-screen bg-ink text-bone flex items-center justify-center px-4">
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
                 className="w-full max-w-md"
             >
-                <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl p-8 border border-slate-700 shadow-2xl">
+                <div className="rounded-2xl p-8 border border-edge shadow-2xl">
                     {/* Icon */}
                     <div className="flex justify-center mb-6">
-                        <div className="p-4 bg-cyan-500/10 rounded-full border border-cyan-500/20">
-                            <Lock size={32} className="text-cyan-400" />
+                        <div className="p-4 bg-card rounded-full border border-hairline">
+                            <Lock size={32} className="text-accent" />
                         </div>
                     </div>
 
                     {/* Title */}
                     <h1 className="text-3xl font-bold text-center mb-2">Admin Login</h1>
-                    <p className="text-slate-400 text-center mb-8">
+                    <p className="text-muted text-center mb-8">
                         Enter your password to access the admin panel
                     </p>
 
                     {/* Error Message */}
                     {error && (
-                        <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-lg">
-                            <p className="text-red-400 text-sm">{error}</p>
+                        <div className="mb-6 p-4 bg-card border border-hairline rounded-lg">
+                            <p className="text-muted text-sm">{error}</p>
                         </div>
                     )}
 
                     {/* Login Form */}
                     <form onSubmit={handleSubmit}>
                         <div className="mb-6">
-                            <label htmlFor="password" className="block text-sm font-medium text-slate-300 mb-2">
+                            <label htmlFor="password" className="block text-sm font-medium text-slate-body mb-2">
                                 Password
                             </label>
                             <div className="relative">
@@ -75,7 +77,7 @@ const AdminLogin = () => {
                                     id="password"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
-                                    className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition-colors pr-12"
+                                    className="w-full px-4 py-3 bg-card border border-edge rounded-lg text-bone placeholder:text-muted focus:outline-none focus:border-hairline transition-colors pr-12"
                                     placeholder="Enter your password"
                                     required
                                     autoFocus
@@ -83,7 +85,7 @@ const AdminLogin = () => {
                                 <button
                                     type="button"
                                     onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-white transition-colors"
+                                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted hover:text-bone transition-colors"
                                 >
                                     {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                                 </button>
@@ -93,11 +95,11 @@ const AdminLogin = () => {
                         <button
                             type="submit"
                             disabled={isLoading}
-                            className="w-full py-3 bg-cyan-500 hover:bg-cyan-600 text-white font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                            className="w-full py-3 bg-card hover:border-hairline text-bone font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                         >
                             {isLoading ? (
                                 <>
-                                    <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white"></div>
+                                    <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-hairline"></div>
                                     Logging in...
                                 </>
                             ) : (
@@ -107,7 +109,7 @@ const AdminLogin = () => {
                     </form>
 
                     {/* Help Text */}
-                    <p className="text-xs text-slate-500 text-center mt-6">
+                    <p className="text-xs text-muted text-center mt-6">
                         Password is set in your environment variables (VITE_ADMIN_PASSWORD)
                     </p>
                 </div>

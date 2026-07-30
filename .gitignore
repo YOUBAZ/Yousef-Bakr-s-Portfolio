@@ -30,3 +30,8 @@ dist-ssr
 
 # Vercel
 .vercel
+
+# Brand kit working folder — the source of truth lives outside this repo.
+# brand.json and BRAND.md carry a phone number and internal strategy notes;
+# they must not be published here. See CLAUDE.md for the rules that do apply.
+v5/

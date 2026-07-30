@@ -1,15 +1,15 @@
 import { useState, useEffect, lazy, Suspense } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { HelmetProvider } from "react-helmet-async";
 import Navbar from "./components/Navbar";
 import MobileMenu from "./components/MobileMenu";
 import ErrorBoundary from "./components/ErrorBoundary";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
+import StackRail from "./components/StackRail";
 import Loading from "./components/Loading";
 import ProtectedRoute from "./components/ProtectedRoute";
-import BlogEditor from "./components/BlogEditor";
 import { validateEnvVars } from "./utils/validateEnv";
+import useTheme from "./hooks/useTheme";
 
 // Lazy load all page components for code splitting
 const Home = lazy(() => import("./pages/Home"));
@@ -24,10 +24,11 @@ const BlogPost = lazy(() => import("./pages/BlogPost"));
 const AdminLogin = lazy(() => import("./pages/AdminLogin"));
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
 const NotFound = lazy(() => import("./pages/NotFound"));
+const BlogEditor = lazy(() => import("./components/BlogEditor"));
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
   // Validate environment variables on mount
   useEffect(() => {
@@ -38,84 +39,83 @@ function App() {
     ]);
   }, []);
 
-  // Simulate loading time
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1500);
-
-    return () => clearTimeout(timer);
-  }, []);
-
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen((prev) => !prev);
   };
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
   return (
     <ErrorBoundary>
-      <HelmetProvider>
-        <Router>
-          <div className="min-h-screen bg-slate-950 text-white">
-            <Navbar toggleMobileMenu={toggleMobileMenu} />
+      <Router>
+        <div className="min-h-screen bg-ink text-slate-body">
+          {/* Seven nav items sit before the content on every page. Without this a
+              keyboard or screen-reader user tabs through all of them each time. */}
+          <a href="#main" className="ybz-skip-link">
+            Skip to content
+          </a>
 
-            <MobileMenu isOpen={isMobileMenuOpen} toggleMenu={toggleMobileMenu} />
+          {/* One rail per page, pinned to the viewport edge, doubling as a
+              scroll-progress indicator — section 5's second job for the device. */}
+          <StackRail fixed progress animate={false} />
 
-            <main className="pt-20">
-              <Suspense fallback={<Loading />}>
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/projects" element={<Projects />} />
-                  <Route path="/certificates" element={<Certificates />} />
-                  <Route path="/about" element={<About />} />
-                  <Route path="/contact" element={<Contact />} />
-                  <Route path="/lets-talk" element={<LetsTalk />} />
-                  <Route path="/cv" element={<Cv />} />
+          <Navbar
+            toggleMobileMenu={toggleMobileMenu}
+            theme={theme}
+            toggleTheme={toggleTheme}
+          />
 
-                  {/* Blog Routes */}
-                  <Route path="/blog" element={<BlogList />} />
-                  <Route path="/blog/:id" element={<BlogPost />} />
+          <MobileMenu isOpen={isMobileMenuOpen} toggleMenu={toggleMobileMenu} />
 
-                  {/* Admin Routes */}
-                  <Route path="/admin/login" element={<AdminLogin />} />
-                  <Route
-                    path="/admin/dashboard"
-                    element={
-                      <ProtectedRoute>
-                        <AdminDashboard />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/admin/blog/new"
-                    element={
-                      <ProtectedRoute>
-                        <BlogEditor mode="create" />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/admin/blog/edit/:id"
-                    element={
-                      <ProtectedRoute>
-                        <BlogEditor mode="edit" />
-                      </ProtectedRoute>
-                    }
-                  />
+          <main id="main" className="pt-20">
+            <Suspense fallback={<Loading />}>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/projects" element={<Projects />} />
+                <Route path="/certificates" element={<Certificates />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/lets-talk" element={<LetsTalk />} />
+                <Route path="/cv" element={<Cv />} />
 
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </Suspense>
-            </main>
+                {/* Blog Routes */}
+                <Route path="/blog" element={<BlogList />} />
+                <Route path="/blog/:id" element={<BlogPost />} />
 
-            <ScrollToTop />
-            <Footer />
-          </div>
-        </Router>
-      </HelmetProvider>
+                {/* Admin Routes */}
+                <Route path="/admin/login" element={<AdminLogin />} />
+                <Route
+                  path="/admin/dashboard"
+                  element={
+                    <ProtectedRoute>
+                      <AdminDashboard />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/blog/new"
+                  element={
+                    <ProtectedRoute>
+                      <BlogEditor mode="create" />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/blog/edit/:id"
+                  element={
+                    <ProtectedRoute>
+                      <BlogEditor mode="edit" />
+                    </ProtectedRoute>
+                  }
+                />
+
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
+          </main>
+
+          <ScrollToTop />
+          <Footer />
+        </div>
+      </Router>
     </ErrorBoundary>
   );
 }

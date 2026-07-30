@@ -10,6 +10,8 @@ import {
 import Seo from "../components/Seo";
 import { siteMeta } from "../config/seo";
 
+const _motion = motion;
+
 const CertificateMedia = ({ certificate, onSelectImage }) => {
   if (certificate.type !== "image" || !certificate.image) {
     return null;
@@ -20,7 +22,7 @@ const CertificateMedia = ({ certificate, onSelectImage }) => {
   };
 
   return (
-    <div className="relative aspect-[4/3] w-full max-w-full overflow-hidden rounded-2xl border border-white/10 bg-slate-900">
+    <div className="relative aspect-[4/3] w-full max-w-full overflow-hidden rounded-2xl border border-edge bg-obsidian">
       <img
         src={certificate.image}
         alt={certificate.title}
@@ -29,7 +31,7 @@ const CertificateMedia = ({ certificate, onSelectImage }) => {
       />
       <button
         onClick={handleView}
-        className="absolute bottom-4 right-4 inline-flex items-center gap-2 rounded-full bg-slate-900/80 px-3 py-2 text-xs font-semibold text-white shadow-lg backdrop-blur transition hover:bg-slate-900"
+        className="absolute bottom-4 right-4 inline-flex items-center gap-2 rounded-full bg-obsidian/80 px-3 py-2 text-xs font-semibold text-bone shadow-lg backdrop-blur transition hover:bg-obsidian"
       >
         <ImageIcon size={14} />
         View
@@ -152,37 +154,37 @@ const Certificates = () => {
         url="/certificates"
         schema={certificateSchema}
       />
-      <div className="bg-slate-950 text-white">
+      <div className="bg-ink text-bone">
         <section className="px-6 pt-24 pb-12 sm:px-10 lg:px-16">
-          <div className="grid gap-10 rounded-3xl border border-white/10 bg-gradient-to-br from-slate-900 to-slate-950 p-6 shadow-2xl shadow-slate-900/30 lg:grid-cols-[1.1fr,0.9fr] lg:p-10">
+          <div className="grid gap-10 rounded-3xl border border-edge p-6 shadow-2xl lg:grid-cols-[1.1fr,0.9fr] lg:p-10">
           <motion.div
             className="space-y-6"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <p className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.4em] text-sky-300">
+            <p className="inline-flex items-center gap-2 rounded-full border border-edge bg-card px-4 py-2 text-xs uppercase tracking-[0.4em] text-accent">
               <BadgeCheck size={16} />
               Credentials
             </p>
             <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">
               Certified growth across software engineering, cloud, LMS, and simulations.
             </h1>
-            <p className="text-slate-300">
+            <p className="text-slate-body">
               A collection of verified badges, diplomas, and completion
               certificates from ALX, IBM, Coursera, and more covering software
               development, data/AI, AWS cloud, LMS strategy, simulation design, and business operations.
             </p>
           </motion.div>
 
-          <div className="rounded-3xl border border-white/10 bg-white/5 p-6 text-sm text-slate-300">
-            <p className="text-xs uppercase tracking-[0.35em] text-slate-400">
+          <div className="rounded-3xl border border-edge bg-card p-6 text-sm text-slate-body">
+            <p className="text-xs uppercase tracking-[0.35em] text-muted">
               Highlights
             </p>
             <ul className="mt-4 space-y-3">
-              <li>- Multi-disciplinary credentials spanning full-stack engineering, cloud, and LMS innovation.</li>
-              <li>- Verified by leading platforms (ALX, IBM Skillbuild, Coursera, edX).</li>
-              <li>- Constant upskilling in simulations, AI integrations, product strategy, and communication.</li>
+              <li>Issued by ALX, IBM SkillsBuild, Cisco, Coursera and edX — each links to its issuer.</li>
+              <li>Best Team Award, DECI Bootcamp — IBM, 2023.</li>
+              <li>Coverage spans engineering, cloud and entrepreneurship.</li>
             </ul>
           </div>
         </div>
@@ -196,8 +198,8 @@ const Certificates = () => {
               onClick={() => setSelectedCategory(category)}
               className={`rounded-full border px-4 py-2 text-sm font-medium transition ${
                 selectedCategory === category
-                  ? "border-sky-400 bg-sky-500/20 text-white"
-                  : "border-white/15 text-slate-300 hover:border-sky-400/60 hover:text-white"
+                  ? "border-hairline bg-card/20 text-bone"
+                  : "border-edge text-slate-body hover:border-hairline hover:text-bone"
               }`}
             >
               {category === "all" ? "All" : category}
@@ -208,7 +210,7 @@ const Certificates = () => {
 
       <section className="px-6 pb-16 sm:px-10 lg:px-16">
         {error && (
-          <div className="rounded-3xl border border-rose-500/40 bg-rose-500/10 p-6 text-center text-rose-200">
+          <div className="rounded-3xl border border-hairline bg-card p-6 text-center text-muted">
             {error}
           </div>
         )}
@@ -220,9 +222,9 @@ const Certificates = () => {
             Array.from({ length: 6 }).map((_, index) => (
               <div
                 key={`skeleton-${index}`}
-                className="h-72 rounded-3xl border border-white/10 bg-white/5"
+                className="h-72 rounded-3xl border border-edge bg-card"
               >
-                <div className="h-full w-full animate-pulse rounded-3xl bg-white/10" />
+                <div className="h-full w-full animate-pulse rounded-3xl bg-card" />
               </div>
             ))}
 
@@ -230,7 +232,7 @@ const Certificates = () => {
             visibleImageCertificates.map((certificate) => (
               <motion.article
                 key={certificate.id}
-                className="group flex h-full w-full min-w-0 flex-col rounded-3xl border border-white/10 bg-white/5 p-4"
+                className="group flex h-full w-full min-w-0 flex-col rounded-3xl border border-edge bg-card p-4"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.2 }}
@@ -241,13 +243,13 @@ const Certificates = () => {
                   onSelectImage={() => setSelectedCertificate(certificate)}
                 />
                 <div className="mt-4 space-y-1">
-                  <p className="text-xs uppercase tracking-[0.35em] text-slate-400">
+                  <p className="text-xs uppercase tracking-[0.35em] text-muted">
                     {certificate.category}
                   </p>
                   <h3 className="text-lg font-semibold break-words">
                     {certificate.title}
                   </h3>
-                  <p className="text-sm text-slate-400">
+                  <p className="text-sm text-muted">
                     Issuer: {certificate.issuer}
                   </p>
                 </div>
@@ -256,7 +258,7 @@ const Certificates = () => {
                     href={certificate.credentialUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-sky-300 hover:text-white"
+                    className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-accent hover:text-bone"
                   >
                     <ExternalLink size={16} />
                     Verify credential
@@ -266,7 +268,7 @@ const Certificates = () => {
             ))}
 
           {!isLoading && !error && visibleImageCertificates.length === 0 && (
-            <div className="rounded-3xl border border-dashed border-white/20 p-8 text-center text-slate-400">
+            <div className="rounded-3xl border border-dashed border-edge p-8 text-center text-muted">
               No certificates in this category yet.
             </div>
           )}
@@ -275,15 +277,15 @@ const Certificates = () => {
 
       {selectedCertificate && selectedCertificate.type === "image" && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4 py-10"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-ink px-4 py-10"
           onClick={() => setSelectedCertificate(null)}
         >
           <div
-            className="relative max-h-[90vh] w-full max-w-4xl overflow-hidden rounded-3xl border border-white/10 bg-slate-950 p-6"
+            className="relative max-h-[90vh] w-full max-w-4xl overflow-hidden rounded-3xl border border-edge bg-ink p-6"
             onClick={(e) => e.stopPropagation()}
           >
             <button
-              className="absolute right-6 top-6 rounded-full border border-white/20 bg-white/10 p-2 text-white"
+              className="absolute right-6 top-6 rounded-full border border-edge bg-card p-2 text-bone"
               onClick={() => setSelectedCertificate(null)}
               aria-label="Close"
             >
@@ -295,13 +297,13 @@ const Certificates = () => {
               className="mx-auto max-h-[70vh] w-full object-contain"
             />
             <div className="mt-4 space-y-1 text-center">
-              <p className="text-xs uppercase tracking-[0.35em] text-slate-400">
+              <p className="text-xs uppercase tracking-[0.35em] text-muted">
                 {selectedCertificate.category}
               </p>
               <h3 className="text-lg font-semibold">
                 {selectedCertificate.title}
               </h3>
-              <p className="text-sm text-slate-400">
+              <p className="text-sm text-muted">
                 {selectedCertificate.issuer}
               </p>
             </div>

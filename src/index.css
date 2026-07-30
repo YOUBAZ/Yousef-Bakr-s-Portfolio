@@ -1,279 +1,424 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Montserrat:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Montserrat:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 @import "tailwindcss";
 
-@plugin "daisyui" {
-  themes: light --default, dark --prefersdark, cupcake;
+/* ==========================================================================
+   YOUSEF BAKR — brand tokens v2.4
+   Values mirror v5/files/yousef-bakr-brand-v2.4/04_tokens.css, which is
+   GENERATED from brand.json by tools/build_web.py. Do not hand-edit a value
+   here — change brand.json, re-run the build, and copy the block across.
+   Rule: 85% dark ground, 15% accent. Gold is the only dominant accent.
+   ========================================================================== */
+
+:root{
+  /* ---------- ground: 85% of every surface ---------- */
+  --ybz-ink:        #020617;  /* midnight — default page ground */
+  --ybz-obsidian:   #0B0E1A;  /* second surface, alternating sections */
+  --ybz-card:       #14161F;  /* raised panel */
+  --ybz-hairline:   rgba(244,192,37,.16);
+  --ybz-edge:       rgba(245,243,239,.07);
+
+  /* ---------- gold: the signature. one dominant accent, nothing else ---------- */
+  --ybz-gold:       #F4C025;
+  --ybz-gold-light: #F2CC5A;
+  --ybz-gold-deep:  #E0A906;
+
+  /* ---------- purple: atmosphere only. never type, never a fill on text ---------- */
+  --ybz-purple:     #401A66;
+  --ybz-purple-lit: #592D86;
+
+  /* ---------- blue: things a person can click. nothing else ---------- */
+  --ybz-sky:        #0284C7;
+  --ybz-indigo:     #4F46E5;
+
+  /* ---------- type colours ---------- */
+  --ybz-bone:       #F5F3EF;  /* headings          18.2:1 on midnight */
+  --ybz-slate:      #A8B0BE;  /* body               9.2:1 */
+  --ybz-muted:      #7C8698;  /* captions, metadata 5.5:1 */
+
+  /* ---------- gradients ---------- */
+  --ybz-grad-gold:   linear-gradient(135deg, var(--ybz-gold-light), var(--ybz-gold-deep));
+  --ybz-grad-cta:    linear-gradient(90deg, var(--ybz-sky), var(--ybz-indigo));
+  --ybz-grad-card:   linear-gradient(135deg, #1A1C25, #0E1017);
+  --ybz-grad-bloom:  radial-gradient(700px 560px at 4% -6%, rgba(89,45,134,.34), transparent 62%);
+
+  /* ---------- type ---------- */
+  --ybz-display: "Playfair Display", Georgia, serif;   /* headlines only, never below 30px */
+  --ybz-body:    "Montserrat", system-ui, sans-serif;  /* all running text */
+  --ybz-mono:    "JetBrains Mono", ui-monospace, monospace; /* code, data, numbers */
+  --ybz-arabic:  "Cairo", system-ui, sans-serif;       /* all RTL */
+
+  /* ---------- shape ---------- */
+  --ybz-r-sm: 12px;
+  --ybz-r-md: 20px;
+  --ybz-r-lg: 28px;
+  --ybz-glow: 0 0 40px rgba(244,192,37,.28);
+
+  /* ---------- surfaces that need an alpha, so they cannot be a flat token ----
+     Translucent chrome behind a blur, and the scrim under a modal. Both are the
+     ground at partial opacity; section 3.3 lists their opaque equivalents for
+     formats without an alpha channel. */
+  --ybz-chrome:  rgba(2,6,23,.72);   /* sticky navbar */
+  --ybz-scrim:   rgba(2,6,23,.85);   /* mobile menu backdrop */
+
+  /* A plate behind a third-party logo. It must stay light in BOTH themes —
+     the logos it carries are drawn for a light ground — so unlike --ybz-bone
+     it does not invert. Paper in light, bone in dark; never pure white. */
+  --ybz-logo-plate: #F5F3EF;
+
+  /* ---------- accents that resolve per theme ----------
+     These two are the whole light-mode contract. Anything that paints an accent
+     onto TYPE must use --ybz-accent-type, never --ybz-gold, because gold is a
+     fill colour on paper and a text colour only on midnight. */
+  --ybz-accent-type: var(--ybz-gold);        /* eyebrows, links, small accents */
+  --ybz-accent-rule: var(--ybz-gold);        /* rules, icon strokes, bars */
+}
+
+/* ==========================================================================
+   LIGHT MODE
+   The system inverts, but gold does not survive the trip as a text colour:
+   #F4C025 on paper is 1.55:1. So in light mode gold becomes a FILL colour,
+   and type accents drop to the bronze end of the same hue family.
+   Dormant until something sets data-theme="light" — wired so a toggle is a
+   flag flip rather than a rewrite.
+   ========================================================================== */
+
+[data-theme="light"], .ybz-light{
+  --ybz-ink:        #F7F5F0;  /* paper — warm, never pure white */
+  --ybz-obsidian:   #EDEAE3;  /* second surface */
+  --ybz-card:       #FFFFFF;  /* raised panel */
+  --ybz-hairline:   rgba(176,126,5,.30);
+  --ybz-edge:       rgba(2,6,23,.09);
+
+  /* the gold ladder, contrast-checked against #F7F5F0 */
+  --ybz-gold:       #F4C025;  /* 1.55:1 — FILLS ONLY. never type. */
+  --ybz-bronze:     #B07E05;  /* 3.3:1  — display type 32px+, rules, icon strokes */
+  --ybz-antique:    #8A6206;  /* 5.03:1 — body-size accents, eyebrows, links */
+
+  --ybz-bone:       #020617;  /* headings          18.51:1 */
+  --ybz-slate:      #3B4354;  /* body               9.11:1 */
+  --ybz-muted:      #5A6376;  /* captions           5.54:1 */
+
+  --ybz-accent-type: var(--ybz-antique);
+  --ybz-accent-rule: var(--ybz-bronze);
+
+  --ybz-grad-gold:  linear-gradient(135deg, #B07E05, #8A6206);
+  --ybz-grad-card:  linear-gradient(135deg, #FFFFFF, #FBF9F5);
+  --ybz-grad-bloom: radial-gradient(700px 560px at 4% -6%, rgba(64,26,102,.07), transparent 62%);
+  --ybz-glow:       0 2px 20px rgba(2,6,23,.05);
+
+  --ybz-chrome: rgba(247,245,240,.80);
+  --ybz-scrim:  rgba(2,6,23,.45);   /* the scrim stays dark — it is a shadow */
+  --ybz-logo-plate: #FFFFFF;        /* the light-theme card surface, section 3.2 */
+}
+
+/* ==========================================================================
+   TAILWIND BRIDGE
+   `inline` is required: it makes utilities emit var(--ybz-*) rather than
+   baking the resolved value, which is what lets the light block override them.
+   `slate-body` is deliberately not `slate` — Tailwind ships its own slate
+   scale and overriding it would silently repaint unrelated classes.
+   ========================================================================== */
+
+@theme inline {
+  --color-ink:        var(--ybz-ink);
+  --color-obsidian:   var(--ybz-obsidian);
+  --color-card:       var(--ybz-card);
+  --color-gold:       var(--ybz-gold);
+  --color-gold-light: var(--ybz-gold-light);
+  --color-gold-deep:  var(--ybz-gold-deep);
+  --color-bone:       var(--ybz-bone);
+  --color-slate-body: var(--ybz-slate);
+  --color-muted:      var(--ybz-muted);
+  --color-accent:     var(--ybz-accent-type);
+  --color-edge:       var(--ybz-edge);
+  --color-hairline:   var(--ybz-hairline);
+  --color-sky-cta:    var(--ybz-sky);
+  --color-indigo-cta: var(--ybz-indigo);
+  --color-chrome:     var(--ybz-chrome);
+  --color-scrim:      var(--ybz-scrim);
+  --color-logo-plate: var(--ybz-logo-plate);
+
+  --font-display: var(--ybz-display);
+  --font-body:    var(--ybz-body);
+  --font-mono:    var(--ybz-mono);
+
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 28px;
 }
 
 @layer base {
-  :root {
-    /* Luxury Color Palette */
-    --luxury-gold: 45 90% 55%;
-    --luxury-gold-light: 45 85% 65%;
-    --luxury-gold-dark: 45 95% 45%;
-
-    --luxury-purple: 270 60% 25%;
-    --luxury-purple-light: 270 50% 35%;
-    --luxury-purple-dark: 270 70% 15%;
-
-    --luxury-black: 240 10% 8%;
-    --luxury-gray: 240 8% 15%;
-    --luxury-gray-light: 240 6% 25%;
-
-    --shimmer-angle: 45deg;
-  }
-
   html {
     scroll-behavior: smooth;
+    background: var(--ybz-ink);
   }
 
   body {
     @apply antialiased;
-    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: var(--ybz-body);
+    background: var(--ybz-ink);
+    color: var(--ybz-slate);
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-family: 'Playfair Display', Georgia, serif;
+  /* Playfair for headlines only. Sizes are set per-use; the 30px floor in
+     BRAND.md section 4 is a rule for the call site, not something CSS enforces. */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--ybz-display);
     font-weight: 700;
+    color: var(--ybz-bone);
+    letter-spacing: -0.015em;
   }
 
-  /* Better focus indicators for accessibility */
-  *:focus-visible {
-    @apply outline-2 outline-offset-2;
-    outline-color: hsl(var(--luxury-gold));
-  }
-
+  *:focus-visible,
   a:focus-visible,
   button:focus-visible {
     @apply outline-2 outline-offset-2;
-    outline-color: hsl(var(--luxury-gold));
+    outline-color: var(--ybz-accent-rule);
+  }
+
+  ::selection {
+    background: var(--ybz-gold);
+    color: var(--ybz-ink);
   }
 }
+
+/* ==========================================================================
+   PRIMITIVES — the brand's own components. Use these before inventing one.
+   ========================================================================== */
 
 @layer components {
   .container {
     @apply max-w-6xl;
   }
 
-  .btn-primary {
-    @apply font-medium py-2 px-6 rounded-lg transition-all duration-300;
-    background: linear-gradient(135deg, hsl(var(--luxury-gold)), hsl(var(--luxury-gold-dark)));
-    color: hsl(var(--luxury-black));
-    box-shadow: 0 4px 15px hsla(var(--luxury-gold), 0.3);
-    position: relative;
-    overflow: hidden;
+  .ybz-gold-text{
+    background: var(--ybz-grad-gold);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
   }
 
-  .btn-primary::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(var(--shimmer-angle),
-        transparent,
-        hsla(var(--luxury-gold-light), 0.3),
-        transparent);
-    transform: translateX(-100%);
-    transition: transform 0.6s;
+  .ybz-eyebrow{
+    font-family: var(--ybz-body); font-weight: 600; font-size: .78rem;
+    letter-spacing: .30em; text-transform: uppercase;
+    color: var(--ybz-accent-type);
   }
 
-  .btn-primary:hover::before {
-    transform: translateX(100%);
+  .ybz-meta{
+    font-family: var(--ybz-mono); font-size: .8rem;
+    letter-spacing: .18em; text-transform: uppercase; color: var(--ybz-muted);
   }
 
-  .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 25px hsla(var(--luxury-gold), 0.5);
+  /* Counters and metrics. JetBrains Mono never carries a sentence. */
+  .ybz-figure{
+    font-family: var(--ybz-mono); font-weight: 500;
+    letter-spacing: .02em; color: var(--ybz-bone);
+    font-variant-numeric: tabular-nums;
   }
 
-  .btn-secondary {
-    @apply font-medium py-2 px-6 rounded-lg transition-all duration-300;
-    background: linear-gradient(135deg, hsl(var(--luxury-purple)), hsl(var(--luxury-purple-light)));
-    color: hsl(var(--luxury-gold-light));
-    border: 1px solid hsla(var(--luxury-gold), 0.3);
+  .ybz-card{
+    background: var(--ybz-grad-card);
+    border: 1px solid var(--ybz-edge);
+    border-radius: var(--ybz-r-lg);
+    transition: border-color .3s, box-shadow .3s, transform .3s;
   }
 
-  .btn-secondary:hover {
-    border-color: hsl(var(--luxury-gold));
-    box-shadow: 0 4px 20px hsla(var(--luxury-gold), 0.2);
-    transform: translateY(-2px);
-  }
-
-  .card {
-    @apply rounded-xl shadow-md overflow-hidden transition-all duration-300;
-    background: linear-gradient(135deg, hsl(var(--luxury-gray)), hsl(var(--luxury-black)));
-    border: 1px solid hsla(var(--luxury-gold), 0.1);
-  }
-
-  .card:hover {
-    border-color: hsla(var(--luxury-gold), 0.4);
-    box-shadow: 0 8px 30px hsla(var(--luxury-gold), 0.15);
+  .ybz-card-interactive:hover{
+    border-color: var(--ybz-hairline);
+    box-shadow: 0 8px 30px rgba(2,6,23,.5);
     transform: translateY(-4px);
   }
 
-  .section-title {
-    @apply text-3xl md:text-4xl font-bold mb-8 text-center;
-    background: linear-gradient(135deg, hsl(var(--luxury-gold)), hsl(var(--luxury-gold-light)));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  /* The gold rule — 2px, 120px, fading left to right. Sits under headlines. */
+  .ybz-rule{
+    height: 2px; width: 120px; border: 0; display: block;
+    background: linear-gradient(90deg, var(--ybz-accent-rule), transparent);
   }
 
-  .section-subtitle {
-    @apply text-lg mb-12 text-center max-w-2xl mx-auto;
-    color: hsl(var(--luxury-gray-light));
+  .ybz-btn-primary{           /* the one gold action per screen */
+    background: var(--ybz-grad-gold); color: var(--ybz-ink);
+    font-family: var(--ybz-body); font-weight: 600;
+    letter-spacing: .12em; text-transform: uppercase;
+    border: 0; border-radius: var(--ybz-r-sm); padding: 1rem 1.75rem;
+    display: inline-flex; align-items: center; gap: .625rem;
+    transition: box-shadow .3s, transform .3s;
+  }
+  .ybz-btn-primary:hover{
+    box-shadow: var(--ybz-glow);
+    transform: translateY(-2px);
   }
 
-  /* Luxury Certificate Card */
-  .certificate-card {
-    @apply transition-all duration-500;
-    position: relative;
+  /* The blue CTA from the kit. Retained because it is a kit primitive, but no
+     longer used on this site — see .ybz-btn-accent below for why. If it is ever
+     reinstated, hold the 16px floor: the sky end of the gradient reads 4.10:1
+     against white, which needs large-text size to clear AA. */
+  .ybz-btn-nav{               /* navigation and contact only */
+    background: var(--ybz-grad-cta); color: #fff;
+    font-family: var(--ybz-body); font-weight: 600;
+    font-size: 1rem;
+    border: 0; border-radius: var(--ybz-r-sm); padding: .9rem 1.5rem;
+    display: inline-flex; align-items: center; gap: .5rem;
+    transition: box-shadow .3s, transform .3s;
+  }
+  .ybz-btn-nav:hover{
+    box-shadow: 0 8px 24px rgba(79,70,229,.35);
+    transform: translateY(-2px);
   }
 
-  .certificate-card::after {
-    content: '';
-    position: absolute;
-    inset: -2px;
-    border-radius: inherit;
-    padding: 2px;
-    background: linear-gradient(135deg,
-        hsla(var(--luxury-gold), 0),
-        hsla(var(--luxury-gold), 0.5),
-        hsla(var(--luxury-gold), 0));
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask-composite: exclude;
-    opacity: 0;
-    transition: opacity 0.5s;
+  /* The persistent navigation CTA.
+     Gold, because blue in the header read as a foreign element on a midnight
+     and gold page — technically permitted by rule 2, but it was the only blue
+     object on the site and it looked borrowed.
+     Outlined rather than filled, because .ybz-btn-primary is "the one gold
+     action per screen" and the navbar is on every screen: a filled navbar CTA
+     would compete with the hero's action on the page beneath it. Same accent
+     family, one step down in weight.
+     Contrast: gold on midnight 11.92:1, antique on paper 5.03:1. On hover it
+     fills and the label flips to ink, which reads 11.92:1 in both themes. */
+  .ybz-btn-accent{
+    background: transparent;
+    color: var(--ybz-accent-type);
+    font-family: var(--ybz-body); font-weight: 600;
+    font-size: 1rem;
+    border: 1px solid var(--ybz-accent-rule);
+    border-radius: var(--ybz-r-sm); padding: .9rem 1.5rem;
+    display: inline-flex; align-items: center; gap: .5rem;
+    transition: background-color .3s, color .3s, box-shadow .3s, transform .3s;
+  }
+  .ybz-btn-accent:hover{
+    background: var(--ybz-accent-rule);
+    color: var(--ybz-ink);
+    box-shadow: var(--ybz-glow);
+    transform: translateY(-2px);
   }
 
-  .certificate-card:hover::after {
-    opacity: 1;
+  .ybz-btn-ghost{
+    background: transparent; color: var(--ybz-bone);
+    font-family: var(--ybz-body); font-weight: 600;
+    border: 1px solid var(--ybz-edge); border-radius: var(--ybz-r-sm);
+    padding: .9rem 1.5rem;
+    display: inline-flex; align-items: center; gap: .5rem;
+    transition: border-color .3s, transform .3s;
+  }
+  .ybz-btn-ghost:hover{
+    border-color: var(--ybz-hairline);
+    transform: translateY(-2px);
+  }
+
+  /* Skip link. Off-screen until focused, then it lands as a normal gold action
+     in the top-left — visible, in-palette, and not a surprise element. */
+  .ybz-skip-link{
+    position: absolute; left: -9999px; top: 0; z-index: 100;
+    background: var(--ybz-grad-gold); color: var(--ybz-ink);
+    font-family: var(--ybz-body); font-weight: 600; font-size: 1rem;
+    padding: .75rem 1.25rem; border-radius: var(--ybz-r-sm);
+  }
+  .ybz-skip-link:focus{
+    left: 1rem; top: 1rem;
+  }
+
+  /* Ambient purple bloom. Background only — never type, never a border. */
+  .ybz-bloom{
+    background: var(--ybz-grad-bloom);
   }
 }
 
-/* Premium Custom Animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
+/* Gold stays full strength wherever it is a filled shape with ink on top —
+   ink on #F4C025 reads at 11.92:1, which is why the primary button is unchanged. */
+[data-theme="light"] .ybz-btn-primary,
+.ybz-light .ybz-btn-primary{ background:linear-gradient(135deg,#F4C025,#E0A906); color:#020617; }
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* The one deliberate exception: code blocks stay midnight on light pages.
+   One dark object per page is the signature; a light code block is anyone's. */
+[data-theme="light"] pre, .ybz-light pre{
+  background:linear-gradient(135deg,#191B24,#0E1017);
+  color:#C9D1E1; border:1px solid rgba(2,6,23,.12);
+  box-shadow:0 6px 30px rgba(2,6,23,.14);
 }
 
-@keyframes shimmer {
-  0% {
-    background-position: -1000px 0;
-  }
+/* ==========================================================================
+   THE CODE BLOCK
+   Rule 5 makes this the one dark object on a light page — so the WHOLE object
+   is dark, chrome included. Built from fixed palette values rather than the
+   theme tokens: --ybz-card resolves to #FFFFFF in light mode, so a language bar
+   painted with it turned white and glued itself to a midnight body, splitting
+   the block in two. Anything inside this component is midnight in both themes.
 
-  100% {
-    background-position: 1000px 0;
-  }
+   Only the outer frame is theme-aware, because the frame is what touches the
+   page: a hairline on midnight, a border plus a lift on paper.
+   ========================================================================== */
+
+.ybz-code{
+  margin: 1.5rem 0;
+  border: 1px solid var(--ybz-edge);
+  border-radius: var(--ybz-r-sm);
+  overflow: hidden;
+  background: linear-gradient(135deg, #0D0F16, #101218);   /* code_ground_dark */
 }
 
-@keyframes float {
-
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
-
-  50% {
-    transform: translateY(-10px);
-  }
+[data-theme="light"] .ybz-code, .ybz-light .ybz-code{
+  border-color: rgba(2,6,23,.12);
+  box-shadow: 0 6px 30px rgba(2,6,23,.14);
+  background: linear-gradient(135deg, #191B24, #0E1017);   /* code_ground_light */
 }
 
-@keyframes glow {
-
-  0%,
-  100% {
-    box-shadow: 0 0 20px hsla(var(--luxury-gold), 0.3);
-  }
-
-  50% {
-    box-shadow: 0 0 30px hsla(var(--luxury-gold), 0.6);
-  }
+/* The language label. Section 4 gives mono the job of carrying code, metrics
+   and timestamps — a filename is one of those, and it never carries a sentence. */
+.ybz-code__bar{
+  display: flex; align-items: center; justify-content: space-between;
+  padding: .5rem 1rem;
+  font-family: var(--ybz-mono); font-size: .75rem;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: #7C8698;                                 /* muted, 5.5:1 on this ground */
+  background: #14161F;                            /* card, the dark value, pinned */
+  border-bottom: 1px solid rgba(245,243,239,.07);
 }
 
-@keyframes gradient-shift {
-  0% {
-    background-position: 0% 50%;
-  }
+[data-theme="light"] .ybz-code__bar, .ybz-light .ybz-code__bar{
+  background: #191B24;   /* the light-page code ground's top stop, one step up */
+}
 
-  50% {
-    background-position: 100% 50%;
-  }
+.ybz-code__body{
+  overflow-x: auto;
+  background: transparent;   /* the ground belongs to .ybz-code, so it can flip */
+}
 
-  100% {
-    background-position: 0% 50%;
-  }
+/* ---------- code syntax ramp: built only from palette colours ---------- */
+.ybz-tok-comment{  color:#7C8698 }
+.ybz-tok-string{   color:#A8B0BE }
+.ybz-tok-number{   color:#E0A906 }
+.ybz-tok-function{ color:#F5F3EF }
+.ybz-tok-keyword{  color:#F2CC5A }
+
+/* RTL: Cairo carries both display and body; hierarchy comes from weight.
+   Dormant — no Arabic content on the site yet. */
+[dir="rtl"]{ font-family: var(--ybz-arabic); }
+[dir="rtl"] h1, [dir="rtl"] h2, [dir="rtl"] h3{
+  font-family: var(--ybz-arabic); font-weight: 700; letter-spacing: 0;
+}
+[dir="rtl"] .ybz-rule{
+  background: linear-gradient(270deg, var(--ybz-accent-rule), transparent);
+}
+
+/* ==========================================================================
+   MOTION
+   Section 17 issue 5 notes there is no documented rule for how the rail
+   animates. One rule, applied everywhere: 600ms ease-out, no bounce.
+   ========================================================================== */
+
+@keyframes ybz-fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes ybz-rail-fill {
+  from { transform: scaleY(0); }
+  to   { transform: scaleY(1); }
 }
 
 .animate-fade-in {
-  animation: fadeIn 0.8s ease-out forwards;
+  animation: ybz-fade-up .6s cubic-bezier(0, 0, 0.2, 1) forwards;
 }
 
-.animate-shimmer {
-  animation: shimmer 3s infinite linear;
-  background: linear-gradient(90deg,
-      transparent,
-      hsla(var(--luxury-gold), 0.1),
-      transparent);
-  background-size: 1000px 100%;
-}
-
-.animate-float {
-  animation: float 3s ease-in-out infinite;
-}
-
-.animate-glow {
-  animation: glow 2s ease-in-out infinite;
-}
-
-.gradient-shimmer {
-  background: linear-gradient(135deg,
-      hsl(var(--luxury-purple-dark)),
-      hsl(var(--luxury-purple)),
-      hsl(var(--luxury-black)),
-      hsl(var(--luxury-purple)));
-  background-size: 300% 300%;
-  animation: gradient-shift 8s ease infinite;
-}
-
-/* Luxury Text Gradient */
-.text-luxury-gradient {
-  background: linear-gradient(135deg,
-      hsl(var(--luxury-gold)),
-      hsl(var(--luxury-gold-light)));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Premium Border Glow */
-.border-luxury-glow {
-  border: 1px solid hsla(var(--luxury-gold), 0.3);
-  box-shadow:
-    0 0 10px hsla(var(--luxury-gold), 0.1),
-    inset 0 0 10px hsla(var(--luxury-gold), 0.05);
-  transition: all 0.3s;
-}
-
-.border-luxury-glow:hover {
-  border-color: hsla(var(--luxury-gold), 0.6);
-  box-shadow:
-    0 0 20px hsla(var(--luxury-gold), 0.3),
-    inset 0 0 20px hsla(var(--luxury-gold), 0.1);
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration:.01ms !important; transition-duration:.01ms !important; }
+  html{ scroll-behavior: auto; }
 }
