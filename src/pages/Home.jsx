@@ -306,10 +306,11 @@ const Home = () => {
                   <div className="mb-5 flex items-center gap-4">
                     {item.companyLogo ? (
                       <div
-                        // Bone, not pure white — section 3.5 rule 4. The plate
-                        // is a fill behind a third-party logo, so it still has
-                        // to come out of the palette.
-                        className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden border border-edge bg-bone p-2"
+                        // A dedicated plate token, not --ybz-bone: bone inverts
+                        // to midnight in light mode, and these third-party logos
+                        // are drawn for a light ground. Never pure white either
+                        // — section 3.5 rule 4.
+                        className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden border border-edge bg-logo-plate p-2"
                         style={{ borderRadius: "var(--ybz-r-sm)" }}
                       >
                         <img

@@ -10,6 +10,7 @@ import Loading from "./components/Loading";
 import ProtectedRoute from "./components/ProtectedRoute";
 import BlogEditor from "./components/BlogEditor";
 import { validateEnvVars } from "./utils/validateEnv";
+import useTheme from "./hooks/useTheme";
 
 // Lazy load all page components for code splitting
 const Home = lazy(() => import("./pages/Home"));
@@ -27,6 +28,7 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 
 function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
   // Validate environment variables on mount
   useEffect(() => {
@@ -49,7 +51,11 @@ function App() {
               scroll-progress indicator — section 5's second job for the device. */}
           <StackRail fixed progress animate={false} />
 
-          <Navbar toggleMobileMenu={toggleMobileMenu} />
+          <Navbar
+            toggleMobileMenu={toggleMobileMenu}
+            theme={theme}
+            toggleTheme={toggleTheme}
+          />
 
           <MobileMenu isOpen={isMobileMenuOpen} toggleMenu={toggleMobileMenu} />
 

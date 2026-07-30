@@ -37,6 +37,34 @@
     <!-- Preconnect to external domains for faster loading -->
     <link rel="preconnect" href="https://assets.calendly.com" crossorigin />
     <link rel="dns-prefetch" href="https://assets.calendly.com" />
+
+    <!--
+      Resolve the theme before first paint. Without this the page renders
+      midnight and then flips to paper, which is the one moment a two-theme
+      site looks broken. Mirrors resolveInitialTheme() in src/hooks/useTheme.js
+      — keep the two in step. Dark is the default and carries no attribute.
+    -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem("ybz-theme");
+          var theme =
+            stored === "light" || stored === "dark"
+              ? stored
+              : window.matchMedia("(prefers-color-scheme: light)").matches
+                ? "light"
+                : "dark";
+          if (theme === "light")
+            document.documentElement.setAttribute("data-theme", "light");
+          document.documentElement.style.colorScheme = theme;
+          document
+            .querySelector('meta[name="theme-color"]')
+            .setAttribute("content", theme === "light" ? "#F7F5F0" : "#020617");
+        } catch (e) {
+          /* private mode or storage disabled — midnight is the default anyway */
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

@@ -53,6 +53,18 @@
   --ybz-r-lg: 28px;
   --ybz-glow: 0 0 40px rgba(244,192,37,.28);
 
+  /* ---------- surfaces that need an alpha, so they cannot be a flat token ----
+     Translucent chrome behind a blur, and the scrim under a modal. Both are the
+     ground at partial opacity; section 3.3 lists their opaque equivalents for
+     formats without an alpha channel. */
+  --ybz-chrome:  rgba(2,6,23,.72);   /* sticky navbar */
+  --ybz-scrim:   rgba(2,6,23,.85);   /* mobile menu backdrop */
+
+  /* A plate behind a third-party logo. It must stay light in BOTH themes —
+     the logos it carries are drawn for a light ground — so unlike --ybz-bone
+     it does not invert. Paper in light, bone in dark; never pure white. */
+  --ybz-logo-plate: #F5F3EF;
+
   /* ---------- accents that resolve per theme ----------
      These two are the whole light-mode contract. Anything that paints an accent
      onto TYPE must use --ybz-accent-type, never --ybz-gold, because gold is a
@@ -93,6 +105,10 @@
   --ybz-grad-card:  linear-gradient(135deg, #FFFFFF, #FBF9F5);
   --ybz-grad-bloom: radial-gradient(700px 560px at 4% -6%, rgba(64,26,102,.07), transparent 62%);
   --ybz-glow:       0 2px 20px rgba(2,6,23,.05);
+
+  --ybz-chrome: rgba(247,245,240,.80);
+  --ybz-scrim:  rgba(2,6,23,.45);   /* the scrim stays dark — it is a shadow */
+  --ybz-logo-plate: #FFFFFF;        /* the light-theme card surface, section 3.2 */
 }
 
 /* ==========================================================================
@@ -118,6 +134,9 @@
   --color-hairline:   var(--ybz-hairline);
   --color-sky-cta:    var(--ybz-sky);
   --color-indigo-cta: var(--ybz-indigo);
+  --color-chrome:     var(--ybz-chrome);
+  --color-scrim:      var(--ybz-scrim);
+  --color-logo-plate: var(--ybz-logo-plate);
 
   --font-display: var(--ybz-display);
   --font-body:    var(--ybz-body);

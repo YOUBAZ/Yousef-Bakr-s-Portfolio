@@ -128,7 +128,7 @@ const Seo = ({
     upsertMeta("name", "twitter:description", pageDescription);
     upsertMeta("name", "twitter:image", pageImage);
 
-    upsertMeta("name", "theme-color", "#020617");
+    // theme-color is owned by useTheme, which flips it with the ground.
     upsertMeta("name", "application-name", siteMeta.siteName);
 
     // Article tags are set only on articles, and cleared when leaving one —
