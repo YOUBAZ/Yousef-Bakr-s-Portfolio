@@ -3,8 +3,8 @@ import { motion } from "framer-motion";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { Github } from "lucide-react";
 import Seo from "../components/Seo";
-import StackRail from "../components/StackRail";
 import { siteMeta } from "../config/seo";
+import GoldRule from "../components/GoldRule";
 
 const _motion = motion;
 
@@ -109,7 +109,6 @@ const Projects = () => {
       <div className="bg-ink text-slate-body">
         <section className="relative isolate overflow-hidden px-6 pb-12 pt-12 sm:px-10 lg:px-16">
           <div className="ybz-bloom pointer-events-none absolute inset-0 -z-10" />
-          <StackRail className="left-2 sm:left-4 lg:left-6" />
 
           <div className="mx-auto max-w-5xl space-y-6">
             <p className="ybz-eyebrow">Projects</p>
@@ -121,7 +120,7 @@ const Projects = () => {
             >
               Every card routes to the source.
             </motion.h1>
-            <hr className="ybz-rule" />
+            <GoldRule />
             <p className="max-w-2xl leading-8">
               There are no live deployments behind these, so the repository is
               the claim. Read the commits rather than the screenshot.

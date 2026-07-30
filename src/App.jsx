@@ -5,6 +5,7 @@ import MobileMenu from "./components/MobileMenu";
 import ErrorBoundary from "./components/ErrorBoundary";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
+import StackRail from "./components/StackRail";
 import Loading from "./components/Loading";
 import ProtectedRoute from "./components/ProtectedRoute";
 import BlogEditor from "./components/BlogEditor";
@@ -44,6 +45,10 @@ function App() {
     <ErrorBoundary>
       <Router>
         <div className="min-h-screen bg-ink text-slate-body">
+          {/* One rail per page, pinned to the viewport edge, doubling as a
+              scroll-progress indicator — section 5's second job for the device. */}
+          <StackRail fixed progress animate={false} />
+
           <Navbar toggleMobileMenu={toggleMobileMenu} />
 
           <MobileMenu isOpen={isMobileMenuOpen} toggleMenu={toggleMobileMenu} />

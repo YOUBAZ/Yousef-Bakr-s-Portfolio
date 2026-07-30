@@ -2,9 +2,9 @@ import { motion } from "framer-motion";
 import { Mail, Linkedin, Github } from "lucide-react";
 import ContactForm from "../components/ContactForm";
 import Seo from "../components/Seo";
-import StackRail from "../components/StackRail";
 import { siteMeta } from "../config/seo";
 import { BRAND } from "../config/brand";
+import GoldRule from "../components/GoldRule";
 
 const _motion = motion;
 
@@ -92,7 +92,6 @@ const Contact = () => {
       <div className="bg-ink text-slate-body">
         <section className="relative isolate overflow-hidden px-6 pb-12 pt-12 sm:px-10 lg:px-16">
           <div className="ybz-bloom pointer-events-none absolute inset-0 -z-10" />
-          <StackRail className="left-2 sm:left-4 lg:left-6" />
 
           <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-2">
             <motion.div
@@ -105,7 +104,7 @@ const Contact = () => {
               <h1 className="max-w-2xl font-display text-4xl leading-tight text-bone sm:text-5xl">
                 Which boundary in your system is leaking right now?
               </h1>
-              <hr className="ybz-rule" />
+              <GoldRule />
               <p className="max-w-xl leading-8">
                 Describe the decision rather than the ticket. I reply with a
                 read on the trade-off, what it will cost either way, and whether

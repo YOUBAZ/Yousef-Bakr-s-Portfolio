@@ -1,10 +1,10 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import Seo from "../components/Seo";
-import StackRail from "../components/StackRail";
 import { siteMeta } from "../config/seo";
 import { BRAND, PROOF_STACK } from "../config/brand";
 import { experienceTimeline } from "../data/experience";
+import GoldRule from "../components/GoldRule";
 
 const _motion = motion;
 
@@ -130,7 +130,6 @@ const About = () => {
       <div className="relative overflow-x-hidden bg-ink text-slate-body">
         <section className="relative isolate overflow-hidden px-4 pb-10 pt-8 sm:px-6 lg:px-8">
           <div className="ybz-bloom pointer-events-none absolute inset-0 -z-10" />
-          <StackRail className="left-1 sm:left-3" />
 
           <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1.1fr_0.9fr]">
             <motion.div
@@ -143,7 +142,7 @@ const About = () => {
               <h1 className="max-w-2xl font-display text-3xl leading-tight text-bone sm:text-4xl lg:text-5xl">
                 {BRAND.positioning}
               </h1>
-              <hr className="ybz-rule" />
+              <GoldRule />
 
               {/* Section 11's About copy, which is already written and on-voice. */}
               <div className="max-w-2xl space-y-4 leading-8">
@@ -240,7 +239,7 @@ const About = () => {
               <h2 className="font-display text-3xl text-bone">
                 Four claims, each with a source.
               </h2>
-              <hr className="ybz-rule" />
+              <GoldRule />
             </div>
             <dl className="grid gap-4 sm:grid-cols-2">
               {PROOF_STACK.map((item) => (
@@ -262,7 +261,7 @@ const About = () => {
               <h2 className="font-display text-3xl text-bone">
                 Four positions I would defend in review.
               </h2>
-              <hr className="ybz-rule" />
+              <GoldRule />
             </div>
 
             <div className="grid gap-4 sm:gap-6 lg:grid-cols-2">
@@ -321,7 +320,7 @@ const About = () => {
                   </span>
                 ))}
               </div>
-              <hr className="ybz-rule" />
+              <GoldRule />
               <p className="text-sm leading-7">
                 Next on the list: .NET and MAUI, Spring Boot, and embedded
                 firmware — chosen because they force different trade-offs than

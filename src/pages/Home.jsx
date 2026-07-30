@@ -8,10 +8,10 @@ import { useSpring as useButtonSpring, animated } from "@react-spring/web";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Seo from "../components/Seo";
-import StackRail from "../components/StackRail";
 import { siteMeta } from "../config/seo";
 import { BRAND, PROOF_STACK } from "../config/brand";
 import { experienceTimeline } from "../data/experience";
+import GoldRule from "../components/GoldRule";
 
 const _motion = motion;
 const _animated = animated;
@@ -151,7 +151,6 @@ const Home = () => {
             --------------------------------------------------------------- */}
         <section className="relative isolate overflow-hidden px-6 py-24 sm:px-10 lg:px-16">
           <div className="ybz-bloom pointer-events-none absolute inset-0 -z-10" />
-          <StackRail className="left-2 sm:left-4 lg:left-6" />
 
           <div className="mx-auto max-w-5xl space-y-8">
             <p className="ybz-eyebrow">{BRAND.descriptorLockup}</p>
@@ -166,7 +165,7 @@ const Home = () => {
                 {BRAND.positioning}
               </motion.h1>
 
-              <hr className="ybz-rule" />
+              <GoldRule />
 
               <p className="max-w-2xl text-lg leading-8 sm:text-xl">
                 {BRAND.tagline} I work across{" "}
@@ -208,7 +207,7 @@ const Home = () => {
               <h2 className="max-w-3xl font-display text-3xl text-bone sm:text-4xl">
                 Four claims, each with a source.
               </h2>
-              <hr className="ybz-rule" />
+              <GoldRule />
             </div>
 
             <dl className="grid gap-6 md:grid-cols-2">
@@ -245,7 +244,7 @@ const Home = () => {
             <h2 className="max-w-3xl font-display text-3xl text-bone sm:text-4xl">
               What I built, and the decision inside it.
             </h2>
-            <hr className="ybz-rule" />
+            <GoldRule />
           </div>
 
           <div
@@ -298,7 +297,7 @@ const Home = () => {
               <h2 className="max-w-3xl font-display text-3xl text-bone sm:text-4xl">
                 Where the work happens.
               </h2>
-              <hr className="ybz-rule" />
+              <GoldRule />
             </div>
 
             <div className="grid gap-6 lg:grid-cols-2">

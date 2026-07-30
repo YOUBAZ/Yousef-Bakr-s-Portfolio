@@ -3,9 +3,9 @@ import { Mail, Linkedin, Github } from "lucide-react";
 import { Link } from "react-router-dom";
 import schedulingConfig from "../config/scheduling";
 import Seo from "../components/Seo";
-import StackRail from "../components/StackRail";
 import { siteMeta } from "../config/seo";
 import { BRAND } from "../config/brand";
+import GoldRule from "../components/GoldRule";
 
 const _motion = motion;
 
@@ -111,7 +111,6 @@ const LetsTalk = () => {
       <div className="bg-ink text-slate-body">
         <section className="relative isolate overflow-hidden px-6 pb-12 pt-16 sm:px-10 lg:px-16">
           <div className="ybz-bloom pointer-events-none absolute inset-0 -z-10" />
-          <StackRail className="left-2 sm:left-4 lg:left-6" />
 
           <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-2">
             <motion.div
@@ -124,7 +123,7 @@ const LetsTalk = () => {
               <h1 className="max-w-2xl font-display text-4xl leading-tight text-bone sm:text-5xl">
                 Pick a slot. Bring the decision, not the ticket.
               </h1>
-              <hr className="ybz-rule" />
+              <GoldRule />
               <p className="max-w-xl leading-8">
                 The scheduler handles time zones and sends the invite once
                 confirmed. Come with the constraint you are working against and

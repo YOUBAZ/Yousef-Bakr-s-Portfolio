@@ -2,10 +2,10 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Download, ExternalLink } from "lucide-react";
 import Seo from "../components/Seo";
-import StackRail from "../components/StackRail";
 import { siteMeta } from "../config/seo";
 import { BRAND } from "../config/brand";
 import { experienceTimeline } from "../data/experience";
+import GoldRule from "../components/GoldRule";
 
 const _motion = motion;
 
@@ -75,7 +75,6 @@ const Cv = () => {
       <div className="bg-ink text-slate-body">
         <section className="relative isolate overflow-hidden px-6 pb-12 pt-12 sm:px-10 lg:px-16">
           <div className="ybz-bloom pointer-events-none absolute inset-0 -z-10" />
-          <StackRail className="left-2 sm:left-4 lg:left-6" />
 
           <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[1.1fr_0.9fr]">
             <motion.div
@@ -88,7 +87,7 @@ const Cv = () => {
               <h1 className="max-w-2xl font-display text-4xl leading-tight text-bone sm:text-5xl">
                 The record, without the adjectives.
               </h1>
-              <hr className="ybz-rule" />
+              <GoldRule />
               <p className="max-w-xl leading-8">
                 Two pages. Read it in the browser or take the PDF into a review.
                 Anything in it that needs a source has one.
@@ -130,7 +129,7 @@ const Cv = () => {
                 ))}
               </ul>
 
-              <hr className="ybz-rule" />
+              <GoldRule />
 
               <div className="space-y-4">
                 <p className="ybz-eyebrow">Current</p>
@@ -184,7 +183,7 @@ const Cv = () => {
             <h2 className="max-w-2xl font-display text-3xl text-bone">
               If the CV raises a question, ask it directly.
             </h2>
-            <hr className="ybz-rule" />
+            <GoldRule />
             <p className="max-w-2xl leading-8">
               The interesting part of a CV is usually the decision behind a line
               on it, and that does not fit in a bullet.
