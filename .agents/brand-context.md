@@ -71,7 +71,9 @@ The fixed facts below come from v2.4 and stay unless they are changed on purpose
 
 ## Evidence
 
-- **EduShiftAI**: shipped to production. Selected by MindShift to train corporate
+- **EduShift AI**: scaled from one simulation into 4 production learning products,
+  adopted by 6+ organisations (edushiftai.com · MindShift MENA, 2025–2026). Selected
+  by MindShift to train corporate
   staff in soft and technical skills.
 - **Timeline**: started programming at 15, first software engineering role at 18.
   Kept internal. See the open conflicts below on age-led framing.
@@ -99,5 +101,6 @@ The fixed facts below come from v2.4 and stay unless they are changed on purpose
 - **Phase 3, identity system**: built 2026-11-19 in `brand-kit/`. The spec is
   `brand-kit/BRAND.md`, the tokens are `brand-kit/brand.json`, and the marks are in
   `brand-kit/logo/`. Not yet adopted by the live site (see BRAND.md section 11).
-  Waiting on EduShiftAI figures for bios and the key-figure slot.
+  Adopted by the live site 2026-11-19 on branch `feat/brand-v3`. Blog and project
+  banner images are still v2.4 artwork.
 - **Phase 3, identity system**: colour, type, mark and layout for the chosen territory. Blocked on Phase 2.

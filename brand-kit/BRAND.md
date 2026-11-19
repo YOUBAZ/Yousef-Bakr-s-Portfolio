@@ -1,9 +1,9 @@
 # BRAND: Yousef Bakr
 
-**Version 3.0 draft · 2026-11-19 · territory: Spec sheet**
+**Version 3.0 · 2026-11-19 · territory: Spec sheet**
 
-This replaces v2.4 (`v5/files/yousef-bakr-brand-v2.4/`) once it is adopted. Until then,
-the live site and the root `CLAUDE.md` still follow v2.4. See section 11.
+This replaces v2.4 (`v5/files/yousef-bakr-brand-v2.4/`, kept for history only). The
+live site and the root `CLAUDE.md` follow this file. See section 11.
 
 `brand.json` is the machine copy of sections 1, 3, 4 and 5. Every hex in this kit comes
 from it. Logo files are generated from it by `tools/build_marks.py`, so you never edit
@@ -23,7 +23,7 @@ them by hand. `tools/verify.py` checks the kit against it.
 | Slogan | Engineering that earns its complexity. |
 | Employer | Software engineer at MindShift MENA |
 | Founder of | SafeStay |
-| Flagship evidence | EduShiftAI |
+| Flagship evidence | EduShift AI |
 | Location | Private. Never on any asset. The audience is worldwide. |
 
 ## 2. Positioning
@@ -49,10 +49,10 @@ is built the way it is.
 
 | Claim | Source |
 |---|---|
-| Built EduShiftAI, which is in production | MindShift MENA |
-| EduShiftAI was selected by MindShift to train corporate teams in soft and technical skills | MindShift MENA |
-| Founder of SafeStay | SafeStay |
-| _Figures pending: people trained, client organisations, time to launch_ | |
+| Scaled EduShift AI from a single simulation into 4 production learning products | edushiftai.com · MindShift MENA, 2025–2026 |
+| EduShift AI is adopted by 6+ organisations to train teams in soft and technical skills, including the She's Next Entrepreneurship Competition | edushiftai.com · MindShift MENA, 2025–2026 |
+| Architected SafeStay: 3-tier platform, 20+ table schema, server-side state machines for multi-party contract signing | SafeStay, 2026– |
+| Best Team Award, DECI Bootcamp | IBM, 2023 |
 
 ### Framing rules
 
@@ -166,7 +166,10 @@ The identity looks like a well-made engineering document.
 - **Header strip** on every page and asset: name, role, revision (`Rev 2026.11`), in
   Plex Mono 13, muted, above a hairline.
 - **Numbered sections:** `01`, `02` in Plex Mono, in `--yb-signal-type`, set to the left
-  of each H2.
+  of each H2. Where sections are not a sequence (a website's pages), a short mono label
+  takes the number's place, in the same colour.
+- **Headline marker:** a 2px × 32px rule in `--yb-signal` under page and section
+  headlines.
 - **Visible grid:** 12 columns with hairlines in `--yb-rule`. Show it in heroes, OG cards
   and covers. Hide it in running text.
 - **Margin notes:** sources, dates and figures in Plex Mono, muted, in the outer column.
@@ -209,22 +212,26 @@ language, in either language, including replies.
 
 | Slot | Copy |
 |---|---|
-| LinkedIn headline | Software Engineer at MindShift MENA · Built EduShiftAI, used to train corporate teams · Founder of SafeStay |
+| LinkedIn headline | Software Engineer at MindShift MENA · Scaled EduShift AI to 4 production products used by 6+ organisations · Founder of SafeStay |
 | One-liner | Software engineer who ships production systems and explains every trade-off in time, risk and users. |
 | Lockup third line | Engineering that earns its complexity. |
 
-The long and short bios are waiting for EduShiftAI figures.
+The long and short bios are not written yet.
 
-## 11. Adoption: what changes when v3 goes live
+## 11. Adoption
 
-Not done yet. It needs a decision, because it changes the rules for the live site.
+Adopted on the site on 2026-11-19 (branch `feat/brand-v3`):
 
-1. Replace the root `CLAUDE.md` colour, type and layout sections with a pointer to
-   this file.
-2. Move the site tokens (`src/config/brand.js`, the CSS custom properties) to section 3.
-3. Swap the fonts for IBM Plex Sans, Mono and Sans Arabic.
-4. Replace the favicon and header mark with `logo/`.
-5. Regenerate the OG card and social banners on the section 6 grid.
+1. The root `CLAUDE.md` and `DESIGN-SYSTEM.md` point to this file.
+2. Site tokens in `src/index.css` mirror section 3; `src/config/brand.js` mirrors
+   section 1. `npm run brand:check` reads its palette from `brand.json`.
+3. Fonts are IBM Plex Sans, Plex Mono and Plex Sans Arabic.
+4. The favicon, app icons and header mark are the Merge Y. `Signet` draws it from
+   `brand.json`.
+5. Both OG cards are regenerated on the section 6 grid.
+
+Still on v2.4: the blog and project banner images in `public/images/`. They are
+raster artwork and need to be redrawn.
 
 ## 12. Self-check before delivery
 
