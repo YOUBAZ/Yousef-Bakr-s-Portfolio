@@ -8,7 +8,7 @@ import { NAV_ITEMS } from "../config/navigation";
 
 /**
  * Wordmark left, links, one outlined CTA, theme switch. The active link is
- * marked by the gold rule under it, never a filled pill.
+ * marked by the signal rule under it, never a filled pill.
  */
 const Navbar = ({ toggleMobileMenu, theme, toggleTheme }) => (
   <header className="pointer-events-none fixed inset-x-0 top-0 z-50 px-4 pt-4">
@@ -68,7 +68,7 @@ const Navbar = ({ toggleMobileMenu, theme, toggleTheme }) => (
           <button
             type="button"
             onClick={toggleMobileMenu}
-            className="flex h-10 w-10 items-center justify-center border border-edge text-bone transition-colors duration-150 hover:border-hairline"
+            className="flex h-11 w-11 items-center justify-center border border-edge text-bone transition-colors duration-150 hover:border-hairline"
             style={{ borderRadius: "var(--ybz-r-sm)" }}
             aria-label="Open navigation"
           >

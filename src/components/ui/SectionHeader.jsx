@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import GoldRule from "../GoldRule";
 
 /**
- * Eyebrow, Playfair heading, gold rule, optional lede — BRAND.md section 5's
+ * Section label, Plex heading, headline marker, optional lede — brand-kit/BRAND.md section 6's
  * headline composition, written once. `level={1}` is the page title size.
  * Spacing: 16 between eyebrow, title and rule; 40 to the content below.
  */

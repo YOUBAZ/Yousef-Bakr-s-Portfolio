@@ -10,9 +10,9 @@ const VARIANTS = {
 /**
  * One button geometry, three colourings.
  *
- *   primary   — the single gold action on a screen
+ *   primary   — the single ink-filled action on a screen
  *   secondary — everything that sits next to it
- *   accent    — the persistent navbar CTA (gold outline)
+ *   accent    — the persistent navbar CTA (ink outline)
  *
  * Renders a router Link for `to`, an anchor for `href`, a button otherwise.
  * External hrefs open in a new tab.

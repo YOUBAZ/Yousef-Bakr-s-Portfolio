@@ -1,11 +1,10 @@
 /**
  * Identity strings, mirrored from the brand kit's single source:
- *   v5/files/yousef-bakr-brand-v2.4/brand.json
+ *   brand-kit/brand.json (v3.0)
  *
- * BRAND.md section 1 is explicit that these facts live in exactly one place and
- * are not restated elsewhere. This module is that one place for the site. If a
- * fact changes, change it in brand.json, re-run the kit's build, then update
- * here — never edit a component's copy directly.
+ * brand-kit/BRAND.md section 1 keeps these facts in exactly one place. This
+ * module is that one place for the site. If a fact changes, change it in
+ * brand.json first, then here — never edit a component's copy directly.
  *
  * Retired and not to be reintroduced anywhere (brand-check-ignore: this block
  * names the retired strings in order to ban them):
@@ -18,7 +17,7 @@
 export const BRAND = {
   name: "Yousef Bakr",
   role: "Software Engineer",
-  descriptorLockup: "SOFTWARE ENGINEER",
+  descriptor: "Software Engineer",
 
   tagline: "Engineering that earns its complexity.",
   positioning:
@@ -51,9 +50,11 @@ export const BRAND = {
 export const LOCATION_RULE = "structured-data-only";
 
 /**
- * The proof stack, section 1. Every claim carries its source — that is the
- * whole point, and it is what section 8 demands of anything the site asserts.
- * Do not add a claim here without one.
+ * The proof stack, brand-kit/BRAND.md section 2. Every claim carries its
+ * source. Do not add a claim here without one.
+ *
+ * Framing rule (section 2): lead with the shipped product, never with age, and
+ * keep rank off the page. The v2.4 age-led item was removed for that reason.
  */
 export const PROOF_STACK = [
   {
@@ -75,12 +76,6 @@ export const PROOF_STACK = [
     source: "NestJS · Next.js · Flutter, 2026–",
     figure: "20+",
     figureLabel: "table schema",
-  },
-  {
-    claim: "Took the first engineering role at eighteen.",
-    source: "MindShift MENA, 09/2025",
-    figure: "18",
-    figureLabel: "age at first role",
   },
 ];
 

@@ -5,22 +5,26 @@ import rehypeRaw from "rehype-raw";
 import PropTypes from "prop-types";
 
 /**
- * The section 3.4 syntax ramp, built only from palette colours. This replaces
- * vscDarkPlus, whose green/violet/sky ramp was retired in v2.4 — six colours in
- * a code block is exactly the drift section 3.6 warns about.
+ * The syntax ramp, brand-kit/BRAND.md section 3: palette colours only, read
+ * from CSS variables so a code block follows the theme.
  *
- *   comment  muted      #7C8698
- *   string   slate      #A8B0BE
- *   number   gold deep  #E0A906
- *   function bone       #F5F3EF
- *   keyword  gold light #F2CC5A
- *   punct    muted      #7C8698
+ *   comment, punctuation  muted
+ *   string, function      ink
+ *   number, keyword       signal as text
  */
-/* The ground lives in .ybz-code in index.css, not here: section 3.3 defines a
-   different code ground for light pages, and only CSS can see the theme. */
+const SYN = {
+  plain: "var(--ybz-syn-plain)",
+  comment: "var(--ybz-syn-comment)",
+  string: "var(--ybz-syn-string)",
+  number: "var(--ybz-syn-number)",
+  fn: "var(--ybz-syn-function)",
+  keyword: "var(--ybz-syn-keyword)",
+};
+
+/* The ground lives in .ybz-code in index.css; the highlighter stays transparent. */
 const brandSyntaxTheme = {
   'code[class*="language-"]': {
-    color: "#C9D1E1",
+    color: SYN.plain,
     background: "none",
     fontFamily: "var(--ybz-mono)",
     textAlign: "left",
@@ -30,37 +34,35 @@ const brandSyntaxTheme = {
     hyphens: "none",
   },
   'pre[class*="language-"]': {
-    color: "#C9D1E1",
-    // Transparent so .ybz-code's ground shows through — section 3.3 gives
-    // light pages a different code ground, and only the wrapper knows the theme.
+    color: SYN.plain,
     background: "transparent",
     fontFamily: "var(--ybz-mono)",
     overflow: "auto",
   },
-  comment: { color: "#7C8698" },
-  prolog: { color: "#7C8698" },
-  doctype: { color: "#7C8698" },
-  cdata: { color: "#7C8698" },
-  punctuation: { color: "#7C8698" },
-  operator: { color: "#7C8698" },
-  string: { color: "#A8B0BE" },
-  char: { color: "#A8B0BE" },
-  "attr-value": { color: "#A8B0BE" },
-  regex: { color: "#A8B0BE" },
-  number: { color: "#E0A906" },
-  boolean: { color: "#E0A906" },
-  constant: { color: "#E0A906" },
-  symbol: { color: "#E0A906" },
-  function: { color: "#F5F3EF" },
-  "class-name": { color: "#F5F3EF" },
-  "attr-name": { color: "#F5F3EF" },
-  property: { color: "#F5F3EF" },
-  variable: { color: "#F5F3EF" },
-  keyword: { color: "#F2CC5A" },
-  atrule: { color: "#F2CC5A" },
-  selector: { color: "#F2CC5A" },
-  tag: { color: "#F2CC5A" },
-  important: { color: "#F2CC5A", fontWeight: "bold" },
+  comment: { color: SYN.comment },
+  prolog: { color: SYN.comment },
+  doctype: { color: SYN.comment },
+  cdata: { color: SYN.comment },
+  punctuation: { color: SYN.comment },
+  operator: { color: SYN.comment },
+  string: { color: SYN.string },
+  char: { color: SYN.string },
+  "attr-value": { color: SYN.string },
+  regex: { color: SYN.string },
+  number: { color: SYN.number },
+  boolean: { color: SYN.number },
+  constant: { color: SYN.number },
+  symbol: { color: SYN.number },
+  function: { color: SYN.fn },
+  "class-name": { color: SYN.fn },
+  "attr-name": { color: SYN.fn },
+  property: { color: SYN.fn },
+  variable: { color: SYN.fn },
+  keyword: { color: SYN.keyword },
+  atrule: { color: SYN.keyword },
+  selector: { color: SYN.keyword },
+  tag: { color: SYN.keyword },
+  important: { color: SYN.keyword, fontWeight: "bold" },
   bold: { fontWeight: "bold" },
   italic: { fontStyle: "italic" },
 };
@@ -104,7 +106,7 @@ const BlogContent = ({ content }) => {
           a: ({ href, children }) => (
             <a
               href={href}
-              className="text-accent underline decoration-hairline underline-offset-4 transition-colors duration-150 hover:decoration-current"
+              className="text-bone underline decoration-hairline underline-offset-4 transition-colors duration-150 hover:decoration-[var(--ybz-signal)]"
               target={href?.startsWith("http") ? "_blank" : undefined}
               rel={href?.startsWith("http") ? "noopener noreferrer" : undefined}
             >
@@ -134,7 +136,7 @@ const BlogContent = ({ content }) => {
                     <span>text</span>
                   </div>
                   <div className="ybz-code__body">
-                    <pre className="m-0 p-4 font-mono text-sm leading-6 text-[#C9D1E1]">
+                    <pre className="m-0 p-4 font-mono text-sm leading-6 text-bone">
                       {text.replace(/\n$/, "")}
                     </pre>
                   </div>
@@ -143,9 +145,7 @@ const BlogContent = ({ content }) => {
             }
 
             return isBlock ? (
-              // .ybz-code owns the ground so it can differ per theme
-              // (section 3.3 gives light pages their own code ground).
-              // Everything inside it stays midnight in both themes.
+              // .ybz-code owns the ground, a surface that follows the theme.
               <div className="ybz-code">
                 <div className="ybz-code__bar">
                   <span>{language}</span>

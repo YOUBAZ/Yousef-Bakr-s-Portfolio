@@ -13,7 +13,7 @@
       "role": "SaaS platform",
       "year": "Live",
       "live": "https://platform.edushiftai.com/",
-      "image": "/images/projects/EduShift.png",
+      "image": "/images/projects/edushift-ai.png",
       "tagline": "An LMS and business-simulation platform that grew from one simulation into four production products.",
       "context": "MindShift MENA",
       "engagement": "Employed, software engineer",
@@ -108,7 +108,7 @@
       "role": "Freelance",
       "year": "Live",
       "live": "https://autobusinessacademy.com/",
-      "image": "/images/projects/AutoBusiness.png",
+      "image": "/images/projects/autobusiness.png",
       "tagline": "A bilingual store for courses and templates, with payment review that cannot grant access twice.",
       "context": "Auto Business, a digital-business training brand",
       "engagement": "Freelance, sole engineer",
@@ -214,7 +214,7 @@
       "year": "Live",
       "live": "https://msp-helwan.vercel.app/",
       "repo": "https://github.com/YOUBAZ/msp_helwan",
-      "image": "/images/projects/MSP-Tech-Club.jpeg",
+      "image": "/images/projects/msp-tech-club.png",
       "tagline": "The public site and member system for a university tech club, with event tickets checked in by QR.",
       "context": "MSP Tech Club, Capital University",
       "engagement": "Volunteer, sole engineer",
@@ -319,7 +319,7 @@
       "role": "Prompt Platform",
       "year": "GitHub",
       "repo": "https://github.com/YOUBAZ/Promptopia",
-      "image": "/images/projects/Promptopia.png"
+      "image": "/images/projects/promptopia.png"
     },
     {
       "id": "blog-post",
@@ -335,7 +335,7 @@
       "role": "Blog Platform",
       "year": "GitHub",
       "repo": "https://github.com/YOUBAZ/Blog-Post",
-      "image": "/images/projects/Blog Post.png"
+      "image": "/images/projects/blog-post.png"
     },
     {
       "id": "e-commerce-app-youtube",
@@ -351,7 +351,7 @@
       "role": "Commerce Store",
       "year": "GitHub",
       "repo": "https://github.com/YOUBAZ/E-commerce-App-youtube-",
-      "image": "/images/projects/E-commerce App.png"
+      "image": "/images/projects/e-commerce-app-youtube.png"
     },
     {
       "id": "imdb-next-js",
@@ -367,7 +367,7 @@
       "role": "Movie Explorer",
       "year": "GitHub",
       "repo": "https://github.com/YOUBAZ/imdb-next.js",
-      "image": "/images/projects/IMDB Clone.png"
+      "image": "/images/projects/imdb-next-js.png"
     }
   ]
 }

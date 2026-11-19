@@ -6,7 +6,7 @@ const Figure = ({ value, label, size = "md", className = "" }) => (
     <p className={`ybz-figure ${size === "lg" ? "text-4xl" : "text-2xl"}`}>
       {value}
     </p>
-    <p className="mt-1 text-xs leading-5 text-muted">{label}</p>
+    <p className="ybz-meta mt-1">{label}</p>
   </div>
 );
 

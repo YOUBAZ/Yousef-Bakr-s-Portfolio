@@ -4,18 +4,28 @@ import PropTypes from "prop-types";
 import { ArrowUpRight, ExternalLink, Github } from "lucide-react";
 import Seo from "../components/Seo";
 import { siteMeta } from "../config/seo";
+import { BRAND } from "../config/brand";
 import {
   Button,
   Card,
   Figure,
   PageHeader,
   Section,
+  SectionHeader,
   StackLine,
+  TextLink,
+  CoverImage,
 } from "../components/ui";
 
-/* One project. The flagship (first in the data) spans both columns on lg and
-   sets the screenshot beside the text, so the remaining six close the grid in
-   three even rows. */
+/* Production work has a case study or measured highlights. Everything else is
+   an earlier build: it keeps its source link but not a screenshot card, so the
+   flagship work carries the page. */
+const isProduction = (project) =>
+  Boolean(project.brief || project.highlights?.length);
+
+/* One production project. The flagship (first in the data) spans both columns
+   on lg and sets the screenshot beside the text. Only the flagship's case-study
+   button is filled, so the page has one primary action. */
 const ProjectCard = ({ project, flagship = false }) => (
   <Card
     as="article"
@@ -28,18 +38,13 @@ const ProjectCard = ({ project, flagship = false }) => (
     }
   >
     <div
-      className={`ybz-frame aspect-[16/10] ${
+      className={`ybz-frame ybz-frame--cover aspect-[16/10] ${
         flagship
-          ? "lg:aspect-auto lg:min-h-80 lg:border-b-0 lg:border-r lg:border-edge"
+          ? "lg:aspect-auto lg:border-b-0 lg:border-r lg:border-edge"
           : ""
       }`}
     >
-      <img
-        src={project.image}
-        alt={project.title}
-        className="p-4"
-        loading="lazy"
-      />
+      <CoverImage src={project.image} alt={project.title} />
     </div>
 
     <div className="flex flex-1 flex-col p-6">
@@ -74,6 +79,7 @@ const ProjectCard = ({ project, flagship = false }) => (
             <Button
               to={`/projects/${project.id}`}
               size="sm"
+              variant={flagship ? "primary" : "secondary"}
               icon={ArrowUpRight}
             >
               Case study
@@ -110,6 +116,31 @@ const ProjectCard = ({ project, flagship = false }) => (
 ProjectCard.propTypes = {
   project: PropTypes.object.isRequired,
   flagship: PropTypes.bool,
+};
+
+/* An earlier build: one row in an index, no screenshot. */
+const EarlierBuild = ({ project }) => (
+  <li className="grid gap-3 border-b border-edge py-6 sm:grid-cols-[14rem_1fr_auto] sm:gap-8">
+    <div className="min-w-0">
+      <h3 className="ybz-title">{project.title}</h3>
+      <p className="ybz-meta mt-1">{project.role}</p>
+    </div>
+    <div className="min-w-0 space-y-3">
+      <p className="ybz-body">{project.summary}</p>
+      <StackLine items={project.tech} />
+    </div>
+    {(project.repo || project.live) && (
+      <div className="sm:pt-1">
+        <TextLink href={project.repo || project.live}>
+          {project.repo ? "Source" : "Live"}
+        </TextLink>
+      </div>
+    )}
+  </li>
+);
+
+EarlierBuild.propTypes = {
+  project: PropTypes.object.isRequired,
 };
 
 const Projects = () => {
@@ -197,6 +228,9 @@ const Projects = () => {
     return () => controller.abort();
   }, []);
 
+  const production = projects.filter(isProduction);
+  const earlier = projects.filter((p) => !isProduction(p));
+
   return (
     <>
       <Seo
@@ -232,7 +266,7 @@ const Projects = () => {
             ))}
 
           {!isLoadingProjects &&
-            projects.map((project, index) => (
+            production.map((project, index) => (
               <ProjectCard
                 key={project.id ?? project.title}
                 project={project}
@@ -240,19 +274,33 @@ const Projects = () => {
               />
             ))}
 
-          {!isLoadingProjects && !loadError && projects.length === 0 && (
-            <Card className="ybz-body border-dashed text-center text-muted lg:col-span-2">
-              No projects were found. Check the project data source.
-            </Card>
-          )}
-
-          {loadError && (
-            <Card className="ybz-body text-center text-muted lg:col-span-2">
-              {loadError}
+          {!isLoadingProjects && (loadError || projects.length === 0) && (
+            <Card className="lg:col-span-2">
+              <p className="ybz-body">
+                The project list did not load. The source for every project is
+                on GitHub in the meantime.
+              </p>
+              <TextLink href={BRAND.github} className="mt-4">
+                Open GitHub
+              </TextLink>
             </Card>
           )}
         </div>
       </Section>
+
+      {!isLoadingProjects && earlier.length > 0 && (
+        <Section tone="raised">
+          <SectionHeader
+            eyebrow="Earlier builds"
+            title="Open-source work from before production."
+          />
+          <ul className="border-t border-edge">
+            {earlier.map((project) => (
+              <EarlierBuild key={project.id ?? project.title} project={project} />
+            ))}
+          </ul>
+        </Section>
+      )}
     </>
   );
 };

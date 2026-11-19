@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 
 /**
- * The raised panel. 20px radius, edge hairline, card gradient (a tone shift
- * inside one neutral). `interactive` adds the hover border step — no lift.
+ * The raised panel. 4px radius, hairline edge, flat surface. `interactive`
+ * steps the border to ink on hover — no lift.
  * `padded={false}` for cards that open with a full-bleed frame.
  */
 const Card = ({

@@ -1,120 +1,121 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Montserrat:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap');
 @import "tailwindcss";
 
 /* ==========================================================================
-   YOUSEF BAKR — brand tokens v2.4
-   Values mirror v5/files/yousef-bakr-brand-v2.4/04_tokens.css, which is
-   GENERATED from brand.json by tools/build_web.py. Do not hand-edit a value
-   here — change brand.json, re-run the build, and copy the block across.
-   Rule: 85% dark ground, 15% accent. Gold is the only dominant accent.
+   YOUSEF BAKR — brand tokens v3.0
+   Values mirror brand-kit/brand.json, section 3 of brand-kit/BRAND.md.
+   Change brand.json first, then copy the value here. Never invent a colour.
+
+   Territory: spec sheet. Ink on paper, one signal colour. Light is the default;
+   dark is opt-in through data-theme="dark" (set by useTheme from the visitor's
+   choice or their system setting).
+
+   The token NAMES are kept from v2.4 so every component keeps working:
+     --ybz-ink       page ground          --ybz-bone   headlines and body
+     --ybz-obsidian  alternate section    --ybz-slate  body (same as ink in v3)
+     --ybz-card      raised surface       --ybz-muted  secondary text
+     --ybz-edge / --ybz-hairline          hairlines (rule)
+     --ybz-signal    graphics only        --ybz-accent-type  signal as text
    ========================================================================== */
 
 :root{
-  /* ---------- ground: 85% of every surface ---------- */
-  --ybz-ink:        #020617;  /* midnight — default page ground */
-  --ybz-obsidian:   #0B0E1A;  /* second surface, alternating sections */
-  --ybz-card:       #14161F;  /* raised panel */
-  --ybz-hairline:   rgba(244,192,37,.16);
-  --ybz-edge:       rgba(245,243,239,.07);
+  /* ---------- ground and surfaces ---------- */
+  --ybz-ink:        #F4F3EF;  /* paper — page ground, never pure white */
+  --ybz-surface:    #EAE8E2;  /* the second neutral */
+  --ybz-obsidian:   var(--ybz-surface);  /* alternate (raised) sections */
 
-  /* ---------- gold: the signature. one dominant accent, nothing else ---------- */
-  --ybz-gold:       #F4C025;
-  --ybz-gold-light: #F2CC5A;
-  --ybz-gold-deep:  #E0A906;
-
-  /* ---------- purple: atmosphere only. never type, never a fill on text ---------- */
-  --ybz-purple:     #401A66;
-  --ybz-purple-lit: #592D86;
-
-  /* ---------- blue: things a person can click. nothing else ---------- */
-  --ybz-sky:        #0284C7;
-  --ybz-indigo:     #4F46E5;
-
-  /* ---------- type colours ---------- */
-  --ybz-bone:       #F5F3EF;  /* headings          18.2:1 on midnight */
-  --ybz-slate:      #A8B0BE;  /* body               9.2:1 */
-  --ybz-muted:      #7C8698;  /* captions, metadata 5.5:1 */
-
-  /* ---------- gradients ---------- */
-  --ybz-grad-gold:   linear-gradient(135deg, var(--ybz-gold-light), var(--ybz-gold-deep));
-  --ybz-grad-cta:    linear-gradient(90deg, var(--ybz-sky), var(--ybz-indigo));
-  --ybz-grad-card:   linear-gradient(135deg, #1A1C25, #0E1017);
-  --ybz-grad-bloom:  radial-gradient(700px 560px at 4% -6%, rgba(89,45,134,.34), transparent 62%);
+  /* Box fills. A box must always differ from what sits behind it: a card on a
+     paper section is surface, a card on a raised band is paper (see .bg-obsidian
+     below), and a box nested inside a card takes the other one (--ybz-inset). */
+  --ybz-card:       var(--ybz-surface);
+  --ybz-inset:      var(--ybz-ink);
+  --ybz-edge:       #D3D0C8;  /* hairlines and grid lines, never text */
+  --ybz-hairline:   #D3D0C8;
 
   /* ---------- type ---------- */
-  --ybz-display: "Playfair Display", Georgia, serif;   /* headlines only, never below 30px */
-  --ybz-body:    "Montserrat", system-ui, sans-serif;  /* all running text */
-  --ybz-mono:    "JetBrains Mono", ui-monospace, monospace; /* code, data, numbers */
-  --ybz-arabic:  "Cairo", system-ui, sans-serif;       /* all RTL */
+  --ybz-bone:       #15171B;  /* headlines and body  16.2:1 on paper */
+  --ybz-slate:      #15171B;
+  --ybz-muted:      #5E626A;  /* secondary text       5.5:1 */
 
-  /* ---------- shape ---------- */
-  --ybz-r-sm: 12px;
-  --ybz-r-md: 20px;
-  --ybz-r-lg: 28px;
-  --ybz-glow: 0 0 40px rgba(244,192,37,.28);
+  /* ---------- the one signal colour ---------- */
+  --ybz-signal:      #D2481C;  /* graphics only: markers, the Merge Y branch. 4.0:1 */
+  --ybz-accent-type: #A8360E;  /* signal as text: section labels, figures. 5.9:1 */
+  --ybz-accent-rule: #D2481C;  /* rules, focus rings, icon strokes */
 
-  /* ---------- surfaces that need an alpha, so they cannot be a flat token ----
-     Translucent chrome behind a blur, and the scrim under a modal. Both are the
-     ground at partial opacity; section 3.3 lists their opaque equivalents for
-     formats without an alpha channel. */
-  --ybz-chrome:  rgba(2,6,23,.72);   /* sticky navbar */
-  --ybz-scrim:   rgba(2,6,23,.85);   /* mobile menu backdrop */
+  /* ---------- type families ---------- */
+  --ybz-display: "IBM Plex Sans", system-ui, sans-serif;   /* headlines, 600, -0.01em */
+  --ybz-body:    "IBM Plex Sans", system-ui, sans-serif;   /* all running text */
+  --ybz-mono:    "IBM Plex Mono", ui-monospace, monospace; /* figures, code, labels */
+  --ybz-arabic:  "IBM Plex Sans Arabic", system-ui, sans-serif;
 
-  /* A plate behind a third-party logo. It must stay light in BOTH themes —
-     the logos it carries are drawn for a light ground — so unlike --ybz-bone
-     it does not invert. Paper in light, bone in dark; never pure white. */
-  --ybz-logo-plate: #F5F3EF;
+  /* ---------- shape: square is the default ---------- */
+  --ybz-r-sm: 2px;
+  --ybz-r-md: 4px;
+  --ybz-r-lg: 8px;
 
-  /* ---------- accents that resolve per theme ----------
-     These two are the whole light-mode contract. Anything that paints an accent
-     onto TYPE must use --ybz-accent-type, never --ybz-gold, because gold is a
-     fill colour on paper and a text colour only on midnight. */
-  --ybz-accent-type: var(--ybz-gold);        /* eyebrows, links, small accents */
-  --ybz-accent-rule: var(--ybz-gold);        /* rules, icon strokes, bars */
+  /* ---------- translucent chrome: the ground at partial opacity ---------- */
+  --ybz-chrome:  rgba(234,232,226,.92);  /* sticky navbar: surface, so the bar reads as a box */
+  --ybz-scrim:   rgba(21,23,27,.45);     /* mobile menu backdrop */
+
+  /* A plate behind third-party logos, which are drawn for light grounds. Stays
+     light in both themes. */
+  --ybz-logo-plate: #F4F3EF;
+
+  /* ---------- syntax ramp: palette colours only ---------- */
+  --ybz-syn-plain:    var(--ybz-bone);
+  --ybz-syn-comment:  var(--ybz-muted);
+  --ybz-syn-string:   var(--ybz-bone);
+  --ybz-syn-number:   var(--ybz-accent-type);
+  --ybz-syn-function: var(--ybz-bone);
+  --ybz-syn-keyword:  var(--ybz-accent-type);
+
+  color-scheme: light;
 }
 
 /* ==========================================================================
-   LIGHT MODE
-   The system inverts, but gold does not survive the trip as a text colour:
-   #F4C025 on paper is 1.55:1. So in light mode gold becomes a FILL colour,
-   and type accents drop to the bronze end of the same hue family.
-   Dormant until something sets data-theme="light" — wired so a toggle is a
-   flag flip rather than a rewrite.
+   DARK
+   Same roles, dark values. Signal lifts so it still reads as text.
    ========================================================================== */
 
-[data-theme="light"], .ybz-light{
-  --ybz-ink:        #F7F5F0;  /* paper — warm, never pure white */
-  --ybz-obsidian:   #EDEAE3;  /* second surface */
-  --ybz-card:       #FFFFFF;  /* raised panel */
-  --ybz-hairline:   rgba(176,126,5,.30);
-  --ybz-edge:       rgba(2,6,23,.09);
+[data-theme="dark"]{
+  --ybz-ink:        #121417;  /* never pure black */
+  --ybz-surface:    #24282D;
+  --ybz-obsidian:   var(--ybz-surface);
+  --ybz-card:       var(--ybz-surface);
+  --ybz-inset:      var(--ybz-ink);
+  --ybz-edge:       #363B42;
+  --ybz-hairline:   #363B42;
 
-  /* the gold ladder, contrast-checked against #F7F5F0 */
-  --ybz-gold:       #F4C025;  /* 1.55:1 — FILLS ONLY. never type. */
-  --ybz-bronze:     #B07E05;  /* 3.3:1  — display type 32px+, rules, icon strokes */
-  --ybz-antique:    #8A6206;  /* 5.03:1 — body-size accents, eyebrows, links */
+  --ybz-bone:       #ECEBE6;  /* 15.5:1 */
+  --ybz-slate:      #ECEBE6;
+  --ybz-muted:      #9A9EA5;  /* 6.9:1 */
 
-  --ybz-bone:       #020617;  /* headings          18.51:1 */
-  --ybz-slate:      #3B4354;  /* body               9.11:1 */
-  --ybz-muted:      #5A6376;  /* captions           5.54:1 */
+  --ybz-signal:      #E2582B;  /* 5.0:1 */
+  --ybz-accent-type: #EE7A52;  /* 6.6:1 */
+  --ybz-accent-rule: #E2582B;
 
-  --ybz-accent-type: var(--ybz-antique);
-  --ybz-accent-rule: var(--ybz-bronze);
+  --ybz-chrome:  rgba(36,40,45,.92);     /* surface #24282D */
+  --ybz-scrim:   rgba(18,20,23,.80);
 
-  --ybz-grad-gold:  linear-gradient(135deg, #B07E05, #8A6206);
-  --ybz-grad-card:  linear-gradient(135deg, #FFFFFF, #FBF9F5);
-  --ybz-grad-bloom: radial-gradient(700px 560px at 4% -6%, rgba(64,26,102,.07), transparent 62%);
-  --ybz-glow:       0 2px 20px rgba(2,6,23,.05);
+  color-scheme: dark;
+}
 
-  --ybz-chrome: rgba(247,245,240,.80);
-  --ybz-scrim:  rgba(2,6,23,.45);   /* the scrim stays dark — it is a shadow */
-  --ybz-logo-plate: #FFFFFF;        /* the light-theme card surface, section 3.2 */
+/* ==========================================================================
+   FIGURE AND GROUND
+   On a raised band the band is surface, so boxes on it flip to paper, and
+   boxes nested inside those flip back to surface. Every box keeps a fill that
+   differs from what is behind it, in both themes, without per-page overrides.
+   ========================================================================== */
+
+.bg-obsidian{
+  --ybz-card:  var(--ybz-ink);
+  --ybz-inset: var(--ybz-surface);
 }
 
 /* ==========================================================================
    TAILWIND BRIDGE
-   `inline` is required: it makes utilities emit var(--ybz-*) rather than
-   baking the resolved value, which is what lets the light block override them.
+   `inline` makes utilities emit var(--ybz-*) rather than baking the resolved
+   value, which is what lets the dark block override them.
    `slate-body` is deliberately not `slate` — Tailwind ships its own slate
    scale and overriding it would silently repaint unrelated classes.
    ========================================================================== */
@@ -123,17 +124,14 @@
   --color-ink:        var(--ybz-ink);
   --color-obsidian:   var(--ybz-obsidian);
   --color-card:       var(--ybz-card);
-  --color-gold:       var(--ybz-gold);
-  --color-gold-light: var(--ybz-gold-light);
-  --color-gold-deep:  var(--ybz-gold-deep);
+  --color-inset:      var(--ybz-inset);
+  --color-signal:     var(--ybz-signal);
   --color-bone:       var(--ybz-bone);
   --color-slate-body: var(--ybz-slate);
   --color-muted:      var(--ybz-muted);
   --color-accent:     var(--ybz-accent-type);
   --color-edge:       var(--ybz-edge);
   --color-hairline:   var(--ybz-hairline);
-  --color-sky-cta:    var(--ybz-sky);
-  --color-indigo-cta: var(--ybz-indigo);
   --color-chrome:     var(--ybz-chrome);
   --color-scrim:      var(--ybz-scrim);
   --color-logo-plate: var(--ybz-logo-plate);
@@ -142,30 +140,27 @@
   --font-body:    var(--ybz-body);
   --font-mono:    var(--ybz-mono);
 
-  --radius-sm: 12px;
-  --radius-md: 20px;
-  --radius-lg: 28px;
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  --radius-xl: 8px;
 
-  /* transition-colors etc. pick up the system curve and feedback duration. */
   --default-transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
   --default-transition-duration: 150ms;
 }
 
 /* ==========================================================================
    SYSTEM TOKENS — the parts BRAND.md leaves to the site.
-   Brand tokens above are copied from the kit and never edited here. These sit
-   on top of them: motion (BRAND.md section 17 issue 5 asked for one rule),
-   layout widths and the page gutter. Every component below reads from them.
    ========================================================================== */
 
 :root{
-  /* Motion. One curve, two durations: 150ms for feedback (hover, press,
-     toggles), 420ms for the one entrance. Nothing loops, nothing bounces, nothing lifts. */
+  /* Motion. One curve, two durations: 150ms for feedback, 420ms for the one
+     entrance. Nothing loops, nothing bounces, nothing lifts. */
   --ybz-ease:       cubic-bezier(0.22, 1, 0.36, 1);
-  --ybz-dur-fast:   150ms;   /* Tailwind duration-150 in markup */
+  --ybz-dur-fast:   150ms;
   --ybz-dur-enter:  420ms;
 
-  /* Reading width for paragraphs and ledes. Page width is max-w-6xl. */
+  /* Reading width: 68 characters, BRAND.md section 4. */
   --ybz-w-read:     42rem;
 }
 
@@ -178,22 +173,23 @@
   body {
     @apply antialiased;
     font-family: var(--ybz-body);
+    font-size: 1rem;
+    line-height: 1.6;
     background: var(--ybz-ink);
     color: var(--ybz-slate);
   }
 
-  /* Playfair carries h1 and h2 only. BRAND.md section 4 sets a 30px floor on
-     the display face, and every h3 on this site is a card or row title well
-     under that, so h3 and below are Montserrat. Sizes live on .ybz-display-*. */
+  /* One family. Hierarchy comes from size and weight, never from case. */
   h1, h2 {
     font-family: var(--ybz-display);
-    font-weight: 700;
+    font-weight: 600;
     color: var(--ybz-bone);
-    letter-spacing: -0.015em;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
   }
   h3, h4, h5, h6 {
     font-family: var(--ybz-body);
-    font-weight: 600;
+    font-weight: 500;
     color: var(--ybz-bone);
   }
 
@@ -205,7 +201,7 @@
   }
 
   ::selection {
-    background: var(--ybz-gold);
+    background: var(--ybz-bone);
     color: var(--ybz-ink);
   }
 }
@@ -220,129 +216,142 @@
     @apply max-w-6xl;
   }
 
-  /* ---------- type roles ---------- */
+  /* ---------- type roles: BRAND.md section 4 ---------- */
 
-  /* Display sizes. Both clear the 30px floor at every breakpoint. */
-  .ybz-display-1{               /* page h1: 36 → 48 → 60 */
-    font-family: var(--ybz-display); font-weight: 700; color: var(--ybz-bone);
-    font-size: 2.25rem; line-height: 1.12; letter-spacing: -0.015em;
+  .ybz-display-1{               /* page h1: 36 → 44 → 60 */
+    font-family: var(--ybz-display); font-weight: 600; color: var(--ybz-bone);
+    font-size: 2.25rem; line-height: 1.12; letter-spacing: -0.01em;
   }
-  @media (min-width: 640px){ .ybz-display-1{ font-size: 3rem; } }
+  @media (min-width: 640px){ .ybz-display-1{ font-size: 2.75rem; } }
   @media (min-width: 1024px){ .ybz-display-1{ font-size: 3.75rem; line-height: 1.08; } }
 
-  .ybz-display-2{               /* section h2: 30 → 36 */
-    font-family: var(--ybz-display); font-weight: 700; color: var(--ybz-bone);
-    font-size: 1.875rem; line-height: 1.2; letter-spacing: -0.01em;
+  .ybz-display-2{               /* section h2: 26 → 32 */
+    font-family: var(--ybz-display); font-weight: 600; color: var(--ybz-bone);
+    font-size: 1.625rem; line-height: 1.2; letter-spacing: -0.01em;
   }
-  @media (min-width: 640px){ .ybz-display-2{ font-size: 2.25rem; } }
+  @media (min-width: 640px){ .ybz-display-2{ font-size: 2rem; } }
 
-  /* Card and row titles. Montserrat, because Playfair below 30px is off-brand. */
   .ybz-title{
-    font-family: var(--ybz-body); font-weight: 600; color: var(--ybz-bone);
-    font-size: 1.125rem; line-height: 1.4;
+    font-family: var(--ybz-body); font-weight: 500; color: var(--ybz-bone);
+    font-size: 1.25rem; line-height: 1.35;
   }
 
   .ybz-lede{
-    font-size: 1.125rem; line-height: 1.75; color: var(--ybz-slate);
+    font-size: 1.25rem; line-height: 1.6; color: var(--ybz-slate);
     max-width: var(--ybz-w-read);
   }
 
   .ybz-body{
-    font-size: .9375rem; line-height: 1.75; color: var(--ybz-slate);
+    font-size: 1rem; line-height: 1.6; color: var(--ybz-slate);
   }
 
+  /* v2.4 gradient text is retired. Kept as a plain signal-text alias. */
   .ybz-gold-text{
-    background: var(--ybz-grad-gold);
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-  }
-
-  .ybz-eyebrow{
-    font-family: var(--ybz-body); font-weight: 600; font-size: .75rem;
-    letter-spacing: .30em; text-transform: uppercase;
     color: var(--ybz-accent-type);
   }
 
-  /* Mono label: periods, counters, short tags. Uppercase, tracked. */
+  /* Section label: mono, signal as text, sentence case. Sits where the
+     section number sits in the kit's layout signature. */
+  .ybz-eyebrow{
+    font-family: var(--ybz-mono); font-weight: 500; font-size: .8125rem;
+    line-height: 1.5; color: var(--ybz-accent-type);
+  }
+
+  /* Mono metadata: periods, counters, short tags. Sentence case. */
   .ybz-meta{
-    font-family: var(--ybz-mono); font-size: .75rem; line-height: 1.5;
-    letter-spacing: .14em; text-transform: uppercase; color: var(--ybz-muted);
+    font-family: var(--ybz-mono); font-size: .8125rem; line-height: 1.5;
+    color: var(--ybz-muted);
     font-variant-numeric: tabular-nums;
   }
 
-  /* Mono source line: URLs, stacks, citations. Sentence case, untracked, so a
-     domain or a framework name reads as written. Replaces the old
-     `ybz-meta normal-case tracking-normal` override. */
+  /* Mono source line: URLs, stacks, citations. */
   .ybz-source{
-    font-family: var(--ybz-mono); font-size: .75rem; line-height: 1.6;
+    font-family: var(--ybz-mono); font-size: .8125rem; line-height: 1.6;
     color: var(--ybz-muted);
   }
 
-  /* Counters and metrics. JetBrains Mono never carries a sentence. */
+  /* Counters and metrics. Plex Mono never carries a sentence. Ink by default:
+     signal is reserved for the one key figure on a page (.ybz-figure--key). */
   .ybz-figure{
     font-family: var(--ybz-mono); font-weight: 500;
-    letter-spacing: .02em; color: var(--ybz-bone);
+    color: var(--ybz-bone);
     font-variant-numeric: tabular-nums;
   }
+  .ybz-figure--key{ color: var(--ybz-accent-type); }
 
-  /* Inline text link with the accent. */
+  /* Links are ink with an underline. The underline turns signal on hover. */
   .ybz-link{
     display: inline-flex; align-items: center; gap: .375rem;
-    font-size: .875rem; font-weight: 600; color: var(--ybz-accent-type);
+    font-size: .9375rem; font-weight: 500; color: var(--ybz-bone);
+    text-decoration: underline; text-decoration-color: var(--ybz-edge);
     text-underline-offset: 4px;
-    transition: color var(--ybz-dur-fast) var(--ybz-ease);
+    transition: text-decoration-color var(--ybz-dur-fast) var(--ybz-ease);
   }
-  .ybz-link:hover{ text-decoration: underline; }
+  .ybz-link:hover{ text-decoration-color: var(--ybz-signal); }
 
   /* ---------- surfaces ---------- */
 
   .ybz-card{
-    background: var(--ybz-grad-card);
+    background: var(--ybz-card);
     border: 1px solid var(--ybz-edge);
     border-radius: var(--ybz-r-md);
   }
 
-  /* Hover is a border step to the gold hairline. No lift, no shadow. */
+  /* Hover is a border step to ink. No lift, no shadow. */
   .ybz-card-interactive{
     transition: border-color var(--ybz-dur-fast) var(--ybz-ease);
   }
   .ybz-card-interactive:hover{
-    border-color: var(--ybz-hairline);
+    border-color: var(--ybz-bone);
   }
 
-  /* A light plate behind third-party logos, which are drawn for light grounds. */
+  /* Generated covers come in two files; show the one for the active theme. */
+  [data-theme="dark"] .ybz-only-light{ display: none; }
+  :root:not([data-theme="dark"]) .ybz-only-dark{ display: none; }
+
+  /* A frame holding a generated cover matches the cover's own ground, so any
+     space around it reads as part of the cover. */
+  .ybz-frame.ybz-frame--cover{ background: var(--ybz-ink); }
+
+  /* A box inside a card: takes the fill the card is not using. */
+  .ybz-inset{
+    background: var(--ybz-inset);
+    border: 1px solid var(--ybz-edge);
+    border-radius: var(--ybz-r-sm);
+  }
+
   .ybz-plate{
     display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     overflow: hidden; background: var(--ybz-logo-plate);
     border: 1px solid var(--ybz-edge); border-radius: var(--ybz-r-sm);
   }
 
-  /* Frame for screenshots and certificates. Third-party images arrive in
-     every colour; a midnight mat with a hairline keeps them inside the page. */
+  /* Frame for screenshots and certificates. */
   .ybz-frame{
     position: relative; overflow: hidden;
-    background: #07080D;                      /* preview_backdrop, section 3.3 */
+    background: var(--ybz-obsidian);
     border-bottom: 1px solid var(--ybz-edge);
   }
   .ybz-frame > img{
     width: 100%; height: 100%; object-fit: contain;
   }
 
-  /* The gold rule — 2px, 120px, fading left to right. Sits under headlines. */
+  /* Headline marker: a short solid signal rule under page and section
+     headlines. BRAND.md section 6. */
   .ybz-rule{
-    height: 2px; width: 120px; border: 0; display: block;
-    background: linear-gradient(90deg, var(--ybz-accent-rule), transparent);
+    height: 2px; width: 32px; border: 0; display: block;
+    background: var(--ybz-signal);
   }
 
   /* ---------- controls ---------- */
 
-  /* One geometry for every button: 48px tall, 12px radius, 16px icon gap.
-     Variants change colour only, so a primary and a secondary side by side
-     share a baseline. */
+  /* One geometry for every button: 48px tall, 4px radius. Variants change
+     colour only, so a primary and a secondary side by side share a baseline. */
   .ybz-btn{
     display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
-    min-height: 3rem; padding: 0 1.5rem;
-    font-family: var(--ybz-body); font-weight: 600; font-size: .875rem;
-    border-radius: var(--ybz-r-sm); border: 1px solid transparent;
+    min-height: 3rem; padding: 0 1.25rem;
+    font-family: var(--ybz-body); font-weight: 500; font-size: .9375rem;
+    border-radius: var(--ybz-r-md); border: 1px solid transparent;
     white-space: nowrap; cursor: pointer;
     transition:
       background-color var(--ybz-dur-fast) var(--ybz-ease),
@@ -350,256 +359,193 @@
       color var(--ybz-dur-fast) var(--ybz-ease),
       transform var(--ybz-dur-fast) var(--ybz-ease);
   }
-  .ybz-btn:active{ transform: scale(.98); }
+  .ybz-btn:active{ transform: scale(.96); }
   .ybz-btn:disabled{ opacity: .5; cursor: not-allowed; transform: none; }
   .ybz-btn--sm{ min-height: 2.5rem; padding: 0 1rem; }
 
-  /* The one gold action per screen. Uppercase and tracked per the kit. */
+  /* Primary: ink fill, ground text. Signal is never a fill behind text, so the
+     hover steps to the signal TEXT colour, which passes 5.9:1 and 6.6:1. */
   .ybz-btn-primary{
-    background: var(--ybz-grad-gold); color: var(--ybz-ink);
-    letter-spacing: .12em; text-transform: uppercase; font-size: .8125rem;
+    background: var(--ybz-bone); color: var(--ybz-ink);
   }
-  .ybz-btn-primary:hover{ background: var(--ybz-gold); }
+  .ybz-btn-primary:hover{ background: var(--ybz-accent-type); }
 
-  /* Secondary: transparent, edge hairline, bone label. */
+  /* Secondary: transparent, hairline, ink label. */
   .ybz-btn-ghost{
     background: transparent; color: var(--ybz-bone);
     border-color: var(--ybz-edge);
   }
-  .ybz-btn-ghost:hover{ border-color: var(--ybz-hairline); background: var(--ybz-card); }
+  .ybz-btn-ghost:hover{ border-color: var(--ybz-bone); }
 
-  /* The persistent navigation CTA: gold outline, one step below the primary
-     fill so it never competes with the page's own gold action. Fills on hover;
-     ink on gold is 11.92:1 in both themes. */
+  /* The persistent navigation CTA: outlined in ink, one step below the
+     primary fill so it never competes with the page's own action. */
   .ybz-btn-accent{
-    background: transparent; color: var(--ybz-accent-type);
-    border-color: var(--ybz-accent-rule);
+    background: transparent; color: var(--ybz-bone);
+    border-color: var(--ybz-bone);
   }
-  .ybz-btn-accent:hover{ background: var(--ybz-accent-rule); color: var(--ybz-ink); }
-
-  /* The blue CTA from the kit. Kept as a kit primitive; not used on this site.
-     If reinstated, hold the 16px floor — the sky end reads 4.10:1 on white. */
-  .ybz-btn-nav{
-    background: var(--ybz-grad-cta); color: #fff; font-size: 1rem;
-  }
+  .ybz-btn-accent:hover{ background: var(--ybz-bone); color: var(--ybz-ink); }
 
   /* Form fields share the button geometry. */
   .ybz-input{
     width: 100%; min-height: 3rem; padding: .75rem 1rem;
-    font-family: var(--ybz-body); font-size: .9375rem; color: var(--ybz-bone);
-    background: var(--ybz-ink);
-    border: 1px solid var(--ybz-edge); border-radius: var(--ybz-r-sm);
+    font-family: var(--ybz-body); font-size: 1rem; color: var(--ybz-bone);
+    background: var(--ybz-inset);
+    border: 1px solid var(--ybz-edge); border-radius: var(--ybz-r-md);
     transition: border-color var(--ybz-dur-fast) var(--ybz-ease);
   }
   .ybz-input::placeholder{ color: var(--ybz-muted); }
-  .ybz-input:hover{ border-color: var(--ybz-hairline); }
+  .ybz-input:hover{ border-color: var(--ybz-muted); }
   .ybz-input:focus{ outline: none; border-color: var(--ybz-accent-rule); }
 
-  /* Filter chips. Selected is a surface step plus gold edge; never a pill. */
+  /* Filter chips. Selected is a surface step plus an ink edge. */
   .ybz-chip{
     display: inline-flex; align-items: center; min-height: 2.25rem; padding: 0 .875rem;
-    font-size: .8125rem; font-weight: 500; color: var(--ybz-slate);
-    border: 1px solid var(--ybz-edge); border-radius: var(--ybz-r-sm);
+    font-size: .875rem; font-weight: 500; color: var(--ybz-muted);
+    border: 1px solid var(--ybz-edge); border-radius: var(--ybz-r-md);
     transition: border-color var(--ybz-dur-fast) var(--ybz-ease),
                 color var(--ybz-dur-fast) var(--ybz-ease),
                 background-color var(--ybz-dur-fast) var(--ybz-ease);
   }
-  .ybz-chip:hover{ color: var(--ybz-bone); border-color: var(--ybz-hairline); }
+  .ybz-chip:hover{ color: var(--ybz-bone); border-color: var(--ybz-muted); }
   .ybz-chip[aria-pressed="true"]{
-    color: var(--ybz-bone); background: var(--ybz-card); border-color: var(--ybz-accent-rule);
+    color: var(--ybz-bone); background: var(--ybz-card); border-color: var(--ybz-bone);
   }
 
-  /* Skip link. Off-screen until focused, then lands as a normal gold action. */
+  /* Touch: every control reaches 44px where the pointer is a finger. */
+  @media (pointer: coarse){
+    .ybz-chip, .ybz-btn--sm{ min-height: 2.75rem; }
+  }
+
+  /* Skip link. Off-screen until focused, then lands as a primary action. */
   .ybz-skip-link{
     position: absolute; left: -9999px; top: 0; z-index: 100;
-    background: var(--ybz-grad-gold); color: var(--ybz-ink);
-    font-family: var(--ybz-body); font-weight: 600; font-size: 1rem;
-    padding: .75rem 1.25rem; border-radius: var(--ybz-r-sm);
+    background: var(--ybz-bone); color: var(--ybz-ink);
+    font-family: var(--ybz-body); font-weight: 500; font-size: 1rem;
+    padding: .75rem 1.25rem; border-radius: var(--ybz-r-md);
   }
   .ybz-skip-link:focus{
     left: 1rem; top: 1rem;
   }
-
-  /* Ambient purple bloom. Hero sections only, one corner — never type, never a border. */
-  .ybz-bloom{
-    background: var(--ybz-grad-bloom);
-  }
-
-}
-
-/* Gold stays full strength wherever it is a filled shape with ink on top —
-   ink on #F4C025 reads at 11.92:1, which is why the primary button is unchanged. */
-[data-theme="light"] .ybz-btn-primary,
-.ybz-light .ybz-btn-primary{ background:linear-gradient(135deg,#F4C025,#E0A906); color:#020617; }
-/* Hover must be restated here: an unlayered rule beats the layered hover. */
-[data-theme="light"] .ybz-btn-primary:hover,
-.ybz-light .ybz-btn-primary:hover{ background:#F4C025; }
-
-/* The one deliberate exception: code blocks stay midnight on light pages.
-   One dark object per page is the signature; a light code block is anyone's. */
-[data-theme="light"] pre, .ybz-light pre{
-  background:linear-gradient(135deg,#191B24,#0E1017);
-  color:#C9D1E1; border:1px solid rgba(2,6,23,.12);
-  box-shadow:0 6px 30px rgba(2,6,23,.14);
 }
 
 /* ==========================================================================
    THE CODE BLOCK
-   Rule 5 makes this the one dark object on a light page — so the WHOLE object
-   is dark, chrome included. Built from fixed palette values rather than the
-   theme tokens: --ybz-card resolves to #FFFFFF in light mode, so a language bar
-   painted with it turned white and glued itself to a midnight body, splitting
-   the block in two. Anything inside this component is midnight in both themes.
-
-   Only the outer frame is theme-aware, because the frame is what touches the
-   page: a hairline on midnight, a border plus a lift on paper.
+   A surface, like a card. It follows the theme: v2.4's "one dark object on a
+   light page" rule is retired.
    ========================================================================== */
 
 .ybz-code{
   margin: 1.5rem 0;
   border: 1px solid var(--ybz-edge);
-  border-radius: var(--ybz-r-sm);
+  border-radius: var(--ybz-r-md);
   overflow: hidden;
-  background: linear-gradient(135deg, #0D0F16, #101218);   /* code_ground_dark */
+  background: var(--ybz-card);
 }
 
-[data-theme="light"] .ybz-code, .ybz-light .ybz-code{
-  border-color: rgba(2,6,23,.12);
-  box-shadow: 0 6px 30px rgba(2,6,23,.14);
-  background: linear-gradient(135deg, #191B24, #0E1017);   /* code_ground_light */
-}
-
-/* The language label. Section 4 gives mono the job of carrying code, metrics
-   and timestamps — a filename is one of those, and it never carries a sentence. */
 .ybz-code__bar{
   display: flex; align-items: center; justify-content: space-between;
   padding: .5rem 1rem;
-  font-family: var(--ybz-mono); font-size: .75rem;
-  letter-spacing: .18em; text-transform: uppercase;
-  color: #7C8698;                                 /* muted, 5.5:1 on this ground */
-  background: #14161F;                            /* card, the dark value, pinned */
-  border-bottom: 1px solid rgba(245,243,239,.07);
+  font-family: var(--ybz-mono); font-size: .8125rem;
+  color: var(--ybz-muted);
+  background: var(--ybz-card);
+  border-bottom: 1px solid var(--ybz-edge);
 }
 
-[data-theme="light"] .ybz-code__bar, .ybz-light .ybz-code__bar{
-  background: #191B24;   /* the light-page code ground's top stop, one step up */
-}
-
-/* A <pre> inside the frame is content, not a second block: the light-page
-   `pre` rule above must not paint another ground, border and shadow on it. */
-.ybz-code pre,
-[data-theme="light"] .ybz-code pre{
+.ybz-code pre{
   background: transparent; border: 0; box-shadow: none;
 }
 
 .ybz-code__body{
   overflow-x: auto;
-  background: transparent;   /* the ground belongs to .ybz-code, so it can flip */
+  background: transparent;
 }
 
 /* ==========================================================================
    THE DECISION RECORD
-   The Home hero object. Like the code block, it is midnight in both themes,
-   so every colour inside is pinned to its dark-theme value rather than a token
-   that would invert. Gold here is type on midnight, 11.92:1.
+   The Home hero object, laid out like a spec-sheet record: a header strip, a
+   list of fields, a footer strip. It follows the theme. The rail is the one
+   signal mark.
    ========================================================================== */
 
 .ybz-record{
   position: relative; margin: 0;
-  padding-left: 6px;                              /* room for the rail */
+  padding-left: 4px;
   border-radius: var(--ybz-r-md);
-  border: 1px solid rgba(245,243,239,.07);
-  background: linear-gradient(135deg, #0D0F16, #101218);   /* code_ground_dark */
-  color: #A8B0BE;
+  border: 1px solid var(--ybz-edge);
+  background: var(--ybz-card);
+  color: var(--ybz-slate);
   overflow: hidden;
-}
-[data-theme="light"] .ybz-record, .ybz-light .ybz-record{
-  border-color: rgba(2,6,23,.12);
-  box-shadow: 0 12px 40px rgba(2,6,23,.16);
-  background: linear-gradient(135deg, #191B24, #0E1017);   /* code_ground_light */
 }
 
 .ybz-record__rail{
-  position: absolute; left: 0; top: 0; bottom: 0; width: 6px;
+  position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
   display: flex; flex-direction: column; gap: 6px; padding: 24px 0;
 }
-.ybz-record__rail > span{ background: #F4C025; border-radius: 0 2px 2px 0; }
+.ybz-record__rail > span{ background: var(--ybz-signal); }
 
 .ybz-record__bar{
   display: flex; align-items: center; justify-content: space-between; gap: 16px;
   padding: 14px 24px;
-  font-family: var(--ybz-mono); font-size: .75rem;
-  letter-spacing: .14em; text-transform: uppercase; color: #7C8698;
-  border-bottom: 1px solid rgba(245,243,239,.07);
+  font-family: var(--ybz-mono); font-size: .8125rem; color: var(--ybz-muted);
+  border-bottom: 1px solid var(--ybz-edge);
 }
 .ybz-record__status{
-  color: #F4C025;
+  color: var(--ybz-accent-type);
 }
 .ybz-record__status::before{
   content: ""; display: inline-block; width: 6px; height: 6px; margin-right: 8px;
-  background: #F4C025; border-radius: 1px; vertical-align: 1px;
+  background: var(--ybz-signal); vertical-align: 1px;
 }
 
 .ybz-record__body{ padding: 8px 24px; }
 .ybz-record__row{
   display: grid; grid-template-columns: 7.5rem 1fr; gap: 16px;
   padding: 16px 0;
-  border-bottom: 1px solid rgba(245,243,239,.07);
+  border-bottom: 1px solid var(--ybz-edge);
 }
 .ybz-record__row:last-child{ border-bottom: 0; }
 .ybz-record__term{
-  font-family: var(--ybz-mono); font-size: .75rem; line-height: 1.6rem;
-  letter-spacing: .14em; text-transform: uppercase; color: #7C8698;
+  font-family: var(--ybz-mono); font-size: .8125rem; line-height: 1.6rem;
+  color: var(--ybz-muted);
 }
 .ybz-record__value{
-  font-size: .9375rem; line-height: 1.6rem; color: #A8B0BE;
+  font-size: 1rem; line-height: 1.6rem; color: var(--ybz-slate);
 }
-.ybz-record__value--key{ color: #F5F3EF; font-weight: 500; }
+.ybz-record__value--key{ color: var(--ybz-bone); font-weight: 500; }
 
 .ybz-record__foot{
   display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 16px;
   padding: 14px 24px;
-  font-family: var(--ybz-mono); font-size: .75rem; color: #7C8698;
-  background: rgba(245,243,239,.02);
-  border-top: 1px solid rgba(245,243,239,.07);
+  font-family: var(--ybz-mono); font-size: .8125rem; color: var(--ybz-muted);
+  border-top: 1px solid var(--ybz-edge);
 }
 
 @media (max-width: 480px){
   .ybz-record__row{ grid-template-columns: 1fr; gap: 4px; }
 }
 
-/* ---------- code syntax ramp: built only from palette colours ---------- */
-.ybz-tok-comment{  color:#7C8698 }
-.ybz-tok-string{   color:#A8B0BE }
-.ybz-tok-number{   color:#E0A906 }
-.ybz-tok-function{ color:#F5F3EF }
-.ybz-tok-keyword{  color:#F2CC5A }
+/* ---------- code syntax ramp: palette colours only ---------- */
+.ybz-tok-comment{  color: var(--ybz-syn-comment) }
+.ybz-tok-string{   color: var(--ybz-syn-string) }
+.ybz-tok-number{   color: var(--ybz-syn-number) }
+.ybz-tok-function{ color: var(--ybz-syn-function) }
+.ybz-tok-keyword{  color: var(--ybz-syn-keyword) }
 
-/* RTL: Cairo carries both display and body; hierarchy comes from weight.
-   Dormant — no Arabic content on the site yet. */
-[dir="rtl"]{ font-family: var(--ybz-arabic); }
+/* RTL: IBM Plex Sans Arabic carries all Arabic, line height 1.8. */
+[dir="rtl"]{ font-family: var(--ybz-arabic); line-height: 1.8; }
 [dir="rtl"] h1, [dir="rtl"] h2, [dir="rtl"] h3{
-  font-family: var(--ybz-arabic); font-weight: 700; letter-spacing: 0;
-}
-[dir="rtl"] .ybz-rule{
-  background: linear-gradient(270deg, var(--ybz-accent-rule), transparent);
+  font-family: var(--ybz-arabic); font-weight: 600; letter-spacing: 0;
 }
 
 /* ==========================================================================
    MOTION
    One entrance per page: the page header fades and rises 8px. Content below
-   it is already there. Nothing animates on scroll except the stack rail,
-   which is a progress indicator, not decoration.
+   it is already there. Nothing animates on scroll.
    ========================================================================== */
 
 @keyframes ybz-fade-up {
   from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes ybz-rail-fill {
-  from { transform: scaleY(0); }
-  to   { transform: scaleY(1); }
 }
 
 .ybz-enter,

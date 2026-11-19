@@ -12,6 +12,7 @@ import {
   Section,
   SectionHeader,
   StackLine,
+  CoverImage,
 } from "../components/ui";
 
 const LH_CATEGORIES = [
@@ -21,7 +22,7 @@ const LH_CATEGORIES = [
   ["seo", "SEO"],
 ];
 
-/* A score as a ring. Gold is the stroke (a fill colour), the number is bone. */
+/* A score as a ring. Signal is the stroke (a graphic), the number is ink. */
 const Gauge = ({ label, score }) => {
   const r = 34;
   const c = 2 * Math.PI * r;
@@ -66,7 +67,7 @@ Gauge.propTypes = {
   score: PropTypes.number.isRequired,
 };
 
-/* The live system is the page's one gold action; the source sits beside it. */
+/* The live system is the page's one primary action; the source sits beside it. */
 const LinkButtons = ({ project }) => (
   <>
     {project.live && (
@@ -218,10 +219,8 @@ const ProjectDetail = () => {
     ...(project.metrics || []),
   ].filter(
     // A figure already in the headline strip is not repeated further down.
-    (m) =>
-      !(project.highlights || []).some(
-        (h) => h.value === m.value && h.label === m.label
-      )
+    // Match on the value: the same number often carries a shorter label here.
+    (m) => !(project.highlights || []).some((h) => h.value === m.value)
   );
 
   const lh = project.lighthouse;
@@ -255,13 +254,13 @@ const ProjectDetail = () => {
       eyebrow: "What it does",
       title: "Features in production",
       body: (
-        <ul className="grid gap-3 md:grid-cols-2">
+        <ul className="grid border-t border-edge md:grid-cols-2 md:gap-x-10">
           {project.features.map((f) => (
-            <li key={f} className="ybz-card ybz-body flex gap-3 p-5">
+            <li key={f} className="ybz-body flex gap-3 border-b border-edge py-4">
               <span
                 aria-hidden="true"
                 className="mt-3 h-px w-4 shrink-0"
-                style={{ background: "var(--ybz-accent-rule)" }}
+                style={{ background: "var(--ybz-muted)" }}
               />
               {f}
             </li>
@@ -372,12 +371,8 @@ const ProjectDetail = () => {
           }`}
         >
           <Card padded={false}>
-            <div className="ybz-frame aspect-[16/10] border-b-0">
-              <img
-                src={project.image}
-                alt={`${project.title} preview`}
-                className="p-6"
-              />
+            <div className="ybz-frame ybz-frame--cover aspect-[16/10] border-b-0">
+              <CoverImage src={project.image} alt={`${project.title} cover`} />
             </div>
           </Card>
 

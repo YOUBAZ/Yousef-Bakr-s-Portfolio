@@ -5,7 +5,7 @@ import Seo from "../components/Seo";
 import { siteMeta } from "../config/seo";
 import { Button, Card, PageHeader, Section, TextLink } from "../components/ui";
 
-/* The certificate image, on the midnight mat. Issuer artwork arrives in every
+/* The certificate image, on the surface mat. Issuer artwork arrives in every
    colour; the frame keeps it inside the page. */
 const CertificateMedia = ({ certificate, onSelectImage }) => {
   if (certificate.type !== "image" || !certificate.image) {

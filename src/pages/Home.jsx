@@ -115,13 +115,12 @@ const Home = () => {
       />
 
       {/* Hero. Text on the left, the decision record on the right: the claim
-          and the evidence for it, side by side. Purple appears only as bloom. */}
+          and the evidence for it, side by side. */}
       <section className="relative isolate overflow-hidden px-6 pb-20 pt-16 sm:px-10 lg:px-16 lg:pb-28 lg:pt-24">
-        <div className="ybz-bloom pointer-events-none absolute inset-0 -z-10" />
 
         <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
           <div className="ybz-enter space-y-6">
-            <p className="ybz-eyebrow">{BRAND.descriptorLockup}</p>
+            <p className="ybz-eyebrow">{BRAND.descriptor}</p>
             <h1 className="ybz-display-1 lg:text-5xl">{BRAND.positioning}</h1>
             <GoldRule />
             <p className="ybz-lede">
@@ -155,17 +154,21 @@ const Home = () => {
       <Section tone="raised">
         <SectionHeader
           eyebrow="Proof"
-          title="Four claims, each with a source."
+          title="Three claims, each with a source."
         />
 
         <dl className="ybz-card divide-y divide-edge">
-          {PROOF_STACK.map((item) => (
+          {PROOF_STACK.map((item, index) => (
             <div
               key={item.source}
               className="grid gap-2 px-6 py-6 sm:grid-cols-[10rem_1fr] sm:gap-8"
             >
               <div>
-                <p className="ybz-figure text-4xl">{item.figure}</p>
+                <p
+                  className={`ybz-figure text-4xl ${index === 0 ? "ybz-figure--key" : ""}`}
+                >
+                  {item.figure}
+                </p>
                 <p className="ybz-meta mt-2">{item.figureLabel}</p>
               </div>
               <div className="space-y-2">
@@ -229,7 +232,7 @@ const Home = () => {
                   </div>
                 ) : (
                   <div
-                    className="flex h-14 w-14 shrink-0 items-center justify-center border border-hairline font-mono text-sm tracking-[0.14em] text-accent"
+                    className="flex h-14 w-14 shrink-0 items-center justify-center border border-hairline font-mono text-sm text-muted"
                     style={{ borderRadius: "var(--ybz-r-sm)" }}
                   >
                     {item.companyBadge}

@@ -4,8 +4,8 @@
   "description": "Engineering that earns its complexity.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#020617",
-  "theme_color": "#020617",
+  "background_color": "#F4F3EF",
+  "theme_color": "#F4F3EF",
   "icons": [
     {
       "src": "/android-192.png",

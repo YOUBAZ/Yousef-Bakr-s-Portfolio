@@ -3,12 +3,11 @@ import { useCallback, useEffect, useState } from "react";
 /**
  * Theme state for the two-theme brand system.
  *
- * BRAND.md section 3.1 names midnight "the default", so that is what an
- * unconfigured visitor gets — the OS preference is consulted only as a hint,
- * and an explicit choice always wins over it.
+ * brand-kit/BRAND.md section 3: light is the default. A visitor whose system
+ * asks for dark gets dark, and an explicit choice always wins over both.
  *
- * Section 3.5 rule 6 — "never mix themes inside one deliverable" — is why the
- * theme is set on documentElement and nowhere else. There is exactly one switch.
+ * The theme is set on documentElement and nowhere else, so there is exactly
+ * one switch.
  */
 
 export const STORAGE_KEY = "ybz-theme";
@@ -16,30 +15,47 @@ const THEMES = ["dark", "light"];
 
 /** Shared with the inline boot script in index.html; keep the two in step. */
 export function resolveInitialTheme() {
-  if (typeof window === "undefined") return "dark";
+  if (typeof window === "undefined") return "light";
 
   const stored = window.localStorage.getItem(STORAGE_KEY);
   if (THEMES.includes(stored)) return stored;
 
-  return window.matchMedia("(prefers-color-scheme: light)").matches
-    ? "light"
-    : "dark";
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+}
+
+/**
+ * A theme flip changes colour, background and border on nearly every element.
+ * Left alone, every 150ms transition fires at once and the switch smears.
+ * Turn transitions off for the swap, force a reflow, restore on the next frame.
+ */
+function withoutTransitions(fn) {
+  const style = document.createElement("style");
+  style.textContent = "*,*::before,*::after{transition:none !important}";
+  document.head.appendChild(style);
+  fn();
+  void document.body.offsetHeight; // force the reflow before restoring
+  requestAnimationFrame(() => style.remove());
 }
 
 function applyTheme(theme) {
+  withoutTransitions(() => setThemeAttributes(theme));
+}
+
+function setThemeAttributes(theme) {
   const root = document.documentElement;
 
-  // Dark is the default and carries no attribute, so the :root block in
+  // Light is the default and carries no attribute, so the :root block in
   // index.css stays the base case rather than becoming an override.
-  if (theme === "light") root.setAttribute("data-theme", "light");
+  if (theme === "dark") root.setAttribute("data-theme", "dark");
   else root.removeAttribute("data-theme");
 
   root.style.colorScheme = theme;
 
-  // Browser chrome follows the page ground: #020617 or #F7F5F0, section 3.5
-  // rule 4. Never black, never white.
+  // Browser chrome follows the page ground. Never black, never white.
   const meta = document.querySelector('meta[name="theme-color"]');
-  if (meta) meta.setAttribute("content", theme === "light" ? "#F7F5F0" : "#020617");
+  if (meta) meta.setAttribute("content", theme === "dark" ? "#121417" : "#F4F3EF");
 }
 
 export default function useTheme() {
@@ -52,10 +68,10 @@ export default function useTheme() {
 
   // Follow the OS only while the visitor has not chosen for themselves.
   useEffect(() => {
-    const query = window.matchMedia("(prefers-color-scheme: light)");
+    const query = window.matchMedia("(prefers-color-scheme: dark)");
     const onChange = (event) => {
       if (window.localStorage.getItem(STORAGE_KEY)) return;
-      setTheme(event.matches ? "light" : "dark");
+      setTheme(event.matches ? "dark" : "light");
     };
     query.addEventListener("change", onChange);
     return () => query.removeEventListener("change", onChange);

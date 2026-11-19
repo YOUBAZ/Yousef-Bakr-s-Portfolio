@@ -114,7 +114,7 @@ const Cv = () => {
                 <li key={item} className="flex items-start gap-3">
                   <span
                     className="mt-3 h-px w-4 shrink-0"
-                    style={{ background: "var(--ybz-accent-rule)" }}
+                    style={{ background: "var(--ybz-muted)" }}
                     aria-hidden="true"
                   />
                   {item}
@@ -148,7 +148,7 @@ const Cv = () => {
             aria-label={`${BRAND.name} CV preview`}
           >
             <div
-              className="flex h-128 w-full flex-col items-center justify-center gap-3 border border-dashed border-edge text-center"
+              className="flex h-128 w-full flex-col items-center justify-center gap-3 border border-dashed border-edge bg-inset text-center"
               style={{ borderRadius: "var(--ybz-r-sm)" }}
             >
               <p className="ybz-body">

@@ -1,10 +1,9 @@
 import PropTypes from "prop-types";
 
 /**
- * The gold rule — BRAND.md section 5, device 2. A 2px bar, 120px wide, fading
- * to transparent left to right, sitting under a headline. Static: it marks a
- * heading, it does not perform. Mirrored in RTL by the [dir="rtl"] block in
- * index.css.
+ * The headline marker — brand-kit/BRAND.md section 6. A short solid signal rule
+ * under page and section headlines. Static: it marks a heading, it does not
+ * perform. The file keeps its v2.4 name so imports stay stable.
  */
 const GoldRule = ({ className = "" }) => <hr className={`ybz-rule ${className}`} />;
 

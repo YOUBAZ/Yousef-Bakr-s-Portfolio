@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Loader2, Search, X } from "lucide-react";
 import BlogCard from "../components/BlogCard";
 import Seo from "../components/Seo";
@@ -10,8 +10,12 @@ import {
 } from "../utils/blogUtils";
 import { Button, PageHeader, Section } from "../components/ui";
 
+/** How many topics show before the rest fold behind "More topics". */
+const TOP_TAGS = 6;
+
 /**
- * Blog listing page
+ * The writing index. Search first, then the most-used topics; the long tail of
+ * tags is one click away, so the articles stay near the top of the page.
  */
 const BlogList = () => {
   const [blogs, setBlogs] = useState([]);
@@ -20,6 +24,24 @@ const BlogList = () => {
   const [selectedTag, setSelectedTag] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [showAllTags, setShowAllTags] = useState(false);
+
+  // Topics ordered by how many articles use them, then alphabetically.
+  const rankedTags = useMemo(() => {
+    const count = (tag) => blogs.filter((b) => b.tags?.includes(tag)).length;
+    return [...allTags].sort((a, b) => count(b) - count(a) || a.localeCompare(b));
+  }, [allTags, blogs]);
+
+  const visibleTags = useMemo(() => {
+    if (showAllTags) return rankedTags;
+    const top = rankedTags.slice(0, TOP_TAGS);
+    // A selected topic from the long tail stays visible so its state is seen.
+    return selectedTag !== "all" && !top.includes(selectedTag)
+      ? [...top, selectedTag]
+      : top;
+  }, [rankedTags, showAllTags, selectedTag]);
+
+  const hiddenCount = rankedTags.length - visibleTags.length;
 
   useEffect(() => {
     const loadBlogs = async () => {
@@ -75,8 +97,8 @@ const BlogList = () => {
 
       <PageHeader
         eyebrow="Writing"
-        title="Blog & articles"
-        lede="Insights on AI, DevOps, software architecture, and modern development practices"
+        title="The decisions rather than the tools."
+        lede="Why a boundary went where it went, what it cost when it went in the wrong place, and what the traces looked like afterwards."
       />
 
       <Section className="pt-0">
@@ -116,7 +138,7 @@ const BlogList = () => {
             >
               All
             </button>
-            {allTags.map((tag) => (
+            {visibleTags.map((tag) => (
               <button
                 key={tag}
                 type="button"
@@ -127,6 +149,16 @@ const BlogList = () => {
                 {tag}
               </button>
             ))}
+            {(hiddenCount > 0 || showAllTags) && (
+              <button
+                type="button"
+                aria-expanded={showAllTags}
+                onClick={() => setShowAllTags((v) => !v)}
+                className="ybz-link min-h-9 px-2"
+              >
+                {showAllTags ? "Fewer topics" : `More topics (${hiddenCount})`}
+              </button>
+            )}
             {hasFilters && (
               <button
                 type="button"

@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yousef Bakr brand kit</title>
+<link rel="icon" href="logo/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --yb-ground: #F4F3EF;
+    --yb-surface: #EAE8E2;
+    --yb-ink: #15171B;
+    --yb-muted: #5E626A;
+    --yb-rule: #D3D0C8;
+    --yb-signal: #D2481C;
+    --yb-signal-type: #A8360E;
+    --sans: "IBM Plex Sans", sans-serif;
+    --mono: "IBM Plex Mono", monospace;
+    --arabic: "IBM Plex Sans Arabic", sans-serif;
+    --on-light: block;
+    --on-dark: none;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --yb-ground: #121417;
+      --yb-surface: #24282D;
+      --yb-ink: #ECEBE6;
+      --yb-muted: #9A9EA5;
+      --yb-rule: #363B42;
+      --yb-signal: #E2582B;
+      --yb-signal-type: #EE7A52;
+      --on-light: none;
+      --on-dark: block;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --yb-ground: #121417;
+    --yb-surface: #24282D;
+    --yb-ink: #ECEBE6;
+    --yb-muted: #9A9EA5;
+    --yb-rule: #363B42;
+    --yb-signal: #E2582B;
+    --yb-signal-type: #EE7A52;
+    --on-light: none;
+    --on-dark: block;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    background: var(--yb-ground);
+    color: var(--yb-ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .on-light { display: var(--on-light); }
+  .on-dark { display: var(--on-dark); }
+  img { max-width: 100%; height: auto; }
+
+  .wrap {
+    max-width: 1184px; margin: 0 auto;
+    padding-left: max(32px, env(safe-area-inset-left, 0px));
+    padding-right: max(32px, env(safe-area-inset-right, 0px));
+  }
+  @media (max-width: 640px) {
+    .wrap {
+      padding-left: max(16px, env(safe-area-inset-left, 0px));
+      padding-right: max(16px, env(safe-area-inset-right, 0px));
+    }
+  }
+
+  /* Header strip */
+  .strip {
+    display: flex; flex-wrap: wrap; gap: 4px 24px; align-items: center;
+    font-family: var(--mono); font-size: 13px; font-weight: 500; color: var(--yb-muted);
+    padding: 14px 0; border-bottom: 1px solid var(--yb-rule);
+  }
+  .strip .push { margin-left: auto; }
+  .strip button {
+    font: inherit; color: var(--yb-ink); background: none; cursor: pointer;
+    border: 1px solid var(--yb-rule); border-radius: 4px; padding: 6px 12px; min-height: 32px;
+  }
+  .strip button:hover { border-color: var(--yb-ink); }
+  .strip button:focus-visible, a:focus-visible { outline: 2px solid var(--yb-signal); outline-offset: 2px; }
+
+  /* Hero with visible grid */
+  .hero { position: relative; padding: 96px 0 72px; border-bottom: 1px solid var(--yb-rule); }
+  .grid {
+    position: absolute; inset: 0; display: grid; grid-template-columns: repeat(12, 1fr);
+    pointer-events: none;
+  }
+  .grid span { border-left: 1px solid var(--yb-rule); }
+  .grid span:last-child { border-right: 1px solid var(--yb-rule); }
+  .hero-body { position: relative; max-width: 760px; background: var(--yb-ground); padding: 24px 24px 24px 0; }
+  .hero-body img { width: min(420px, 100%); }
+  .descriptor { font-family: var(--mono); font-size: 15px; font-weight: 500; color: var(--yb-muted); margin-top: 10px; }
+  .slogan { font-size: 20px; margin-top: 28px; }
+  .line { color: var(--yb-muted); margin-top: 8px; max-width: 60ch; }
+
+  /* Sections */
+  section { padding: 72px 0; border-bottom: 1px solid var(--yb-rule); }
+  .sec-head { display: grid; grid-template-columns: 64px 1fr; align-items: baseline; margin-bottom: 40px; }
+  .num { font-family: var(--mono); font-size: 13px; font-weight: 500; color: var(--yb-signal-type); }
+  h2 { font-size: 32px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.2; }
+  h3 { font-size: 20px; font-weight: 500; line-height: 1.3; margin-bottom: 8px; }
+  .note { font-family: var(--mono); font-size: 13px; color: var(--yb-muted); }
+  @media (max-width: 640px) {
+    .sec-head { grid-template-columns: 40px 1fr; }
+    h2 { font-size: 26px; }
+    .scale .t[style*="60px"] { font-size: 40px !important; }
+    .scale .t[style*="44px"] { font-size: 32px !important; }
+  }
+
+  /* Marks */
+  .marks { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .tile { background: var(--yb-surface); border-radius: 4px; padding: 32px; }
+  .tile .note { margin-top: 20px; }
+  .tile.wide { grid-column: 1 / -1; }
+  .sizes { display: flex; align-items: flex-end; gap: 32px; }
+  @media (max-width: 640px) { .marks { grid-template-columns: 1fr; } .tile { padding: 24px; } }
+
+  /* Colour */
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(128px, 1fr)); gap: 16px; }
+  .chip { height: 72px; border-radius: 4px; border: 1px solid var(--yb-rule); }
+  .swatch .name { font-family: var(--mono); font-size: 13px; font-weight: 500; margin-top: 10px; }
+  .swatch .note { font-size: 12px; line-height: 1.5; }
+  .rule-list { margin-top: 40px; padding-left: 18px; max-width: 68ch; }
+  .rule-list li + li { margin-top: 6px; }
+
+  /* Type */
+  .scale > div { display: grid; grid-template-columns: 120px 1fr; align-items: baseline; padding: 14px 0; border-top: 1px solid var(--yb-rule); }
+  .scale .t { overflow-wrap: anywhere; }
+  @media (max-width: 640px) { .scale > div { grid-template-columns: 1fr; gap: 4px; } }
+  .ar { font-family: var(--arabic); line-height: 1.8; direction: rtl; text-align: right; }
+
+  /* Layout in use */
+  .doc { display: grid; grid-template-columns: 1fr 220px; gap: 40px; }
+  .doc p { max-width: 68ch; }
+  .doc p + p { margin-top: 16px; }
+  .figure { border-left: 2px solid var(--yb-signal); padding-left: 16px; margin: 28px 0; }
+  .figure .big { font-family: var(--mono); font-size: 44px; font-weight: 500; line-height: 1.1; color: var(--yb-signal-type); }
+  aside .note + .note { margin-top: 16px; }
+  aside { border-left: 1px solid var(--yb-rule); padding-left: 20px; }
+  @media (max-width: 760px) { .doc { grid-template-columns: 1fr; } aside { border-left: 0; padding-left: 0; border-top: 1px solid var(--yb-rule); padding-top: 16px; } }
+  a { color: inherit; text-decoration: underline; text-decoration-color: var(--yb-rule); text-underline-offset: 3px; }
+  a:hover { text-decoration-color: var(--yb-signal); }
+
+  /* Footer strip */
+  footer .strip { border-bottom: 0; border-top: 1px solid var(--yb-rule); padding: 20px 0 40px; }
+  footer img { width: 22px; height: 22px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="strip">
+    <span>Yousef Bakr</span><span>Software Engineer</span><span>Brand kit v3.0</span><span>Rev 2026.11</span>
+    <button class="push" id="theme" type="button" aria-label="Switch colour theme">Theme: system</button>
+  </div>
+
+  <header class="hero">
+    <div class="grid" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+    <div class="hero-body">
+      <img class="on-light" src="logo/lockup-horizontal-on-light.svg" alt="Yousef Bakr logo">
+      <img class="on-dark" src="logo/lockup-horizontal-on-dark.svg" alt="Yousef Bakr logo">
+      <p class="descriptor">Software Engineer</p>
+      <p class="slogan">Engineering that earns its complexity.</p>
+      <p class="line">Software engineer who ships production systems and explains every trade-off in time, risk and users.</p>
+    </div>
+  </header>
+
+  <section>
+    <div class="sec-head"><span class="num">01</span><h2>Marks</h2></div>
+    <div class="marks">
+      <div class="tile wide">
+        <img class="on-light" src="logo/lockup-horizontal-on-light.svg" alt="Primary logo" style="width:min(440px,100%)">
+        <img class="on-dark" src="logo/lockup-horizontal-on-dark.svg" alt="Primary logo" style="width:min(440px,100%)">
+        <p class="note">Primary logo. Merge Y at 1.45 times the cap height, centred on it, with a 0.4em gap.</p>
+      </div>
+      <div class="tile">
+        <div class="sizes">
+          <img class="on-light" src="logo/glyph-on-light.svg" alt="Merge Y, 64px" width="64" height="64">
+          <img class="on-dark" src="logo/glyph-on-dark.svg" alt="Merge Y, 64px" width="64" height="64">
+          <img class="on-light" src="logo/glyph-on-light.svg" alt="" width="32" height="32">
+          <img class="on-dark" src="logo/glyph-on-dark.svg" alt="" width="32" height="32">
+          <img class="on-light" src="logo/glyph-on-light.svg" alt="" width="16" height="16">
+          <img class="on-dark" src="logo/glyph-on-dark.svg" alt="" width="16" height="16">
+        </div>
+        <p class="note">Symbol. Merge Y at 64, 32 and 16px. The branch meets the main line across a hairline seam.</p>
+      </div>
+      <div class="tile">
+        <div class="sizes">
+          <img class="on-light" src="logo/glyph-mono-on-light.svg" alt="Merge Y in ink only" width="64" height="64">
+          <img class="on-dark" src="logo/glyph-mono-on-dark.svg" alt="Merge Y in ink only" width="64" height="64">
+          <img class="on-light" src="logo/wordmark-on-light.svg" alt="Wordmark" style="width:200px">
+          <img class="on-dark" src="logo/wordmark-on-dark.svg" alt="Wordmark" style="width:200px">
+        </div>
+        <p class="note">All-ink symbol for photos and one-colour print. Wordmark alone where the symbol is already nearby.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="num">02</span><h2>Colour</h2></div>
+    <div class="swatches" id="swatches"></div>
+    <ul class="rule-list">
+      <li>One signal colour, about 5% of any composition. The Merge Y branch, section numbers and one key figure.</li>
+      <li>Signal is never body text on paper. Use the signal type token, which passes at 5.9:1.</li>
+      <li>Links are ink with an underline. The underline turns signal on hover.</li>
+      <li>No gradients, glows or glass. No pure black or pure white.</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="num">03</span><h2>Type</h2></div>
+    <div class="scale">
+      <div><span class="note">Display 60</span><span class="t" style="font-size:60px;font-weight:600;letter-spacing:-0.01em;line-height:1.1">Shipped, then measured</span></div>
+      <div><span class="note">H1 44</span><span class="t" style="font-size:44px;font-weight:600;letter-spacing:-0.01em;line-height:1.15">How EduShift AI reached production</span></div>
+      <div><span class="note">H2 32</span><span class="t" style="font-size:32px;font-weight:600;letter-spacing:-0.01em;line-height:1.2">What the first release got wrong</span></div>
+      <div><span class="note">Lead 20</span><span class="t" style="font-size:20px">A production system is judged by what it costs to change, not by what it cost to build.</span></div>
+      <div><span class="note">Body 16</span><span class="t">Body text is IBM Plex Sans at 16px with a 1.6 line height and a 68 character measure. It carries every paragraph, caption and button label.</span></div>
+      <div><span class="note">Mono 13</span><span class="t" style="font-family:var(--mono);font-size:13px;font-weight:500">Rev 2026.11 · Section 03 · 16 / 1.6 · 68ch</span></div>
+      <div><span class="note">Arabic</span><span class="t ar" lang="ar" style="font-size:25px;font-weight:600">يوسف بكر · مهندس برمجيات</span></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="num">04</span><h2>Layout in use</h2></div>
+    <div class="doc">
+      <div>
+        <h3>EduShift AI</h3>
+        <p>Scaled from a single simulation into a family of production learning products at MindShift MENA, adopted by 6+ organisations to train teams in soft and technical skills.</p>
+        <div class="figure">
+          <div class="big">4</div>
+          <div class="note">Production learning products, grown from one simulation.</div>
+        </div>
+        <p>This is the case-study pattern. The claim comes first, then the evidence, with one key figure in signal colour and sources in the margin. Nothing is centred.</p>
+      </div>
+      <aside>
+        <p class="note">Source: edushiftai.com · MindShift MENA, 2025–2026</p>
+        <p class="note">Status: in production</p>
+        <p class="note">Margin notes hold dates, sources and figures in Plex Mono.</p>
+      </aside>
+    </div>
+  </section>
+
+  <footer>
+    <div class="strip">
+      <img class="on-light" src="logo/glyph-on-light.svg" alt="">
+      <img class="on-dark" src="logo/glyph-on-dark.svg" alt="">
+      <span>Yousef Bakr</span><span>Software Engineer</span><span class="push">04 / 04</span>
+    </div>
+  </footer>
+</div>
+
+<script>
+  const SWATCHES = [
+    ["ground", "Page background"],
+    ["surface", "Cards and code"],
+    ["ink", "Headlines and body"],
+    ["muted", "Secondary text"],
+    ["rule", "Hairlines only"],
+    ["signal", "Graphics only"],
+    ["signal-type", "Signal as text"],
+  ];
+  const root = document.documentElement;
+
+  function renderSwatches() {
+    const css = getComputedStyle(root);
+    document.getElementById("swatches").innerHTML = SWATCHES.map(([t, role]) => {
+      const v = css.getPropertyValue("--yb-" + t).trim();
+      return `<div class="swatch"><div class="chip" style="background:var(--yb-${t})"></div>
+        <div class="name">--yb-${t}</div><div class="note">${v.toUpperCase()} · ${role}</div></div>`;
+    }).join("");
+  }
+
+  const modes = ["system", "light", "dark"];
+  const btn = document.getElementById("theme");
+  let mode = "system";
+  try { mode = localStorage.getItem("yb-theme") || "system"; } catch (e) {}
+  function apply() {
+    if (mode === "system") root.removeAttribute("data-theme");
+    else root.setAttribute("data-theme", mode);
+    btn.textContent = "Theme: " + mode;
+    renderSwatches();
+  }
+  btn.addEventListener("click", () => {
+    mode = modes[(modes.indexOf(mode) + 1) % modes.length];
+    try { localStorage.setItem("yb-theme", mode); } catch (e) {}
+    apply();
+  });
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", renderSwatches);
+  apply();
+</script>
+</body>
+</html>
