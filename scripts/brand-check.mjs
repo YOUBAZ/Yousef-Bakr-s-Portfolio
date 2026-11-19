@@ -1,17 +1,17 @@
 #!/usr/bin/env node
 /**
- * brand-check — the site's equivalent of the brand kit's tools/verify.py.
+ * brand-check — the site's equivalent of brand-kit/tools/verify.py.
  *
- * BRAND.md section 15 makes the self-check mechanical for the kit's own
- * artefacts. That script reads the kit, not this site, so items 1, 4 and 9 were
- * still manual here. This closes them.
+ * The kit's verifier reads the kit. This reads the site, against the same
+ * source: the palette is loaded from brand-kit/brand.json, so the site and the
+ * kit cannot drift apart.
  *
  * It fails on:
- *   1. any colour — hex or Tailwind class — outside sections 3.1 to 3.4
- *   2. any retired identity string
+ *   1. any colour — hex or Tailwind class — outside brand-kit/brand.json
+ *   2. any retired identity string, or age-led framing
  *   3. the location appearing anywhere but the structured homeLocation field
  *
- * Everything else in the section 15 list still needs eyes.
+ * Everything else in BRAND.md section 12 still needs eyes.
  *
  *   npm run brand:check
  */
@@ -21,25 +21,19 @@ import { join, relative, extname } from "node:path";
 
 const ROOT = new URL("..", import.meta.url).pathname;
 const SCAN_DIRS = ["src", "public/data"];
-const SCAN_FILES = ["index.html"];
-const EXTENSIONS = new Set([".js", ".jsx", ".ts", ".tsx", ".css", ".html", ".json"]);
+const SCAN_FILES = ["index.html", "public/site.webmanifest"];
+const EXTENSIONS = new Set([".js", ".jsx", ".ts", ".tsx", ".css", ".html", ".json", ".webmanifest"]);
 
-// --- section 3.1–3.4, plus the 3.3 derived surface stops -------------------
+// --- brand-kit/brand.json section 3: every colour, both themes --------------
+const KIT = JSON.parse(readFileSync(join(ROOT, "brand-kit/brand.json"), "utf8"));
 const PALETTE = new Set(
-  [
-    // dark
-    "#020617", "#0B0E1A", "#14161F", "#F4C025", "#F2CC5A", "#E0A906",
-    "#401A66", "#592D86", "#0284C7", "#4F46E5", "#F5F3EF", "#A8B0BE", "#7C8698",
-    // light
-    "#F7F5F0", "#EDEAE3", "#FFFFFF", "#B07E05", "#8A6206", "#3B4354", "#5A6376",
-    // 3.3 derived surface stops
-    "#1A1C25", "#0E1017", "#FBF9F5", "#07080D", "#0D0F16", "#101218",
-    "#191B24", "#C9D1E1", "#24252E", "#E8E9EA", "#1B1F2E", "#DEDDDA", "#5B6376",
-  ].map((h) => h.toUpperCase())
+  Object.values(KIT.palette)
+    .flatMap((theme) => Object.values(theme))
+    .map((token) => token.hex.toUpperCase())
 );
 
 // Tailwind scales that carry a colour the brand does not define. `slate-body`,
-// `gold`, `ink`, `bone`, `muted` and friends are ours and resolve to --ybz-*.
+// `signal`, `ink`, `bone`, `muted` and friends are ours and resolve to --ybz-*.
 const BANNED_SCALES =
   "slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose";
 const UTILITIES =
@@ -61,6 +55,7 @@ const RETIRED = [
   { pattern: /Systems? Analyst/i, why: "never the headline noun" },
   { pattern: /Cloud Architect/i, why: "not a role the brand claims" },
   { pattern: /youngest senior/i, why: "section 2 retired this claim outright" },
+  { pattern: /\bat (eighteen|fifteen|18|15)\b|age at first role/i, why: "age-led framing — BRAND.md section 2 leads with the shipped product" },
 ];
 
 // --- section 1, location is private ---------------------------------------
@@ -76,9 +71,9 @@ const GEO_ALLOWED = new Set(["src/config/seo.js", "src/config/brand.js"]);
  * something.
  */
 const PROPER_NOUNS = [
-  '"Cairo"',                            // the Arabic typeface, section 4
-  "Cairo carries both display",         // the comment explaining it
   "Digital Egypt Builders Initiative",  // the institution that ran DEBI
+  "AIESEC in Egypt",                    // the organisation's registered name
+  "Egypt Fellows Community",            // the organisation's registered name
 ];
 
 /**
@@ -132,8 +127,7 @@ for (const file of files) {
       problems.push({ at, kind: "colour", detail: `"${match}" is outside the palette`, line });
     }
 
-    // Pure white and black are section 3.5 rule 4. The token file is exempt:
-    // it defines #FFFFFF as the light-theme card surface, which is in 3.2.
+    // Grounds are never pure white or pure black, BRAND.md section 3.
     if (!isTokenFile) {
       for (const match of line.match(PURE_BW_RE) || []) {
         problems.push({ at, kind: "colour", detail: `"${match}" — grounds are never pure black or white`, line });
@@ -146,7 +140,7 @@ for (const file of files) {
         : raw
       ).toUpperCase();
       if (!PALETTE.has(hex)) {
-        problems.push({ at, kind: "colour", detail: `hex ${raw} is not in sections 3.1–3.4`, line });
+        problems.push({ at, kind: "colour", detail: `hex ${raw} is not in brand-kit/brand.json`, line });
       }
     }
 
@@ -160,7 +154,7 @@ for (const file of files) {
       problems.push({
         at,
         kind: "location",
-        detail: `"${line.match(GEO_RE)[0]}" — section 1 keeps the location to the structured homeLocation field`,
+        detail: `"${line.match(GEO_RE)[0]}" — BRAND.md section 1 keeps the location off every asset; only the structured homeLocation field may carry it`,
         line,
       });
     }

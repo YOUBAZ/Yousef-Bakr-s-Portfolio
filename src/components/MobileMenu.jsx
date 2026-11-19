@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { X } from "lucide-react";
 import useFocusTrap from "../hooks/useFocusTrap";
-import StackRail from "./StackRail";
 import Wordmark from "./Wordmark";
 import GoldRule from "./GoldRule";
 import { NAV_ITEMS } from "../config/navigation";
@@ -60,9 +59,6 @@ const MobileMenu = ({ isOpen, toggleMenu }) => {
         className="absolute inset-y-0 right-0 flex h-[100dvh] w-4/5 flex-col gap-8 overflow-y-auto overscroll-contain border-l border-hairline bg-ink p-6"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Section 5 flips the rail to the mirrored edge; this panel enters
-            from the right, so the rail sits on its leading edge. */}
-        <StackRail />
 
         <div className="flex items-center justify-between">
           <Wordmark />

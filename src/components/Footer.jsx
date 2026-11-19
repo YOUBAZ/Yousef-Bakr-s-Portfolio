@@ -15,8 +15,8 @@ const socialLinks = [
 const pad = (n) => String(n).padStart(2, "0");
 
 /**
- * The footer strip — BRAND.md section 5, device 3: hairline top border,
- * signet + name + role on the left, mono counter on the right in gold.
+ * The footer strip — brand-kit/BRAND.md section 6: hairline top border,
+ * Merge Y + name + role on the left, mono page counter on the right.
  * On a site the counter is the page's position in the primary navigation,
  * the same job it does on a carousel slide.
  */

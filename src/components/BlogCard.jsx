@@ -6,7 +6,7 @@ import { Card, StackLine, TextLink } from "./ui";
 const defaultImage = "/images/blog/default-blog.jpg";
 
 /**
- * A post in the writing index. The banner sits in a midnight frame at its own
+ * A post in the writing index. The banner sits in a surface frame at its own
  * 1200 × 630 ratio; hover is the card's border step and nothing else.
  */
 const BlogCard = ({ blog }) => {

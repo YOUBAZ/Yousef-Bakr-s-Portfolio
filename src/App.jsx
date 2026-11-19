@@ -5,7 +5,6 @@ import MobileMenu from "./components/MobileMenu";
 import ErrorBoundary from "./components/ErrorBoundary";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
-import StackRail from "./components/StackRail";
 import Loading from "./components/Loading";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { validateEnvVars } from "./utils/validateEnv";
@@ -53,10 +52,6 @@ function App() {
           <a href="#main" className="ybz-skip-link">
             Skip to content
           </a>
-
-          {/* One rail per page, pinned to the viewport edge, doubling as a
-              scroll-progress indicator — section 5's second job for the device. */}
-          <StackRail fixed progress animate={false} />
 
           <Navbar
             toggleMobileMenu={toggleMobileMenu}

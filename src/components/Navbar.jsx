@@ -8,7 +8,7 @@ import { NAV_ITEMS } from "../config/navigation";
 
 /**
  * Wordmark left, links, one outlined CTA, theme switch. The active link is
- * marked by the gold rule under it, never a filled pill.
+ * marked by the signal rule under it, never a filled pill.
  */
 const Navbar = ({ toggleMobileMenu, theme, toggleTheme }) => (
   <header className="pointer-events-none fixed inset-x-0 top-0 z-50 px-4 pt-4">

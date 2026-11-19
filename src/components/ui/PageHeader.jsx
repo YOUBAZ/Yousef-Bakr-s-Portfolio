@@ -8,7 +8,6 @@ import SectionHeader from "./SectionHeader";
  */
 const PageHeader = ({ eyebrow, title, lede, actions, children }) => (
   <section className="relative isolate overflow-hidden px-6 pb-12 pt-16 sm:px-10 lg:px-16">
-    <div className="ybz-bloom pointer-events-none absolute inset-0 -z-10" />
     <div className="ybz-enter mx-auto max-w-6xl">
       <SectionHeader
         level={1}

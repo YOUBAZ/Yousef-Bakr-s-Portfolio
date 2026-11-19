@@ -21,7 +21,7 @@ const LH_CATEGORIES = [
   ["seo", "SEO"],
 ];
 
-/* A score as a ring. Gold is the stroke (a fill colour), the number is bone. */
+/* A score as a ring. Signal is the stroke (a graphic), the number is ink. */
 const Gauge = ({ label, score }) => {
   const r = 34;
   const c = 2 * Math.PI * r;
@@ -66,7 +66,7 @@ Gauge.propTypes = {
   score: PropTypes.number.isRequired,
 };
 
-/* The live system is the page's one gold action; the source sits beside it. */
+/* The live system is the page's one primary action; the source sits beside it. */
 const LinkButtons = ({ project }) => (
   <>
     {project.live && (

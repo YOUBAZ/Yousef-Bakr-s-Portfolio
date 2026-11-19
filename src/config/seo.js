@@ -8,7 +8,7 @@ export const siteMeta = {
   locale: "en_US",
   siteLanguage: "en",
   // The generated OG card, not a portrait. BRAND.md section 17, issue 2.
-  ogImage: "/og-1200x630-dark.png",
+  ogImage: "/og-1200x630-light.png",
   profileImage: "/images/about/profile.jpg",
   twitterHandle: BRAND.x,
   contactEmail: BRAND.email,

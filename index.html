@@ -7,11 +7,12 @@
     <title>Yousef Bakr — Software Engineer</title>
     <meta name="description" content="I build production software — and publish the architecture decisions behind it." />
     <meta name="author" content="Yousef Bakr" />
-    <meta name="theme-color" content="#020617" />
+    <meta name="theme-color" content="#F4F3EF" />
     <meta name="application-name" content="Yousef Bakr" />
     <meta name="robots" content="index,follow,max-image-preview:large" />
 
     <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180.png" />
@@ -22,7 +23,7 @@
     <meta property="og:site_name" content="Yousef Bakr" />
     <meta property="og:title" content="Yousef Bakr — Software Engineer" />
     <meta property="og:description" content="I build production software — and publish the architecture decisions behind it." />
-    <meta property="og:image" content="https://yousef-bakr-s-portfolio.vercel.app/og-1200x630-dark.png" />
+    <meta property="og:image" content="https://yousef-bakr-s-portfolio.vercel.app/og-1200x630-light.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Yousef Bakr — Engineering that earns its complexity." />
@@ -32,17 +33,16 @@
     <meta name="twitter:site" content="@yousefbakr" />
     <meta name="twitter:title" content="Yousef Bakr — Software Engineer" />
     <meta name="twitter:description" content="I build production software — and publish the architecture decisions behind it." />
-    <meta name="twitter:image" content="https://yousef-bakr-s-portfolio.vercel.app/og-1200x630-dark.png" />
+    <meta name="twitter:image" content="https://yousef-bakr-s-portfolio.vercel.app/og-1200x630-light.png" />
 
     <!-- Preconnect to external domains for faster loading -->
     <link rel="preconnect" href="https://assets.calendly.com" crossorigin />
     <link rel="dns-prefetch" href="https://assets.calendly.com" />
 
     <!--
-      Resolve the theme before first paint. Without this the page renders
-      midnight and then flips to paper, which is the one moment a two-theme
-      site looks broken. Mirrors resolveInitialTheme() in src/hooks/useTheme.js
-      — keep the two in step. Dark is the default and carries no attribute.
+      Resolve the theme before first paint, so the page never flashes the wrong
+      ground. Mirrors resolveInitialTheme() in src/hooks/useTheme.js — keep the
+      two in step. Light is the default and carries no attribute.
     -->
     <script>
       (function () {
@@ -51,17 +51,17 @@
           var theme =
             stored === "light" || stored === "dark"
               ? stored
-              : window.matchMedia("(prefers-color-scheme: light)").matches
-                ? "light"
-                : "dark";
-          if (theme === "light")
-            document.documentElement.setAttribute("data-theme", "light");
+              : window.matchMedia("(prefers-color-scheme: dark)").matches
+                ? "dark"
+                : "light";
+          if (theme === "dark")
+            document.documentElement.setAttribute("data-theme", "dark");
           document.documentElement.style.colorScheme = theme;
           document
             .querySelector('meta[name="theme-color"]')
-            .setAttribute("content", theme === "light" ? "#F7F5F0" : "#020617");
+            .setAttribute("content", theme === "dark" ? "#121417" : "#F4F3EF");
         } catch (e) {
-          /* private mode or storage disabled — midnight is the default anyway */
+          /* private mode or storage disabled — light is the default anyway */
         }
       })();
     </script>

@@ -148,9 +148,9 @@ const About = () => {
             </p>
             <p className="ybz-body max-w-2xl">
               Currently a software engineer at {BRAND.employer}, working
-              full-stack across {BRAND.stackShort}, and building SafeStay. I
-              took my first engineering role at eighteen and have spent the time
-              since shipping, breaking and repairing systems in production.
+              full-stack across {BRAND.stackShort}, and building SafeStay. Since
+              September 2025 I have been shipping, breaking and repairing systems
+              in production.
             </p>
             <p className="ybz-body max-w-2xl">
               I write here about the decisions rather than the tools — why a
@@ -217,7 +217,7 @@ const About = () => {
       <Section tone="raised">
         <SectionHeader
           eyebrow="Proof"
-          title="Four claims, each with a source."
+          title="Three claims, each with a source."
         />
         <dl className="grid border-t border-edge sm:grid-cols-2 sm:gap-x-10">
           {PROOF_STACK.map((item) => (
