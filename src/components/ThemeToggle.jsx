@@ -13,7 +13,7 @@ const ThemeToggle = ({ theme, onToggle, className = "" }) => {
     <button
       type="button"
       onClick={onToggle}
-      className={`flex h-10 w-10 items-center justify-center border border-edge text-muted transition-colors duration-[160ms] hover:border-hairline hover:text-accent ${className}`}
+      className={`flex h-10 w-10 items-center justify-center border border-edge text-muted transition-colors duration-150 hover:border-hairline hover:text-accent ${className}`}
       style={{ borderRadius: "var(--ybz-r-sm)" }}
       aria-label={`Switch to the ${nextTheme} theme`}
       title={`Switch to the ${nextTheme} theme`}

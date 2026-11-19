@@ -73,7 +73,7 @@ does not exist, add it here first.
 - **Spacing.** Tailwind's 4px scale only. No arbitrary `[13px]` values.
 - **Radius.** 12 (controls, plates, chips), 20 (cards), 28 (page panels). Nothing is a pill.
 - **Icons.** lucide, 16px in text and buttons, 18px standalone, stroke 1.75, text-role colour.
-- **Motion.** `--ybz-ease`; 160ms feedback, 200ms menus, 420ms entrance. Transition
+- **Motion.** `--ybz-ease`; 150ms feedback (`duration-150`, also Tailwind's default here), 420ms entrance. Transition
   colour, border, background, opacity, transform by name — never `transition-all`.
   No hover lift, no glow, no scale on hover, no scroll-triggered reveals, no loops.
   One entrance per page, in `PageHeader`. The stack rail's scroll progress is the

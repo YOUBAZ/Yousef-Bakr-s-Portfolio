@@ -145,6 +145,10 @@
   --radius-sm: 12px;
   --radius-md: 20px;
   --radius-lg: 28px;
+
+  /* transition-colors etc. pick up the system curve and feedback duration. */
+  --default-transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  --default-transition-duration: 150ms;
 }
 
 /* ==========================================================================
@@ -155,16 +159,14 @@
    ========================================================================== */
 
 :root{
-  /* Motion. One curve, three durations. Hover and press are feedback, menus
-     open, content enters. Nothing loops, nothing bounces, nothing lifts. */
+  /* Motion. One curve, two durations: 150ms for feedback (hover, press,
+     toggles), 420ms for the one entrance. Nothing loops, nothing bounces, nothing lifts. */
   --ybz-ease:       cubic-bezier(0.22, 1, 0.36, 1);
-  --ybz-dur-fast:   160ms;
-  --ybz-dur-menu:   200ms;
+  --ybz-dur-fast:   150ms;   /* Tailwind duration-150 in markup */
   --ybz-dur-enter:  420ms;
 
-  /* Layout. One content width, one reading width, one gutter ladder. */
-  --ybz-w-page:     72rem;   /* 1152px, Tailwind max-w-6xl */
-  --ybz-w-read:     42rem;   /* 672px, paragraphs and ledes */
+  /* Reading width for paragraphs and ledes. Page width is max-w-6xl. */
+  --ybz-w-read:     42rem;
 }
 
 @layer base {
@@ -423,16 +425,15 @@
     background: var(--ybz-grad-bloom);
   }
 
-  /* Theme-specific artwork, e.g. the dark and light lockups. */
-  .ybz-only-light{ display: none; }
-  [data-theme="light"] .ybz-only-dark{ display: none; }
-  [data-theme="light"] .ybz-only-light{ display: block; }
 }
 
 /* Gold stays full strength wherever it is a filled shape with ink on top —
    ink on #F4C025 reads at 11.92:1, which is why the primary button is unchanged. */
 [data-theme="light"] .ybz-btn-primary,
 .ybz-light .ybz-btn-primary{ background:linear-gradient(135deg,#F4C025,#E0A906); color:#020617; }
+/* Hover must be restated here: an unlayered rule beats the layered hover. */
+[data-theme="light"] .ybz-btn-primary:hover,
+.ybz-light .ybz-btn-primary:hover{ background:#F4C025; }
 
 /* The one deliberate exception: code blocks stay midnight on light pages.
    One dark object per page is the signature; a light code block is anyone's. */
@@ -482,6 +483,13 @@
 
 [data-theme="light"] .ybz-code__bar, .ybz-light .ybz-code__bar{
   background: #191B24;   /* the light-page code ground's top stop, one step up */
+}
+
+/* A <pre> inside the frame is content, not a second block: the light-page
+   `pre` rule above must not paint another ground, border and shadow on it. */
+.ybz-code pre,
+[data-theme="light"] .ybz-code pre{
+  background: transparent; border: 0; box-shadow: none;
 }
 
 .ybz-code__body{

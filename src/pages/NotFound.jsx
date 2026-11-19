@@ -1,14 +1,14 @@
 import { ArrowLeft, Home } from "lucide-react";
 import Seo from "../components/Seo";
+import { NAV_ITEMS } from "../config/navigation";
 import { Button, PageHeader, TextLink } from "../components/ui";
 
-const quickLinks = [
-  { label: "Projects", to: "/projects" },
-  { label: "Writing", to: "/blog" },
-  { label: "Certificates", to: "/certificates" },
-  { label: "About", to: "/about" },
-  { label: "Contact", to: "/contact" },
-];
+const quickLinks = NAV_ITEMS.filter((item) => item.path !== "/").map(
+  (item) => ({
+    label: item.name,
+    to: item.path,
+  })
+);
 
 const NotFound = () => {
   return (

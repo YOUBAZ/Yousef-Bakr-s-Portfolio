@@ -1,44 +1,9 @@
-import { Mail, Linkedin, Github } from "lucide-react";
 import ContactForm from "../components/ContactForm";
 import Seo from "../components/Seo";
 import { siteMeta } from "../config/seo";
 import { BRAND } from "../config/brand";
+import { CONTACT_CHANNELS, COLLABORATION_NOTES } from "../config/contact";
 import { Card, PageHeader, Section } from "../components/ui";
-
-/**
- * The phone number is deliberately absent. brand.json marks it
- * "Business card only. Never on a banner, OG card or signature." The location
- * line is gone for the same class of reason — section 1 keeps it private and
- * lets the structured homeLocation field in seo.js carry it instead.
- */
-const contactInfo = [
-  {
-    icon: Mail,
-    label: "Email",
-    value: BRAND.email,
-    href: `mailto:${BRAND.email}`,
-  },
-  {
-    icon: Linkedin,
-    label: "LinkedIn",
-    value: BRAND.linkedin,
-    href: BRAND.linkedinUrl,
-  },
-  {
-    icon: Github,
-    label: "GitHub",
-    value: "github.com/YOUBAZ",
-    href: BRAND.github,
-  },
-];
-
-// Section 8: name the shape of the work, not a list of technologies.
-const collaborationNotes = [
-  "A second opinion on an architecture call you are unsure about",
-  "A boundary that is leaking — service seams, data ownership, or state that drifted to the client",
-  "API design and migrations where the rollback plan matters more than the rewrite",
-  "Production work on TypeScript, NestJS, Next.js and PostgreSQL systems",
-];
 
 const Contact = () => {
   const contactSchema = [
@@ -111,7 +76,7 @@ const Contact = () => {
             <Card>
               <h2 className="ybz-title">Good fit</h2>
               <ul className="ybz-body mt-4 space-y-3">
-                {collaborationNotes.map((note) => (
+                {COLLABORATION_NOTES.map((note) => (
                   <li key={note} className="flex items-start gap-3">
                     <span
                       aria-hidden="true"
@@ -125,7 +90,7 @@ const Contact = () => {
             </Card>
 
             <ul className="grid gap-4">
-              {contactInfo.map((item) => {
+              {CONTACT_CHANNELS.map((item) => {
                 const Icon = item.icon;
                 const external = item.href.startsWith("http");
                 return (

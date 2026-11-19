@@ -113,11 +113,36 @@ const BlogContent = ({ content }) => {
           ),
 
           // Custom code blocks
-          code: ({ inline, className, children, ...props }) => {
+          // react-markdown 10 dropped the `inline` prop. A fenced block is
+          // rendered as <pre><code>; `pre` unwraps so the frame below is the
+          // only block wrapper, and a block is recognised by its language
+          // class or a newline in its text.
+          pre: ({ children }) => <>{children}</>,
+
+          code: ({ className, children, ...props }) => {
             const match = /language-(\w+)/.exec(className || "");
             const language = match ? match[1] : "";
+            const text = String(children);
+            const isBlock = Boolean(match) || text.includes("\n");
 
-            return !inline && match ? (
+            if (isBlock && !match) {
+              // Plain fenced block: diagrams, shell output. Same frame, no
+              // highlighting, scrolls sideways instead of overflowing.
+              return (
+                <div className="ybz-code">
+                  <div className="ybz-code__bar">
+                    <span>text</span>
+                  </div>
+                  <div className="ybz-code__body">
+                    <pre className="m-0 p-4 font-mono text-sm leading-6 text-[#C9D1E1]">
+                      {text.replace(/\n$/, "")}
+                    </pre>
+                  </div>
+                </div>
+              );
+            }
+
+            return isBlock ? (
               // .ybz-code owns the ground so it can differ per theme
               // (section 3.3 gives light pages their own code ground).
               // Everything inside it stays midnight in both themes.
@@ -167,7 +192,7 @@ const BlogContent = ({ content }) => {
               </div>
             ) : (
               <code
-                className="border border-edge bg-card px-1.5 py-0.5 font-mono text-sm text-bone [pre_&]:border-0 [pre_&]:bg-transparent [pre_&]:p-0 [pre_&]:text-inherit"
+                className="border border-edge bg-card px-1.5 py-0.5 font-mono text-sm text-bone"
                 {...props}
               >
                 {children}

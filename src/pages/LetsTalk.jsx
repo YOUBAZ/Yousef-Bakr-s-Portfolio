@@ -1,37 +1,9 @@
-import { Mail, Linkedin, Github } from "lucide-react";
 import schedulingConfig from "../config/scheduling";
 import Seo from "../components/Seo";
 import { siteMeta } from "../config/seo";
 import { BRAND } from "../config/brand";
+import { CONTACT_CHANNELS, COLLABORATION_NOTES } from "../config/contact";
 import { Card, PageHeader, Section, TextLink } from "../components/ui";
-
-const contactInfo = [
-  {
-    icon: Mail,
-    label: "Email",
-    value: BRAND.email,
-    href: `mailto:${BRAND.email}`,
-  },
-  {
-    icon: Linkedin,
-    label: "LinkedIn",
-    value: BRAND.linkedin,
-    href: BRAND.linkedinUrl,
-  },
-  {
-    icon: Github,
-    label: "GitHub",
-    value: "github.com/YOUBAZ",
-    href: BRAND.github,
-  },
-];
-
-const collaborationNotes = [
-  "A second opinion on an architecture call you are unsure about",
-  "A boundary that is leaking — service seams, data ownership, or state that drifted to the client",
-  "API design and migrations where the rollback plan matters more than the rewrite",
-  "Production work on TypeScript, NestJS, Next.js and PostgreSQL systems",
-];
 
 const availability = [
   { day: "Monday", slots: "09:00 — 13:00 GMT" },
@@ -117,7 +89,7 @@ const LetsTalk = () => {
             <Card>
               <h2 className="ybz-title">Good fit</h2>
               <ul className="ybz-body mt-4 space-y-3">
-                {collaborationNotes.map((note) => (
+                {COLLABORATION_NOTES.map((note) => (
                   <li key={note} className="flex items-start gap-3">
                     <span
                       aria-hidden="true"
@@ -193,7 +165,7 @@ const LetsTalk = () => {
         </div>
 
         <ul className="grid gap-6 lg:grid-cols-3">
-          {contactInfo.map((item) => {
+          {CONTACT_CHANNELS.map((item) => {
             const Icon = item.icon;
             const external = item.href.startsWith("http");
             return (

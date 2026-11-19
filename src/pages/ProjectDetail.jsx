@@ -218,7 +218,10 @@ const ProjectDetail = () => {
     ...(project.metrics || []),
   ].filter(
     // A figure already in the headline strip is not repeated further down.
-    (m) => !(project.highlights || []).some((h) => h.value === m.value)
+    (m) =>
+      !(project.highlights || []).some(
+        (h) => h.value === m.value && h.label === m.label
+      )
   );
 
   const lh = project.lighthouse;
@@ -358,14 +361,7 @@ const ProjectDetail = () => {
         eyebrow={project.role}
         title={project.title}
         lede={project.tagline || project.summary}
-        actions={
-          <>
-            <LinkButtons project={project} />
-            <Button to="/lets-talk" variant="secondary" icon={ArrowRight}>
-              Book a call
-            </Button>
-          </>
-        }
+        actions={<LinkButtons project={project} />}
       />
 
       {/* Screenshot, headline figures and engagement facts. */}

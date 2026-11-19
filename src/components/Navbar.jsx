@@ -21,7 +21,7 @@ const Navbar = ({ toggleMobileMenu, theme, toggleTheme }) => (
         }}
       >
         <Link to="/" aria-label={`${BRAND.name}, home`}>
-          <Wordmark descriptor={false} />
+          <Wordmark descriptorClassName="hidden sm:block" />
         </Link>
 
         <nav
@@ -35,7 +35,7 @@ const Navbar = ({ toggleMobileMenu, theme, toggleTheme }) => (
               end={item.path === "/"}
               className={({ isActive }) =>
                 [
-                  "relative flex h-9 items-center px-3 transition-colors duration-[160ms]",
+                  "relative flex h-9 items-center px-3 transition-colors duration-150",
                   isActive ? "text-bone" : "text-slate-body hover:text-bone",
                 ].join(" ")
               }
@@ -68,7 +68,7 @@ const Navbar = ({ toggleMobileMenu, theme, toggleTheme }) => (
           <button
             type="button"
             onClick={toggleMobileMenu}
-            className="flex h-10 w-10 items-center justify-center border border-edge text-bone transition-colors duration-[160ms] hover:border-hairline"
+            className="flex h-10 w-10 items-center justify-center border border-edge text-bone transition-colors duration-150 hover:border-hairline"
             style={{ borderRadius: "var(--ybz-r-sm)" }}
             aria-label="Open navigation"
           >

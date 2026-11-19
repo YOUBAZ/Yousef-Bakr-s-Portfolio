@@ -54,7 +54,7 @@ const Footer = () => {
                   <li key={link.path}>
                     <Link
                       to={link.path}
-                      className="text-slate-body transition-colors duration-[160ms] hover:text-bone"
+                      className="text-slate-body transition-colors duration-150 hover:text-bone"
                     >
                       {link.name}
                     </Link>
@@ -86,7 +86,7 @@ const Footer = () => {
                   <li key={entry.href}>
                     <a
                       href={entry.href}
-                      className="ybz-source transition-colors duration-[160ms] hover:text-accent"
+                      className="ybz-source transition-colors duration-150 hover:text-accent"
                     >
                       {entry.label}
                     </a>

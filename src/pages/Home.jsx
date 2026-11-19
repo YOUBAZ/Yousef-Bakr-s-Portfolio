@@ -31,13 +31,11 @@ const featuredProjects = [
     title: "Promptopia",
     copy: "AI prompt-sharing platform. NextAuth sessions over MongoDB, with the create/browse/manage loop kept to a single social feed.",
     tags: ["Next.js", "React", "NextAuth", "MongoDB"],
-    link: "/projects/promptopia",
   },
   {
     title: "Blog Post",
     copy: "Content dashboard separating posts, users and admin flows behind an Express API rather than letting the client hold authorisation.",
     tags: ["React", "Node.js", "Express.js", "MongoDB"],
-    link: "/projects/blog-post",
   },
 ];
 
@@ -66,8 +64,8 @@ const heroRecord = {
   ],
   footer: (
     <>
-      <span>NestJS · Next.js · Flutter · PostgreSQL</span>
-      <span>3 tiers · 20+ tables</span>
+      <span>3-tier platform</span>
+      <span>20+ table schema</span>
     </>
   ),
 };

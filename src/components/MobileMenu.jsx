@@ -69,7 +69,7 @@ const MobileMenu = ({ isOpen, toggleMenu }) => {
           <button
             type="button"
             onClick={toggleMenu}
-            className="flex h-10 w-10 items-center justify-center border border-edge text-bone transition-colors duration-[160ms] hover:border-hairline"
+            className="flex h-10 w-10 items-center justify-center border border-edge text-bone transition-colors duration-150 hover:border-hairline"
             style={{ borderRadius: "var(--ybz-r-sm)" }}
             aria-label="Close menu"
           >
@@ -86,7 +86,7 @@ const MobileMenu = ({ isOpen, toggleMenu }) => {
               key={item.name}
               to={item.path}
               onClick={toggleMenu}
-              className="flex h-12 items-center border-l-2 border-transparent px-4 text-slate-body transition-colors duration-[160ms] hover:border-[var(--ybz-accent-rule)] hover:text-bone"
+              className="flex h-12 items-center border-l-2 border-transparent px-4 text-slate-body transition-colors duration-150 hover:border-[var(--ybz-accent-rule)] hover:text-bone"
             >
               {item.name}
             </Link>
