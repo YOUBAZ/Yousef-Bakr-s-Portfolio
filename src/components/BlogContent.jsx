@@ -106,7 +106,7 @@ const BlogContent = ({ content }) => {
           a: ({ href, children }) => (
             <a
               href={href}
-              className="text-accent underline decoration-hairline underline-offset-4 transition-colors duration-150 hover:decoration-current"
+              className="text-bone underline decoration-hairline underline-offset-4 transition-colors duration-150 hover:decoration-[var(--ybz-signal)]"
               target={href?.startsWith("http") ? "_blank" : undefined}
               rel={href?.startsWith("http") ? "noopener noreferrer" : undefined}
             >

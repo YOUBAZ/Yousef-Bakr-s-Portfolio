@@ -45,6 +45,7 @@ does not exist, add it here first.
 | `Figure` | A metric: mono figure in signal text over a short label |
 | `DecisionRecord` | The Home hero object. A surface that follows the theme. Facts only |
 | `Signet` | The Merge Y, drawn from `brand-kit/brand.json`. `mono` for the all-ink version |
+| `CoverImage` | A generated blog or project cover in the active theme. Put it in `ybz-frame ybz-frame--cover` so the frame matches the cover's ground. Regenerate covers with `brand-kit/tools/build_covers.py` |
 | `Wordmark` | Merge Y + name + descriptor: the primary logo |
 
 ## Classes
@@ -63,6 +64,7 @@ does not exist, add it here first.
 | `ybz-btn` + variant | Buttons. Use `Button` instead |
 | `ybz-input` | Form fields, same geometry as buttons |
 | `ybz-chip` | Filter toggles. Set `aria-pressed` |
+| `ybz-inset` | A box inside a card (a slot, a nested panel, a preview frame). Takes the fill the card is not using |
 | `ybz-plate` | Light plate behind a third-party logo |
 | `ybz-frame` | Surface mat behind screenshots and certificates |
 | `ybz-enter` | The one load animation |
@@ -73,6 +75,12 @@ does not exist, add it here first.
   `text-slate-body`, `text-muted`, `text-accent`, `bg-ink`, `bg-obsidian`,
   `bg-card`, `border-edge`, `border-hairline`). Signal on type is always
   `text-accent` (`--ybz-accent-type`). Signal is never a fill behind text.
+- **Figure and ground.** A box never has the same fill as what sits behind it.
+  The tokens handle it: `--ybz-card` is surface on a paper section and paper on
+  a raised band (`.bg-obsidian` swaps it), and `--ybz-inset` is always the other
+  one. So use `ybz-card` / `bg-card` for boxes and `ybz-inset` / `bg-inset` for
+  boxes inside them. Never hard-code a box fill, and never leave a bordered box
+  inside a card unfilled.
 - **Theme.** Light is the default and has no attribute. Dark sets
   `data-theme="dark"` on `<html>`, from the visitor's choice or their system.
 - **Type.** IBM Plex Sans, Plex Mono, Plex Sans Arabic. Weights 400 to 600. No

@@ -101,6 +101,6 @@ The fixed facts below come from v2.4 and stay unless they are changed on purpose
 - **Phase 3, identity system**: built 2026-11-19 in `brand-kit/`. The spec is
   `brand-kit/BRAND.md`, the tokens are `brand-kit/brand.json`, and the marks are in
   `brand-kit/logo/`. Not yet adopted by the live site (see BRAND.md section 11).
-  Adopted by the live site 2026-11-19 on branch `feat/brand-v3`. Blog and project
-  banner images are still v2.4 artwork.
+  Adopted by the live site 2026-11-19. Blog and project covers regenerated on v3
+  (light and dark), v2.4 banners deleted.
 - **Phase 3, identity system**: colour, type, mark and layout for the chosen territory. Blocked on Phase 2.

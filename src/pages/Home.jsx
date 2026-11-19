@@ -158,13 +158,17 @@ const Home = () => {
         />
 
         <dl className="ybz-card divide-y divide-edge">
-          {PROOF_STACK.map((item) => (
+          {PROOF_STACK.map((item, index) => (
             <div
               key={item.source}
               className="grid gap-2 px-6 py-6 sm:grid-cols-[10rem_1fr] sm:gap-8"
             >
               <div>
-                <p className="ybz-figure text-4xl">{item.figure}</p>
+                <p
+                  className={`ybz-figure text-4xl ${index === 0 ? "ybz-figure--key" : ""}`}
+                >
+                  {item.figure}
+                </p>
                 <p className="ybz-meta mt-2">{item.figureLabel}</p>
               </div>
               <div className="space-y-2">
@@ -228,7 +232,7 @@ const Home = () => {
                   </div>
                 ) : (
                   <div
-                    className="flex h-14 w-14 shrink-0 items-center justify-center border border-hairline font-mono text-sm text-accent"
+                    className="flex h-14 w-14 shrink-0 items-center justify-center border border-hairline font-mono text-sm text-muted"
                     style={{ borderRadius: "var(--ybz-r-sm)" }}
                   >
                     {item.companyBadge}

@@ -25,7 +25,25 @@ export function resolveInitialTheme() {
     : "light";
 }
 
+/**
+ * A theme flip changes colour, background and border on nearly every element.
+ * Left alone, every 150ms transition fires at once and the switch smears.
+ * Turn transitions off for the swap, force a reflow, restore on the next frame.
+ */
+function withoutTransitions(fn) {
+  const style = document.createElement("style");
+  style.textContent = "*,*::before,*::after{transition:none !important}";
+  document.head.appendChild(style);
+  fn();
+  void document.body.offsetHeight; // force the reflow before restoring
+  requestAnimationFrame(() => style.remove());
+}
+
 function applyTheme(theme) {
+  withoutTransitions(() => setThemeAttributes(theme));
+}
+
+function setThemeAttributes(theme) {
   const root = document.documentElement;
 
   // Light is the default and carries no attribute, so the :root block in

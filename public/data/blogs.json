@@ -14,14 +14,14 @@
       "Automation",
       "LLMs"
     ],
-    "featuredImage": "/images/blog/banner-01-ai-agents-1200.png",
+    "featuredImage": "/images/blog/ai-agents-agentic-systems-2025.png",
     "readTime": 15,
     "status": "published",
     "seo": {
       "metaTitle": "AI Agents and Agentic Systems 2025 - Complete Guide",
       "metaDescription": "Learn to build autonomous AI agents using LangChain, AutoGPT, and agentic workflows. Comprehensive guide with code examples, patterns, and production tips.",
       "keywords": "AI agents, agentic systems, LangChain, AutoGPT, autonomous AI, tool-using agents, multi-agent systems",
-      "ogImage": "/images/blog/banner-01-ai-agents-1200.png",
+      "ogImage": "/images/blog/ai-agents-agentic-systems-2025.png",
       "ogType": "article"
     }
   },
@@ -40,14 +40,14 @@
       "LangChain",
       "Embeddings"
     ],
-    "featuredImage": "/images/blog/banner-02-rag-systems-1200.png",
+    "featuredImage": "/images/blog/rag-retrieval-augmented-generation-2025.png",
     "readTime": 14,
     "status": "published",
     "seo": {
       "metaTitle": "Building Production RAG Systems 2025 - Complete Guide",
       "metaDescription": "Master Retrieval-Augmented Generation with vector databases, embeddings, and production-ready architectures. Build context-aware AI with your data.",
       "keywords": "RAG, retrieval augmented generation, vector databases, embeddings, LangChain, ChromaDB, Pinecone, AI applications",
-      "ogImage": "/images/blog/banner-02-rag-systems-1200.png",
+      "ogImage": "/images/blog/rag-retrieval-augmented-generation-2025.png",
       "ogType": "article"
     }
   },
@@ -66,14 +66,14 @@
       "Performance",
       "Architecture"
     ],
-    "featuredImage": "/images/blog/banner-03-edge-serverless-1200.png",
+    "featuredImage": "/images/blog/edge-computing-serverless-2025.png",
     "readTime": 13,
     "status": "published",
     "seo": {
       "metaTitle": "Edge Computing and Serverless 2025 - Complete Guide",
       "metaDescription": "Master edge computing and serverless architecture with Cloudflare Workers, Vercel Edge, and Lambda@Edge. Build ultra-fast globally distributed applications.",
       "keywords": "edge computing, serverless, Cloudflare Workers, Vercel Edge Functions, Lambda@Edge, distributed systems, performance",
-      "ogImage": "/images/blog/banner-03-edge-serverless-1200.png",
+      "ogImage": "/images/blog/edge-computing-serverless-2025.png",
       "ogType": "article"
     }
   },
@@ -91,14 +91,14 @@
       "Python",
       "Engineering"
     ],
-    "featuredImage": "/images/blog/banner-04-ai-engineering-1200.png",
+    "featuredImage": "/images/blog/getting-started-with-ai-engineering.png",
     "readTime": 8,
     "status": "published",
     "seo": {
       "metaTitle": "Getting Started with AI Engineering - Complete Guide",
       "metaDescription": "Learn AI engineering fundamentals including ML pipelines, model deployment, and production best practices. Practical guide for developers.",
       "keywords": "AI engineering, machine learning, model deployment, ML pipelines, Python, data science",
-      "ogImage": "/images/blog/banner-04-ai-engineering-1200.png",
+      "ogImage": "/images/blog/getting-started-with-ai-engineering.png",
       "ogType": "article"
     }
   },
@@ -117,14 +117,14 @@
       "Docker",
       "IaC"
     ],
-    "featuredImage": "/images/blog/banner-05-devops-practices-1200.png",
+    "featuredImage": "/images/blog/modern-devops-practices-2024.png",
     "readTime": 10,
     "status": "published",
     "seo": {
       "metaTitle": "Modern DevOps Practices 2024 - Complete Guide",
       "metaDescription": "Master essential DevOps practices including CI/CD, infrastructure as code, Kubernetes, monitoring, and security. Practical examples included.",
       "keywords": "DevOps, CI/CD, Kubernetes, Docker, infrastructure as code, monitoring, automation",
-      "ogImage": "/images/blog/banner-05-devops-practices-1200.png",
+      "ogImage": "/images/blog/modern-devops-practices-2024.png",
       "ogType": "article"
     }
   },
@@ -143,14 +143,14 @@
       "Docker",
       "Architecture"
     ],
-    "featuredImage": "/images/blog/banner-06-microservices-1200.png",
+    "featuredImage": "/images/blog/building-scalable-microservices.png",
     "readTime": 12,
     "status": "published",
     "seo": {
       "metaTitle": "Building Scalable Microservices with Node.js - Complete Guide",
       "metaDescription": "Learn to build scalable microservices using Node.js, Express, Docker. Includes service communication, deployment strategies, and best practices.",
       "keywords": "microservices, Node.js, Docker, architecture, scalability, distributed systems, Express",
-      "ogImage": "/images/blog/banner-06-microservices-1200.png",
+      "ogImage": "/images/blog/building-scalable-microservices.png",
       "ogType": "article"
     }
   }

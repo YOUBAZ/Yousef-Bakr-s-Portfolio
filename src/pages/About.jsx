@@ -137,7 +137,10 @@ const About = () => {
         schema={aboutSchema}
       />
 
-      <PageHeader eyebrow="About" title={BRAND.positioning}>
+      <PageHeader
+        eyebrow="About"
+        title={`${BRAND.role} at ${BRAND.employer}. Founder of SafeStay.`}
+      >
         <div className="mt-10 grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
           {/* Section 11's About copy, which is already written and on-voice. */}
           <div className="space-y-4">
@@ -275,13 +278,24 @@ const About = () => {
                 </li>
               ))}
             </ol>
-            <div className="grid gap-8 border-t border-edge pt-8 md:grid-cols-2">
-              <RoleList
-                eyebrow="Leadership and community"
-                roles={leadershipRoles}
-              />
-              <RoleList eyebrow="Volunteering" roles={volunteering} />
-            </div>
+            <details className="group border-t border-edge pt-6">
+              <summary className="ybz-link min-h-11 cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                <span className="group-open:hidden">
+                  Show leadership and volunteering (
+                  {leadershipRoles.length + volunteering.length} roles)
+                </span>
+                <span className="hidden group-open:inline">
+                  Hide leadership and volunteering
+                </span>
+              </summary>
+              <div className="grid gap-8 pt-6 md:grid-cols-2">
+                <RoleList
+                  eyebrow="Leadership and community"
+                  roles={leadershipRoles}
+                />
+                <RoleList eyebrow="Volunteering" roles={volunteering} />
+              </div>
+            </details>
           </Card>
 
           <Card className="space-y-6 self-start">

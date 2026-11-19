@@ -3,7 +3,7 @@ import { Github, Linkedin, Mail } from "lucide-react";
 import Wordmark from "./Wordmark";
 import GoldRule from "./GoldRule";
 import { Button } from "./ui";
-import { BRAND, CONTACT_BLOCK } from "../config/brand";
+import { BRAND } from "../config/brand";
 import { NAV_ITEMS } from "../config/navigation";
 
 const socialLinks = [
@@ -49,12 +49,13 @@ const Footer = () => {
 
             <nav aria-label="Footer">
               <p className="ybz-eyebrow">Navigate</p>
-              <ul className="mt-4 space-y-3 text-sm">
+              <ul className="mt-2 text-sm">
                 {NAV_ITEMS.filter((item) => item.path !== "/").map((link) => (
                   <li key={link.path}>
+                    {/* 44px tall rows: a finger-sized target without extra gaps. */}
                     <Link
                       to={link.path}
-                      className="text-slate-body transition-colors duration-150 hover:text-bone"
+                      className="flex min-h-11 items-center text-slate-body underline-offset-4 lg:min-h-8 transition-colors duration-150 hover:text-bone hover:underline"
                     >
                       {link.name}
                     </Link>
@@ -80,19 +81,8 @@ const Footer = () => {
                 ))}
               </div>
 
-              {/* Section 11's contact block, in its fixed order. */}
-              <ul className="mt-6 space-y-1">
-                {CONTACT_BLOCK.map((entry) => (
-                  <li key={entry.href}>
-                    <a
-                      href={entry.href}
-                      className="ybz-source transition-colors duration-150 hover:text-accent"
-                    >
-                      {entry.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
+              {/* The address as text, so it can be copied where mailto: does nothing. */}
+              <p className="ybz-source mt-4 select-all">{BRAND.email}</p>
             </div>
           </div>
 

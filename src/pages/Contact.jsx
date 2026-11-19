@@ -81,7 +81,7 @@ const Contact = () => {
                     <span
                       aria-hidden="true"
                       className="mt-3 h-px w-4 shrink-0"
-                      style={{ background: "var(--ybz-accent-rule)" }}
+                      style={{ background: "var(--ybz-muted)" }}
                     />
                     {note}
                   </li>
@@ -107,7 +107,7 @@ const Contact = () => {
                         size={18}
                         strokeWidth={1.75}
                         aria-hidden="true"
-                        className="shrink-0 text-accent"
+                        className="shrink-0 text-muted"
                       />
                       <div className="min-w-0">
                         <p className="ybz-meta">{item.label}</p>

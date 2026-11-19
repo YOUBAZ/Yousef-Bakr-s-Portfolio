@@ -18,6 +18,7 @@ import {
   Section,
   SectionHeader,
   StackLine,
+  CoverImage,
 } from "../components/ui";
 
 /**
@@ -219,13 +220,11 @@ const BlogPost = () => {
 
           {blog.featuredImage && (
             <Card padded={false} className="mt-8">
-              <div className="ybz-frame aspect-[40/21] border-b-0">
-                <img
+              <div className="ybz-frame ybz-frame--cover aspect-[40/21] border-b-0">
+                <CoverImage
                   src={blog.featuredImage}
                   alt={blog.title}
-                  onError={(e) => {
-                    e.target.style.display = "none";
-                  }}
+                  fallback="/images/blog/default.png"
                 />
               </div>
             </Card>
@@ -256,14 +255,11 @@ const BlogPost = () => {
                 className="group block"
               >
                 {relatedBlog.featuredImage && (
-                  <div className="ybz-frame aspect-[40/21]">
-                    <img
+                  <div className="ybz-frame ybz-frame--cover aspect-[40/21]">
+                    <CoverImage
                       src={relatedBlog.featuredImage}
                       alt=""
-                      loading="lazy"
-                      onError={(e) => {
-                        e.target.src = "/images/blog/default-blog.jpg";
-                      }}
+                      fallback="/images/blog/default.png"
                     />
                   </div>
                 )}

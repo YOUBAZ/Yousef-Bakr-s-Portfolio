@@ -21,8 +21,14 @@
 :root{
   /* ---------- ground and surfaces ---------- */
   --ybz-ink:        #F4F3EF;  /* paper — page ground, never pure white */
-  --ybz-obsidian:   #EAE8E2;  /* alternate sections */
-  --ybz-card:       #EAE8E2;  /* cards, code blocks, table headers */
+  --ybz-surface:    #EAE8E2;  /* the second neutral */
+  --ybz-obsidian:   var(--ybz-surface);  /* alternate (raised) sections */
+
+  /* Box fills. A box must always differ from what sits behind it: a card on a
+     paper section is surface, a card on a raised band is paper (see .bg-obsidian
+     below), and a box nested inside a card takes the other one (--ybz-inset). */
+  --ybz-card:       var(--ybz-surface);
+  --ybz-inset:      var(--ybz-ink);
   --ybz-edge:       #D3D0C8;  /* hairlines and grid lines, never text */
   --ybz-hairline:   #D3D0C8;
 
@@ -48,7 +54,7 @@
   --ybz-r-lg: 8px;
 
   /* ---------- translucent chrome: the ground at partial opacity ---------- */
-  --ybz-chrome:  rgba(244,243,239,.88);  /* sticky navbar */
+  --ybz-chrome:  rgba(234,232,226,.92);  /* sticky navbar: surface, so the bar reads as a box */
   --ybz-scrim:   rgba(21,23,27,.45);     /* mobile menu backdrop */
 
   /* A plate behind third-party logos, which are drawn for light grounds. Stays
@@ -73,10 +79,12 @@
 
 [data-theme="dark"]{
   --ybz-ink:        #121417;  /* never pure black */
-  --ybz-obsidian:   #1B1E22;
-  --ybz-card:       #1B1E22;
-  --ybz-edge:       #2E3238;
-  --ybz-hairline:   #2E3238;
+  --ybz-surface:    #24282D;
+  --ybz-obsidian:   var(--ybz-surface);
+  --ybz-card:       var(--ybz-surface);
+  --ybz-inset:      var(--ybz-ink);
+  --ybz-edge:       #363B42;
+  --ybz-hairline:   #363B42;
 
   --ybz-bone:       #ECEBE6;  /* 15.5:1 */
   --ybz-slate:      #ECEBE6;
@@ -86,10 +94,22 @@
   --ybz-accent-type: #EE7A52;  /* 6.6:1 */
   --ybz-accent-rule: #E2582B;
 
-  --ybz-chrome:  rgba(18,20,23,.85);
+  --ybz-chrome:  rgba(36,40,45,.92);     /* surface #24282D */
   --ybz-scrim:   rgba(18,20,23,.80);
 
   color-scheme: dark;
+}
+
+/* ==========================================================================
+   FIGURE AND GROUND
+   On a raised band the band is surface, so boxes on it flip to paper, and
+   boxes nested inside those flip back to surface. Every box keeps a fill that
+   differs from what is behind it, in both themes, without per-page overrides.
+   ========================================================================== */
+
+.bg-obsidian{
+  --ybz-card:  var(--ybz-ink);
+  --ybz-inset: var(--ybz-surface);
 }
 
 /* ==========================================================================
@@ -104,6 +124,7 @@
   --color-ink:        var(--ybz-ink);
   --color-obsidian:   var(--ybz-obsidian);
   --color-card:       var(--ybz-card);
+  --color-inset:      var(--ybz-inset);
   --color-signal:     var(--ybz-signal);
   --color-bone:       var(--ybz-bone);
   --color-slate-body: var(--ybz-slate);
@@ -249,12 +270,14 @@
     color: var(--ybz-muted);
   }
 
-  /* Counters and metrics. Plex Mono never carries a sentence. */
+  /* Counters and metrics. Plex Mono never carries a sentence. Ink by default:
+     signal is reserved for the one key figure on a page (.ybz-figure--key). */
   .ybz-figure{
     font-family: var(--ybz-mono); font-weight: 500;
-    color: var(--ybz-accent-type);
+    color: var(--ybz-bone);
     font-variant-numeric: tabular-nums;
   }
+  .ybz-figure--key{ color: var(--ybz-accent-type); }
 
   /* Links are ink with an underline. The underline turns signal on hover. */
   .ybz-link{
@@ -280,6 +303,21 @@
   }
   .ybz-card-interactive:hover{
     border-color: var(--ybz-bone);
+  }
+
+  /* Generated covers come in two files; show the one for the active theme. */
+  [data-theme="dark"] .ybz-only-light{ display: none; }
+  :root:not([data-theme="dark"]) .ybz-only-dark{ display: none; }
+
+  /* A frame holding a generated cover matches the cover's own ground, so any
+     space around it reads as part of the cover. */
+  .ybz-frame.ybz-frame--cover{ background: var(--ybz-ink); }
+
+  /* A box inside a card: takes the fill the card is not using. */
+  .ybz-inset{
+    background: var(--ybz-inset);
+    border: 1px solid var(--ybz-edge);
+    border-radius: var(--ybz-r-sm);
   }
 
   .ybz-plate{
@@ -321,7 +359,7 @@
       color var(--ybz-dur-fast) var(--ybz-ease),
       transform var(--ybz-dur-fast) var(--ybz-ease);
   }
-  .ybz-btn:active{ transform: scale(.98); }
+  .ybz-btn:active{ transform: scale(.96); }
   .ybz-btn:disabled{ opacity: .5; cursor: not-allowed; transform: none; }
   .ybz-btn--sm{ min-height: 2.5rem; padding: 0 1rem; }
 
@@ -351,7 +389,7 @@
   .ybz-input{
     width: 100%; min-height: 3rem; padding: .75rem 1rem;
     font-family: var(--ybz-body); font-size: 1rem; color: var(--ybz-bone);
-    background: var(--ybz-ink);
+    background: var(--ybz-inset);
     border: 1px solid var(--ybz-edge); border-radius: var(--ybz-r-md);
     transition: border-color var(--ybz-dur-fast) var(--ybz-ease);
   }
@@ -371,6 +409,11 @@
   .ybz-chip:hover{ color: var(--ybz-bone); border-color: var(--ybz-muted); }
   .ybz-chip[aria-pressed="true"]{
     color: var(--ybz-bone); background: var(--ybz-card); border-color: var(--ybz-bone);
+  }
+
+  /* Touch: every control reaches 44px where the pointer is a finger. */
+  @media (pointer: coarse){
+    .ybz-chip, .ybz-btn--sm{ min-height: 2.75rem; }
   }
 
   /* Skip link. Off-screen until focused, then lands as a primary action. */

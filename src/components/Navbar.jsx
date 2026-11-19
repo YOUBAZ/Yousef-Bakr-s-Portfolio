@@ -68,7 +68,7 @@ const Navbar = ({ toggleMobileMenu, theme, toggleTheme }) => (
           <button
             type="button"
             onClick={toggleMobileMenu}
-            className="flex h-10 w-10 items-center justify-center border border-edge text-bone transition-colors duration-150 hover:border-hairline"
+            className="flex h-11 w-11 items-center justify-center border border-edge text-bone transition-colors duration-150 hover:border-hairline"
             style={{ borderRadius: "var(--ybz-r-sm)" }}
             aria-label="Open navigation"
           >

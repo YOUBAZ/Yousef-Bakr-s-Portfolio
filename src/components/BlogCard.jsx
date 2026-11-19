@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { formatDate } from "../utils/blogUtils";
+import { CoverImage } from "./ui";
 import { Card, StackLine, TextLink } from "./ui";
 
-const defaultImage = "/images/blog/default-blog.jpg";
+const defaultImage = "/images/blog/default.png";
 
 /**
  * A post in the writing index. The banner sits in a surface frame at its own
@@ -20,14 +21,11 @@ const BlogCard = ({ blog }) => {
       className="flex h-full flex-col"
     >
       <Link to={href} tabIndex={-1} aria-hidden="true" className="block">
-        <div className="ybz-frame aspect-[40/21]">
-          <img
+        <div className="ybz-frame ybz-frame--cover aspect-[40/21]">
+          <CoverImage
             src={blog.featuredImage || defaultImage}
             alt=""
-            loading="lazy"
-            onError={(e) => {
-              e.target.src = defaultImage;
-            }}
+            fallback={defaultImage}
           />
         </div>
       </Link>

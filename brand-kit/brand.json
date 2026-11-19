@@ -29,10 +29,10 @@
     },
     "dark": {
       "ground":      { "hex": "#121417", "role": "Page background. Never pure black." },
-      "surface":     { "hex": "#1B1E22", "role": "Cards, code blocks, table headers." },
+      "surface":     { "hex": "#24282D", "role": "Cards, code blocks, table headers. 9.7 L* above ground: dark needs a larger step than light to read as a separate box." },
       "ink":         { "hex": "#ECEBE6", "role": "Headlines and body text. 15.5:1 on ground." },
       "muted":       { "hex": "#9A9EA5", "role": "Secondary text, captions, margin notes. 6.9:1 on ground." },
-      "rule":        { "hex": "#2E3238", "role": "Hairlines and grid lines only. Never text." },
+      "rule":        { "hex": "#363B42", "role": "Hairlines and grid lines only. Never text. Visible on ground and on surface." },
       "signal":      { "hex": "#E2582B", "role": "Graphics: markers, glyph node, key figure rules. 5.0:1 on ground." },
       "signal_type": { "hex": "#EE7A52", "role": "Signal colour as text. 6.6:1 on ground." }
     }
