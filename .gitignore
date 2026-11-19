@@ -35,3 +35,7 @@ dist-ssr
 # brand.json and BRAND.md carry a phone number and internal strategy notes;
 # they must not be published here. See CLAUDE.md for the rules that do apply.
 v5/
+
+# Python
+__pycache__/
+*.pyc

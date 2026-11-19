@@ -1,0 +1,70 @@
+{
+  "version": "3.0.0-draft",
+  "date": "2026-11-19",
+  "territory": "Spec sheet, with the Merge Y as the symbol",
+  "identity": {
+    "name": "Yousef Bakr",
+    "role": "Software Engineer",
+    "descriptor": "Software Engineer",
+    "slogan": "Engineering that earns its complexity.",
+    "employer": "MindShift MENA",
+    "founder_of": "SafeStay",
+    "flagship": "EduShiftAI",
+    "site": "yousef-bakr-s-portfolio.vercel.app",
+    "linkedin": "linkedin.com/in/yousef-bakr",
+    "x": "@yousefbakr",
+    "retired_names": ["Yousef Bakr Zaki"],
+    "retired_roles": ["Full-Stack Engineer", "Systems Analyst"],
+    "never_on_assets": ["Cairo", "Egypt"]
+  },
+  "palette": {
+    "light": {
+      "ground":      { "hex": "#F4F3EF", "role": "Page background. Warm paper, never pure white." },
+      "surface":     { "hex": "#EAE8E2", "role": "Cards, code blocks, table headers." },
+      "ink":         { "hex": "#15171B", "role": "Headlines and body text. 16.2:1 on ground." },
+      "muted":       { "hex": "#5E626A", "role": "Secondary text, captions, margin notes. 5.5:1 on ground." },
+      "rule":        { "hex": "#D3D0C8", "role": "Hairlines and grid lines only. Never text." },
+      "signal":      { "hex": "#D2481C", "role": "Graphics only: markers, glyph node, key figure rules. 4.0:1, fails as body text." },
+      "signal_type": { "hex": "#A8360E", "role": "Signal colour when it must be text: section numbers, key figures. 5.9:1 on ground." }
+    },
+    "dark": {
+      "ground":      { "hex": "#121417", "role": "Page background. Never pure black." },
+      "surface":     { "hex": "#1B1E22", "role": "Cards, code blocks, table headers." },
+      "ink":         { "hex": "#ECEBE6", "role": "Headlines and body text. 15.5:1 on ground." },
+      "muted":       { "hex": "#9A9EA5", "role": "Secondary text, captions, margin notes. 6.9:1 on ground." },
+      "rule":        { "hex": "#2E3238", "role": "Hairlines and grid lines only. Never text." },
+      "signal":      { "hex": "#E2582B", "role": "Graphics: markers, glyph node, key figure rules. 5.0:1 on ground." },
+      "signal_type": { "hex": "#EE7A52", "role": "Signal colour as text. 6.6:1 on ground." }
+    }
+  },
+  "type": {
+    "sans":   { "family": "IBM Plex Sans",        "weights": [400, 500, 600], "role": "Headlines and all running text." },
+    "mono":   { "family": "IBM Plex Mono",        "weights": [400, 500],      "role": "Figures, code, section numbers, metadata, margin notes." },
+    "arabic": { "family": "IBM Plex Sans Arabic", "weights": [400, 500, 600], "role": "All Arabic text. Line height 1.8." },
+    "scale_px": { "label": 13, "body": 16, "lead": 20, "h3": 25, "h2": 32, "h1": 44, "display": 60 },
+    "rules": {
+      "headline_weight": 600,
+      "headline_tracking": "-0.01em",
+      "body_line_height": 1.6,
+      "measure_ch": 68,
+      "case": "Sentence case everywhere. No all-caps."
+    }
+  },
+  "radius_px": { "s": 2, "m": 4, "l": 8 },
+  "space_px": [4, 8, 12, 16, 24, 32, 48, 64, 96],
+  "marks": {
+    "wordmark": { "family": "IBM Plex Sans", "weight": 600, "text": "Yousef Bakr" },
+    "descriptor": { "family": "IBM Plex Mono", "weight": 500, "text": "Software Engineer" },
+    "glyph": {
+      "name": "Merge Y",
+      "meaning": "The Y is a merge diagram. The right arm and stem are the main line; the left arm is the branch, in signal, meeting it across a hairline seam.",
+      "grid": 48,
+      "main": [[30, 4], [42, 4], [30, 25], [30, 44], [18, 44], [18, 25]],
+      "branch": [[6, 4], [18, 4], [23.08, 12.89], [17.08, 23.39]],
+      "seam": 1.6,
+      "bounds": [6, 4, 42, 44],
+      "lockup_height_to_cap": 1.45,
+      "min_size_px": 16
+    }
+  }
+}
