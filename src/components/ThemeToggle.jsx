@@ -2,12 +2,8 @@ import PropTypes from "prop-types";
 import { Moon, Sun } from "lucide-react";
 
 /**
- * The theme switch.
- *
- * Deliberately not gold and not blue. Gold is the one dominant accent and is
- * spent on the primary action; blue is reserved for navigation and contact by
- * section 3.5 rule 2. A theme switch is chrome, so it takes the hairline
- * treatment the rest of the chrome uses and gains its accent only on hover.
+ * The theme switch. Chrome, so it takes the hairline treatment and gains the
+ * accent only on hover. Same 40px square as the mobile menu button.
  */
 const ThemeToggle = ({ theme, onToggle, className = "" }) => {
   const nextTheme = theme === "light" ? "dark" : "light";
@@ -17,12 +13,12 @@ const ThemeToggle = ({ theme, onToggle, className = "" }) => {
     <button
       type="button"
       onClick={onToggle}
-      className={`border border-edge p-2 text-muted transition-colors hover:border-hairline hover:text-[var(--ybz-accent-type)] ${className}`}
+      className={`flex h-10 w-10 items-center justify-center border border-edge text-muted transition-colors duration-[160ms] hover:border-hairline hover:text-accent ${className}`}
       style={{ borderRadius: "var(--ybz-r-sm)" }}
       aria-label={`Switch to the ${nextTheme} theme`}
       title={`Switch to the ${nextTheme} theme`}
     >
-      <Icon size={18} />
+      <Icon size={18} strokeWidth={1.75} />
     </button>
   );
 };

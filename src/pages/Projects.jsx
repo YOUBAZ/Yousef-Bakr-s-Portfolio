@@ -1,18 +1,121 @@
 import { useEffect, useMemo, useState } from "react";
-import { motion } from "framer-motion";
-import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { Github } from "lucide-react";
+import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import { ArrowUpRight, ExternalLink, Github } from "lucide-react";
 import Seo from "../components/Seo";
 import { siteMeta } from "../config/seo";
-import GoldRule from "../components/GoldRule";
+import {
+  Button,
+  Card,
+  Figure,
+  PageHeader,
+  Section,
+  StackLine,
+} from "../components/ui";
 
-const _motion = motion;
+/* One project. The flagship (first in the data) spans both columns on lg and
+   sets the screenshot beside the text, so the remaining six close the grid in
+   three even rows. */
+const ProjectCard = ({ project, flagship = false }) => (
+  <Card
+    as="article"
+    interactive
+    padded={false}
+    className={
+      flagship
+        ? "flex flex-col lg:col-span-2 lg:grid lg:grid-cols-[1.15fr_1fr]"
+        : "flex h-full flex-col"
+    }
+  >
+    <div
+      className={`ybz-frame aspect-[16/10] ${
+        flagship
+          ? "lg:aspect-auto lg:min-h-80 lg:border-b-0 lg:border-r lg:border-edge"
+          : ""
+      }`}
+    >
+      <img
+        src={project.image}
+        alt={project.title}
+        className="p-4"
+        loading="lazy"
+      />
+    </div>
+
+    <div className="flex flex-1 flex-col p-6">
+      <p className="ybz-meta">{project.role}</p>
+      <h3 className="ybz-title mt-2">
+        {project.brief ? (
+          <Link
+            to={`/projects/${project.id}`}
+            className="underline-offset-4 hover:underline"
+          >
+            {project.title}
+          </Link>
+        ) : (
+          project.title
+        )}
+      </h3>
+      <p className="ybz-body mt-3 flex-1">{project.summary}</p>
+
+      {project.highlights?.length > 0 && (
+        <div className="mt-6 grid grid-cols-3 gap-4 border-y border-edge py-4">
+          {project.highlights.map((h) => (
+            <Figure key={h.label} value={h.value} label={h.label} />
+          ))}
+        </div>
+      )}
+
+      <StackLine items={project.tech} className="mt-6" />
+
+      {(project.brief || project.live || project.repo) && (
+        <div className="mt-8 flex flex-wrap gap-3">
+          {project.brief && (
+            <Button
+              to={`/projects/${project.id}`}
+              size="sm"
+              icon={ArrowUpRight}
+            >
+              Case study
+            </Button>
+          )}
+          {project.live && (
+            <Button
+              href={project.live}
+              variant="secondary"
+              size="sm"
+              icon={ExternalLink}
+              iconPosition="start"
+            >
+              Live
+            </Button>
+          )}
+          {project.repo && (
+            <Button
+              href={project.repo}
+              variant="secondary"
+              size="sm"
+              icon={Github}
+              iconPosition="start"
+            >
+              Source
+            </Button>
+          )}
+        </div>
+      )}
+    </div>
+  </Card>
+);
+
+ProjectCard.propTypes = {
+  project: PropTypes.object.isRequired,
+  flagship: PropTypes.bool,
+};
 
 const Projects = () => {
   const [projects, setProjects] = useState([]);
   const [isLoadingProjects, setIsLoadingProjects] = useState(true);
   const [loadError, setLoadError] = useState(null);
-  const [gridRef] = useAutoAnimate({ duration: 240 });
 
   const projectsSchema = useMemo(() => {
     const locale = (siteMeta.locale || "en_US").replace("_", "-");
@@ -23,7 +126,7 @@ const Projects = () => {
         url: `${siteMeta.siteUrl}/projects`,
         name: "Projects",
         description:
-          "Source-linked projects spanning AI prompt platforms, content dashboards, commerce and media browsing.",
+          "Live systems and source-linked projects: an LMS and simulation SaaS, a bilingual course store, a university club platform, and earlier open-source builds.",
         inLanguage: locale,
       },
       {
@@ -54,6 +157,8 @@ const Projects = () => {
           name: project.title,
           description: project.summary,
           url:
+            (project.brief && `${siteMeta.siteUrl}/projects/${project.id}`) ||
+            project.live ||
             project.repo ||
             `${siteMeta.siteUrl}/projects#${project.id ?? index + 1}`,
         })),
@@ -96,7 +201,7 @@ const Projects = () => {
     <>
       <Seo
         title="Projects"
-        description="Source-linked projects: Promptopia, Blog Post, E-commerce App and IMDB Clone. Each card routes to the repository."
+        description="Live systems and source-linked projects: EduShift AI, AutoBusiness, MSP Tech Club, Promptopia and more. Each card routes to the running product or the repository."
         keywords={[
           "projects",
           "React portfolio",
@@ -106,118 +211,48 @@ const Projects = () => {
         url="/projects"
         schema={projectsSchema}
       />
-      <div className="bg-ink text-slate-body">
-        <section className="relative isolate overflow-hidden px-6 pb-12 pt-12 sm:px-10 lg:px-16">
-          <div className="ybz-bloom pointer-events-none absolute inset-0 -z-10" />
+      <PageHeader
+        eyebrow="Projects"
+        title="Every card routes to the proof."
+        lede="Live systems link to the running product. Open-source work links to the repository. Where the code belongs to a client, the deployment is the claim."
+      />
 
-          <div className="mx-auto max-w-5xl space-y-6">
-            <p className="ybz-eyebrow">Projects</p>
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: [0, 0, 0.2, 1] }}
-              className="max-w-3xl font-display text-4xl leading-tight text-bone sm:text-5xl"
-            >
-              Every card routes to the source.
-            </motion.h1>
-            <GoldRule />
-            <p className="max-w-2xl leading-8">
-              There are no live deployments behind these, so the repository is
-              the claim. Read the commits rather than the screenshot.
-            </p>
-          </div>
-        </section>
+      <Section className="pt-0">
+        <div
+          className="grid gap-6 lg:grid-cols-2"
+          aria-busy={isLoadingProjects || undefined}
+        >
+          {isLoadingProjects &&
+            Array.from({ length: 4 }).map((_, idx) => (
+              <div
+                key={`skeleton-${idx}`}
+                className="ybz-card h-64 opacity-60"
+                aria-hidden="true"
+              />
+            ))}
 
-        <section className="px-6 pb-24 sm:px-10 lg:px-16">
-          <div
-            ref={gridRef}
-            className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-2"
-          >
-            {isLoadingProjects &&
-              Array.from({ length: 4 }).map((_, idx) => (
-                <div
-                  key={`skeleton-${idx}`}
-                  className="ybz-card h-64 animate-pulse"
-                />
-              ))}
+          {!isLoadingProjects &&
+            projects.map((project, index) => (
+              <ProjectCard
+                key={project.id ?? project.title}
+                project={project}
+                flagship={index === 0}
+              />
+            ))}
 
-            {!isLoadingProjects &&
-              projects.map((project, index) => (
-                <motion.article
-                  key={project.id ?? project.title}
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.3 }}
-                  transition={{
-                    duration: 0.6,
-                    delay: index * 0.05,
-                    ease: [0, 0, 0.2, 1],
-                  }}
-                  className="ybz-card ybz-card-interactive group flex h-full flex-col overflow-hidden"
-                >
-                  <div className="relative aspect-[16/10] overflow-hidden border-b border-edge bg-ink">
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="h-full w-full object-contain p-4"
-                      loading="lazy"
-                    />
-                    <div className="absolute left-4 top-4">
-                      <span className="ybz-meta border border-edge bg-ink/80 px-3 py-1 backdrop-blur">
-                        {project.role}
-                      </span>
-                    </div>
-                  </div>
+          {!isLoadingProjects && !loadError && projects.length === 0 && (
+            <Card className="ybz-body border-dashed text-center text-muted lg:col-span-2">
+              No projects were found. Check the project data source.
+            </Card>
+          )}
 
-                  <div className="flex flex-1 flex-col p-6">
-                    <h3 className="font-display text-2xl text-bone">
-                      {project.title}
-                    </h3>
-                    <p className="mt-3 flex-1 text-sm leading-7">
-                      {project.summary}
-                    </p>
-                    <div className="mt-6 flex flex-wrap gap-2">
-                      {project.tech?.map((tag) => (
-                        <span
-                          key={tag}
-                          className="border border-edge px-3 py-1 font-mono text-xs text-muted"
-                          style={{ borderRadius: "var(--ybz-r-sm)" }}
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                    {project.repo && (
-                      <div className="mt-8">
-                        <a
-                          href={project.repo}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="ybz-btn-ghost !py-2.5 text-sm"
-                        >
-                          <Github size={16} />
-                          Source
-                        </a>
-                      </div>
-                    )}
-                  </div>
-                </motion.article>
-              ))}
-
-            {!isLoadingProjects && !loadError && projects.length === 0 && (
-              <div className="ybz-card border-dashed p-10 text-center text-muted">
-                No projects were found. Check the project data source.
-              </div>
-            )}
-
-            {loadError && (
-              <div className="ybz-card border-hairline p-6 text-center text-muted">
-                {loadError}
-              </div>
-            )}
-          </div>
-        </section>
-      </div>
+          {loadError && (
+            <Card className="ybz-body text-center text-muted lg:col-span-2">
+              {loadError}
+            </Card>
+          )}
+        </div>
+      </Section>
     </>
   );
 };

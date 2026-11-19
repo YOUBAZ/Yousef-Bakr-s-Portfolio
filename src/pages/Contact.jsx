@@ -1,12 +1,9 @@
-import { motion } from "framer-motion";
 import { Mail, Linkedin, Github } from "lucide-react";
 import ContactForm from "../components/ContactForm";
 import Seo from "../components/Seo";
 import { siteMeta } from "../config/seo";
 import { BRAND } from "../config/brand";
-import GoldRule from "../components/GoldRule";
-
-const _motion = motion;
+import { Card, PageHeader, Section } from "../components/ui";
 
 /**
  * The phone number is deliberately absent. brand.json marks it
@@ -89,100 +86,78 @@ const Contact = () => {
         url="/contact"
         schema={contactSchema}
       />
-      <div className="bg-ink text-slate-body">
-        <section className="relative isolate overflow-hidden px-6 pb-12 pt-12 sm:px-10 lg:px-16">
-          <div className="ybz-bloom pointer-events-none absolute inset-0 -z-10" />
 
-          <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-2">
-            <motion.div
-              className="space-y-6"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: [0, 0, 0.2, 1] }}
-            >
-              <p className="ybz-eyebrow">Contact</p>
-              <h1 className="max-w-2xl font-display text-4xl leading-tight text-bone sm:text-5xl">
-                Which boundary in your system is leaking right now?
-              </h1>
-              <GoldRule />
-              <p className="max-w-xl leading-8">
-                Describe the decision rather than the ticket. I reply with a
-                read on the trade-off, what it will cost either way, and whether
-                I am the right person for it.
-              </p>
+      <PageHeader
+        eyebrow="Contact"
+        title="Which boundary in your system is leaking right now?"
+        lede="Describe the decision rather than the ticket. I reply with a read on the trade-off, what it will cost either way, and whether I am the right person for it."
+      />
 
-              <div className="ybz-card p-6">
-                <p className="ybz-eyebrow">Good fit</p>
-                <ul className="mt-4 space-y-3 text-sm leading-7">
-                  {collaborationNotes.map((note) => (
-                    <li key={note} className="flex items-start gap-3">
-                      <span
-                        className="mt-2.5 h-px w-4 shrink-0"
-                        style={{ background: "var(--ybz-accent-rule)" }}
-                      />
-                      {note}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </motion.div>
+      <Section className="pt-0">
+        <div className="grid items-start gap-6 lg:grid-cols-2">
+          {/* The form leads on small screens: it is the page's one action. */}
+          <Card className="lg:order-2">
+            <h2 className="ybz-title">Project details</h2>
+            <p className="ybz-body mt-2">
+              Timeline, the decision you are weighing, and what you have ruled
+              out already.
+            </p>
+            <div className="mt-6">
+              <ContactForm />
+            </div>
+          </Card>
 
-            <motion.div
-              className="ybz-card p-6"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1, ease: [0, 0, 0.2, 1] }}
-            >
-              <h2 className="font-display text-xl text-bone">
-                Project details
-              </h2>
-              <p className="mt-2 text-sm leading-7">
-                Timeline, the decision you are weighing, and what you have ruled
-                out already.
-              </p>
-              <div className="mt-6">
-                <ContactForm />
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
-        <section className="px-6 pb-16 sm:px-10 lg:px-16">
-          <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-3">
-            {contactInfo.map((item) => {
-              const Icon = item.icon;
-              return (
-                <motion.a
-                  key={item.label}
-                  href={item.href}
-                  target={item.href.startsWith("http") ? "_blank" : undefined}
-                  rel={
-                    item.href.startsWith("http")
-                      ? "noopener noreferrer"
-                      : undefined
-                  }
-                  className="ybz-card ybz-card-interactive block p-6"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.3 }}
-                  transition={{ duration: 0.5, ease: [0, 0, 0.2, 1] }}
-                >
-                  <div className="flex items-center gap-3">
-                    <Icon
-                      size={18}
-                      style={{ color: "var(--ybz-accent-type)" }}
+          <div className="space-y-6 lg:order-1">
+            <Card>
+              <h2 className="ybz-title">Good fit</h2>
+              <ul className="ybz-body mt-4 space-y-3">
+                {collaborationNotes.map((note) => (
+                  <li key={note} className="flex items-start gap-3">
+                    <span
+                      aria-hidden="true"
+                      className="mt-3 h-px w-4 shrink-0"
+                      style={{ background: "var(--ybz-accent-rule)" }}
                     />
-                    <p className="ybz-eyebrow">{item.label}</p>
-                  </div>
-                  <p className="mt-4 break-all font-mono text-sm text-bone">
-                    {item.value}
-                  </p>
-                </motion.a>
-              );
-            })}
+                    {note}
+                  </li>
+                ))}
+              </ul>
+            </Card>
+
+            <ul className="grid gap-4">
+              {contactInfo.map((item) => {
+                const Icon = item.icon;
+                const external = item.href.startsWith("http");
+                return (
+                  <li key={item.label}>
+                    <Card
+                      as="a"
+                      interactive
+                      href={item.href}
+                      target={external ? "_blank" : undefined}
+                      rel={external ? "noopener noreferrer" : undefined}
+                      className="flex items-center gap-4"
+                    >
+                      <Icon
+                        size={18}
+                        strokeWidth={1.75}
+                        aria-hidden="true"
+                        className="shrink-0 text-accent"
+                      />
+                      <div className="min-w-0">
+                        <p className="ybz-meta">{item.label}</p>
+                        <p className="mt-1 break-all font-mono text-sm text-bone">
+                          {item.value}
+                        </p>
+                      </div>
+                    </Card>
+                  </li>
+                );
+              })}
+            </ul>
           </div>
-        </section>
-      </div>
+        </div>
+      </Section>
     </>
   );
 };

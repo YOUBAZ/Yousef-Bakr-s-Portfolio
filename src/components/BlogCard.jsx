@@ -1,124 +1,80 @@
-import { Link } from 'react-router-dom';
-import { Calendar, Clock, Tag } from 'lucide-react';
-import { formatDate } from '../utils/blogUtils';
-import PropTypes from 'prop-types';
-import { motion } from 'framer-motion';
+import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import { formatDate } from "../utils/blogUtils";
+import { Card, StackLine, TextLink } from "./ui";
 
-const _motion = motion;
+const defaultImage = "/images/blog/default-blog.jpg";
 
 /**
- * Blog card component for displaying blog posts in listing
+ * A post in the writing index. The banner sits in a midnight frame at its own
+ * 1200 × 630 ratio; hover is the card's border step and nothing else.
  */
-const BlogCard = ({ blog, index = 0 }) => {
-    const defaultImage = '/images/blog/default-blog.jpg';
+const BlogCard = ({ blog }) => {
+  const href = `/blog/${blog.id}`;
 
-    return (
-        <motion.article
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
-            className="group relative rounded-2xl overflow-hidden border border-edge/50 hover:border-hairline transition-all duration-300 hover:shadow-2xl hover:"
-        >
-            {/* Featured Image */}
-            <Link to={`/blog/${blog.id}`} className="block overflow-hidden">
-                <div className="relative h-48 overflow-hidden">
-                    <img
-                        src={blog.featuredImage || defaultImage}
-                        alt={blog.title}
-                        className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-                        loading="lazy"
-                        onError={(e) => {
-                            e.target.src = defaultImage;
-                        }}
-                    />
-                    <div className="absolute inset-0 to-transparent opacity-60" />
-                </div>
-            </Link>
+  return (
+    <Card
+      as="article"
+      interactive
+      padded={false}
+      className="flex h-full flex-col"
+    >
+      <Link to={href} tabIndex={-1} aria-hidden="true" className="block">
+        <div className="ybz-frame aspect-[40/21]">
+          <img
+            src={blog.featuredImage || defaultImage}
+            alt=""
+            loading="lazy"
+            onError={(e) => {
+              e.target.src = defaultImage;
+            }}
+          />
+        </div>
+      </Link>
 
-            {/* Content */}
-            <div className="p-6">
-                {/* Tags */}
-                {blog.tags && blog.tags.length > 0 && (
-                    <div className="flex flex-wrap gap-2 mb-3">
-                        {blog.tags.slice(0, 3).map((tag, idx) => (
-                            <span
-                                key={idx}
-                                className="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium text-accent bg-card rounded-full border border-hairline"
-                            >
-                                <Tag size={12} />
-                                {tag}
-                            </span>
-                        ))}
-                    </div>
-                )}
+      <div className="flex flex-1 flex-col p-6">
+        {blog.tags && blog.tags.length > 0 && (
+          <StackLine items={blog.tags.slice(0, 3)} className="mb-3" />
+        )}
 
-                {/* Title */}
-                <Link to={`/blog/${blog.id}`}>
-                    <h3 className="text-xl font-bold text-bone mb-3 group-hover:text-accent transition-colors line-clamp-2">
-                        {blog.title}
-                    </h3>
-                </Link>
+        <h3 className="ybz-title line-clamp-2">
+          <Link
+            to={href}
+            className="transition-colors duration-150 hover:text-accent"
+          >
+            {blog.title}
+          </Link>
+        </h3>
 
-                {/* Description */}
-                <p className="text-muted text-sm mb-4 line-clamp-3">
-                    {blog.description}
-                </p>
+        <p className="ybz-body mt-3 line-clamp-3">{blog.description}</p>
 
-                {/* Meta Information */}
-                <div className="flex items-center justify-between text-xs text-muted pt-4 border-t border-edge/50">
-                    <div className="flex items-center gap-4">
-                        <span className="flex items-center gap-1">
-                            <Calendar size={14} className="text-accent" />
-                            {formatDate(blog.publishDate)}
-                        </span>
-                        <span className="flex items-center gap-1">
-                            <Clock size={14} className="text-accent" />
-                            {blog.readTime} min read
-                        </span>
-                    </div>
-                </div>
-
-                {/* Read More Link */}
-                <Link
-                    to={`/blog/${blog.id}`}
-                    className="inline-flex items-center gap-2 mt-4 text-sm font-medium text-accent hover:opacity-80 transition-colors group/link"
-                >
-                    Read Article
-                    <svg
-                        className="w-4 h-4 transform group-hover/link:translate-x-1 transition-transform"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M17 8l4 4m0 0l-4 4m4-4H3"
-                        />
-                    </svg>
-                </Link>
-            </div>
-
-            {/* Hover Effect Glow */}
-            <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                <div className="absolute inset-0 rounded-2xl" />
-            </div>
-        </motion.article>
-    );
+        <div className="mt-auto pt-6">
+          <p className="ybz-source border-t border-edge pt-4">
+            <time dateTime={blog.publishDate}>
+              {formatDate(blog.publishDate)}
+            </time>
+            {" · "}
+            {blog.readTime} min read
+          </p>
+          <TextLink to={href} className="mt-4">
+            Read article
+          </TextLink>
+        </div>
+      </div>
+    </Card>
+  );
 };
 
 BlogCard.propTypes = {
-    blog: PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        title: PropTypes.string.isRequired,
-        description: PropTypes.string.isRequired,
-        featuredImage: PropTypes.string,
-        publishDate: PropTypes.string.isRequired,
-        readTime: PropTypes.number.isRequired,
-        tags: PropTypes.arrayOf(PropTypes.string)
-    }).isRequired,
-    index: PropTypes.number
+  blog: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    featuredImage: PropTypes.string,
+    publishDate: PropTypes.string.isRequired,
+    readTime: PropTypes.number.isRequired,
+    tags: PropTypes.arrayOf(PropTypes.string),
+  }).isRequired,
 };
 
 export default BlogCard;

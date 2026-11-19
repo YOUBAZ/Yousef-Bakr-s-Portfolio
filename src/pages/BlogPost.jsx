@@ -1,13 +1,24 @@
-import { useState, useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
-import { Calendar, Clock, Tag, ArrowLeft, Share2, Twitter, Linkedin } from 'lucide-react';
-import BlogContent from '../components/BlogContent';
-import Seo from '../components/Seo';
-import { BRAND } from '../config/brand';
-import { getBlogById, formatDate, formatDateISO, getRelatedPosts, getBlogPosts } from '../utils/blogUtils';
-import { motion } from 'framer-motion';
-
-const _motion = motion;
+import { useState, useEffect } from "react";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { ArrowLeft, Linkedin, Loader2, Share2, Twitter } from "lucide-react";
+import BlogContent from "../components/BlogContent";
+import Seo from "../components/Seo";
+import { BRAND } from "../config/brand";
+import {
+  getBlogById,
+  formatDate,
+  formatDateISO,
+  getRelatedPosts,
+  getBlogPosts,
+} from "../utils/blogUtils";
+import {
+  Button,
+  Card,
+  PageHeader,
+  Section,
+  SectionHeader,
+  StackLine,
+} from "../components/ui";
 
 /**
  * Individual blog post page
@@ -24,9 +35,9 @@ const BlogPost = () => {
     const loadBlog = async () => {
       setIsLoading(true);
       const blogData = await getBlogById(id);
-      
+
       if (!blogData) {
-        navigate('/blog');
+        navigate("/blog");
         return;
       }
 
@@ -50,29 +61,38 @@ const BlogPost = () => {
     const url = window.location.href;
     const text = blog.title;
 
-    let shareUrl = '';
-    if (platform === 'twitter') {
+    let shareUrl = "";
+    if (platform === "twitter") {
       shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
-    } else if (platform === 'linkedin') {
+    } else if (platform === "linkedin") {
       shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
     }
 
     if (shareUrl) {
-      window.open(shareUrl, '_blank', 'width=600,height=400');
+      window.open(shareUrl, "_blank", "width=600,height=400");
     }
     setShowShareMenu(false);
   };
 
   const copyLink = () => {
     navigator.clipboard.writeText(window.location.href);
-    alert('Link copied to clipboard!');
+    alert("Link copied to clipboard");
     setShowShareMenu(false);
   };
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-ink flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-hairline"></div>
+      <div
+        role="status"
+        className="flex min-h-screen items-center justify-center text-muted"
+      >
+        <Loader2
+          size={18}
+          strokeWidth={1.75}
+          aria-hidden="true"
+          className="animate-spin"
+        />
+        <span className="sr-only">Loading article</span>
       </div>
     );
   }
@@ -84,21 +104,23 @@ const BlogPost = () => {
   // Create structured data for SEO. Seo.jsx wraps this in the @graph, so the
   // @context belongs there rather than here.
   const structuredData = {
-    '@type': 'BlogPosting',
+    "@type": "BlogPosting",
     headline: blog.title,
     description: blog.description,
-    image: blog.featuredImage ? `https://yousef-bakr-s-portfolio.vercel.app${blog.featuredImage}` : undefined,
+    image: blog.featuredImage
+      ? `https://yousef-bakr-s-portfolio.vercel.app${blog.featuredImage}`
+      : undefined,
     datePublished: formatDateISO(blog.publishDate),
     dateModified: formatDateISO(blog.lastModified),
     author: {
-      '@type': 'Person',
-      name: blog.author
+      "@type": "Person",
+      name: blog.author,
     },
     publisher: {
-      '@type': 'Person',
-      name: 'Yousef Bakr'
+      "@type": "Person",
+      name: "Yousef Bakr",
     },
-    keywords: blog.tags?.join(', ')
+    keywords: blog.tags?.join(", "),
   };
 
   return (
@@ -116,189 +138,148 @@ const BlogPost = () => {
         schema={structuredData}
       />
 
-      <div className="min-h-screen bg-ink text-bone">
-        {/* Back Button */}
-        <div className="max-w-4xl mx-auto px-4 pt-8">
-          <Link
-            to="/blog"
-            className="inline-flex items-center gap-2 text-accent hover:opacity-80 transition-colors mb-8"
-          >
-            <ArrowLeft size={20} />
-            Back to Blog
-          </Link>
-        </div>
+      <PageHeader eyebrow="Writing" title={blog.title} lede={blog.description}>
+        <p className="ybz-source mt-6">
+          <time dateTime={formatDateISO(blog.publishDate)}>
+            {formatDate(blog.publishDate)}
+          </time>
+          {" · "}
+          {blog.readTime} min read
+          {" · "}
+          By <span className="text-bone">{blog.author}</span>
+        </p>
+        {blog.tags && blog.tags.length > 0 && (
+          <StackLine items={blog.tags} className="mt-2" />
+        )}
+      </PageHeader>
 
-        {/* Article Header */}
-        <article className="max-w-4xl mx-auto px-4 pb-20">
-          <motion.header
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="mb-12"
-          >
-            {/* Tags */}
-            {blog.tags && blog.tags.length > 0 && (
-              <div className="flex flex-wrap gap-2 mb-4">
-                {blog.tags.map((tag, idx) => (
-                  <span
-                    key={idx}
-                    className="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium text-accent bg-card rounded-full border border-hairline"
-                  >
-                    <Tag size={12} />
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            )}
+      <Section className="pt-0">
+        <article className="max-w-3xl">
+          <div className="flex flex-wrap items-center gap-3">
+            <Button
+              to="/blog"
+              variant="secondary"
+              size="sm"
+              icon={ArrowLeft}
+              iconPosition="start"
+            >
+              Back to blog
+            </Button>
 
-            {/* Title */}
-            <h1 className="text-4xl md:text-5xl font-bold text-bone mb-6 leading-tight">
-              {blog.title}
-            </h1>
-
-            {/* Meta Information */}
-            <div className="flex flex-wrap items-center gap-6 text-sm text-muted mb-6">
-              <div className="flex items-center gap-2">
-                <Calendar size={16} className="text-accent" />
-                {formatDate(blog.publishDate)}
-              </div>
-              <div className="flex items-center gap-2">
-                <Clock size={16} className="text-accent" />
-                {blog.readTime} min read
-              </div>
-              <div className="flex items-center gap-2">
-                By <span className="text-bone font-medium">{blog.author}</span>
-              </div>
-            </div>
-
-            {/* Share Button */}
             <div className="relative">
-              <button
+              <Button
+                variant="secondary"
+                size="sm"
+                icon={Share2}
+                iconPosition="start"
+                aria-expanded={showShareMenu}
+                aria-haspopup="true"
                 onClick={() => setShowShareMenu(!showShareMenu)}
-                className="inline-flex items-center gap-2 px-4 py-2 bg-card hover:border-hairline text-bone rounded-lg transition-colors border border-edge"
               >
-                <Share2 size={18} />
                 Share
-              </button>
+              </Button>
 
               {showShareMenu && (
-                <div className="absolute top-full left-0 mt-2 bg-card border border-edge rounded-lg shadow-xl overflow-hidden z-10">
-                  <button
-                    onClick={() => handleShare('twitter')}
-                    className="flex items-center gap-3 w-full px-4 py-3 hover:border-hairline transition-colors text-left"
-                  >
-                    <Twitter size={18} className="text-accent" />
-                    Share on Twitter
-                  </button>
-                  <button
-                    onClick={() => handleShare('linkedin')}
-                    className="flex items-center gap-3 w-full px-4 py-3 hover:border-hairline transition-colors text-left"
-                  >
-                    <Linkedin size={18} className="text-accent" />
-                    Share on LinkedIn
-                  </button>
-                  <button
-                    onClick={copyLink}
-                    className="flex items-center gap-3 w-full px-4 py-3 hover:border-hairline transition-colors text-left"
-                  >
-                    <Share2 size={18} className="text-accent" />
-                    Copy Link
-                  </button>
+                <div className="ybz-card absolute left-0 top-full z-10 mt-2 min-w-56 overflow-hidden py-1">
+                  {[
+                    {
+                      label: "Share on Twitter",
+                      icon: Twitter,
+                      onClick: () => handleShare("twitter"),
+                    },
+                    {
+                      label: "Share on LinkedIn",
+                      icon: Linkedin,
+                      onClick: () => handleShare("linkedin"),
+                    },
+                    { label: "Copy link", icon: Share2, onClick: copyLink },
+                  ].map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <button
+                        key={item.label}
+                        type="button"
+                        onClick={item.onClick}
+                        className="flex w-full items-center gap-3 px-4 py-3 text-left text-sm text-bone transition-colors duration-150 hover:bg-obsidian"
+                      >
+                        <Icon
+                          size={16}
+                          strokeWidth={1.75}
+                          aria-hidden="true"
+                          className="text-accent"
+                        />
+                        {item.label}
+                      </button>
+                    );
+                  })}
                 </div>
               )}
             </div>
+          </div>
 
-            {/* Featured Image */}
-            {blog.featuredImage && (
-              <div className="mt-8 rounded-2xl overflow-hidden border border-edge">
+          {blog.featuredImage && (
+            <Card padded={false} className="mt-8">
+              <div className="ybz-frame aspect-[40/21] border-b-0">
                 <img
                   src={blog.featuredImage}
                   alt={blog.title}
-                  className="w-full h-auto object-cover"
                   onError={(e) => {
-                    e.target.style.display = 'none';
+                    e.target.style.display = "none";
                   }}
                 />
               </div>
-            )}
-          </motion.header>
+            </Card>
+          )}
 
-          {/* Description */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-xl text-slate-body mb-12 pb-8 border-b border-edge"
-          >
-            {blog.description}
-          </motion.div>
-
-          {/* Blog Content */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-          >
+          <div className="mt-12">
             <BlogContent content={blog.content} />
-          </motion.div>
+          </div>
 
-          {/* Author Info */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            className="mt-12 pt-8 border-t border-edge"
-          >
-            <div className="rounded-2xl p-6 border border-edge">
-              <div className="flex items-center gap-4">
-                <div className="flex-1">
-                  <h3 className="text-lg font-semibold text-bone mb-1">Written by {blog.author}</h3>
-                  <p className="ybz-meta">{BRAND.role}</p>
-                </div>
-              </div>
-            </div>
-          </motion.div>
+          <Card className="mt-12">
+            <h2 className="ybz-title">Written by {blog.author}</h2>
+            <p className="ybz-meta mt-1">{BRAND.role}</p>
+          </Card>
         </article>
+      </Section>
 
-        {/* Related Posts */}
-        {relatedPosts.length > 0 && (
-          <section className="bg-obsidian py-16">
-            <div className="max-w-7xl mx-auto px-4">
-              <h2 className="text-3xl font-bold text-bone mb-8">Related Articles</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {relatedPosts.map((relatedBlog) => (
-                  <Link
-                    key={relatedBlog.id}
-                    to={`/blog/${relatedBlog.id}`}
-                    className="group bg-card rounded-xl overflow-hidden border border-edge hover:border-hairline transition-all hover:shadow-xl hover:"
-                  >
-                    {relatedBlog.featuredImage && (
-                      <div className="h-48 overflow-hidden">
-                        <img
-                          src={relatedBlog.featuredImage}
-                          alt={relatedBlog.title}
-                          className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-                          onError={(e) => {
-                            e.target.src = '/images/blog/default-blog.jpg';
-                          }}
-                        />
-                      </div>
-                    )}
-                    <div className="p-6">
-                      <h3 className="text-lg font-semibold text-bone group-hover:text-accent transition-colors line-clamp-2 mb-2">
-                        {relatedBlog.title}
-                      </h3>
-                      <p className="text-sm text-muted line-clamp-2">
-                        {relatedBlog.description}
-                      </p>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
-      </div>
+      {relatedPosts.length > 0 && (
+        <Section tone="raised" className="border-b-0">
+          <SectionHeader title="Related articles" />
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+            {relatedPosts.map((relatedBlog) => (
+              <Card
+                key={relatedBlog.id}
+                as={Link}
+                to={`/blog/${relatedBlog.id}`}
+                interactive
+                padded={false}
+                className="group block"
+              >
+                {relatedBlog.featuredImage && (
+                  <div className="ybz-frame aspect-[40/21]">
+                    <img
+                      src={relatedBlog.featuredImage}
+                      alt=""
+                      loading="lazy"
+                      onError={(e) => {
+                        e.target.src = "/images/blog/default-blog.jpg";
+                      }}
+                    />
+                  </div>
+                )}
+                <div className="p-6">
+                  <h3 className="ybz-title line-clamp-2 transition-colors duration-150 group-hover:text-accent">
+                    {relatedBlog.title}
+                  </h3>
+                  <p className="ybz-body mt-2 line-clamp-2">
+                    {relatedBlog.description}
+                  </p>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </Section>
+      )}
     </>
   );
 };

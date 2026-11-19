@@ -147,6 +147,26 @@
   --radius-lg: 28px;
 }
 
+/* ==========================================================================
+   SYSTEM TOKENS — the parts BRAND.md leaves to the site.
+   Brand tokens above are copied from the kit and never edited here. These sit
+   on top of them: motion (BRAND.md section 17 issue 5 asked for one rule),
+   layout widths and the page gutter. Every component below reads from them.
+   ========================================================================== */
+
+:root{
+  /* Motion. One curve, three durations. Hover and press are feedback, menus
+     open, content enters. Nothing loops, nothing bounces, nothing lifts. */
+  --ybz-ease:       cubic-bezier(0.22, 1, 0.36, 1);
+  --ybz-dur-fast:   160ms;
+  --ybz-dur-menu:   200ms;
+  --ybz-dur-enter:  420ms;
+
+  /* Layout. One content width, one reading width, one gutter ladder. */
+  --ybz-w-page:     72rem;   /* 1152px, Tailwind max-w-6xl */
+  --ybz-w-read:     42rem;   /* 672px, paragraphs and ledes */
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -160,13 +180,19 @@
     color: var(--ybz-slate);
   }
 
-  /* Playfair for headlines only. Sizes are set per-use; the 30px floor in
-     BRAND.md section 4 is a rule for the call site, not something CSS enforces. */
-  h1, h2, h3, h4, h5, h6 {
+  /* Playfair carries h1 and h2 only. BRAND.md section 4 sets a 30px floor on
+     the display face, and every h3 on this site is a card or row title well
+     under that, so h3 and below are Montserrat. Sizes live on .ybz-display-*. */
+  h1, h2 {
     font-family: var(--ybz-display);
     font-weight: 700;
     color: var(--ybz-bone);
     letter-spacing: -0.015em;
+  }
+  h3, h4, h5, h6 {
+    font-family: var(--ybz-body);
+    font-weight: 600;
+    color: var(--ybz-bone);
   }
 
   *:focus-visible,
@@ -183,12 +209,44 @@
 }
 
 /* ==========================================================================
-   PRIMITIVES — the brand's own components. Use these before inventing one.
+   PRIMITIVES — the brand's own components. React wrappers live in
+   src/components/ui; reach for those first, these classes second.
    ========================================================================== */
 
 @layer components {
   .container {
     @apply max-w-6xl;
+  }
+
+  /* ---------- type roles ---------- */
+
+  /* Display sizes. Both clear the 30px floor at every breakpoint. */
+  .ybz-display-1{               /* page h1: 36 → 48 → 60 */
+    font-family: var(--ybz-display); font-weight: 700; color: var(--ybz-bone);
+    font-size: 2.25rem; line-height: 1.12; letter-spacing: -0.015em;
+  }
+  @media (min-width: 640px){ .ybz-display-1{ font-size: 3rem; } }
+  @media (min-width: 1024px){ .ybz-display-1{ font-size: 3.75rem; line-height: 1.08; } }
+
+  .ybz-display-2{               /* section h2: 30 → 36 */
+    font-family: var(--ybz-display); font-weight: 700; color: var(--ybz-bone);
+    font-size: 1.875rem; line-height: 1.2; letter-spacing: -0.01em;
+  }
+  @media (min-width: 640px){ .ybz-display-2{ font-size: 2.25rem; } }
+
+  /* Card and row titles. Montserrat, because Playfair below 30px is off-brand. */
+  .ybz-title{
+    font-family: var(--ybz-body); font-weight: 600; color: var(--ybz-bone);
+    font-size: 1.125rem; line-height: 1.4;
+  }
+
+  .ybz-lede{
+    font-size: 1.125rem; line-height: 1.75; color: var(--ybz-slate);
+    max-width: var(--ybz-w-read);
+  }
+
+  .ybz-body{
+    font-size: .9375rem; line-height: 1.75; color: var(--ybz-slate);
   }
 
   .ybz-gold-text{
@@ -197,14 +255,24 @@
   }
 
   .ybz-eyebrow{
-    font-family: var(--ybz-body); font-weight: 600; font-size: .78rem;
+    font-family: var(--ybz-body); font-weight: 600; font-size: .75rem;
     letter-spacing: .30em; text-transform: uppercase;
     color: var(--ybz-accent-type);
   }
 
+  /* Mono label: periods, counters, short tags. Uppercase, tracked. */
   .ybz-meta{
-    font-family: var(--ybz-mono); font-size: .8rem;
-    letter-spacing: .18em; text-transform: uppercase; color: var(--ybz-muted);
+    font-family: var(--ybz-mono); font-size: .75rem; line-height: 1.5;
+    letter-spacing: .14em; text-transform: uppercase; color: var(--ybz-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Mono source line: URLs, stacks, citations. Sentence case, untracked, so a
+     domain or a framework name reads as written. Replaces the old
+     `ybz-meta normal-case tracking-normal` override. */
+  .ybz-source{
+    font-family: var(--ybz-mono); font-size: .75rem; line-height: 1.6;
+    color: var(--ybz-muted);
   }
 
   /* Counters and metrics. JetBrains Mono never carries a sentence. */
@@ -214,17 +282,47 @@
     font-variant-numeric: tabular-nums;
   }
 
+  /* Inline text link with the accent. */
+  .ybz-link{
+    display: inline-flex; align-items: center; gap: .375rem;
+    font-size: .875rem; font-weight: 600; color: var(--ybz-accent-type);
+    text-underline-offset: 4px;
+    transition: color var(--ybz-dur-fast) var(--ybz-ease);
+  }
+  .ybz-link:hover{ text-decoration: underline; }
+
+  /* ---------- surfaces ---------- */
+
   .ybz-card{
     background: var(--ybz-grad-card);
     border: 1px solid var(--ybz-edge);
-    border-radius: var(--ybz-r-lg);
-    transition: border-color .3s, box-shadow .3s, transform .3s;
+    border-radius: var(--ybz-r-md);
   }
 
+  /* Hover is a border step to the gold hairline. No lift, no shadow. */
+  .ybz-card-interactive{
+    transition: border-color var(--ybz-dur-fast) var(--ybz-ease);
+  }
   .ybz-card-interactive:hover{
     border-color: var(--ybz-hairline);
-    box-shadow: 0 8px 30px rgba(2,6,23,.5);
-    transform: translateY(-4px);
+  }
+
+  /* A light plate behind third-party logos, which are drawn for light grounds. */
+  .ybz-plate{
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    overflow: hidden; background: var(--ybz-logo-plate);
+    border: 1px solid var(--ybz-edge); border-radius: var(--ybz-r-sm);
+  }
+
+  /* Frame for screenshots and certificates. Third-party images arrive in
+     every colour; a midnight mat with a hairline keeps them inside the page. */
+  .ybz-frame{
+    position: relative; overflow: hidden;
+    background: #07080D;                      /* preview_backdrop, section 3.3 */
+    border-bottom: 1px solid var(--ybz-edge);
+  }
+  .ybz-frame > img{
+    width: 100%; height: 100%; object-fit: contain;
   }
 
   /* The gold rule — 2px, 120px, fading left to right. Sits under headlines. */
@@ -233,78 +331,83 @@
     background: linear-gradient(90deg, var(--ybz-accent-rule), transparent);
   }
 
-  .ybz-btn-primary{           /* the one gold action per screen */
+  /* ---------- controls ---------- */
+
+  /* One geometry for every button: 48px tall, 12px radius, 16px icon gap.
+     Variants change colour only, so a primary and a secondary side by side
+     share a baseline. */
+  .ybz-btn{
+    display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+    min-height: 3rem; padding: 0 1.5rem;
+    font-family: var(--ybz-body); font-weight: 600; font-size: .875rem;
+    border-radius: var(--ybz-r-sm); border: 1px solid transparent;
+    white-space: nowrap; cursor: pointer;
+    transition:
+      background-color var(--ybz-dur-fast) var(--ybz-ease),
+      border-color var(--ybz-dur-fast) var(--ybz-ease),
+      color var(--ybz-dur-fast) var(--ybz-ease),
+      transform var(--ybz-dur-fast) var(--ybz-ease);
+  }
+  .ybz-btn:active{ transform: scale(.98); }
+  .ybz-btn:disabled{ opacity: .5; cursor: not-allowed; transform: none; }
+  .ybz-btn--sm{ min-height: 2.5rem; padding: 0 1rem; }
+
+  /* The one gold action per screen. Uppercase and tracked per the kit. */
+  .ybz-btn-primary{
     background: var(--ybz-grad-gold); color: var(--ybz-ink);
-    font-family: var(--ybz-body); font-weight: 600;
-    letter-spacing: .12em; text-transform: uppercase;
-    border: 0; border-radius: var(--ybz-r-sm); padding: 1rem 1.75rem;
-    display: inline-flex; align-items: center; gap: .625rem;
-    transition: box-shadow .3s, transform .3s;
+    letter-spacing: .12em; text-transform: uppercase; font-size: .8125rem;
   }
-  .ybz-btn-primary:hover{
-    box-shadow: var(--ybz-glow);
-    transform: translateY(-2px);
-  }
+  .ybz-btn-primary:hover{ background: var(--ybz-gold); }
 
-  /* The blue CTA from the kit. Retained because it is a kit primitive, but no
-     longer used on this site — see .ybz-btn-accent below for why. If it is ever
-     reinstated, hold the 16px floor: the sky end of the gradient reads 4.10:1
-     against white, which needs large-text size to clear AA. */
-  .ybz-btn-nav{               /* navigation and contact only */
-    background: var(--ybz-grad-cta); color: #fff;
-    font-family: var(--ybz-body); font-weight: 600;
-    font-size: 1rem;
-    border: 0; border-radius: var(--ybz-r-sm); padding: .9rem 1.5rem;
-    display: inline-flex; align-items: center; gap: .5rem;
-    transition: box-shadow .3s, transform .3s;
-  }
-  .ybz-btn-nav:hover{
-    box-shadow: 0 8px 24px rgba(79,70,229,.35);
-    transform: translateY(-2px);
-  }
-
-  /* The persistent navigation CTA.
-     Gold, because blue in the header read as a foreign element on a midnight
-     and gold page — technically permitted by rule 2, but it was the only blue
-     object on the site and it looked borrowed.
-     Outlined rather than filled, because .ybz-btn-primary is "the one gold
-     action per screen" and the navbar is on every screen: a filled navbar CTA
-     would compete with the hero's action on the page beneath it. Same accent
-     family, one step down in weight.
-     Contrast: gold on midnight 11.92:1, antique on paper 5.03:1. On hover it
-     fills and the label flips to ink, which reads 11.92:1 in both themes. */
-  .ybz-btn-accent{
-    background: transparent;
-    color: var(--ybz-accent-type);
-    font-family: var(--ybz-body); font-weight: 600;
-    font-size: 1rem;
-    border: 1px solid var(--ybz-accent-rule);
-    border-radius: var(--ybz-r-sm); padding: .9rem 1.5rem;
-    display: inline-flex; align-items: center; gap: .5rem;
-    transition: background-color .3s, color .3s, box-shadow .3s, transform .3s;
-  }
-  .ybz-btn-accent:hover{
-    background: var(--ybz-accent-rule);
-    color: var(--ybz-ink);
-    box-shadow: var(--ybz-glow);
-    transform: translateY(-2px);
-  }
-
+  /* Secondary: transparent, edge hairline, bone label. */
   .ybz-btn-ghost{
     background: transparent; color: var(--ybz-bone);
-    font-family: var(--ybz-body); font-weight: 600;
-    border: 1px solid var(--ybz-edge); border-radius: var(--ybz-r-sm);
-    padding: .9rem 1.5rem;
-    display: inline-flex; align-items: center; gap: .5rem;
-    transition: border-color .3s, transform .3s;
+    border-color: var(--ybz-edge);
   }
-  .ybz-btn-ghost:hover{
-    border-color: var(--ybz-hairline);
-    transform: translateY(-2px);
+  .ybz-btn-ghost:hover{ border-color: var(--ybz-hairline); background: var(--ybz-card); }
+
+  /* The persistent navigation CTA: gold outline, one step below the primary
+     fill so it never competes with the page's own gold action. Fills on hover;
+     ink on gold is 11.92:1 in both themes. */
+  .ybz-btn-accent{
+    background: transparent; color: var(--ybz-accent-type);
+    border-color: var(--ybz-accent-rule);
+  }
+  .ybz-btn-accent:hover{ background: var(--ybz-accent-rule); color: var(--ybz-ink); }
+
+  /* The blue CTA from the kit. Kept as a kit primitive; not used on this site.
+     If reinstated, hold the 16px floor — the sky end reads 4.10:1 on white. */
+  .ybz-btn-nav{
+    background: var(--ybz-grad-cta); color: #fff; font-size: 1rem;
   }
 
-  /* Skip link. Off-screen until focused, then it lands as a normal gold action
-     in the top-left — visible, in-palette, and not a surprise element. */
+  /* Form fields share the button geometry. */
+  .ybz-input{
+    width: 100%; min-height: 3rem; padding: .75rem 1rem;
+    font-family: var(--ybz-body); font-size: .9375rem; color: var(--ybz-bone);
+    background: var(--ybz-ink);
+    border: 1px solid var(--ybz-edge); border-radius: var(--ybz-r-sm);
+    transition: border-color var(--ybz-dur-fast) var(--ybz-ease);
+  }
+  .ybz-input::placeholder{ color: var(--ybz-muted); }
+  .ybz-input:hover{ border-color: var(--ybz-hairline); }
+  .ybz-input:focus{ outline: none; border-color: var(--ybz-accent-rule); }
+
+  /* Filter chips. Selected is a surface step plus gold edge; never a pill. */
+  .ybz-chip{
+    display: inline-flex; align-items: center; min-height: 2.25rem; padding: 0 .875rem;
+    font-size: .8125rem; font-weight: 500; color: var(--ybz-slate);
+    border: 1px solid var(--ybz-edge); border-radius: var(--ybz-r-sm);
+    transition: border-color var(--ybz-dur-fast) var(--ybz-ease),
+                color var(--ybz-dur-fast) var(--ybz-ease),
+                background-color var(--ybz-dur-fast) var(--ybz-ease);
+  }
+  .ybz-chip:hover{ color: var(--ybz-bone); border-color: var(--ybz-hairline); }
+  .ybz-chip[aria-pressed="true"]{
+    color: var(--ybz-bone); background: var(--ybz-card); border-color: var(--ybz-accent-rule);
+  }
+
+  /* Skip link. Off-screen until focused, then lands as a normal gold action. */
   .ybz-skip-link{
     position: absolute; left: -9999px; top: 0; z-index: 100;
     background: var(--ybz-grad-gold); color: var(--ybz-ink);
@@ -315,10 +418,15 @@
     left: 1rem; top: 1rem;
   }
 
-  /* Ambient purple bloom. Background only — never type, never a border. */
+  /* Ambient purple bloom. Hero sections only, one corner — never type, never a border. */
   .ybz-bloom{
     background: var(--ybz-grad-bloom);
   }
+
+  /* Theme-specific artwork, e.g. the dark and light lockups. */
+  .ybz-only-light{ display: none; }
+  [data-theme="light"] .ybz-only-dark{ display: none; }
+  [data-theme="light"] .ybz-only-light{ display: block; }
 }
 
 /* Gold stays full strength wherever it is a filled shape with ink on top —
@@ -381,6 +489,77 @@
   background: transparent;   /* the ground belongs to .ybz-code, so it can flip */
 }
 
+/* ==========================================================================
+   THE DECISION RECORD
+   The Home hero object. Like the code block, it is midnight in both themes,
+   so every colour inside is pinned to its dark-theme value rather than a token
+   that would invert. Gold here is type on midnight, 11.92:1.
+   ========================================================================== */
+
+.ybz-record{
+  position: relative; margin: 0;
+  padding-left: 6px;                              /* room for the rail */
+  border-radius: var(--ybz-r-md);
+  border: 1px solid rgba(245,243,239,.07);
+  background: linear-gradient(135deg, #0D0F16, #101218);   /* code_ground_dark */
+  color: #A8B0BE;
+  overflow: hidden;
+}
+[data-theme="light"] .ybz-record, .ybz-light .ybz-record{
+  border-color: rgba(2,6,23,.12);
+  box-shadow: 0 12px 40px rgba(2,6,23,.16);
+  background: linear-gradient(135deg, #191B24, #0E1017);   /* code_ground_light */
+}
+
+.ybz-record__rail{
+  position: absolute; left: 0; top: 0; bottom: 0; width: 6px;
+  display: flex; flex-direction: column; gap: 6px; padding: 24px 0;
+}
+.ybz-record__rail > span{ background: #F4C025; border-radius: 0 2px 2px 0; }
+
+.ybz-record__bar{
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 14px 24px;
+  font-family: var(--ybz-mono); font-size: .75rem;
+  letter-spacing: .14em; text-transform: uppercase; color: #7C8698;
+  border-bottom: 1px solid rgba(245,243,239,.07);
+}
+.ybz-record__status{
+  color: #F4C025;
+}
+.ybz-record__status::before{
+  content: ""; display: inline-block; width: 6px; height: 6px; margin-right: 8px;
+  background: #F4C025; border-radius: 1px; vertical-align: 1px;
+}
+
+.ybz-record__body{ padding: 8px 24px; }
+.ybz-record__row{
+  display: grid; grid-template-columns: 7.5rem 1fr; gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(245,243,239,.07);
+}
+.ybz-record__row:last-child{ border-bottom: 0; }
+.ybz-record__term{
+  font-family: var(--ybz-mono); font-size: .75rem; line-height: 1.6rem;
+  letter-spacing: .14em; text-transform: uppercase; color: #7C8698;
+}
+.ybz-record__value{
+  font-size: .9375rem; line-height: 1.6rem; color: #A8B0BE;
+}
+.ybz-record__value--key{ color: #F5F3EF; font-weight: 500; }
+
+.ybz-record__foot{
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 16px;
+  padding: 14px 24px;
+  font-family: var(--ybz-mono); font-size: .75rem; color: #7C8698;
+  background: rgba(245,243,239,.02);
+  border-top: 1px solid rgba(245,243,239,.07);
+}
+
+@media (max-width: 480px){
+  .ybz-record__row{ grid-template-columns: 1fr; gap: 4px; }
+}
+
 /* ---------- code syntax ramp: built only from palette colours ---------- */
 .ybz-tok-comment{  color:#7C8698 }
 .ybz-tok-string{   color:#A8B0BE }
@@ -400,12 +579,13 @@
 
 /* ==========================================================================
    MOTION
-   Section 17 issue 5 notes there is no documented rule for how the rail
-   animates. One rule, applied everywhere: 600ms ease-out, no bounce.
+   One entrance per page: the page header fades and rises 8px. Content below
+   it is already there. Nothing animates on scroll except the stack rail,
+   which is a progress indicator, not decoration.
    ========================================================================== */
 
 @keyframes ybz-fade-up {
-  from { opacity: 0; transform: translateY(24px); }
+  from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
@@ -414,8 +594,9 @@
   to   { transform: scaleY(1); }
 }
 
+.ybz-enter,
 .animate-fade-in {
-  animation: ybz-fade-up .6s cubic-bezier(0, 0, 0.2, 1) forwards;
+  animation: ybz-fade-up var(--ybz-dur-enter) var(--ybz-ease) both;
 }
 
 @media (prefers-reduced-motion: reduce){

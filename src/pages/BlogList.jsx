@@ -1,187 +1,193 @@
-import { useState, useEffect } from 'react';
-import { Search, Filter, X } from 'lucide-react';
-import BlogCard from '../components/BlogCard';
-import Seo from '../components/Seo';
-import { getBlogPosts, getAllTags, filterBlogsByTag, searchBlogs } from '../utils/blogUtils';
-import { motion } from 'framer-motion';
-
-const _motion = motion;
+import { useState, useEffect } from "react";
+import { Loader2, Search, X } from "lucide-react";
+import BlogCard from "../components/BlogCard";
+import Seo from "../components/Seo";
+import {
+  getBlogPosts,
+  getAllTags,
+  filterBlogsByTag,
+  searchBlogs,
+} from "../utils/blogUtils";
+import { Button, PageHeader, Section } from "../components/ui";
 
 /**
  * Blog listing page
  */
 const BlogList = () => {
-    const [blogs, setBlogs] = useState([]);
-    const [filteredBlogs, setFilteredBlogs] = useState([]);
-    const [allTags, setAllTags] = useState([]);
-    const [selectedTag, setSelectedTag] = useState('all');
-    const [searchQuery, setSearchQuery] = useState('');
-    const [isLoading, setIsLoading] = useState(true);
+  const [blogs, setBlogs] = useState([]);
+  const [filteredBlogs, setFilteredBlogs] = useState([]);
+  const [allTags, setAllTags] = useState([]);
+  const [selectedTag, setSelectedTag] = useState("all");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        const loadBlogs = async () => {
-            setIsLoading(true);
-            const blogData = await getBlogPosts();
-            const tags = await getAllTags();
-            setBlogs(blogData);
-            setFilteredBlogs(blogData);
-            setAllTags(tags);
-            setIsLoading(false);
-        };
-
-        loadBlogs();
-    }, []);
-
-    useEffect(() => {
-        let result = blogs;
-
-        // Apply tag filter
-        result = filterBlogsByTag(result, selectedTag);
-
-        // Apply search
-        result = searchBlogs(result, searchQuery);
-
-        setFilteredBlogs(result);
-    }, [selectedTag, searchQuery, blogs]);
-
-    const handleTagClick = (tag) => {
-        setSelectedTag(tag);
+  useEffect(() => {
+    const loadBlogs = async () => {
+      setIsLoading(true);
+      const blogData = await getBlogPosts();
+      const tags = await getAllTags();
+      setBlogs(blogData);
+      setFilteredBlogs(blogData);
+      setAllTags(tags);
+      setIsLoading(false);
     };
 
-    const clearFilters = () => {
-        setSelectedTag('all');
-        setSearchQuery('');
-    };
+    loadBlogs();
+  }, []);
 
-    return (
-        <>
-            <Seo
-                title="Writing"
-                description="The decisions rather than the tools — why a boundary went where it went, what it cost when it went in the wrong place, and what the traces looked like afterwards."
-                keywords={["architecture decisions", "system design", "trade-offs", "NestJS", "Next.js"]}
-                url="/blog"
+  useEffect(() => {
+    let result = blogs;
+
+    // Apply tag filter
+    result = filterBlogsByTag(result, selectedTag);
+
+    // Apply search
+    result = searchBlogs(result, searchQuery);
+
+    setFilteredBlogs(result);
+  }, [selectedTag, searchQuery, blogs]);
+
+  const handleTagClick = (tag) => {
+    setSelectedTag(tag);
+  };
+
+  const clearFilters = () => {
+    setSelectedTag("all");
+    setSearchQuery("");
+  };
+
+  const hasFilters = selectedTag !== "all" || searchQuery;
+
+  return (
+    <>
+      <Seo
+        title="Writing"
+        description="The decisions rather than the tools — why a boundary went where it went, what it cost when it went in the wrong place, and what the traces looked like afterwards."
+        keywords={[
+          "architecture decisions",
+          "system design",
+          "trade-offs",
+          "NestJS",
+          "Next.js",
+        ]}
+        url="/blog"
+      />
+
+      <PageHeader
+        eyebrow="Writing"
+        title="Blog & articles"
+        lede="Insights on AI, DevOps, software architecture, and modern development practices"
+      />
+
+      <Section className="pt-0">
+        {/* Filters */}
+        <div className="space-y-5 border-b border-edge pb-8">
+          <div className="relative max-w-xl">
+            <label htmlFor="blog-search" className="sr-only">
+              Search articles
+            </label>
+            <Search
+              size={16}
+              strokeWidth={1.75}
+              aria-hidden="true"
+              className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-muted"
             />
+            <input
+              id="blog-search"
+              type="search"
+              placeholder="Search articles..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="ybz-input pl-11"
+            />
+          </div>
 
-            <div className="min-h-screen bg-ink text-bone">
-                {/* Hero Section */}
-                <section className="relative py-20 px-4 overflow-hidden">
-                    <div className="absolute inset-0" />
+          <div
+            role="group"
+            aria-label="Filter by tag"
+            className="flex flex-wrap items-center gap-2"
+          >
+            <span className="ybz-meta mr-2">Filter by</span>
+            <button
+              type="button"
+              aria-pressed={selectedTag === "all"}
+              onClick={() => handleTagClick("all")}
+              className="ybz-chip"
+            >
+              All
+            </button>
+            {allTags.map((tag) => (
+              <button
+                key={tag}
+                type="button"
+                aria-pressed={selectedTag === tag}
+                onClick={() => handleTagClick(tag)}
+                className="ybz-chip"
+              >
+                {tag}
+              </button>
+            ))}
+            {hasFilters && (
+              <button
+                type="button"
+                onClick={clearFilters}
+                className="ybz-chip gap-2"
+              >
+                <X size={16} strokeWidth={1.75} aria-hidden="true" />
+                Clear filters
+              </button>
+            )}
+          </div>
+        </div>
 
-                    <div className="max-w-7xl mx-auto relative z-10">
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6 }}
-                            className="text-center"
-                        >
-                            <h1 className="text-5xl md:text-6xl font-bold mb-6 text-bone">
-                                Blog & Articles
-                            </h1>
-                            <p className="text-xl text-muted max-w-3xl mx-auto">
-                                Insights on AI, DevOps, software architecture, and modern development practices
-                            </p>
-                        </motion.div>
-                    </div>
-                </section>
-
-                {/* Filters Section */}
-                <section className="px-4 pb-8">
-                    <div className="max-w-7xl mx-auto">
-                        <div className="bg-obsidian rounded-2xl p-6 border border-edge">
-                            {/* Search Bar */}
-                            <div className="mb-6">
-                                <div className="relative">
-                                    <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted" size={20} />
-                                    <input
-                                        type="text"
-                                        placeholder="Search articles..."
-                                        value={searchQuery}
-                                        onChange={(e) => setSearchQuery(e.target.value)}
-                                        className="w-full pl-12 pr-4 py-3 bg-card border border-edge rounded-lg text-bone placeholder:text-muted focus:outline-none focus:border-hairline transition-colors"
-                                    />
-                                </div>
-                            </div>
-
-                            {/* Tag Filters */}
-                            <div className="flex items-center gap-3 flex-wrap">
-                                <div className="flex items-center gap-2 text-muted">
-                                    <Filter size={18} />
-                                    <span className="text-sm font-medium">Filter by:</span>
-                                </div>
-
-                                <button
-                                    onClick={() => handleTagClick('all')}
-                                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${selectedTag === 'all'
-                                            ? 'bg-card text-bone'
-                                            : 'bg-card text-muted hover:border-hairline'
-                                        }`}
-                                >
-                                    All
-                                </button>
-
-                                {allTags.map((tag) => (
-                                    <button
-                                        key={tag}
-                                        onClick={() => handleTagClick(tag)}
-                                        className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${selectedTag === tag
-                                                ? 'bg-card text-bone'
-                                                : 'bg-card text-muted hover:border-hairline'
-                                            }`}
-                                    >
-                                        {tag}
-                                    </button>
-                                ))}
-
-                                {(selectedTag !== 'all' || searchQuery) && (
-                                    <button
-                                        onClick={clearFilters}
-                                        className="ml-auto px-4 py-2 rounded-lg text-sm font-medium bg-card text-muted hover:border-hairline transition-all flex items-center gap-2"
-                                    >
-                                        <X size={16} />
-                                        Clear Filters
-                                    </button>
-                                )}
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                {/* Blog Grid */}
-                <section className="px-4 pb-20">
-                    <div className="max-w-7xl mx-auto">
-                        {isLoading ? (
-                            <div className="flex items-center justify-center py-20">
-                                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-hairline"></div>
-                            </div>
-                        ) : filteredBlogs.length > 0 ? (
-                            <>
-                                <div className="mb-6 text-muted">
-                                    Showing {filteredBlogs.length} article{filteredBlogs.length !== 1 ? 's' : ''}
-                                </div>
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                    {filteredBlogs.map((blog, index) => (
-                                        <BlogCard key={blog.id} blog={blog} index={index} />
-                                    ))}
-                                </div>
-                            </>
-                        ) : (
-                            <div className="text-center py-20">
-                                <div className="text-6xl mb-4">📝</div>
-                                <h3 className="text-2xl font-bold text-bone mb-2">No articles found</h3>
-                                <p className="text-muted mb-6">Try adjusting your search or filters</p>
-                                <button
-                                    onClick={clearFilters}
-                                    className="px-6 py-3 bg-card hover:border-hairline text-bone rounded-lg transition-colors"
-                                >
-                                    Clear Filters
-                                </button>
-                            </div>
-                        )}
-                    </div>
-                </section>
+        {/* Posts */}
+        <div className="pt-8">
+          {isLoading ? (
+            <div
+              role="status"
+              className="flex items-center justify-center py-20 text-muted"
+            >
+              <Loader2
+                size={18}
+                strokeWidth={1.75}
+                aria-hidden="true"
+                className="animate-spin"
+              />
+              <span className="sr-only">Loading articles</span>
             </div>
-        </>
-    );
+          ) : filteredBlogs.length > 0 ? (
+            <>
+              <p className="ybz-meta mb-6" aria-live="polite">
+                Showing {filteredBlogs.length} article
+                {filteredBlogs.length !== 1 ? "s" : ""}
+              </p>
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {filteredBlogs.map((blog) => (
+                  <BlogCard key={blog.id} blog={blog} />
+                ))}
+              </div>
+            </>
+          ) : (
+            <div className="py-16">
+              <h2 className="ybz-title">No articles found</h2>
+              <p className="ybz-body mt-2">
+                Try adjusting your search or filters
+              </p>
+              <Button
+                variant="secondary"
+                icon={X}
+                iconPosition="start"
+                onClick={clearFilters}
+                className="mt-6"
+              >
+                Clear filters
+              </Button>
+            </div>
+          )}
+        </div>
+      </Section>
+    </>
+  );
 };
 
 export default BlogList;

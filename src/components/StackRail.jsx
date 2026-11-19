@@ -1,5 +1,11 @@
 import PropTypes from "prop-types";
-import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform,
+} from "framer-motion";
 
 const _motion = motion;
 
@@ -43,11 +49,11 @@ const ProgressSegment = ({ progress, grow, opacity, start, end }) => {
 
   return (
     <span
-      className="relative w-full overflow-hidden rounded-full"
+      className="relative w-full overflow-hidden"
       style={{ flexGrow: grow, background: "var(--ybz-edge)" }}
     >
       <motion.span
-        className="absolute inset-x-0 top-0 block rounded-full"
+        className="absolute inset-x-0 top-0 block"
         style={{ height, opacity, background: "var(--ybz-accent-rule)" }}
       />
     </span>
@@ -104,7 +110,7 @@ const StackRail = ({
         ) : (
           <span
             key={segment.opacity}
-            className="w-full rounded-full"
+            className="w-full"
             style={{
               flexGrow: segment.grow,
               background: "var(--ybz-accent-rule)",

@@ -1,12 +1,21 @@
-import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import Seo from "../components/Seo";
 import { siteMeta } from "../config/seo";
 import { BRAND, PROOF_STACK } from "../config/brand";
-import { experienceTimeline } from "../data/experience";
-import GoldRule from "../components/GoldRule";
-
-const _motion = motion;
+import {
+  experienceTimeline,
+  leadershipRoles,
+  volunteering,
+} from "../data/experience";
+import RoleList from "../components/RoleList";
+import {
+  Card,
+  PageHeader,
+  Section,
+  SectionHeader,
+  StackLine,
+  TextLink,
+} from "../components/ui";
 
 /**
  * Section 8: evidence before opinion. Each principle names a mechanism rather
@@ -127,209 +136,165 @@ const About = () => {
         url="/about"
         schema={aboutSchema}
       />
-      <div className="relative overflow-x-hidden bg-ink text-slate-body">
-        <section className="relative isolate overflow-hidden px-4 pb-10 pt-8 sm:px-6 lg:px-8">
-          <div className="ybz-bloom pointer-events-none absolute inset-0 -z-10" />
 
-          <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1.1fr_0.9fr]">
-            <motion.div
-              className="space-y-6"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: [0, 0, 0.2, 1] }}
-            >
-              <p className="ybz-eyebrow">About</p>
-              <h1 className="max-w-2xl font-display text-3xl leading-tight text-bone sm:text-4xl lg:text-5xl">
-                {BRAND.positioning}
-              </h1>
-              <GoldRule />
+      <PageHeader eyebrow="About" title={BRAND.positioning}>
+        <div className="mt-10 grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
+          {/* Section 11's About copy, which is already written and on-voice. */}
+          <div className="space-y-4">
+            <p className="ybz-lede">
+              I build production software: APIs that carry real traffic,
+              front-ends that survive contact with real users, and the
+              boundaries between them.
+            </p>
+            <p className="ybz-body max-w-2xl">
+              Currently a software engineer at {BRAND.employer}, working
+              full-stack across {BRAND.stackShort}, and building SafeStay. I
+              took my first engineering role at eighteen and have spent the time
+              since shipping, breaking and repairing systems in production.
+            </p>
+            <p className="ybz-body max-w-2xl">
+              I write here about the decisions rather than the tools — why a
+              boundary went where it went, what it cost when it went in the
+              wrong place, and what the traces looked like afterwards. If you
+              lead a team and want a second opinion on an architecture call, my
+              inbox is open.
+            </p>
+          </div>
 
-              {/* Section 11's About copy, which is already written and on-voice. */}
-              <div className="max-w-2xl space-y-4 leading-8">
-                <p>
-                  I build production software: APIs that carry real traffic,
-                  front-ends that survive contact with real users, and the
-                  boundaries between them.
-                </p>
-                <p>
-                  Currently a software engineer at {BRAND.employer}, working
-                  full-stack across {BRAND.stackShort}, and building SafeStay. I
-                  took my first engineering role at eighteen and have spent the
-                  time since shipping, breaking and repairing systems in
-                  production.
-                </p>
-                <p>
-                  I write here about the decisions rather than the tools — why a
-                  boundary went where it went, what it cost when it went in the
-                  wrong place, and what the traces looked like afterwards. If
-                  you lead a team and want a second opinion on an architecture
-                  call, my inbox is open.
-                </p>
-              </div>
-            </motion.div>
+          {/* Visuals. The images are stacked and cross-fade on opacity alone;
+              the interval only changes which one is visible. */}
+          <Card padded={false}>
+            <div className="ybz-frame aspect-4/5 lg:aspect-16/10">
+              {aboutGallery.map((image, index) => (
+                <img
+                  key={image.src}
+                  src={image.src}
+                  alt={index === activeImageIndex ? image.alt : ""}
+                  aria-hidden={index !== activeImageIndex}
+                  className="absolute inset-0 p-3 transition-opacity duration-150"
+                  style={{
+                    opacity: index === activeImageIndex ? 1 : 0,
+                    transitionTimingFunction: "var(--ybz-ease)",
+                  }}
+                  loading="lazy"
+                />
+              ))}
+            </div>
 
-            <motion.div
-              className="ybz-card p-5"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1, ease: [0, 0, 0.2, 1] }}
-            >
-              <div className="mb-3 flex items-center justify-between">
-                <p className="ybz-eyebrow">Visuals</p>
-                <p className="ybz-figure text-xs text-muted">
-                  {activeImageIndex + 1}/{aboutGallery.length}
-                </p>
-              </div>
-
-              <div
-                className="relative aspect-[4/5] overflow-hidden border border-edge bg-ink lg:aspect-[16/10]"
-                style={{ borderRadius: "var(--ybz-r-md)" }}
-              >
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={activeImage.src}
-                    className="absolute inset-0 flex items-center justify-center p-3"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.35 }}
-                  >
-                    <img
-                      src={activeImage.src}
-                      alt={activeImage.alt}
-                      className="max-h-full max-w-full object-contain"
-                      loading="lazy"
-                    />
-                  </motion.div>
-                </AnimatePresence>
-                <div className="absolute left-3 top-3">
-                  <span className="ybz-meta border border-edge bg-ink/80 px-3 py-1 backdrop-blur">
-                    {activeImage.label}
-                  </span>
-                </div>
-              </div>
-
-              <div className="mt-4 flex items-center justify-center gap-2">
+            <div className="flex items-center justify-between gap-4 px-5 py-4">
+              <p className="ybz-meta">{activeImage.label}</p>
+              <div className="flex items-center gap-1">
                 {aboutGallery.map((image, index) => (
                   <button
                     key={image.src}
                     type="button"
                     onClick={() => setActiveImageIndex(index)}
-                    className="h-[3px] transition-all duration-300"
-                    style={{
-                      width: activeImageIndex === index ? 32 : 12,
-                      background:
-                        activeImageIndex === index
-                          ? "var(--ybz-accent-rule)"
-                          : "var(--ybz-edge)",
-                    }}
+                    className="flex h-8 items-center px-1"
                     aria-label={`Show ${image.label}`}
-                  />
-                ))}
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Proof, with sources. */}
-        <section className="border-y border-edge bg-obsidian px-4 py-16 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-7xl space-y-8">
-            <div className="space-y-4">
-              <p className="ybz-eyebrow">Proof</p>
-              <h2 className="font-display text-3xl text-bone">
-                Four claims, each with a source.
-              </h2>
-              <GoldRule />
-            </div>
-            <dl className="grid gap-4 sm:grid-cols-2">
-              {PROOF_STACK.map((item) => (
-                <div key={item.source} className="ybz-card p-5">
-                  <dt className="leading-7 text-bone">{item.claim}</dt>
-                  <dd className="ybz-meta mt-3 normal-case tracking-normal">
-                    {item.source}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-          </div>
-        </section>
-
-        <section className="px-4 py-16 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-7xl space-y-8">
-            <div className="space-y-4">
-              <p className="ybz-eyebrow">How I work</p>
-              <h2 className="font-display text-3xl text-bone">
-                Four positions I would defend in review.
-              </h2>
-              <GoldRule />
-            </div>
-
-            <div className="grid gap-4 sm:gap-6 lg:grid-cols-2">
-              {principles.map((principle) => (
-                <motion.div
-                  key={principle.label}
-                  className="ybz-card p-6"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.3 }}
-                  transition={{ duration: 0.6, ease: [0, 0, 0.2, 1] }}
-                >
-                  <h3 className="font-display text-xl text-bone">
-                    {principle.label}
-                  </h3>
-                  <p className="mt-3 text-sm leading-7">{principle.copy}</p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="border-t border-edge bg-obsidian px-4 py-16 sm:px-6 lg:px-8">
-          <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-            <div className="ybz-card space-y-6 p-6">
-              <p className="ybz-eyebrow">Timeline</p>
-              <div className="space-y-5">
-                {timeline.map((entry) => (
-                  <div
-                    key={entry.title}
-                    className="border-l-2 border-hairline pl-5"
+                    aria-pressed={activeImageIndex === index}
                   >
-                    <p className="ybz-meta">{entry.period}</p>
-                    <h3 className="mt-2 font-display text-lg text-bone">
-                      {entry.title}
-                    </h3>
-                    <p className="mt-2 text-sm leading-7">{entry.detail}</p>
-                    <p className="ybz-meta mt-3 normal-case tracking-normal">
-                      {entry.source}
-                    </p>
-                  </div>
+                    <span
+                      className="block h-0.5 w-6 transition-colors duration-150"
+                      style={{
+                        background:
+                          activeImageIndex === index
+                            ? "var(--ybz-accent-rule)"
+                            : "var(--ybz-edge)",
+                      }}
+                    />
+                  </button>
                 ))}
+                <p className="ybz-meta ml-3">
+                  {activeImageIndex + 1}/{aboutGallery.length}
+                </p>
               </div>
             </div>
+          </Card>
+        </div>
+      </PageHeader>
 
-            <div className="ybz-card space-y-6 p-6">
-              <p className="ybz-eyebrow">Toolset</p>
-              <div className="flex flex-wrap gap-2">
-                {toolset.map((tool) => (
-                  <span
-                    key={tool}
-                    className="border border-edge px-3 py-2 font-mono text-xs text-muted"
-                    style={{ borderRadius: "var(--ybz-r-sm)" }}
-                  >
-                    {tool}
-                  </span>
-                ))}
-              </div>
-              <GoldRule />
-              <p className="text-sm leading-7">
-                Next on the list: .NET and MAUI, Spring Boot, and embedded
-                firmware — chosen because they force different trade-offs than
-                the ones I already know how to make.
+      {/* Proof, with sources. */}
+      <Section tone="raised">
+        <SectionHeader
+          eyebrow="Proof"
+          title="Four claims, each with a source."
+        />
+        <dl className="grid border-t border-edge sm:grid-cols-2 sm:gap-x-10">
+          {PROOF_STACK.map((item) => (
+            <div
+              key={item.source}
+              className="space-y-2 border-b border-edge py-6"
+            >
+              <dt className="ybz-body text-bone">{item.claim}</dt>
+              <dd className="ybz-source">{item.source}</dd>
+            </div>
+          ))}
+        </dl>
+      </Section>
+
+      <Section>
+        <SectionHeader
+          eyebrow="How I work"
+          title="Four positions I would defend in review."
+        />
+        <ol className="border-t border-edge">
+          {principles.map((principle, index) => (
+            <li
+              key={principle.label}
+              className="grid gap-3 border-b border-edge py-8 md:grid-cols-[3rem_16rem_1fr] md:gap-8"
+            >
+              <p className="ybz-meta pt-1">
+                {String(index + 1).padStart(2, "0")}
               </p>
+              <h3 className="ybz-title">{principle.label}</h3>
+              <p className="ybz-body max-w-2xl">{principle.copy}</p>
+            </li>
+          ))}
+        </ol>
+      </Section>
+
+      <Section tone="raised" className="border-b-0">
+        <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+          <Card className="space-y-8">
+            <p className="ybz-eyebrow">Timeline</p>
+            <ol className="space-y-6">
+              {timeline.map((entry) => (
+                <li
+                  key={`${entry.title}-${entry.period}`}
+                  className="border-l border-edge pl-5"
+                >
+                  <p className="ybz-meta">{entry.period}</p>
+                  <h3 className="ybz-title mt-2">{entry.title}</h3>
+                  <p className="ybz-body mt-2">{entry.detail}</p>
+                  <p className="ybz-source mt-3">{entry.source}</p>
+                  {entry.link && (
+                    <TextLink to={entry.link} className="mt-3">
+                      Read the case study
+                    </TextLink>
+                  )}
+                </li>
+              ))}
+            </ol>
+            <div className="grid gap-8 border-t border-edge pt-8 md:grid-cols-2">
+              <RoleList
+                eyebrow="Leadership and community"
+                roles={leadershipRoles}
+              />
+              <RoleList eyebrow="Volunteering" roles={volunteering} />
             </div>
-          </div>
-        </section>
-      </div>
+          </Card>
+
+          <Card className="space-y-6 self-start">
+            <p className="ybz-eyebrow">Toolset</p>
+            <StackLine items={toolset} className="text-sm leading-7" />
+            <p className="ybz-body border-t border-edge pt-6">
+              Next on the list: .NET and MAUI, Spring Boot, and embedded
+              firmware — chosen because they force different trade-offs than the
+              ones I already know how to make.
+            </p>
+          </Card>
+        </div>
+      </Section>
     </>
   );
 };
