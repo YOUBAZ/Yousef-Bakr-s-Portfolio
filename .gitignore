@@ -31,9 +31,20 @@ dist-ssr
 # Vercel
 .vercel
 
-# Brand kit working folder — the source of truth lives outside this repo.
-# brand.json and BRAND.md carry a phone number and internal strategy notes;
-# they must not be published here. See CLAUDE.md for the rules that do apply.
+# Brand kit (v3) — a local working folder, not published. BRAND.md carries
+# internal strategy notes and the generated assets are large; rebuild them with
+# brand-kit/tools/build_kit.py. See CLAUDE.md for the rules that do apply.
+#
+# One exception: brand.json stays tracked. The site imports it (Signet draws the
+# Merge Y from it) and `npm run brand:check` reads its palette, so a deploy
+# fails without it. It holds only public facts: name, links, colours, geometry.
+brand-kit/*
+!brand-kit/brand.json
+
+# Brand discovery notes for AI tools: private positioning answers. Local only.
+.agents/
+
+# Retired v2.4 kit, kept out of the repo if it is ever restored locally.
 v5/
 
 # Python
