@@ -1,49 +1,77 @@
-import { useEffect, useMemo, useRef } from "react";
-import { motion } from "framer-motion";
+import { useMemo } from "react";
 import { ArrowUpRight, Mail } from "lucide-react";
-import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { Link } from "react-router-dom";
-import { useGesture } from "@use-gesture/react";
-import { useSpring as useButtonSpring, animated } from "@react-spring/web";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Seo from "../components/Seo";
 import { siteMeta } from "../config/seo";
 import { BRAND, PROOF_STACK } from "../config/brand";
 import { experienceTimeline } from "../data/experience";
 import GoldRule from "../components/GoldRule";
+import {
+  Button,
+  Card,
+  DecisionRecord,
+  Section,
+  SectionHeader,
+  StackLine,
+  TextLink,
+} from "../components/ui";
 
-const _motion = motion;
-const _animated = animated;
+const featuredProjects = [
+  {
+    title: "SafeStay",
+    copy: "Three-tier platform for verified student housing. Server-side state machines drive multi-party contract signing, so a half-signed contract cannot exist in the database.",
+    tags: ["NestJS", "Next.js", "Flutter", "PostgreSQL"],
+  },
+  {
+    title: "EduShift AI",
+    copy: "Configurable prompt-engineering platform with versioned AI simulations and automated competency scoring. One simulation became four production products.",
+    tags: ["TypeScript", "Next.js", "PostgreSQL", "Docker"],
+    link: "/projects/edushift-ai",
+  },
+  {
+    title: "Promptopia",
+    copy: "AI prompt-sharing platform. NextAuth sessions over MongoDB, with the create/browse/manage loop kept to a single social feed.",
+    tags: ["Next.js", "React", "NextAuth", "MongoDB"],
+  },
+  {
+    title: "Blog Post",
+    copy: "Content dashboard separating posts, users and admin flows behind an Express API rather than letting the client hold authorisation.",
+    tags: ["React", "Node.js", "Express.js", "MongoDB"],
+  },
+];
+
+/* Every row is a fact already published on the site: the SafeStay project
+   copy, the About page's "how I work" and the proof stack. */
+const heroRecord = {
+  id: "Decision record",
+  project: "SafeStay",
+  status: "Accepted",
+  rows: [
+    {
+      term: "Context",
+      value:
+        "Several parties sign one housing contract, at different times, from a Flutter app and a Next.js console.",
+    },
+    {
+      term: "Decision",
+      value:
+        "Signing runs as a server-side state machine in the API. The client renders state; it does not own it.",
+    },
+    {
+      term: "Result",
+      value: "A half-signed contract cannot exist in the database.",
+      emphasis: true,
+    },
+  ],
+  footer: (
+    <>
+      <span>3-tier platform</span>
+      <span>20+ table schema</span>
+    </>
+  ),
+};
 
 const Home = () => {
-  const featuredProjects = useMemo(
-    () => [
-      {
-        title: "SafeStay",
-        copy: "Three-tier platform for verified student housing. Server-side state machines drive multi-party contract signing, so a half-signed contract cannot exist in the database.",
-        tags: ["NestJS", "Next.js", "Flutter", "PostgreSQL"],
-      },
-      {
-        title: "EduShift AI",
-        copy: "Configurable prompt-engineering platform with versioned AI simulations and automated competency scoring. One simulation became four production products.",
-        tags: ["TypeScript", "Next.js", "PostgreSQL", "Docker"],
-      },
-      {
-        title: "Promptopia",
-        copy: "AI prompt-sharing platform. NextAuth sessions over MongoDB, with the create/browse/manage loop kept to a single social feed.",
-        tags: ["Next.js", "React", "NextAuth", "MongoDB"],
-      },
-      {
-        title: "Blog Post",
-        copy: "Content dashboard separating posts, users and admin flows behind an Express API rather than letting the client hold authorisation.",
-        tags: ["React", "Node.js", "Express.js", "MongoDB"],
-      },
-    ],
-    []
-  );
-
-  const timeline = experienceTimeline;
+  const timeline = experienceTimeline.filter((entry) => entry.current);
 
   const homeSchema = useMemo(() => {
     const locale = (siteMeta.locale || "en_US").replace("_", "-");
@@ -70,64 +98,6 @@ const Home = () => {
     ];
   }, []);
 
-  const cardsRef = useRef(null);
-  const [gridRef] = useAutoAnimate({ duration: 240 });
-  const timelineRef = useRef(null);
-
-  const [magneticSpring, magneticApi] = useButtonSpring(() => ({
-    xys: [0, 0, 1],
-    config: { mass: 1, tension: 210, friction: 18 },
-  }));
-
-  const bindMagnetic = useGesture({
-    onMove: ({ event, hovering }) => {
-      if (!hovering) return;
-      const target = event.currentTarget.getBoundingClientRect();
-      const x = event.clientX - (target.left + target.width / 2);
-      const y = event.clientY - (target.top + target.height / 2);
-      magneticApi.start({ xys: [x / 10, y / 10, 1.03] });
-    },
-    onHover: ({ active }) => {
-      if (!active) {
-        magneticApi.start({ xys: [0, 0, 1] });
-      }
-    },
-  });
-
-  useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-    const ctx = gsap.context(() => {
-      // One motion rule, 600ms ease-out, no bounce — see index.css.
-      if (cardsRef.current) {
-        gsap.from(".feature-card", {
-          opacity: 0,
-          y: 32,
-          duration: 0.6,
-          ease: "power2.out",
-          stagger: 0.12,
-          scrollTrigger: { trigger: cardsRef.current, start: "top 80%" },
-        });
-      }
-
-      if (timelineRef.current) {
-        gsap.from(".timeline-step", {
-          opacity: 0,
-          y: 32,
-          duration: 0.6,
-          ease: "power2.out",
-          stagger: 0.12,
-          scrollTrigger: { trigger: timelineRef.current, start: "top 75%" },
-        });
-      }
-    });
-
-    return () => ctx.revert();
-  }, []);
-
-  const rippleTransform = magneticSpring.xys.to(
-    (x, y, scale) => `translate3d(${x}px, ${y}px, 0) scale(${scale})`
-  );
-
   return (
     <>
       <Seo
@@ -143,215 +113,146 @@ const Home = () => {
         url="/"
         schema={homeSchema}
       />
-      <div className="bg-ink text-slate-body">
-        {/* ---------------------------------------------------------------
-            Hero. Section 5's three devices carry the identity: the stack
-            rail, the gold rule under the headline, and the footer strip
-            (which lives in Footer.jsx). Purple appears only as the bloom.
-            --------------------------------------------------------------- */}
-        <section className="relative isolate overflow-hidden px-6 py-24 sm:px-10 lg:px-16">
-          <div className="ybz-bloom pointer-events-none absolute inset-0 -z-10" />
 
-          <div className="mx-auto max-w-5xl space-y-8">
+      {/* Hero. Text on the left, the decision record on the right: the claim
+          and the evidence for it, side by side. Purple appears only as bloom. */}
+      <section className="relative isolate overflow-hidden px-6 pb-20 pt-16 sm:px-10 lg:px-16 lg:pb-28 lg:pt-24">
+        <div className="ybz-bloom pointer-events-none absolute inset-0 -z-10" />
+
+        <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
+          <div className="ybz-enter space-y-6">
             <p className="ybz-eyebrow">{BRAND.descriptorLockup}</p>
-
-            <div className="space-y-6">
-              <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: [0, 0, 0.2, 1] }}
-                className="max-w-4xl font-display text-4xl leading-[1.15] text-bone sm:text-5xl lg:text-6xl"
-              >
-                {BRAND.positioning}
-              </motion.h1>
-
-              <GoldRule />
-
-              <p className="max-w-2xl text-lg leading-8 sm:text-xl">
-                {BRAND.tagline} I work across{" "}
-                <span className="text-bone">{BRAND.stackFull}</span> — but the
-                stack is the least interesting part. What a boundary costs when
-                it goes in the wrong place is the part worth writing down.
-              </p>
-            </div>
-
-            <div className="flex flex-wrap items-center gap-4">
-              {/* The one gold action per screen. */}
-              <animated.div
-                {...bindMagnetic()}
-                style={{ transform: rippleTransform }}
-                className="inline-flex"
-              >
-                <Link to="/lets-talk" className="ybz-btn-primary">
-                  Start a conversation
-                  <ArrowUpRight size={18} />
-                </Link>
-              </animated.div>
-
-              <Link to="/contact" className="ybz-btn-ghost">
-                <Mail size={18} />
-                Contact
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* ---------------------------------------------------------------
-            Proof. Every line carries its source — that is what turns a
-            claim into evidence, and section 8 accepts nothing less.
-            --------------------------------------------------------------- */}
-        <section className="border-y border-edge bg-obsidian px-6 py-20 sm:px-10 lg:px-16">
-          <div className="mx-auto max-w-6xl space-y-10">
-            <div className="space-y-4">
-              <p className="ybz-eyebrow">Proof</p>
-              <h2 className="max-w-3xl font-display text-3xl text-bone sm:text-4xl">
-                Four claims, each with a source.
-              </h2>
-              <GoldRule />
-            </div>
-
-            <dl className="grid gap-6 md:grid-cols-2">
-              {PROOF_STACK.map((item) => (
-                <motion.div
-                  key={item.source}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.3 }}
-                  transition={{ duration: 0.6, ease: [0, 0, 0.2, 1] }}
-                  className="ybz-card p-6"
-                >
-                  <div className="flex items-baseline gap-4">
-                    <span className="ybz-figure text-3xl">{item.figure}</span>
-                    <span className="ybz-meta">{item.figureLabel}</span>
-                  </div>
-                  <dt className="mt-4 leading-7 text-bone">{item.claim}</dt>
-                  <dd className="ybz-meta mt-3 normal-case tracking-normal">
-                    {item.source}
-                  </dd>
-                </motion.div>
-              ))}
-            </dl>
-          </div>
-        </section>
-
-        {/* --------------------------------------------------------------- */}
-        <section
-          ref={cardsRef}
-          className="space-y-10 px-6 py-20 sm:px-10 lg:px-16"
-        >
-          <div className="mx-auto max-w-6xl space-y-4">
-            <p className="ybz-eyebrow">Selected work</p>
-            <h2 className="max-w-3xl font-display text-3xl text-bone sm:text-4xl">
-              What I built, and the decision inside it.
-            </h2>
+            <h1 className="ybz-display-1 lg:text-5xl">{BRAND.positioning}</h1>
             <GoldRule />
-          </div>
-
-          <div
-            ref={gridRef}
-            className="mx-auto grid max-w-6xl gap-6 md:grid-cols-2"
-          >
-            {featuredProjects.map((project) => (
-              <article
-                key={project.title}
-                className="feature-card ybz-card ybz-card-interactive flex h-full flex-col p-6"
+            <p className="ybz-lede">
+              {BRAND.tagline} I work across{" "}
+              <span className="text-bone">{BRAND.stackFull}</span>. The stack is
+              the least interesting part. What a boundary costs when it goes in
+              the wrong place is the part worth writing down.
+            </p>
+            <div className="flex flex-wrap items-center gap-3 pt-2">
+              <Button to="/lets-talk" icon={ArrowUpRight}>
+                Start a conversation
+              </Button>
+              <Button
+                to="/contact"
+                variant="secondary"
+                icon={Mail}
+                iconPosition="start"
               >
-                <h3 className="font-display text-xl text-bone">
-                  {project.title}
-                </h3>
-                <p className="mt-4 flex-1 text-sm leading-7">{project.copy}</p>
-                <div className="mt-6 flex flex-wrap gap-2">
-                  {project.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="border border-edge px-3 py-1 font-mono text-xs text-muted"
-                      style={{ borderRadius: "var(--ybz-r-sm)" }}
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </article>
-            ))}
+                Contact
+              </Button>
+            </div>
           </div>
 
-          <div className="mx-auto max-w-6xl">
-            <Link
-              to="/projects"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--ybz-accent-type)] transition-opacity hover:opacity-80"
+          <div className="ybz-enter" style={{ animationDelay: "60ms" }}>
+            <DecisionRecord {...heroRecord} />
+          </div>
+        </div>
+      </section>
+
+      {/* Proof, as a ledger. Every line carries its source — section 8. */}
+      <Section tone="raised">
+        <SectionHeader
+          eyebrow="Proof"
+          title="Four claims, each with a source."
+        />
+
+        <dl className="ybz-card divide-y divide-edge">
+          {PROOF_STACK.map((item) => (
+            <div
+              key={item.source}
+              className="grid gap-2 px-6 py-6 sm:grid-cols-[10rem_1fr] sm:gap-8"
             >
-              All projects
-              <ArrowUpRight size={16} />
-            </Link>
-          </div>
-        </section>
-
-        {/* --------------------------------------------------------------- */}
-        <section
-          ref={timelineRef}
-          className="border-t border-edge bg-obsidian px-6 py-20 sm:px-10 lg:px-16"
-        >
-          <div className="mx-auto max-w-6xl space-y-10">
-            <div className="space-y-4">
-              <p className="ybz-eyebrow">Now</p>
-              <h2 className="max-w-3xl font-display text-3xl text-bone sm:text-4xl">
-                Where the work happens.
-              </h2>
-              <GoldRule />
+              <div>
+                <p className="ybz-figure text-4xl">{item.figure}</p>
+                <p className="ybz-meta mt-2">{item.figureLabel}</p>
+              </div>
+              <div className="space-y-2">
+                <dt className="ybz-body text-bone">{item.claim}</dt>
+                <dd className="ybz-source">{item.source}</dd>
+              </div>
             </div>
+          ))}
+        </dl>
+      </Section>
 
-            <div className="grid gap-6 lg:grid-cols-2">
-              {timeline.map((item) => (
-                <div key={item.title} className="timeline-step ybz-card p-6">
-                  <div className="mb-5 flex items-center gap-4">
-                    {item.companyLogo ? (
-                      <div
-                        // A dedicated plate token, not --ybz-bone: bone inverts
-                        // to midnight in light mode, and these third-party logos
-                        // are drawn for a light ground. Never pure white either
-                        // — section 3.5 rule 4.
-                        className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden border border-edge bg-logo-plate p-2"
-                        style={{ borderRadius: "var(--ybz-r-sm)" }}
-                      >
-                        <img
-                          src={item.companyLogo}
-                          alt={`${item.companyLabel} logo`}
-                          className="h-full w-full object-contain"
-                          loading="lazy"
-                        />
-                      </div>
-                    ) : (
-                      <div
-                        className="flex h-14 w-14 shrink-0 items-center justify-center border border-hairline font-mono text-sm text-[var(--ybz-accent-type)]"
-                        style={{
-                          borderRadius: "var(--ybz-r-sm)",
-                          letterSpacing: "0.14em",
-                        }}
-                      >
-                        {item.companyBadge}
-                      </div>
-                    )}
-                    <div className="min-w-0">
-                      <p className="font-display text-lg text-bone">
-                        {item.companyLabel}
-                      </p>
-                      <p className="ybz-meta">{item.period}</p>
-                    </div>
+      {/* Selected work, as an index: name and stack on the left, the decision
+          on the right. */}
+      <Section>
+        <SectionHeader
+          eyebrow="Selected work"
+          title="What I built, and the decision inside it."
+        />
+
+        <ol className="border-t border-edge">
+          {featuredProjects.map((project) => (
+            <li
+              key={project.title}
+              className="grid gap-3 border-b border-edge py-8 md:grid-cols-[16rem_1fr] md:gap-10"
+            >
+              <div className="space-y-2">
+                <h3 className="ybz-title">{project.title}</h3>
+                <StackLine items={project.tags} />
+              </div>
+              <div className="space-y-3">
+                <p className="ybz-body max-w-2xl">{project.copy}</p>
+                {project.link && (
+                  <TextLink to={project.link}>Case study</TextLink>
+                )}
+              </div>
+            </li>
+          ))}
+        </ol>
+
+        <div className="mt-8">
+          <TextLink to="/projects">All projects</TextLink>
+        </div>
+      </Section>
+
+      {/* Where the work happens now. */}
+      <Section tone="raised" className="border-b-0">
+        <SectionHeader eyebrow="Now" title="Where the work happens." />
+
+        <div className="grid gap-6 lg:grid-cols-2">
+          {timeline.map((item) => (
+            <Card key={item.title}>
+              <div className="mb-6 flex items-center gap-4">
+                {item.companyLogo ? (
+                  <div className="ybz-plate h-14 w-14 p-2">
+                    <img
+                      src={item.companyLogo}
+                      alt={`${item.companyLabel} logo`}
+                      className="h-full w-full object-contain"
+                      loading="lazy"
+                    />
                   </div>
-
-                  <h3 className="font-display text-lg text-bone">
-                    {item.role}
-                  </h3>
-                  <p className="mt-2 text-sm leading-7">{item.detail}</p>
-                  <p className="ybz-meta mt-4 normal-case tracking-normal">
-                    {item.source}
-                  </p>
+                ) : (
+                  <div
+                    className="flex h-14 w-14 shrink-0 items-center justify-center border border-hairline font-mono text-sm tracking-[0.14em] text-accent"
+                    style={{ borderRadius: "var(--ybz-r-sm)" }}
+                  >
+                    {item.companyBadge}
+                  </div>
+                )}
+                <div className="min-w-0">
+                  <p className="font-medium text-bone">{item.companyLabel}</p>
+                  <p className="ybz-meta">{item.period}</p>
                 </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      </div>
+              </div>
+
+              <h3 className="ybz-title">{item.role}</h3>
+              <p className="ybz-body mt-2">{item.detail}</p>
+              <p className="ybz-source mt-4">{item.source}</p>
+              {item.link && (
+                <TextLink to={item.link} className="mt-4">
+                  Case study
+                </TextLink>
+              )}
+            </Card>
+          ))}
+        </div>
+      </Section>
     </>
   );
 };

@@ -5,7 +5,7 @@ const emailConfig = {
 };
 
 // Validate configuration in development
-if (process.env.NODE_ENV === "development") {
+if (import.meta.env.DEV) {
   const missing = [];
   if (!emailConfig.serviceId) missing.push("VITE_EMAILJS_SERVICE_ID");
   if (!emailConfig.templateId) missing.push("VITE_EMAILJS_TEMPLATE_ID");
@@ -13,7 +13,7 @@ if (process.env.NODE_ENV === "development") {
 
   if (missing.length > 0) {
     console.warn(
-      `⚠️  EmailJS Configuration Warning:\n` +
+      `EmailJS configuration warning:\n` +
       `Missing environment variables: ${missing.join(", ")}\n` +
       `Contact form will not work until these are configured.\n` +
       `Please copy .env.example to .env and add your EmailJS credentials.`

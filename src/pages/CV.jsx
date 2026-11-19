@@ -1,13 +1,21 @@
-import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
 import { Download, ExternalLink } from "lucide-react";
 import Seo from "../components/Seo";
 import { siteMeta } from "../config/seo";
 import { BRAND } from "../config/brand";
-import { experienceTimeline } from "../data/experience";
-import GoldRule from "../components/GoldRule";
-
-const _motion = motion;
+import {
+  experienceTimeline,
+  leadershipRoles,
+  volunteering,
+} from "../data/experience";
+import RoleList from "../components/RoleList";
+import {
+  Button,
+  Card,
+  PageHeader,
+  Section,
+  SectionHeader,
+  TextLink,
+} from "../components/ui";
 
 const pdfSrc = "/images/CV/Yousef-Bakr-CV.pdf";
 
@@ -72,130 +80,94 @@ const Cv = () => {
         url="/cv"
         schema={resumeSchema}
       />
-      <div className="bg-ink text-slate-body">
-        <section className="relative isolate overflow-hidden px-6 pb-12 pt-12 sm:px-10 lg:px-16">
-          <div className="ybz-bloom pointer-events-none absolute inset-0 -z-10" />
 
-          <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[1.1fr_0.9fr]">
-            <motion.div
-              className="space-y-6"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: [0, 0, 0.2, 1] }}
+      <PageHeader
+        eyebrow="CV"
+        title="The record, without the adjectives."
+        lede="Two pages. Read it in the browser or take the PDF into a review. Anything in it that needs a source has one."
+        actions={
+          <>
+            <Button href={pdfSrc} download icon={Download} iconPosition="start">
+              Download PDF
+            </Button>
+            <Button
+              href={pdfSrc}
+              variant="secondary"
+              icon={ExternalLink}
+              iconPosition="start"
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              <p className="ybz-eyebrow">CV</p>
-              <h1 className="max-w-2xl font-display text-4xl leading-tight text-bone sm:text-5xl">
-                The record, without the adjectives.
-              </h1>
-              <GoldRule />
-              <p className="max-w-xl leading-8">
-                Two pages. Read it in the browser or take the PDF into a review.
-                Anything in it that needs a source has one.
-              </p>
+              Open in a new tab
+            </Button>
+          </>
+        }
+      />
 
-              <div className="flex flex-wrap gap-3 pt-2">
-                <a href={pdfSrc} download className="ybz-btn-primary">
-                  <Download size={18} />
-                  Download PDF
-                </a>
-                <a
-                  href={pdfSrc}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="ybz-btn-ghost"
-                >
-                  <ExternalLink size={18} />
-                  Open in a new tab
-                </a>
-              </div>
-            </motion.div>
-
-            <motion.div
-              className="ybz-card space-y-5 p-6"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1, ease: [0, 0, 0.2, 1] }}
-            >
-              <p className="ybz-eyebrow">What&apos;s inside</p>
-              <ul className="space-y-3 text-sm leading-7">
-                {inside.map((item) => (
-                  <li key={item} className="flex items-start gap-3">
-                    <span
-                      className="mt-2.5 h-px w-4 shrink-0"
-                      style={{ background: "var(--ybz-accent-rule)" }}
-                    />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-
-              <GoldRule />
-
-              <div className="space-y-4">
-                <p className="ybz-eyebrow">Current</p>
-                {experienceTimeline.map((entry) => (
-                  <div key={entry.title}>
-                    <p className="ybz-meta">{entry.period}</p>
-                    <p className="mt-1 text-sm text-bone">{entry.title}</p>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
+      {/* What the PDF holds, set as three ruled columns rather than cards. */}
+      <Section tone="raised">
+        <div className="grid gap-10 md:grid-cols-3">
+          <div className="space-y-4 border-t border-edge pt-6">
+            <p className="ybz-eyebrow">What&apos;s inside</p>
+            <ul className="ybz-body space-y-3">
+              {inside.map((item) => (
+                <li key={item} className="flex items-start gap-3">
+                  <span
+                    className="mt-3 h-px w-4 shrink-0"
+                    style={{ background: "var(--ybz-accent-rule)" }}
+                    aria-hidden="true"
+                  />
+                  {item}
+                </li>
+              ))}
+            </ul>
           </div>
-        </section>
 
-        <section className="px-6 pb-16 sm:px-10 lg:px-16">
-          <motion.div
-            className="ybz-card mx-auto max-w-6xl p-4 sm:p-6"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.6, ease: [0, 0, 0.2, 1] }}
+          <div className="border-t border-edge pt-6">
+            <RoleList eyebrow="Experience" roles={experienceTimeline} compact />
+          </div>
+
+          <div className="space-y-8 border-t border-edge pt-6">
+            <RoleList
+              eyebrow="Leadership and community"
+              roles={leadershipRoles}
+              compact
+            />
+            <RoleList eyebrow="Volunteering" roles={volunteering} compact />
+          </div>
+        </div>
+      </Section>
+
+      <Section>
+        <Card className="p-4 sm:p-6">
+          <object
+            data={pdfSrc}
+            type="application/pdf"
+            className="h-128 w-full"
+            style={{ borderRadius: "var(--ybz-r-sm)" }}
+            aria-label={`${BRAND.name} CV preview`}
           >
-            <object
-              data={pdfSrc}
-              type="application/pdf"
-              className="h-[32rem] w-full"
-              style={{ borderRadius: "var(--ybz-r-md)" }}
-              aria-label={`${BRAND.name} CV preview`}
+            <div
+              className="flex h-128 w-full flex-col items-center justify-center gap-3 border border-dashed border-edge text-center"
+              style={{ borderRadius: "var(--ybz-r-sm)" }}
             >
-              <div
-                className="flex h-[32rem] w-full flex-col items-center justify-center gap-3 border border-dashed border-edge text-center text-sm"
-                style={{ borderRadius: "var(--ybz-r-md)" }}
-              >
-                <p>This browser cannot preview PDFs inline.</p>
-                <a
-                  href={pdfSrc}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[var(--ybz-accent-type)] underline underline-offset-4"
-                >
-                  Open the CV in a new tab
-                </a>
-              </div>
-            </object>
-          </motion.div>
-        </section>
-
-        <section className="border-t border-edge bg-obsidian px-6 py-16 sm:px-10 lg:px-16">
-          <div className="mx-auto max-w-6xl space-y-5">
-            <p className="ybz-eyebrow">Next</p>
-            <h2 className="max-w-2xl font-display text-3xl text-bone">
-              If the CV raises a question, ask it directly.
-            </h2>
-            <GoldRule />
-            <p className="max-w-2xl leading-8">
-              The interesting part of a CV is usually the decision behind a line
-              on it, and that does not fit in a bullet.
-            </p>
-            <div className="pt-2">
-              <Link to="/contact" className="ybz-btn-primary">
-                Contact
-              </Link>
+              <p className="ybz-body">
+                This browser cannot preview PDFs inline.
+              </p>
+              <TextLink href={pdfSrc}>Open the CV in a new tab</TextLink>
             </div>
-          </div>
-        </section>
-      </div>
+          </object>
+        </Card>
+      </Section>
+
+      <Section tone="raised" className="border-b-0">
+        <SectionHeader
+          eyebrow="Next"
+          title="If the CV raises a question, ask it directly."
+          lede="The interesting part of a CV is usually the decision behind a line on it, and that does not fit in a bullet."
+        />
+        <Button to="/contact">Contact</Button>
+      </Section>
     </>
   );
 };

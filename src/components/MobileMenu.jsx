@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { X } from "lucide-react";
 import useFocusTrap from "../hooks/useFocusTrap";
-import Signet from "./Signet";
 import StackRail from "./StackRail";
-import { BRAND } from "../config/brand";
+import Wordmark from "./Wordmark";
 import GoldRule from "./GoldRule";
+import { NAV_ITEMS } from "../config/navigation";
 
 const MobileMenu = ({ isOpen, toggleMenu }) => {
   const focusTrapRef = useFocusTrap(isOpen);
@@ -44,21 +44,11 @@ const MobileMenu = ({ isOpen, toggleMenu }) => {
     return () => container?.removeEventListener("escape-trap", handleEscape);
   }, [toggleMenu, focusTrapRef]);
 
-  const navItems = [
-    { name: "Home", path: "/" },
-    { name: "Projects", path: "/projects" },
-    { name: "Writing", path: "/blog" },
-    { name: "Certificates", path: "/certificates" },
-    { name: "CV", path: "/cv" },
-    { name: "About", path: "/about" },
-    { name: "Contact", path: "/contact" },
-  ];
-
   if (!isOpen) return null;
 
   return (
     <div
-      className="fixed inset-0 z-50 overflow-hidden backdrop-blur md:hidden"
+      className="fixed inset-0 z-50 overflow-hidden md:hidden"
       style={{ background: "var(--ybz-scrim)" }}
       onClick={toggleMenu}
       role="dialog"
@@ -75,49 +65,40 @@ const MobileMenu = ({ isOpen, toggleMenu }) => {
         <StackRail />
 
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Signet size={34} />
-            <div>
-              <p className="font-display text-lg font-bold text-bone">
-                {BRAND.name}
-              </p>
-              <p
-                className="font-mono text-[0.6rem] uppercase text-muted"
-                style={{ letterSpacing: "0.14em" }}
-              >
-                {BRAND.descriptorLockup}
-              </p>
-            </div>
-          </div>
+          <Wordmark />
           <button
+            type="button"
             onClick={toggleMenu}
-            className="border border-edge p-2 text-bone transition-colors hover:border-hairline"
+            className="flex h-10 w-10 items-center justify-center border border-edge text-bone transition-colors duration-150 hover:border-hairline"
             style={{ borderRadius: "var(--ybz-r-sm)" }}
             aria-label="Close menu"
           >
-            <X size={20} />
+            <X size={18} strokeWidth={1.75} />
           </button>
         </div>
 
-        <div className="flex flex-col gap-1 text-lg font-medium">
-          {navItems.map((item) => (
+        <nav
+          className="flex flex-col gap-1 text-lg font-medium"
+          aria-label="Primary"
+        >
+          {NAV_ITEMS.map((item) => (
             <Link
               key={item.name}
               to={item.path}
               onClick={toggleMenu}
-              className="border-l-2 border-transparent px-4 py-3 text-slate-body transition-colors hover:border-[var(--ybz-accent-rule)] hover:text-bone"
+              className="flex h-12 items-center border-l-2 border-transparent px-4 text-slate-body transition-colors duration-150 hover:border-[var(--ybz-accent-rule)] hover:text-bone"
             >
               {item.name}
             </Link>
           ))}
-        </div>
+        </nav>
 
         <div className="mt-auto space-y-4">
           <GoldRule />
           <Link
             to="/lets-talk"
             onClick={toggleMenu}
-            className="ybz-btn-accent w-full justify-center"
+            className="ybz-btn ybz-btn-accent w-full"
           >
             Let&apos;s talk
           </Link>

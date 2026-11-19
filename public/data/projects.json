@@ -1,6 +1,311 @@
 {
   "projects": [
     {
+      "id": "edushift-ai",
+      "title": "EduShift AI",
+      "summary": "LMS and business-simulation SaaS at MindShift MENA. Versioned AI simulations with automated competency scoring. One simulation became four production learning products, now used by 6+ organisations.",
+      "tech": [
+        "TypeScript",
+        "Next.js",
+        "PostgreSQL",
+        "Docker"
+      ],
+      "role": "SaaS platform",
+      "year": "Live",
+      "live": "https://platform.edushiftai.com/",
+      "image": "/images/projects/EduShift.png",
+      "tagline": "An LMS and business-simulation platform that grew from one simulation into four production products.",
+      "context": "MindShift MENA",
+      "engagement": "Employed, software engineer",
+      "timeline": "2025 – present",
+      "status": "In production",
+      "brief": "MindShift MENA runs training programmes that teach decision-making through simulation. The first version was a single hand-built simulation. Each new programme meant a new build. The platform needed to make a simulation a configuration, not a project.",
+      "features": [
+        "Learning management: programmes, cohorts and learner progress",
+        "Business simulations that learners play through as decisions with consequences",
+        "AI-driven scenarios, versioned so a running cohort is never moved onto a changed prompt",
+        "Automated competency scoring against a defined rubric",
+        "Configuration instead of code for each new programme"
+      ],
+      "decisions": [
+        {
+          "title": "Simulations are versioned, not edited in place",
+          "body": "A cohort that started on one version of a simulation finishes on that version. Changing the prompt or the scoring creates a new version, so results within a cohort stay comparable.",
+          "outcome": "A cohort's results stay comparable while the product keeps changing."
+        },
+        {
+          "title": "Scoring is automated against a rubric",
+          "body": "Competency scores come from a fixed rubric rather than from a facilitator's reading of each transcript, so two cohorts can be compared on the same scale.",
+          "outcome": "Two cohorts are graded on the same scale, without one facilitator's bias."
+        },
+        {
+          "title": "One engine, many products",
+          "body": "The simulation became a configurable engine. That is what let a single simulation turn into four production learning products.",
+          "outcome": "A new programme is configuration, not a new build."
+        }
+      ],
+      "metrics": [
+        {
+          "label": "Production products",
+          "value": "4"
+        },
+        {
+          "label": "Organisations using it",
+          "value": "6+"
+        }
+      ],
+      "users": null,
+      "stackProse": "TypeScript end to end, Next.js on the front, PostgreSQL for data, shipped in Docker containers.",
+      "lighthouse": {
+        "version": "12.8.2",
+        "url": "https://platform.edushiftai.com/login?next=%2F",
+        "date": "2026-11-19",
+        "mobile": {
+          "performance": 81,
+          "accessibility": 100,
+          "bestPractices": 96,
+          "seo": 92,
+          "lcp": "4.3 s",
+          "cls": "0.001",
+          "tbt": "60 ms"
+        },
+        "desktop": {
+          "performance": 97,
+          "accessibility": 100,
+          "bestPractices": 96,
+          "seo": 92,
+          "lcp": "1.1 s",
+          "cls": "0",
+          "tbt": "0 ms"
+        }
+      },
+      "highlights": [
+        {
+          "value": "4",
+          "label": "production products grown from one simulation"
+        },
+        {
+          "value": "6+",
+          "label": "organisations training on it"
+        },
+        {
+          "value": "100",
+          "label": "Lighthouse accessibility score"
+        }
+      ]
+    },
+    {
+      "id": "autobusiness",
+      "title": "AutoBusiness",
+      "summary": "Freelance build: a bilingual Arabic and English store for courses and templates. Orders move through a server-side state machine under row locks, so approving a payment twice cannot grant access twice.",
+      "tech": [
+        "Next.js",
+        "NestJS",
+        "TypeORM",
+        "MariaDB",
+        "Docker"
+      ],
+      "role": "Freelance",
+      "year": "Live",
+      "live": "https://autobusinessacademy.com/",
+      "image": "/images/projects/AutoBusiness.png",
+      "tagline": "A bilingual store for courses and templates, with payment review that cannot grant access twice.",
+      "context": "Auto Business, a digital-business training brand",
+      "engagement": "Freelance, sole engineer",
+      "timeline": "Oct – Nov 2026",
+      "status": "In production",
+      "brief": "The client sells courses and downloadable templates to an Arabic-speaking audience. Card payments were not an option, so buyers pay by InstaPay or Vodafone Cash and upload a receipt. The system had to turn that manual step into something an admin can review safely, in Arabic first, with English as a switch.",
+      "features": [
+        "Arabic-first interface (right to left) with English as a switch, on locale-prefixed routes",
+        "Catalogue of courses, templates and bundles priced on their own",
+        "Checkout by InstaPay or Vodafone Cash with receipt upload",
+        "Admin review queue: approve or reject receipts, with an audit log of every decision",
+        "My library: unlocked courses and authenticated file downloads",
+        "Two-stage payments for service projects: deposit, then final payment on delivery",
+        "Per-page SEO in both languages: hreflang, JSON-LD for courses and products, dynamic sitemap"
+      ],
+      "decisions": [
+        {
+          "title": "Orders are a state machine under a row lock",
+          "body": "An order moves pending payment, awaiting review, then approved, rejected or cancelled. Every transition runs in one transaction holding a pessimistic write lock. Approving an order twice is a no-op, so a double click or two admins at once cannot grant access twice.",
+          "outcome": "A double click, or two admins at once, never gives a course away."
+        },
+        {
+          "title": "Refresh tokens rotate and detect reuse",
+          "body": "Each refresh issues a new token in the same family. If an already-used token comes back, the whole family is revoked. Stored tokens are HMAC-hashed with a purpose prefix, so a reset token can never be replayed as a refresh token.",
+          "outcome": "A stolen session token stops working the moment it is replayed."
+        },
+        {
+          "title": "One service decides access",
+          "body": "Bundles expand into per-product entitlements at approval time. A single entitlements service answers every 'can this user see this?' question and supports revocation. Uploads are typed by their magic bytes, not by their file extension.",
+          "outcome": "Access rules live in one place, so a new product type cannot leak paid content."
+        }
+      ],
+      "metrics": [
+        {
+          "label": "Backend modules",
+          "value": "17"
+        },
+        {
+          "label": "Database entities",
+          "value": "22"
+        },
+        {
+          "label": "API routes",
+          "value": "~104"
+        },
+        {
+          "label": "Test files",
+          "value": "74"
+        }
+      ],
+      "users": null,
+      "stackProse": "A NestJS modular monolith over MariaDB through TypeORM, with a Next.js front end using next-intl for Arabic and English. Zod validates both sides of the contract. Docker runs the full stack locally, including a mail catcher.",
+      "lighthouse": {
+        "version": "12.8.2",
+        "url": "https://autobusinessacademy.com/ar",
+        "date": "2026-11-19",
+        "mobile": {
+          "performance": 99,
+          "accessibility": 100,
+          "bestPractices": 100,
+          "seo": 100,
+          "lcp": "1.8 s",
+          "cls": "0.054",
+          "tbt": "40 ms"
+        },
+        "desktop": {
+          "performance": 100,
+          "accessibility": 100,
+          "bestPractices": 100,
+          "seo": 100,
+          "lcp": "0.7 s",
+          "cls": "0.004",
+          "tbt": "0 ms"
+        }
+      },
+      "highlights": [
+        {
+          "value": "99",
+          "label": "Lighthouse performance on mobile"
+        },
+        {
+          "value": "74",
+          "label": "automated test files"
+        },
+        {
+          "value": "AR / EN",
+          "label": "Arabic first, English on a switch"
+        }
+      ]
+    },
+    {
+      "id": "msp-tech-club",
+      "title": "MSP Tech Club system",
+      "summary": "Public site and invite-only member system for MSP Tech Club, Capital University. Permission-based RBAC blocks privilege escalation and always keeps one active president. Registration locks the event row, promotes the waitlist and issues QR tickets scanned at the door.",
+      "tech": [
+        "Next.js",
+        "NestJS",
+        "PostgreSQL",
+        "Drizzle ORM",
+        "Vercel"
+      ],
+      "role": "Club system",
+      "year": "Live",
+      "live": "https://msp-helwan.vercel.app/",
+      "repo": "https://github.com/YOUBAZ/msp_helwan",
+      "image": "/images/projects/MSP-Tech-Club.jpeg",
+      "tagline": "The public site and member system for a university tech club, with event tickets checked in by QR.",
+      "context": "MSP Tech Club, Capital University",
+      "engagement": "Volunteer, sole engineer",
+      "timeline": "Nov 2026",
+      "status": "In production",
+      "brief": "The club ran on a static site and spreadsheets. The board needed invite-only accounts with real roles, events with capacity and a waitlist, and a way to check attendees in at the door, without giving every board member every permission.",
+      "features": [
+        "Public pages: committees, team, media albums and events",
+        "Event registration without an account, with a QR ticket sent by email",
+        "Capacity limits with an automatic waitlist",
+        "Door check-in by scanning the QR ticket from the dashboard",
+        "Custom registration forms per event",
+        "Invite-only accounts with configurable roles and permissions",
+        "Contact inbox, newsletter subscribers and daily reminder emails"
+      ],
+      "decisions": [
+        {
+          "title": "Permissions, not role names, guard every route",
+          "body": "Routes declare the permission they need. The API refuses to let anyone grant a permission they do not hold, only a President can appoint a President, and the last active President cannot be removed. The club cannot lock itself out.",
+          "outcome": "The club cannot lock itself out, and no member can promote themselves."
+        },
+        {
+          "title": "Registration locks the event row",
+          "body": "Each registration runs in a transaction that locks the event. Two people cannot take the last seat. When a seat frees up, the next person on the waitlist is promoted in the same transaction.",
+          "outcome": "The last seat is taken once. Nobody is told they are in and then turned away."
+        },
+        {
+          "title": "Tokens can be revoked",
+          "body": "A token version on each user invalidates every issued JWT at once, such as when an account is disabled. Migrations are plain SQL applied at boot and tracked in a table, so a deploy is the whole release process.",
+          "outcome": "Disabling an account takes effect at once, on every device."
+        }
+      ],
+      "metrics": [
+        {
+          "label": "Pages",
+          "value": "22"
+        },
+        {
+          "label": "API routes",
+          "value": "86"
+        },
+        {
+          "label": "Database tables",
+          "value": "17"
+        },
+        {
+          "label": "Test cases",
+          "value": "~100"
+        }
+      ],
+      "users": null,
+      "stackProse": "Next.js 15 on the front, NestJS 11 on the API, PostgreSQL on Neon through Drizzle ORM, both deployed on Vercel with a scheduled job for reminders.",
+      "lighthouse": {
+        "version": "12.8.2",
+        "url": "https://msp-helwan.vercel.app/",
+        "date": "2026-11-19",
+        "mobile": {
+          "performance": 85,
+          "accessibility": 96,
+          "bestPractices": 100,
+          "seo": 100,
+          "lcp": "4.2 s",
+          "cls": "0",
+          "tbt": "130 ms"
+        },
+        "desktop": {
+          "performance": 99,
+          "accessibility": 96,
+          "bestPractices": 100,
+          "seo": 100,
+          "lcp": "0.9 s",
+          "cls": "0",
+          "tbt": "0 ms"
+        }
+      },
+      "highlights": [
+        {
+          "value": "3 days",
+          "label": "from first commit to live system"
+        },
+        {
+          "value": "~100",
+          "label": "automated test cases"
+        },
+        {
+          "value": "86",
+          "label": "API routes behind permission checks"
+        }
+      ]
+    },
+    {
       "id": "promptopia",
       "title": "Promptopia",
       "summary": "AI prompt-sharing platform built with Next.js, React, NextAuth, and MongoDB for creating, browsing, and managing prompts in a clean social feed.",

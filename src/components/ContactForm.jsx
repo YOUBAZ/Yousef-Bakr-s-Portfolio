@@ -1,8 +1,9 @@
 import { useState } from "react";
 import emailjs from "@emailjs/browser";
-import { AlertCircle, Check } from "lucide-react";
+import { AlertCircle, Check, Loader2, Send } from "lucide-react";
 import emailConfig from "../config/email";
 import { BRAND } from "../config/brand";
+import { Button } from "./ui";
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -42,46 +43,44 @@ const ContactForm = () => {
     }
   };
 
-  const fieldClass =
-    "mt-2 block w-full border border-edge bg-ink p-3 text-bone placeholder:text-muted focus:border-hairline focus:outline-none";
-  const fieldStyle = { borderRadius: "var(--ybz-r-sm)" };
+  const labelClass = "block text-sm font-medium text-bone";
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
-      <div>
-        <label htmlFor="name" className="ybz-eyebrow">
+      <div className="space-y-2">
+        <label htmlFor="name" className={labelClass}>
           Name
         </label>
         <input
           type="text"
           id="name"
           name="name"
+          autoComplete="name"
           value={formData.name}
           onChange={handleChange}
           required
-          className={fieldClass}
-          style={fieldStyle}
+          className="ybz-input"
         />
       </div>
 
-      <div>
-        <label htmlFor="email" className="ybz-eyebrow">
+      <div className="space-y-2">
+        <label htmlFor="email" className={labelClass}>
           Email
         </label>
         <input
           type="email"
           id="email"
           name="email"
+          autoComplete="email"
           value={formData.email}
           onChange={handleChange}
           required
-          className={fieldClass}
-          style={fieldStyle}
+          className="ybz-input"
         />
       </div>
 
-      <div>
-        <label htmlFor="message" className="ybz-eyebrow">
+      <div className="space-y-2">
+        <label htmlFor="message" className={labelClass}>
           Message
         </label>
         <textarea
@@ -91,46 +90,61 @@ const ContactForm = () => {
           value={formData.message}
           onChange={handleChange}
           required
-          className={fieldClass}
-          style={fieldStyle}
+          className="ybz-input resize-y"
         />
       </div>
 
-      <button
+      <Button
         type="submit"
         disabled={isSubmitting}
-        className="ybz-btn-primary w-full justify-center disabled:opacity-50"
+        icon={isSubmitting ? Loader2 : Send}
+        className={`w-full ${isSubmitting ? "[&>svg]:animate-spin" : ""}`}
       >
         {isSubmitting ? "Sending" : "Send"}
-      </button>
+      </Button>
 
       {/* Section 3.5 rule 1 has no red and no green. State is carried by an
           icon and the wording, not by a colour outside the palette. */}
-      {submitStatus === "success" && (
-        <div className="flex items-start gap-3 text-sm leading-7 text-bone">
-          <Check
-            size={18}
-            className="mt-1 shrink-0"
-            style={{ color: "var(--ybz-accent-type)" }}
-          />
-          Sent. I read every one of these and reply to the ones I can be useful
-          on.
-        </div>
-      )}
+      <div aria-live="polite">
+        {submitStatus === "success" && (
+          <p className="flex items-start gap-3 text-sm leading-6 text-bone">
+            <Check
+              size={16}
+              strokeWidth={1.75}
+              aria-hidden="true"
+              className="mt-1 shrink-0 text-accent"
+            />
+            <span>
+              Sent. I read every one of these and reply to the ones I can be
+              useful on.
+            </span>
+          </p>
+        )}
 
-      {submitStatus === "error" && (
-        <div className="flex items-start gap-3 text-sm leading-7 text-muted">
-          <AlertCircle size={18} className="mt-1 shrink-0" />
-          That did not send. Try again, or email me directly at{" "}
-          <a
-            href={`mailto:${BRAND.email}`}
-            className="text-[var(--ybz-accent-type)] underline underline-offset-4"
+        {submitStatus === "error" && (
+          <p
+            role="alert"
+            className="flex items-start gap-3 text-sm leading-6 text-accent"
           >
-            {BRAND.email}
-          </a>
-          .
-        </div>
-      )}
+            <AlertCircle
+              size={16}
+              strokeWidth={1.75}
+              aria-hidden="true"
+              className="mt-1 shrink-0"
+            />
+            <span>
+              That did not send. Try again, or email me directly at{" "}
+              <a
+                href={`mailto:${BRAND.email}`}
+                className="underline underline-offset-4"
+              >
+                {BRAND.email}
+              </a>
+              .
+            </span>
+          </p>
+        )}
+      </div>
     </form>
   );
 };

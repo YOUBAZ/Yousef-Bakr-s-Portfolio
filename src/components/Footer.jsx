@@ -1,8 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Github, Linkedin, Mail } from "lucide-react";
-import Signet from "./Signet";
-import { BRAND, CONTACT_BLOCK } from "../config/brand";
+import Wordmark from "./Wordmark";
 import GoldRule from "./GoldRule";
+import { Button } from "./ui";
+import { BRAND, CONTACT_BLOCK } from "../config/brand";
+import { NAV_ITEMS } from "../config/navigation";
 
 const socialLinks = [
   { icon: Github, label: "GitHub", href: BRAND.github },
@@ -10,117 +12,100 @@ const socialLinks = [
   { icon: Mail, label: "Email", href: `mailto:${BRAND.email}` },
 ];
 
-const navShortcuts = [
-  { label: "Projects", path: "/projects" },
-  { label: "Writing", path: "/blog" },
-  { label: "Certificates", path: "/certificates" },
-  { label: "CV", path: "/cv" },
-  { label: "About", path: "/about" },
-  { label: "Contact", path: "/contact" },
-];
+const pad = (n) => String(n).padStart(2, "0");
 
 /**
- * The footer strip — BRAND.md section 5, device 3. Hairline top border, signet
- * + name + role on the left, mono counter on the right in gold.
- *
- * What used to live here and does not any more: four unsourced capability
- * badges, a line volunteering the location (section 1 keeps it private), and a
- * "Built with React, Next.js, Node.js…" sign-off — a stack list on an asset,
- * naming two frameworks this site does not use.
+ * The footer strip — BRAND.md section 5, device 3: hairline top border,
+ * signet + name + role on the left, mono counter on the right in gold.
+ * On a site the counter is the page's position in the primary navigation,
+ * the same job it does on a carousel slide.
  */
 const Footer = () => {
-  const currentYear = new Date().getFullYear();
+  const { pathname } = useLocation();
+  const index = NAV_ITEMS.findIndex((item) =>
+    item.path === "/" ? pathname === "/" : pathname.startsWith(item.path)
+  );
 
   return (
-    <footer className="relative mt-24 border-t border-hairline bg-ink text-slate-body">
-      <div className="mx-auto max-w-6xl space-y-12 px-6 py-16">
-        <div className="grid gap-10 lg:grid-cols-[1.6fr_1fr_1fr]">
-          <div>
-            <Link
-              to="/"
-              className="flex items-center gap-3"
-              onClick={() => window.scrollTo({ top: 0, behavior: "auto" })}
-            >
-              <Signet size={40} />
-              <div>
-                <p className="font-display text-lg font-bold text-bone">
-                  {BRAND.name}
-                </p>
-                <p
-                  className="font-mono text-[0.65rem] uppercase text-muted"
-                  style={{ letterSpacing: "0.14em" }}
-                >
-                  {BRAND.descriptorLockup}
-                </p>
+    <footer className="border-t border-hairline bg-ink text-slate-body">
+      <div className="px-6 py-16 sm:px-10 lg:px-16">
+        <div className="mx-auto max-w-6xl space-y-12">
+          <div className="grid gap-12 lg:grid-cols-[1.6fr_1fr_1fr]">
+            <div className="space-y-6">
+              <Link
+                to="/"
+                className="inline-block"
+                aria-label={`${BRAND.name}, home`}
+                onClick={() => window.scrollTo({ top: 0, behavior: "auto" })}
+              >
+                <Wordmark size="lg" />
+              </Link>
+              <GoldRule />
+              <div className="max-w-md space-y-2">
+                <p className="ybz-body">{BRAND.positioning}</p>
+                <p className="text-sm text-muted">{BRAND.tagline}</p>
               </div>
-            </Link>
-
-            <GoldRule className="mt-6" />
-
-            <p className="mt-5 max-w-md text-sm leading-7">
-              {BRAND.positioning}
-            </p>
-            <p className="mt-3 max-w-md text-sm italic text-muted">
-              {BRAND.tagline}
-            </p>
-          </div>
-
-          <div>
-            <p className="ybz-eyebrow">Navigate</p>
-            <div className="mt-4 flex flex-col gap-3 text-sm">
-              {navShortcuts.map((link) => (
-                <Link
-                  key={link.label}
-                  to={link.path}
-                  className="text-slate-body transition-colors hover:text-bone"
-                >
-                  {link.label}
-                </Link>
-              ))}
             </div>
-          </div>
 
-          <div>
-            <p className="ybz-eyebrow">Connect</p>
-            <div className="mt-4 flex flex-wrap gap-3 text-sm">
-              {socialLinks.map((link) => {
-                const Icon = link.icon;
-                return (
-                  <a
+            <nav aria-label="Footer">
+              <p className="ybz-eyebrow">Navigate</p>
+              <ul className="mt-4 space-y-3 text-sm">
+                {NAV_ITEMS.filter((item) => item.path !== "/").map((link) => (
+                  <li key={link.path}>
+                    <Link
+                      to={link.path}
+                      className="text-slate-body transition-colors duration-150 hover:text-bone"
+                    >
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+
+            <div>
+              <p className="ybz-eyebrow">Connect</p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {socialLinks.map((link) => (
+                  <Button
                     key={link.label}
                     href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 border border-edge px-4 py-3 text-bone transition-all hover:-translate-y-0.5 hover:border-hairline"
-                    style={{ borderRadius: "var(--ybz-r-sm)" }}
+                    variant="secondary"
+                    size="sm"
+                    icon={link.icon}
+                    iconPosition="start"
                   >
-                    <Icon size={18} />
                     {link.label}
-                  </a>
-                );
-              })}
-            </div>
+                  </Button>
+                ))}
+              </div>
 
-            {/* Section 11's contact block, in its fixed order. */}
-            <div className="mt-6 flex flex-col gap-1.5 text-xs">
-              {CONTACT_BLOCK.map((entry) => (
-                <a
-                  key={entry.href}
-                  href={entry.href}
-                  className="text-muted transition-colors hover:text-[var(--ybz-accent-type)]"
-                >
-                  {entry.label}
-                </a>
-              ))}
+              {/* Section 11's contact block, in its fixed order. */}
+              <ul className="mt-6 space-y-1">
+                {CONTACT_BLOCK.map((entry) => (
+                  <li key={entry.href}>
+                    <a
+                      href={entry.href}
+                      className="ybz-source transition-colors duration-150 hover:text-accent"
+                    >
+                      {entry.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
-        </div>
 
-        <div className="flex flex-col gap-4 border-t border-edge pt-6 sm:flex-row sm:items-center sm:justify-between">
-          <p className="ybz-meta">
-            © {currentYear} {BRAND.name}
-          </p>
-          <p className="ybz-meta">{BRAND.role}</p>
+          <div className="flex items-center justify-between gap-4 border-t border-edge pt-6">
+            <p className="ybz-meta">
+              © {new Date().getFullYear()} {BRAND.name} · {BRAND.role}
+            </p>
+            {index >= 0 && (
+              <p className="ybz-meta text-accent" aria-hidden="true">
+                {pad(index + 1)} / {pad(NAV_ITEMS.length)}
+              </p>
+            )}
+          </div>
         </div>
       </div>
     </footer>
