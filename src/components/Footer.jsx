@@ -18,7 +18,7 @@ const pad = (n) => String(n).padStart(2, "0");
  * The footer strip — brand-kit/BRAND.md section 6: hairline top border,
  * Merge Y + name + role on the left, mono page counter on the right.
  * On a site the counter is the page's position in the primary navigation,
- * the same job it does on a carousel slide.
+ * the same job it does on a carousel slide, labelled so it reads as one.
  */
 const Footer = () => {
   const { pathname } = useLocation();
@@ -91,8 +91,11 @@ const Footer = () => {
               © {new Date().getFullYear()} {BRAND.name} · {BRAND.role}
             </p>
             {index >= 0 && (
-              <p className="ybz-meta text-accent" aria-hidden="true">
-                {pad(index + 1)} / {pad(NAV_ITEMS.length)}
+              <p className="ybz-meta">
+                Page{" "}
+                <span className="text-accent">
+                  {pad(index + 1)} of {pad(NAV_ITEMS.length)}
+                </span>
               </p>
             )}
           </div>

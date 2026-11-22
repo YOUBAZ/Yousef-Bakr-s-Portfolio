@@ -2,8 +2,8 @@ import ContactForm from "../components/ContactForm";
 import Seo from "../components/Seo";
 import { siteMeta } from "../config/seo";
 import { BRAND } from "../config/brand";
-import { CONTACT_CHANNELS, COLLABORATION_NOTES, AVAILABILITY } from "../config/contact";
-import { Card, PageHeader, Section } from "../components/ui";
+import { CONTACT_CHANNELS } from "../config/contact";
+import { Card, PageHeader, Section, TextLink } from "../components/ui";
 
 const Contact = () => {
   const contactSchema = [
@@ -54,8 +54,8 @@ const Contact = () => {
 
       <PageHeader
         eyebrow="Contact"
-        title="Which boundary in your system is leaking right now?"
-        lede="Describe the decision rather than the ticket. I reply with a read on the trade-off, what it will cost either way, and whether I am the right person for it."
+        title="Hiring, or have a project?"
+        lede="Tell me about the role or the system. I read every message."
       />
 
       <Section className="pt-0">
@@ -64,9 +64,8 @@ const Contact = () => {
           <Card className="lg:order-2">
             <h2 className="ybz-title">Write to me</h2>
             <p className="ybz-body mt-2">
-              The decision you are weighing, your timeline, and what you have
-              ruled out already. If a call is easier, name a window from the
-              list and I will send an invite.
+              For a role: the team, the stack and where it is based. For a
+              project: what it does and where it is stuck.
             </p>
             <div className="mt-6">
               <ContactForm />
@@ -75,34 +74,23 @@ const Contact = () => {
 
           <div className="space-y-6 lg:order-1">
             <Card>
-              <h2 className="ybz-title">Good fit</h2>
-              <ul className="ybz-body mt-4 space-y-3">
-                {COLLABORATION_NOTES.map((note) => (
-                  <li key={note} className="flex items-start gap-3">
-                    <span
-                      aria-hidden="true"
-                      className="mt-3 h-px w-4 shrink-0"
-                      style={{ background: "var(--ybz-muted)" }}
-                    />
-                    {note}
-                  </li>
-                ))}
-              </ul>
+              <h2 className="ybz-title">If you are hiring</h2>
+              <p className="ybz-body mt-3">
+                The CV has the dates, the stack and the links. The case studies
+                show how I work on a real system.
+              </p>
+              <div className="mt-4 flex flex-wrap gap-x-6">
+                <TextLink to="/cv">CV</TextLink>
+                <TextLink to="/projects">Case studies</TextLink>
+              </div>
             </Card>
 
             <Card>
-              <h2 className="ybz-title">Call windows</h2>
-              <p className="ybz-source mt-1">All hours in GMT</p>
-              <dl className="mt-4 grid gap-3 sm:grid-cols-2">
-                {AVAILABILITY.map((slot) => (
-                  <div key={slot.day} className="ybz-inset p-3">
-                    <dt className="ybz-meta">{slot.day}</dt>
-                    <dd className="mt-1 font-mono text-sm tabular-nums text-bone">
-                      {slot.slots}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
+              <h2 className="ybz-title">If you have a project</h2>
+              <p className="ybz-body mt-3">
+                Production work in TypeScript, NestJS, Next.js and PostgreSQL:
+                the API, the data model and the front end on top of it.
+              </p>
             </Card>
 
             <ul className="grid gap-4">

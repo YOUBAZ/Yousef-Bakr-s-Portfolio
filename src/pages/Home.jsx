@@ -1,16 +1,12 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Seo from "../components/Seo";
 import { siteMeta } from "../config/seo";
 import { BRAND, PROOF_STACK } from "../config/brand";
-import { experienceTimeline } from "../data/experience";
-import { formatDate, getBlogPosts } from "../utils/blogUtils";
-import { formatPeriod } from "../utils/formatPeriod";
 import GoldRule from "../components/GoldRule";
 import {
   Button,
-  Card,
   DecisionRecord,
   Section,
   SectionHeader,
@@ -85,20 +81,6 @@ const heroRecord = {
 };
 
 const Home = () => {
-  // SafeStay is already the hero and a case study; it is not repeated under "Now".
-  const timeline = experienceTimeline.filter(
-    (entry) => entry.current && entry.companyLabel !== "SafeStay"
-  );
-  const [posts, setPosts] = useState([]);
-
-  useEffect(() => {
-    let live = true;
-    getBlogPosts().then((all) => live && setPosts(all.slice(0, 3)));
-    return () => {
-      live = false;
-    };
-  }, []);
-
   const homeSchema = useMemo(() => {
     const locale = (siteMeta.locale || "en_US").replace("_", "-");
     return [
@@ -152,7 +134,7 @@ const Home = () => {
               NestJS, Next.js and PostgreSQL.
             </p>
             <div className="flex flex-wrap items-center gap-3 pt-2">
-              <Button to="/contact" icon={ArrowUpRight}>
+              <Button to="/contact" icon={ArrowRight}>
                 Contact
               </Button>
               <Button to="/projects" variant="secondary">
@@ -231,7 +213,7 @@ const Home = () => {
                 className="hidden items-center gap-1.5 self-start text-sm font-medium text-bone md:flex"
               >
                 Case study
-                <ArrowUpRight size={16} strokeWidth={1.75} />
+                <ArrowRight size={16} strokeWidth={1.75} />
               </span>
             </li>
           ))}
@@ -239,76 +221,6 @@ const Home = () => {
 
         <div className="mt-8">
           <TextLink to="/projects">All projects</TextLink>
-        </div>
-      </Section>
-
-      {/* Writing: the decisions the headline says are published. */}
-      {posts.length > 0 && (
-        <Section tone="raised">
-          <SectionHeader
-            eyebrow="Writing"
-            title="The decisions, written down."
-          />
-          {/* Titles, not cards: the covers live on /blog, this keeps the page short. */}
-          <ol className="-mx-4 border-t border-edge">
-            {posts.map((post) => (
-              <li
-                key={post.id}
-                className="group relative grid gap-2 border-b border-edge px-4 py-6 transition-colors duration-150 hover:bg-card sm:grid-cols-[1fr_auto] sm:items-baseline sm:gap-8"
-              >
-                <h3 className="ybz-title">
-                  <Link
-                    to={`/blog/${post.id}`}
-                    className="underline-offset-4 after:absolute after:inset-0 after:content-[''] group-hover:underline"
-                  >
-                    {post.title}
-                  </Link>
-                </h3>
-                <p className="ybz-meta">
-                  {formatDate(post.publishDate)} · {post.readTime} min read
-                </p>
-              </li>
-            ))}
-          </ol>
-          <div className="mt-8">
-            <TextLink to="/blog">All writing</TextLink>
-          </div>
-        </Section>
-      )}
-
-      {/* Where the work happens now. */}
-      <Section>
-        <SectionHeader eyebrow="Now" title="Where the work happens." />
-
-        <div className="grid gap-6 lg:grid-cols-3">
-          {timeline.map((item) => (
-            <Card key={item.title}>
-              <div className="mb-6 flex items-center gap-4">
-                {item.companyLogo && (
-                  <div className="ybz-plate h-14 w-14 p-2">
-                    <img
-                      src={item.companyLogo}
-                      alt={`${item.companyLabel} logo`}
-                      className="h-full w-full object-contain"
-                      loading="lazy"
-                    />
-                  </div>
-                )}
-                <div className="min-w-0">
-                  <p className="font-medium text-bone">{item.companyLabel}</p>
-                  <p className="ybz-meta">{formatPeriod(item.period)}</p>
-                </div>
-              </div>
-
-              <h3 className="ybz-title">{item.role}</h3>
-              <p className="ybz-body mt-2">{item.detail}</p>
-              {item.link && (
-                <TextLink to={item.link} className="mt-4">
-                  Case study
-                </TextLink>
-              )}
-            </Card>
-          ))}
         </div>
       </Section>
     </>

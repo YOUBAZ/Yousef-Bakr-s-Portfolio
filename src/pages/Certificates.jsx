@@ -40,9 +40,12 @@ CertificateMedia.propTypes = {
   onSelectImage: PropTypes.func,
 };
 
+/* A selection, not a count: certificates.json marks the credentials that bear
+   on engineering work with "featured" (their order). Everything else stays one
+   click away under "All certificates". */
+
 const Certificates = () => {
   const [certificates, setCertificates] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedCertificate, setSelectedCertificate] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -75,19 +78,16 @@ const Certificates = () => {
     return () => controller.abort();
   }, []);
 
-  const categories = useMemo(() => {
-    const unique = new Set(certificates.map((cert) => cert.category));
-    return ["all", ...unique];
-  }, [certificates]);
+  const featured = certificates
+    .filter((cert) => cert.featured && cert.type === "image" && cert.image)
+    .sort((a, b) => a.featured - b.featured);
 
-  const visibleCertificates =
-    selectedCategory === "all"
-      ? certificates
-      : certificates.filter((cert) => cert.category === selectedCategory);
-
-  const visibleImageCertificates = visibleCertificates.filter(
-    (cert) => cert.type === "image" && cert.image
-  );
+  const others = certificates
+    .filter((cert) => !cert.featured)
+    .sort(
+      (a, b) =>
+        a.category.localeCompare(b.category) || a.title.localeCompare(b.title)
+    );
 
   const certificateSchema = useMemo(() => {
     const locale = (siteMeta.locale || "en_US").replace("_", "-");
@@ -157,41 +157,11 @@ const Certificates = () => {
       />
       <PageHeader
         eyebrow="Credentials"
-        title="Certificates, filed by subject and issuer."
-        lede="Badges, diplomas and completion certificates from ALX, IBM SkillsBuild, Cisco, Coursera, edX and others, covering AI, web development, Linux, automation, entrepreneurship and business communication."
-      >
-        <ul className="mt-8 max-w-3xl border-t border-edge">
-          {[
-            "Issued by ALX, IBM SkillsBuild, Cisco, Coursera and edX, among others. Open any certificate to see it full size.",
-            "Best Team Award, DECI Bootcamp — IBM, 2023.",
-            "Coverage spans AI, web development, Linux and entrepreneurship.",
-          ].map((line) => (
-            <li key={line} className="ybz-body border-b border-edge py-3">
-              {line}
-            </li>
-          ))}
-        </ul>
-      </PageHeader>
+        title="Selected credentials."
+        lede="Linux, web development and AI, from the Linux Professional Institute, IBM, Cisco, ALX and the DECI bootcamp, where my team won Best Team. The full list is below."
+      />
 
       <Section className="pt-0">
-        <div
-          className="mb-8 flex flex-wrap gap-3"
-          role="group"
-          aria-label="Filter by category"
-        >
-          {categories.map((category) => (
-            <button
-              key={category}
-              type="button"
-              onClick={() => setSelectedCategory(category)}
-              aria-pressed={selectedCategory === category}
-              className="ybz-chip"
-            >
-              {category === "all" ? "All" : category}
-            </button>
-          ))}
-        </div>
-
         {error && (
           <Card className="ybz-body mb-6 text-center text-muted">{error}</Card>
         )}
@@ -210,7 +180,7 @@ const Certificates = () => {
             ))}
 
           {!isLoading &&
-            visibleImageCertificates.map((certificate) => (
+            featured.map((certificate) => (
               <Card
                 as="article"
                 key={certificate.id}
@@ -238,12 +208,45 @@ const Certificates = () => {
               </Card>
             ))}
 
-          {!isLoading && !error && visibleImageCertificates.length === 0 && (
-            <Card className="ybz-body border-dashed text-center text-muted md:col-span-2 xl:col-span-3">
-              No certificates in this category yet.
-            </Card>
-          )}
         </div>
+
+        {/* The rest: a compact list, folded. Each opens the same viewer. */}
+        {!isLoading && others.length > 0 && (
+          <details className="group mt-12 border-t border-edge pt-6">
+            <summary className="ybz-link min-h-11 cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+              <span className="group-open:hidden">
+                All certificates ({certificates.length})
+              </span>
+              <span className="hidden group-open:inline">
+                Hide the full list
+              </span>
+            </summary>
+            <ul className="mt-6 border-t border-edge">
+              {others.map((cert) => (
+                <li
+                  key={cert.id}
+                  className="grid gap-1 border-b border-edge py-4 sm:grid-cols-[1fr_auto] sm:items-center sm:gap-6"
+                >
+                  <div className="min-w-0">
+                    <p className="text-bone">{cert.title}</p>
+                    <p className="ybz-source">
+                      {cert.issuer} · {cert.category}
+                    </p>
+                  </div>
+                  {cert.type === "image" && cert.image && (
+                    <button
+                      type="button"
+                      onClick={() => setSelectedCertificate(cert)}
+                      className="ybz-link justify-self-start"
+                    >
+                      View
+                    </button>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </details>
+        )}
       </Section>
 
       {selectedCertificate && selectedCertificate.type === "image" && (

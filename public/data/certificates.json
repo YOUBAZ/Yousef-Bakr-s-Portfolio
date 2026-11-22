@@ -8,7 +8,8 @@
       "issueDate": "",
       "credentialUrl": "",
       "image": "/images/certificates/ALX AICI/66-alx-aice-ai-career-essentials-certificate-yousef-bakr-zaki-alsaidi.png",
-      "type": "image"
+      "type": "image",
+      "featured": 6
     },
     {
       "id": "yousefb80802@gmail.com",
@@ -38,7 +39,8 @@
       "issueDate": "",
       "credentialUrl": "",
       "image": "/images/certificates/Single Courses/CISCO/AI_Fundamentals.png",
-      "type": "image"
+      "type": "image",
+      "featured": 5
     },
     {
       "id": "introduction-to-modern-ai",
@@ -127,7 +129,7 @@
       "issuer": "edX (USMx)",
       "issueDate": "",
       "credentialUrl": "",
-      "image": "/images/certificates/Entrepreneurship EDX + Founder Academy/USMx ENES461x Certificate _ edX.png",
+      "image": "/images/certificates/Entrepreneurship EDX and Founder Academy/USMx ENES461x Certificate _ edX.png",
       "type": "image"
     },
     {
@@ -137,7 +139,7 @@
       "issuer": "edX (USMx)",
       "issueDate": "",
       "credentialUrl": "",
-      "image": "/images/certificates/Entrepreneurship EDX + Founder Academy/USMx ENES662x Certificate _ edX.png",
+      "image": "/images/certificates/Entrepreneurship EDX and Founder Academy/USMx ENES662x Certificate _ edX.png",
       "type": "image"
     },
     {
@@ -148,7 +150,8 @@
       "issueDate": "",
       "credentialUrl": "",
       "image": "/images/certificates/DECI/CamScanner 09-04-2024 18.22.png",
-      "type": "image"
+      "type": "image",
+      "featured": 4
     },
     {
       "id": "yousef-bakr-zaki-alsaidi",
@@ -218,7 +221,8 @@
       "issueDate": "",
       "credentialUrl": "https://skills.yourlearning.ibm.com/certificate/share/7cec59d08dewogICJvYmplY3RJZCIgOiAiVVJMLUI4MzVFM0MzRTIwRiIsCiAgImxlYXJuZXJDTlVNIiA6ICIxNzQzOTQ1UkVHIiwKICAib2JqZWN0VHlwZSIgOiAiQUNUSVZJVFkiCn0e9252b6ad8-10",
       "image": "/images/certificates/IBM Skillbuild/Web Development/Yousef_Alsaidi[1].png",
-      "type": "image"
+      "type": "image",
+      "featured": 2
     },
     {
       "id": "explore-emerging-tech",
@@ -228,7 +232,8 @@
       "issueDate": "",
       "credentialUrl": "",
       "image": "/images/certificates/IBM Skillbuild/Web Foundations/explore-emerging-tech.png",
-      "type": "image"
+      "type": "image",
+      "featured": 3
     },
     {
       "id": "explore_emerging_tech_badge20240806-7-ro6zal",
@@ -258,7 +263,8 @@
       "issueDate": "",
       "credentialUrl": "",
       "image": "/images/certificates/Single Courses/CISCO/Linux_Essentials_certificate_yousefb80802-gmail-com_c64d8082-644b-4846-811d-936f29d201f7-1.png",
-      "type": "image"
+      "type": "image",
+      "featured": 1
     },
     {
       "id": "coursera-design-&-make-inforgraphics",

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import { ArrowUpRight, ExternalLink, Github } from "lucide-react";
+import { ArrowRight, ExternalLink, Github } from "lucide-react";
 import Seo from "../components/Seo";
 import { siteMeta } from "../config/seo";
 import { BRAND } from "../config/brand";
@@ -61,7 +61,7 @@ const ProjectCard = ({ project, flagship = false }) => (
           project.title
         )}
       </h3>
-      <p className="ybz-body mt-3 flex-1">{project.summary}</p>
+      <p className="ybz-body mt-3">{project.summary}</p>
 
       {project.highlights?.length > 0 && (
         <div className="mt-6 grid grid-cols-3 gap-4 border-y border-edge py-4">
@@ -74,13 +74,13 @@ const ProjectCard = ({ project, flagship = false }) => (
       <StackLine items={project.tech} className="mt-6" />
 
       {(project.brief || project.live || project.repo) && (
-        <div className="mt-8 flex flex-wrap gap-3">
+        <div className="mt-auto flex flex-wrap gap-3 pt-8">
           {project.brief && (
             <Button
               to={`/projects/${project.id}`}
               size="sm"
               variant={flagship ? "primary" : "secondary"}
-              icon={ArrowUpRight}
+              icon={ArrowRight}
             >
               Case study
             </Button>
@@ -270,7 +270,12 @@ const Projects = () => {
               <ProjectCard
                 key={project.id ?? project.title}
                 project={project}
-                flagship={index === 0}
+                // The first card leads; an odd card left at the end takes the
+                // same full-width layout rather than sitting beside a gap.
+                flagship={
+                  index === 0 ||
+                  (index === production.length - 1 && production.length % 2 === 0)
+                }
               />
             ))}
 

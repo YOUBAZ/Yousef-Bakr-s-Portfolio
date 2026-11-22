@@ -1,15 +1,17 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 
-/** Inline accent link with a trailing arrow. Router link for `to`, anchor for `href`. */
+/**
+ * Inline link with a trailing arrow. Router link for `to`, anchor for `href`.
+ * The arrow says where it goes: → stays on this site, ↗ leaves it.
+ */
 const TextLink = ({ to, href, children, className = "", arrow = true }) => {
+  const Arrow = to ? ArrowRight : ArrowUpRight;
   const content = (
     <>
       {children}
-      {arrow && (
-        <ArrowUpRight size={16} strokeWidth={1.75} aria-hidden="true" />
-      )}
+      {arrow && <Arrow size={16} strokeWidth={1.75} aria-hidden="true" />}
     </>
   );
   const classes = `ybz-link ${className}`;
