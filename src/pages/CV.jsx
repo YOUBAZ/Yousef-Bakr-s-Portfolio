@@ -11,7 +11,6 @@ import RoleList from "../components/RoleList";
 import CertificatesSection from "../components/CertificatesSection";
 import {
   Button,
-  Card,
   PageHeader,
   Section,
   SectionHeader,
@@ -19,6 +18,10 @@ import {
 } from "../components/ui";
 
 const pdfSrc = "/images/CV/Yousef-Bakr-CV.pdf";
+/* Page renders written by `npm run cv:build`. Update the count if the CV's
+   length changes; the build prints it. */
+const cvPages = ["/images/CV/page-1.png", "/images/CV/page-2.png"];
+const pad = (n) => String(n).padStart(2, "0");
 
 /**
  * This page used to assert "40+ product launches", a cloud-architect title,
@@ -139,26 +142,37 @@ const Cv = () => {
         </div>
       </Section>
 
+      {/* The CV's own pages, rendered by scripts/build-cv.mjs, side by side on
+          the page grid. No browser PDF viewer: its toolbar is a block of
+          someone else's chrome in the middle of the page. */}
       <Section>
-        <Card className="p-4 sm:p-6">
-          <object
-            data={pdfSrc}
-            type="application/pdf"
-            className="h-128 w-full"
-            style={{ borderRadius: "var(--ybz-r-sm)" }}
-            aria-label={`${BRAND.name} CV preview`}
-          >
-            <div
-              className="flex h-128 w-full flex-col items-center justify-center gap-3 border border-dashed border-edge bg-inset text-center"
-              style={{ borderRadius: "var(--ybz-r-sm)" }}
-            >
-              <p className="ybz-body">
-                This browser cannot preview PDFs inline.
-              </p>
-              <TextLink href={pdfSrc}>Open the CV in a new tab</TextLink>
-            </div>
-          </object>
-        </Card>
+        <div className="grid gap-8 md:grid-cols-12 md:gap-x-6">
+          {cvPages.map((src, i) => (
+            <figure key={src} className="md:col-span-6">
+              <a
+                href={pdfSrc}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block border border-mid transition-colors duration-150 hover:border-bone"
+              >
+                <img
+                  src={src}
+                  alt={`${BRAND.name} CV, page ${i + 1} of ${cvPages.length}`}
+                  width="992"
+                  height="1404"
+                  loading="lazy"
+                  className="block h-auto w-full"
+                />
+              </a>
+              <figcaption className="ybz-meta mt-3">
+                Page {pad(i + 1)} of {pad(cvPages.length)}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+        <TextLink href={pdfSrc} className="mt-8">
+          Open the PDF
+        </TextLink>
       </Section>
 
       <CertificatesSection tone="raised" />

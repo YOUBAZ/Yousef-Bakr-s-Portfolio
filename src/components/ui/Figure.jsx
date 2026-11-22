@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
 
 /**
- * A figure's value. The number is mono; a unit after it ("3 days") is set in
- * the sans at a smaller size, so the unit does not take a full mono cell and
- * "3 days" sits as tight as "4" or "6+".
+ * A figure's value. A unit after the number ("3 days") stays in Plex Mono, so
+ * every figure on a row is one face, but at half size and muted, so it reads
+ * as the unit and does not take a full-size mono cell.
  */
 export const FigureValue = ({ value }) => {
   const m = String(value).match(/^([~\d.,+/%]+)\s+(\D.*)$/);
@@ -11,9 +11,7 @@ export const FigureValue = ({ value }) => {
   return (
     <>
       {m[1]}
-      <span className="ml-1.5 font-body text-[0.5em] font-medium tracking-normal">
-        {m[2]}
-      </span>
+      <span className="ml-1.5 text-[0.5em] font-medium text-muted">{m[2]}</span>
     </>
   );
 };

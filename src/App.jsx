@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import MobileMenu from "./components/MobileMenu";
 import ErrorBoundary from "./components/ErrorBoundary";
 import Footer from "./components/Footer";
+import GridLines from "./components/ui/GridLines";
 import ScrollToTop from "./components/ScrollToTop";
 import Loading from "./components/Loading";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -59,7 +60,10 @@ function App() {
 
           <MobileMenu isOpen={isMobileMenuOpen} toggleMenu={toggleMobileMenu} />
 
-          <main id="main" className="pt-20">
+          {/* pt-16 is the header strip's height, so the grid ruler hangs
+              directly from its hairline. */}
+          <main id="main" className="pt-16">
+            <GridLines />
             <Suspense fallback={<Loading />}>
               <Routes>
                 <Route path="/" element={<Home />} />

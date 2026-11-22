@@ -199,11 +199,11 @@ const BlogList = () => {
                 Showing {filteredBlogs.length} article
                 {filteredBlogs.length !== 1 ? "s" : ""}
               </p>
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+              <ol className="border-t border-edge">
                 {filteredBlogs.map((blog) => (
                   <BlogCard key={blog.id} blog={blog} />
                 ))}
-              </div>
+              </ol>
             </>
           ) : (
             <div className="py-16">

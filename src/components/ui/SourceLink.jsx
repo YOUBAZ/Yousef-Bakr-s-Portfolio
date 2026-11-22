@@ -4,7 +4,20 @@ import PropTypes from "prop-types";
  * A proof source the reader can check. Mono, muted, underlined; the underline
  * turns signal on hover, as every link does. Without an href it renders as text.
  */
-const SourceLink = ({ href, children, className = "" }) => {
+/* A source reads "site · organisation, Sep 2025 – Present". It may wrap only
+   at a " · ", never inside a part, so a date range is never split. */
+const keepParts = (children) =>
+  typeof children === "string" && children.includes(" · ")
+    ? children.split(" · ").map((part, i) => (
+        <span key={part}>
+          {i > 0 && " · "}
+          <span className="whitespace-nowrap">{part}</span>
+        </span>
+      ))
+    : children;
+
+const SourceLink = ({ href, children: raw, className = "" }) => {
+  const children = keepParts(raw);
   const classes = `ybz-source ${className}`;
   if (!href) return <span className={classes}>{children}</span>;
   const external = /^https?:/.test(href);

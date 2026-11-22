@@ -1,65 +1,49 @@
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { formatDate } from "../utils/blogUtils";
-import { CoverImage } from "./ui";
-import { Card, StackLine, TextLink } from "./ui";
-
-const defaultImage = "/images/blog/default.png";
+import { StackLine, TextLink } from "./ui";
 
 /**
- * A post in the writing index. The banner sits in a surface frame at its own
- * 1200 × 630 ratio; hover is the card's border step and nothing else.
+ * A post in the writing index: one row on the page grid (3 / 7 / 2), like the
+ * project index. Date and topics in columns 1–3, title and summary in 4–10,
+ * the link in 11–12. No cover here: the generated cover repeats the title at a
+ * size no one can read. It stays the article's banner and social image.
  */
 const BlogCard = ({ blog }) => {
   const href = `/blog/${blog.id}`;
 
   return (
-    <Card
-      as="article"
-      interactive
-      padded={false}
-      className="flex h-full flex-col"
-    >
-      <Link to={href} tabIndex={-1} aria-hidden="true" className="block">
-        <div className="ybz-frame ybz-frame--cover aspect-[40/21]">
-          <CoverImage
-            src={blog.featuredImage || defaultImage}
-            alt=""
-            fallback={defaultImage}
-          />
-        </div>
-      </Link>
-
-      <div className="flex flex-1 flex-col p-6">
+    <li className="group relative grid gap-3 border-b border-edge py-8 md:grid-cols-12 md:gap-x-6">
+      <div className="space-y-2 md:col-span-3">
+        <p className="ybz-meta">
+          <time dateTime={blog.publishDate}>{formatDate(blog.publishDate)}</time>
+          {" · "}
+          {blog.readTime} min read
+        </p>
         {blog.tags && blog.tags.length > 0 && (
-          <StackLine items={blog.tags.slice(0, 3)} className="mb-3" />
+          <StackLine items={blog.tags.slice(0, 3)} />
         )}
+      </div>
 
-        <h3 className="ybz-title line-clamp-2">
+      <div className="space-y-2 md:col-span-7">
+        <h3 className="ybz-title">
+          {/* The link covers the whole row; the title is its name. */}
           <Link
             to={href}
-            className="underline decoration-transparent underline-offset-4 transition-colors duration-150 hover:decoration-[var(--ybz-signal)]"
+            className="underline decoration-transparent underline-offset-4 transition-colors duration-150 after:absolute after:inset-0 after:content-[''] group-hover:decoration-[var(--ybz-signal)]"
           >
             {blog.title}
           </Link>
         </h3>
-
-        <p className="ybz-body mt-3 line-clamp-3">{blog.description}</p>
-
-        <div className="mt-auto pt-6">
-          <p className="ybz-source border-t border-edge pt-4">
-            <time dateTime={blog.publishDate}>
-              {formatDate(blog.publishDate)}
-            </time>
-            {" · "}
-            {blog.readTime} min read
-          </p>
-          <TextLink to={href} className="mt-4">
-            Read article
-          </TextLink>
-        </div>
+        <p className="ybz-body line-clamp-3">{blog.description}</p>
       </div>
-    </Card>
+
+      <div className="md:col-span-2 md:justify-self-end">
+        <TextLink to={href} tabIndex={-1} aria-hidden="true">
+          Read
+        </TextLink>
+      </div>
+    </li>
   );
 };
 

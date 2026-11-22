@@ -43,14 +43,26 @@ const ProjectRecord = ({ project, lead = false }) => (
           project.title
         )}
       </h3>
+
+      {/* The headline figure holds the left column, so the name does not sit
+          alone beside a tall body. On the lead record it carries the page's
+          one signal rule. */}
+      {project.highlights?.[0] && (
+        <Figure
+          value={project.highlights[0].value}
+          label={project.highlights[0].label}
+          size="lg"
+          className={`!mt-8 pt-4 ${lead ? "ybz-key-rule" : "border-t border-mid"}`}
+        />
+      )}
     </div>
 
     <div className="space-y-6 md:col-span-9">
       <p className="ybz-body max-w-[var(--ybz-w-read)]">{project.summary}</p>
 
-      {project.highlights?.length > 0 && (
+      {project.highlights?.length > 1 && (
         <div className="grid grid-cols-3 gap-x-6 border-t border-edge pt-5">
-          {project.highlights.map((h) => (
+          {project.highlights.slice(1).map((h) => (
             <Figure key={h.label} value={h.value} label={h.label} />
           ))}
         </div>

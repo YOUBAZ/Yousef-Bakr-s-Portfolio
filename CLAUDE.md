@@ -46,7 +46,8 @@ into `brand-kit/01_logo/` to `07_stationery/`; never hand-edit them. On the site
 the Merge Y from `brand.json`.
 
 ## Layout
-Spec sheet: a header strip, a visible 12-column hairline grid on heroes and covers,
+Spec sheet: a header strip with a 12-column grid ruler hanging from it (the full
+hairline grid on covers),
 numbered section strips, a short signal marker under page headlines
 (not section headlines), mono margin notes, and a footer strip with the
 Merge Y + name + role + counter. Left-aligned. Radii 2/4/8; square is the default.

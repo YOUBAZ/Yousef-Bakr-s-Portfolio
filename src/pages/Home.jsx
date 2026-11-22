@@ -11,7 +11,6 @@ import {
   ClosingCta,
   CoverImage,
   DecisionRecord,
-  GridLines,
   Section,
   SectionHeader,
   SourceLink,
@@ -130,20 +129,20 @@ const Home = () => {
         schema={homeSchema}
       />
 
-      {/* Hero, on the visible 12-column grid. The claim runs across ten
-          columns at full display size; under it, the lede in columns 1–5 and
-          the evidence for the claim in columns 7–12. Text blocks sit on the
-          ground colour, so the grid shows between them, never through text. */}
-      <section className="relative isolate overflow-hidden px-6 pb-16 pt-12 sm:px-10 sm:pt-16 lg:px-16 lg:pb-24 lg:pt-20">
-        <GridLines />
+      {/* Hero, on the 12-column grid the ruler above marks out. The claim
+          runs across ten columns at full display size, wrapped "pretty" rather
+          than balanced so its lines fill the width instead of leaving an
+          empty top-right corner; under it, the lede in columns 1–5 and the
+          evidence for the claim in columns 7–12. */}
+      <section className="relative px-6 pb-16 pt-8 sm:px-10 sm:pt-10 lg:px-16 lg:pb-24 lg:pt-12">
         <div className="mx-auto grid max-w-6xl gap-y-10 md:grid-cols-12 md:gap-x-6 lg:gap-y-14">
-          <div className="ybz-enter space-y-6 bg-ink md:col-span-12 lg:col-span-10">
+          <div className="ybz-enter space-y-6 md:col-span-12 lg:col-span-10">
             <p className="ybz-eyebrow">{BRAND.descriptor}</p>
-            <h1 className="ybz-display-1">{BRAND.positioning}</h1>
+            <h1 className="ybz-display-1 [text-wrap:pretty]">{BRAND.positioning}</h1>
             <GoldRule />
           </div>
 
-          <div className="ybz-enter space-y-8 self-start bg-ink md:col-span-12 lg:col-span-5">
+          <div className="ybz-enter space-y-8 self-start md:col-span-12 lg:col-span-5">
             <p className="ybz-lede">
               Software engineer at {BRAND.employer} and founder of SafeStay. I
               build the API, the data model and the front end, in TypeScript,
@@ -182,11 +181,11 @@ const Home = () => {
           {PROOF_STACK.map((item, index) => (
             <div
               key={item.claim}
-              className="flex flex-col border-t border-mid pt-6 md:col-span-4"
+              className={`flex flex-col pt-6 md:col-span-4 ${
+                index === 0 ? "ybz-key-rule" : "border-t border-mid"
+              }`}
             >
-              <p
-                className={`ybz-figure text-5xl leading-none ${index === 0 ? "ybz-figure--key" : ""}`}
-              >
+              <p className="ybz-figure text-5xl leading-none">
                 <FigureValue value={item.figure} />
               </p>
               <p className="ybz-meta mt-3">{item.figureLabel}</p>
@@ -215,12 +214,14 @@ const Home = () => {
               key={project.title}
               className="group relative grid grid-cols-[6rem_1fr] gap-x-4 gap-y-3 border-b border-edge py-6 md:grid-cols-12 md:gap-x-6 md:py-8"
             >
-              {/* The product, or how it is built, so a skimmer sees the work. */}
+              {/* The product, or how it is built, so a skimmer sees the work.
+                  Greyscale here, full colour on the case study: four product
+                  palettes in a row would outshout the page's one signal. */}
               <div className="ybz-frame aspect-[16/10] self-start overflow-hidden rounded-sm border border-edge md:col-span-2">
                 <CoverImage
                   src={project.thumb}
                   alt=""
-                  className="!object-cover !object-top"
+                  className="ybz-photo !object-cover !object-top"
                 />
               </div>
               <div className="min-w-0 space-y-2 md:col-span-3">

@@ -15,7 +15,9 @@ const CertificateMedia = ({ certificate, onSelectImage }) => {
       <img
         src={certificate.image}
         alt={certificate.title}
-        className="p-4"
+        // Greyscale in the grid, so six issuers' brand colours do not set the
+        // page's palette; the enlarged view shows the certificate as issued.
+        className="ybz-photo p-4"
         loading="lazy"
       />
       <Button

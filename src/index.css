@@ -25,11 +25,12 @@
   --ybz-raised:     #F4F3EF;  /* a box on a raised band: lighter than the band */
   --ybz-obsidian:   var(--ybz-surface);  /* alternate (raised) sections */
 
-  /* Box fills. A box must always differ from what sits behind it: a card on a
-     paper section is surface, a card on a raised band is paper (see .bg-obsidian
-     below), and a box nested inside a card takes the other one (--ybz-inset). */
-  --ybz-card:       var(--ybz-surface);
-  --ybz-inset:      var(--ybz-ink);
+  /* Box fills. On a paper section a card is paper with a hairline: an
+     outline, not a beige block, so a page of cards stays paper. On a raised
+     band a card takes --ybz-raised (see .bg-obsidian below), and a box nested
+     inside a card takes surface (--ybz-inset). */
+  --ybz-card:       var(--ybz-ink);
+  --ybz-inset:      var(--ybz-surface);
   --ybz-edge:       #CCC8BE;  /* hairlines and grid lines, never text */
   --ybz-hairline:   #CCC8BE;
   --ybz-mid:        #A29D92;  /* the mid-tone: strong hairlines, hover borders. Never text */
@@ -84,8 +85,8 @@
   --ybz-surface:    #282826;  /* near-neutral; 9.8 L* above ground */
   --ybz-raised:     #343432;  /* a box on a raised band: lighter, so it lifts, never a hole */
   --ybz-obsidian:   var(--ybz-surface);
-  --ybz-card:       var(--ybz-surface);
-  --ybz-inset:      var(--ybz-ink);
+  --ybz-card:       var(--ybz-ink);
+  --ybz-inset:      var(--ybz-surface);
   --ybz-edge:       #484745;
   --ybz-hairline:   #484745;
   --ybz-mid:        #6E6C68;
@@ -295,7 +296,7 @@
   }
 
   /* Counters and metrics. Plex Mono never carries a sentence. Ink by default:
-     signal is reserved for the one key figure on a page (.ybz-figure--key). */
+     the one key figure on a page takes .ybz-key-rule on its column. */
   .ybz-figure{
     font-family: var(--ybz-mono); font-weight: 500;
     color: var(--ybz-bone);
@@ -303,11 +304,12 @@
     /* A mono space is 0.6em; pull "3 days" back to a normal word gap. */
     word-spacing: -0.25em;
   }
-  /* The one key figure on a page: ink, with a signal rule beside it. The rule
-     is the signal, so the digits never sit in a second red next to it. */
-  .ybz-figure--key{
-    border-left: 2px solid var(--ybz-signal);
-    padding-left: 12px;
+  /* The one key figure on a page sits under a signal rule that runs the full
+     width of its column: the page's one confident mark of colour. The digits
+     stay ink, so two reds never sit side by side. Put the class on the
+     figure's column, in place of its hairline top border. */
+  .ybz-key-rule{
+    border-top: 2px solid var(--ybz-signal);
   }
 
   /* Links are ink with an underline. The underline turns signal on hover. */
@@ -475,7 +477,7 @@
 
 main{ counter-reset: ybz-section; }
 
-.ybz-gridlines{ display: none; height: 100%; }
+.ybz-gridlines{ display: none; }
 @media (min-width: 768px){
   .ybz-gridlines{
     display: grid; grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -485,7 +487,9 @@ main{ counter-reset: ybz-section; }
 .ybz-gridlines > span{ border-left: 1px solid var(--ybz-edge); }
 .ybz-gridlines > span:last-child{ border-right: 1px solid var(--ybz-edge); }
 
-/* Portraits sit in the palette: no colour photograph outshouts the signal. */
+/* Portraits, product thumbnails and certificate scans sit in the palette: no
+   colour image outshouts the signal. Full colour is kept where the image is
+   the subject (a case study's screenshot, an enlarged certificate). */
 .ybz-photo{ filter: grayscale(1) contrast(1.05); }
 
 /* ==========================================================================

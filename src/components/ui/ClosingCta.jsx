@@ -1,14 +1,16 @@
 import { ArrowRight } from "lucide-react";
 import Button from "./Button";
-import Card from "./Card";
 import SectionHeader from "./SectionHeader";
 
 /**
  * The one closing call to action, shared by the home page and every case
  * study so the two cannot drift apart. Hiring first, then a project.
+ *
+ * It sits straight on its raised band. A box here would be the largest and
+ * lightest object on the page in dark mode, and would outweigh the hero.
  */
 const ClosingCta = () => (
-  <Card className="p-8 sm:p-10">
+  <div>
     <SectionHeader
       eyebrow="Working together"
       title="Hiring, or have a project?"
@@ -26,7 +28,7 @@ const ClosingCta = () => (
         CV
       </Button>
     </div>
-  </Card>
+  </div>
 );
 
 export default ClosingCta;

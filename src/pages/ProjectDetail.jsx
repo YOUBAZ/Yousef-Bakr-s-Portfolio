@@ -380,7 +380,10 @@ const ProjectDetail = () => {
   ].filter(Boolean);
 
   // The closing band takes the next tone in the alternation.
-  const closeTone = bands.length % 2 === 0 ? "raised" : "base";
+  /* Bands mark chapters, not sections: the decisions are the case study's one
+     raised chapter, the close is the second, and every other section sits on
+     the page, separated by its numbered strip. Two bands, never stripes. */
+  const bandTone = (key) => (key === "decisions" ? "raised" : "base");
 
   return (
     <>
@@ -459,7 +462,8 @@ const ProjectDetail = () => {
         </div>
 
         {facts.length > 0 && (
-          <dl className="ybz-card mt-6 grid gap-6 p-6 sm:grid-cols-2 lg:grid-cols-4">
+          // Engagement facts: a ruled row on the page grid, not another box.
+          <dl className="mt-8 grid gap-6 border-t border-edge pt-6 sm:grid-cols-2 lg:grid-cols-12 lg:gap-x-6 lg:[&>*]:col-span-3">
             {facts.map(([label, value]) => (
               <div key={label} className="space-y-1">
                 <dt className="ybz-meta">{label}</dt>
@@ -471,7 +475,13 @@ const ProjectDetail = () => {
       </Section>
 
       {bands.map((band, i) => (
-        <Section key={band.key} tone={i % 2 === 0 ? "raised" : "base"}>
+        <Section
+          key={band.key}
+          tone={bandTone(band.key)}
+          // Consecutive plain sections need no band edge between them; the
+          // section strip's hairline already separates them.
+          className={i > 0 && bandTone(band.key) === "base" && bandTone(bands[i - 1].key) === "base" ? "pt-4" : ""}
+        >
           <SectionHeader eyebrow={band.eyebrow} title={band.title} />
           {band.collapse && isPhone ? (
             <details className="group">
@@ -488,17 +498,19 @@ const ProjectDetail = () => {
       ))}
 
       {/* Close ---------------------------------------------------------- */}
-      <Section tone={closeTone} className="border-b-0">
+      <Section tone="raised" className="border-b-0">
         <ClosingCta />
 
         {next && next.id !== project.id && (
           <Link
             to={`/projects/${next.id}`}
-            className="ybz-card ybz-card-interactive mt-6 flex items-center justify-between gap-6 p-6"
+            className="group mt-12 flex items-center justify-between gap-6 border-t border-edge pt-6"
           >
             <span>
               <span className="ybz-meta block">Next project</span>
-              <span className="ybz-title mt-1 block">{next.title}</span>
+              <span className="ybz-title mt-1 block underline decoration-transparent underline-offset-4 transition-colors duration-150 group-hover:decoration-[var(--ybz-signal)]">
+                {next.title}
+              </span>
             </span>
             <ArrowRight
               size={18}

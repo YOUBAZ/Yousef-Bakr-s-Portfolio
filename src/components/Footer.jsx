@@ -1,7 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { Github, Linkedin, Mail } from "lucide-react";
 import Wordmark from "./Wordmark";
-import GoldRule from "./GoldRule";
 import { Button } from "./ui";
 import { BRAND } from "../config/brand";
 import { NAV_ITEMS } from "../config/navigation";
@@ -43,11 +42,10 @@ const Footer = () => {
               >
                 <Wordmark size="lg" />
               </Link>
-              <GoldRule />
-              <div className="max-w-md space-y-2">
-                <p className="ybz-body">{BRAND.positioning}</p>
-                <p className="text-sm text-muted">{BRAND.tagline}</p>
-              </div>
+              {/* The slogan is the footer's one line: the brand's own words, at
+                  lede size in ink. The positioning line already heads Home, and
+                  the signal marker belongs to page titles only. */}
+              <p className="ybz-lede max-w-md text-bone">{BRAND.tagline}</p>
             </div>
 
             <nav aria-label="Footer">
