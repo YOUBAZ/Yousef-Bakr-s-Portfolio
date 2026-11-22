@@ -5,7 +5,12 @@ import emailConfig from "../config/email";
 import { BRAND } from "../config/brand";
 import { Button } from "./ui";
 
+/* Who is writing, so a recruiter has a path as clear as a client's. The choice
+   is prefixed onto the message, so the email template needs no new field. */
+const TOPICS = ["Hiring", "A project", "Something else"];
+
 const ContactForm = () => {
+  const [topic, setTopic] = useState(TOPICS[0]);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -29,7 +34,7 @@ const ContactForm = () => {
       await emailjs.send(
         emailConfig.serviceId,
         emailConfig.templateId,
-        formData,
+        { ...formData, message: `[${topic}] ${formData.message}` },
         emailConfig.publicKey
       );
 
@@ -47,6 +52,28 @@ const ContactForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
+      <fieldset className="space-y-2">
+        <legend className={labelClass}>What is this about?</legend>
+        <div className="flex flex-wrap gap-2 pt-1">
+          {TOPICS.map((t) => (
+            <label
+              key={t}
+              className="ybz-chip cursor-pointer has-[:checked]:border-[var(--ybz-bone)] has-[:checked]:bg-card has-[:checked]:text-bone has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-[var(--ybz-accent-rule)]"
+            >
+              <input
+                type="radio"
+                name="topic"
+                value={t}
+                checked={topic === t}
+                onChange={() => setTopic(t)}
+                className="sr-only"
+              />
+              {t}
+            </label>
+          ))}
+        </div>
+      </fieldset>
+
       <div className="space-y-2">
         <label htmlFor="name" className={labelClass}>
           Name

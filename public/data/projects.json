@@ -92,12 +92,38 @@
           "value": "100",
           "label": "Lighthouse accessibility score"
         }
-      ]
+      ],
+      "screenshot": {
+        "src": "/images/projects/edushift-ai-screen.jpg",
+        "caption": "edushiftai.com, the product site · Captured 22 Nov 2026"
+      },
+      "architecture": {
+        "clients": [
+          {
+            "name": "Next.js front end",
+            "notes": [
+              "Programmes, cohorts, learner progress"
+            ]
+          }
+        ],
+        "server": {
+          "name": "TypeScript application",
+          "notes": [
+            "Versioned AI simulations",
+            "Competency scoring against a rubric",
+            "One engine, configured per product"
+          ]
+        },
+        "data": {
+          "name": "PostgreSQL"
+        },
+        "runsOn": "TypeScript end to end, shipped in Docker containers."
+      }
     },
     {
       "id": "safestay",
       "title": "SafeStay",
-      "summary": "Three-tier platform for verified student housing: a NestJS API, a Next.js console and a Flutter app. Contract signing runs as a server-side state machine, so several parties can sign one contract at different times without it ever being half-signed.",
+      "summary": "Three-tier platform for verified student housing: a NestJS API, a Next.js console and a Flutter app, with contract signing run as a server-side state machine.",
       "tech": [
         "NestJS",
         "Next.js",
@@ -110,7 +136,7 @@
       "repo": null,
       "image": "/images/projects/safestay.png",
       "tagline": "Verified student housing, where a contract signed by several parties can never be left half-signed.",
-      "context": "SafeStay",
+      "context": "Own product",
       "engagement": "Founder",
       "timeline": "2026 – Present",
       "status": "Building",
@@ -149,7 +175,41 @@
         }
       ],
       "users": null,
-      "stackProse": "NestJS for the API, Next.js for the console, Flutter for the mobile app, and PostgreSQL underneath."
+      "stackProse": "NestJS for the API, Next.js for the console, Flutter for the mobile app, and PostgreSQL underneath.",
+      "architecture": {
+        "clients": [
+          {
+            "name": "Flutter app"
+          },
+          {
+            "name": "Next.js console"
+          }
+        ],
+        "server": {
+          "name": "NestJS API",
+          "notes": [
+            "Contract signing as a server-side state machine",
+            "Identity verification (KYC) gating",
+            "Scheduled payment reminders"
+          ]
+        },
+        "data": {
+          "name": "PostgreSQL",
+          "notes": [
+            "20+ table schema"
+          ]
+        }
+      },
+      "highlights": [
+        {
+          "value": "3",
+          "label": "tiers: app, console, API"
+        },
+        {
+          "value": "20+",
+          "label": "tables in the schema"
+        }
+      ]
     },
     {
       "id": "autobusiness",
@@ -254,7 +314,36 @@
           "value": "AR / EN",
           "label": "Arabic first, English on a switch"
         }
-      ]
+      ],
+      "screenshot": {
+        "src": "/images/projects/autobusiness-screen.jpg",
+        "caption": "autobusinessacademy.com, Arabic-first · Captured 22 Nov 2026"
+      },
+      "architecture": {
+        "clients": [
+          {
+            "name": "Next.js front end",
+            "notes": [
+              "Arabic and English through next-intl"
+            ]
+          }
+        ],
+        "server": {
+          "name": "NestJS modular monolith",
+          "notes": [
+            "Orders as a state machine under a row lock",
+            "One service decides access",
+            "Zod validates both sides of the contract"
+          ]
+        },
+        "data": {
+          "name": "MariaDB",
+          "notes": [
+            "Through TypeORM"
+          ]
+        },
+        "runsOn": "Docker runs the full stack locally, including a mail catcher."
+      }
     },
     {
       "id": "msp-tech-club",
@@ -360,7 +449,36 @@
           "value": "86",
           "label": "API routes behind permission checks"
         }
-      ]
+      ],
+      "screenshot": {
+        "src": "/images/projects/msp-tech-club-screen.jpg",
+        "caption": "msp-helwan.vercel.app · Captured 22 Nov 2026"
+      },
+      "architecture": {
+        "clients": [
+          {
+            "name": "Next.js 15",
+            "notes": [
+              "Public site and member dashboard"
+            ]
+          }
+        ],
+        "server": {
+          "name": "NestJS 11 API",
+          "notes": [
+            "Permissions guard every route",
+            "Registration locks the event row",
+            "Scheduled job for reminders"
+          ]
+        },
+        "data": {
+          "name": "PostgreSQL on Neon",
+          "notes": [
+            "Through Drizzle ORM"
+          ]
+        },
+        "runsOn": "Front end and API both deployed on Vercel."
+      }
     },
     {
       "id": "promptopia",

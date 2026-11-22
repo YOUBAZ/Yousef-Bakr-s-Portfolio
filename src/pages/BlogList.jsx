@@ -13,6 +13,9 @@ import { Button, PageHeader, Section } from "../components/ui";
 /** How many topics show before the rest fold behind "More topics". */
 const TOP_TAGS = 6;
 
+/** Below this many posts, search and topic filters cost more than they help. */
+const FILTER_THRESHOLD = 15;
+
 /**
  * The writing index. Search first, then the most-used topics; the long tail of
  * tags is one click away, so the articles stay near the top of the page.
@@ -97,12 +100,13 @@ const BlogList = () => {
 
       <PageHeader
         eyebrow="Writing"
-        title="The decisions rather than the tools."
-        lede="Why a boundary went where it went, what it cost when it went in the wrong place, and what the traces looked like afterwards."
+        title="Notes on AI systems, DevOps and architecture."
+        lede="Longer pieces on the tools and patterns I work with. The architecture decisions themselves are written up in each case study."
       />
 
       <Section className="pt-0">
-        {/* Filters */}
+        {/* Filters: only once there is enough writing to need them. */}
+        {blogs.length >= FILTER_THRESHOLD && (
         <div className="space-y-5 border-b border-edge pb-8">
           <div className="relative max-w-xl">
             <label htmlFor="blog-search" className="sr-only">
@@ -172,8 +176,10 @@ const BlogList = () => {
           </div>
         </div>
 
+        )}
+
         {/* Posts */}
-        <div className="pt-8">
+        <div className={blogs.length >= FILTER_THRESHOLD ? "pt-8" : ""}>
           {isLoading ? (
             <div
               role="status"

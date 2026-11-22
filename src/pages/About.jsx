@@ -1,8 +1,7 @@
 import { formatPeriod } from "../utils/formatPeriod";
-import { useEffect, useState } from "react";
 import Seo from "../components/Seo";
 import { siteMeta } from "../config/seo";
-import { BRAND, PROOF_STACK } from "../config/brand";
+import { BRAND } from "../config/brand";
 import {
   experienceTimeline,
   leadershipRoles,
@@ -16,7 +15,6 @@ import {
   SectionHeader,
   StackLine,
   TextLink,
-  SourceLink,
 } from "../components/ui";
 
 /**
@@ -31,11 +29,11 @@ const principles = [
   },
   {
     label: "State belongs on the server",
-    copy: "SafeStay's contract signing runs as a server-side state machine, so a half-signed agreement cannot exist in the database. The client renders state; it does not own it.",
+    copy: "In SafeStay, contract signing is a state machine in the API. The app and the console render state rather than own it; the case study walks through why.",
   },
   {
     label: "Reversibility over correctness",
-    copy: "A decision you can undo in a day is worth more than one you are 90% sure about. Most architecture arguments dissolve once you cost the rollback.",
+    copy: "A decision I can undo in a day is worth more than one I am 90% sure about, so I price the rollback before arguing the design.",
   },
   {
     label: "Publish the reasoning, not the result",
@@ -57,41 +55,9 @@ const toolset = [
   "REST & GraphQL APIs",
 ];
 
-const aboutGallery = [
-  {
-    src: "/images/about/profile.jpg",
-    alt: "Yousef Bakr",
-    label: "Portrait",
-  },
-  {
-    src: "/images/about/WhatsApp Image 2026-03-29 at 9.32.54 PM.jpeg",
-    alt: "Yousef Bakr at the AI Everything event",
-    label: "AI Everything",
-  },
-  {
-    src: "/images/about/WhatsApp Image 2026-03-29 at 9.32.54 PM (1).jpeg",
-    alt: "Event poster, variant one",
-    label: "Poster 01",
-  },
-  {
-    src: "/images/about/WhatsApp Image 2026-03-29 at 9.32.54 PM (2).jpeg",
-    alt: "Event poster, variant two",
-    label: "Poster 02",
-  },
-];
 
 const About = () => {
-  const [activeImageIndex, setActiveImageIndex] = useState(0);
-  const activeImage = aboutGallery[activeImageIndex];
   const timeline = experienceTimeline;
-
-  useEffect(() => {
-    const timer = window.setInterval(() => {
-      setActiveImageIndex((prev) => (prev + 1) % aboutGallery.length);
-    }, 4500);
-
-    return () => window.clearInterval(timer);
-  }, []);
 
   const aboutSchema = [
     {
@@ -158,91 +124,29 @@ const About = () => {
               in production.
             </p>
             <p className="ybz-body max-w-2xl">
-              I write here about the decisions rather than the tools — why a
-              boundary went where it went, what it cost when it went in the
-              wrong place, and what the traces looked like afterwards. If you
-              lead a team and want a second opinion on an architecture call, my
-              inbox is open.
+              Each case study on this site walks through the decisions inside
+              one system: what it had to solve, what I chose, and what that
+              choice prevents. If you are hiring, the CV has the dates and the
+              details.
             </p>
           </div>
 
-          {/* Visuals. The images are stacked and cross-fade on opacity alone;
-              the interval only changes which one is visible. */}
-          <Card padded={false}>
-            <div className="ybz-frame aspect-4/5 lg:aspect-16/10">
-              {aboutGallery.map((image, index) => (
-                <img
-                  key={image.src}
-                  src={image.src}
-                  alt={index === activeImageIndex ? image.alt : ""}
-                  aria-hidden={index !== activeImageIndex}
-                  className="absolute inset-0 p-3 transition-opacity duration-150"
-                  style={{
-                    opacity: index === activeImageIndex ? 1 : 0,
-                    transitionTimingFunction: "var(--ybz-ease)",
-                  }}
-                  loading="lazy"
-                />
-              ))}
-            </div>
-
-            <div className="flex items-center justify-between gap-4 px-5 py-4">
-              <p className="ybz-meta">{activeImage.label}</p>
-              <div className="flex items-center gap-1">
-                {aboutGallery.map((image, index) => (
-                  <button
-                    key={image.src}
-                    type="button"
-                    onClick={() => setActiveImageIndex(index)}
-                    className="flex h-8 items-center px-1"
-                    aria-label={`Show ${image.label}`}
-                    aria-pressed={activeImageIndex === index}
-                  >
-                    <span
-                      className="block h-0.5 w-6 transition-colors duration-150"
-                      style={{
-                        background:
-                          activeImageIndex === index
-                            ? "var(--ybz-accent-rule)"
-                            : "var(--ybz-edge)",
-                      }}
-                    />
-                  </button>
-                ))}
-                <p className="ybz-meta ml-3">
-                  {activeImageIndex + 1}/{aboutGallery.length}
-                </p>
-              </div>
-            </div>
+          {/* One portrait, cropped to fill its frame. */}
+          <Card padded={false} className="self-start overflow-hidden">
+            <img
+              src="/images/about/profile.jpg"
+              alt={BRAND.name}
+              className="aspect-4/5 w-full object-cover object-top"
+            />
           </Card>
         </div>
       </PageHeader>
 
-      {/* Proof, with sources. */}
-      <Section tone="raised">
-        <SectionHeader
-          eyebrow="Proof"
-          title="Three claims, each with a source."
-        />
-        <dl className="grid border-t border-edge sm:grid-cols-2 sm:gap-x-10">
-          {PROOF_STACK.map((item) => (
-            <div
-              key={item.claim}
-              className="space-y-2 border-b border-edge py-6"
-            >
-              <dt className="ybz-body text-bone">{item.claim}</dt>
-              <dd>
-                <SourceLink href={item.href}>{item.source}</SourceLink>
-              </dd>
-            </div>
-          ))}
-        </dl>
-      </Section>
 
       <Section>
         <SectionHeader
           eyebrow="How I work"
-          title="Four positions I would defend in review."
+          title="Four habits I build by."
         />
         <ol className="border-t border-edge">
           {principles.map((principle, index) => (

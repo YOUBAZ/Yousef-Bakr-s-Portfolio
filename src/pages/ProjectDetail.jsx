@@ -13,6 +13,7 @@ import {
   SectionHeader,
   StackLine,
   CoverImage,
+  ArchitectureDiagram,
 } from "../components/ui";
 
 const LH_CATEGORIES = [
@@ -238,7 +239,7 @@ const ProjectDetail = () => {
     metrics.length > 0 && {
       key: "numbers",
       eyebrow: "By the numbers",
-      title: "Measured, not described",
+      title: "At a glance",
       body: (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {metrics.map((m) => (
@@ -337,6 +338,15 @@ const ProjectDetail = () => {
         <div className="space-y-6">
           <p className="ybz-lede">{project.stackProse}</p>
           <StackLine items={project.tech} />
+          {/* When the hero shows the product, the architecture lives here. */}
+          {project.screenshot && project.architecture && (
+            <Card>
+              <ArchitectureDiagram
+                architecture={project.architecture}
+                title={project.title}
+              />
+            </Card>
+          )}
         </div>
       ),
     },
@@ -371,11 +381,37 @@ const ProjectDetail = () => {
             project.highlights?.length > 0 ? "lg:grid-cols-[1.5fr_1fr]" : ""
           }`}
         >
-          <Card padded={false}>
-            <div className="ybz-frame ybz-frame--cover aspect-[16/10] border-b-0">
-              <CoverImage src={project.image} alt={`${project.title} cover`} />
-            </div>
-          </Card>
+          {/* One real visual: the live product if it is public, otherwise how
+              the system is built. The cover stays a thumbnail on /projects. */}
+          {project.screenshot ? (
+            <Card padded={false}>
+              <figure>
+                <div className="ybz-frame aspect-[16/10]">
+                  <img
+                    src={project.screenshot.src}
+                    alt={`${project.title}, the live product`}
+                    className="!object-cover !object-top"
+                  />
+                </div>
+                <figcaption className="ybz-source px-5 py-3">
+                  {project.screenshot.caption}
+                </figcaption>
+              </figure>
+            </Card>
+          ) : project.architecture ? (
+            <Card>
+              <ArchitectureDiagram
+                architecture={project.architecture}
+                title={project.title}
+              />
+            </Card>
+          ) : (
+            <Card padded={false}>
+              <div className="ybz-frame ybz-frame--cover aspect-[16/10] border-b-0">
+                <CoverImage src={project.image} alt={`${project.title} cover`} />
+              </div>
+            </Card>
+          )}
 
           {project.highlights?.length > 0 && (
             <Card className="flex flex-col justify-center divide-y divide-edge py-2">
@@ -416,12 +452,12 @@ const ProjectDetail = () => {
         <Card className="p-8 sm:p-10">
           <SectionHeader
             eyebrow="Working together"
-            title="Where does your system break when two people act at once?"
+            title="Hiring, or have a project?"
             className="mb-6"
           />
           <p className="ybz-body max-w-2xl">
-            That is usually the first conversation. Bring the system, or the
-            brief for one, and we will find the boundary that needs to hold.
+            The CV has the dates and the details. For anything else, the
+            contact form reaches me directly.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Button to="/contact">Contact</Button>
