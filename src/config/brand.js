@@ -59,7 +59,7 @@ export const LOCATION_RULE = "structured-data-only";
 export const PROOF_STACK = [
   {
     claim:
-      "Scaled EduShift AI from a single simulation into 4 production learning products.",
+      "Scaled EduShift AI from a single simulation into 4 production learning products, used by 6+ organisations including the She's Next Entrepreneurship Competition.",
     source: "edushiftai.com · MindShift MENA, Sep 2025 – Present",
     href: "https://edushiftai.com",
     figure: "4",
@@ -67,11 +67,11 @@ export const PROOF_STACK = [
   },
   {
     claim:
-      "EduShift AI is used by 6+ organisations to train teams, including the She's Next Entrepreneurship Competition.",
-    source: "edushiftai.com · MindShift MENA, Sep 2025 – Present",
-    href: "https://edushiftai.com",
-    figure: "6+",
-    figureLabel: "organisations",
+      "Shipped the AutoBusiness store, Arabic first, with 74 automated test files and a 99 Lighthouse performance score on mobile.",
+    source: "autobusinessacademy.com · Oct – Nov 2026",
+    href: "https://autobusinessacademy.com/",
+    figure: "74",
+    figureLabel: "automated test files",
   },
   {
     claim:

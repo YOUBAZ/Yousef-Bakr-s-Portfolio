@@ -8,6 +8,7 @@ import {
   volunteering,
 } from "../data/experience";
 import RoleList from "../components/RoleList";
+import CertificatesSection from "../components/CertificatesSection";
 import {
   Button,
   Card,
@@ -160,7 +161,9 @@ const Cv = () => {
         </Card>
       </Section>
 
-      <Section tone="raised" className="border-b-0">
+      <CertificatesSection tone="raised" />
+
+      <Section>
         <SectionHeader
           eyebrow="Next"
           title="If the CV raises a question, ask it directly."

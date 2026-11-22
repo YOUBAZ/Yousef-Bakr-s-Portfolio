@@ -141,12 +141,6 @@
       "timeline": "2026 – Present",
       "status": "Building",
       "brief": "SafeStay is a platform for verified student housing. One housing contract is signed by several parties, at different times, from two different clients: a Flutter app and a Next.js console. The platform had to keep that contract consistent whichever order the signatures arrive in, and keep the flows behind identity verification.",
-      "features": [
-        "Multi-party contract signing across the Flutter app and the Next.js console",
-        "Identity verification (KYC) gating",
-        "Scheduled payment reminders, run on the server",
-        "One API serving both clients, over a 20+ table schema"
-      ],
       "decisions": [
         {
           "title": "The server owns the contract's state",
