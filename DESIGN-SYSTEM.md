@@ -1,6 +1,6 @@
 # Design system
 
-How the portfolio is built. `brand-kit/BRAND.md` (v3.0) decides colour, type and
+How the portfolio is built. `brand-kit/BRAND.md` (v3.1) decides colour, type and
 identity; this file decides how the site applies them. If the two disagree,
 BRAND.md wins and this file is wrong.
 
@@ -11,8 +11,8 @@ BRAND.md wins and this file is wrong.
 | Product | A software engineer's record of shipped systems and the decisions inside them, for hiring managers, tech leads and founders |
 | Character | Exact, unhurried, evidentiary |
 | World | The engineering spec sheet and the decision record. Ink on paper, one signal colour |
-| Moments | The decision record in the Home hero. The proof ledger. Nothing else gets colour |
-| Signature | The Merge Y, the signal marker under every headline, mono section labels |
+| Moments | The Home hero on the visible grid, with the decision record. The proof figures. Nothing else gets colour |
+| Signature | The Merge Y, the header strip, the visible 12-column grid on heroes, numbered section strips, one signal marker under each page title |
 
 ## Layers
 
@@ -35,17 +35,18 @@ does not exist, add it here first.
 
 | Component | Use |
 |---|---|
-| `PageHeader` | Top of every interior page. Label, h1, signal marker, lede, optional `actions`. Carries the page's one entrance animation |
+| `PageHeader` | Top of every interior page. Label, h1, signal marker, lede, optional `actions`, over `GridLines` (the grid shows in the margins, never through text). Carries the page's one entrance animation |
 | `Section` | A page band. Owns gutter (`px-6 sm:px-10 lg:px-16`), rhythm (`py-20`) and width (`max-w-6xl`, or `width="read"`). `tone="raised"` is the surface band; never two in a row |
-| `SectionHeader` | Label, h2, signal marker, optional lede. 40px to the content |
-| `Card` | 4px radius, hairline edge. `interactive` steps the border to ink on hover. `padded={false}` when it opens with an image frame |
+| `SectionHeader` | The section strip (page-counted number, label, hairline, optional `note` as a mono margin note), then the h2, optional lede. No signal marker. 40px to the content |
+| `GridLines` | The visible 12-column grid, aligned to the page container. Heroes only; parent must be `relative isolate`; text blocks over it take `bg-ink` |
+| `Card` | 4px radius, hairline edge. `interactive` steps the border to ink on hover. `padded={false}` when it opens with an image frame. Use only where the content needs a container; a list of records is hairline rows, not cards |
 | `Button` | `primary` (ink fill, the one per screen), `secondary`, `accent` (navbar only, ink outline). One height, 48px; `size="sm"` is 40px |
 | `TextLink` | Inline ink link, underline turns signal on hover |
-| `StackLine` | A stack as `NestJS · Next.js · Flutter` in mono. Tags are never chips |
-| `Figure` | A metric: mono figure in signal text over a short label |
-| `DecisionRecord` | The Home hero object. A surface that follows the theme. Facts only |
+| `StackLine` | A stack in mono, items spaced (no separators, so nothing hangs at a line end). Tags are never chips |
+| `Figure` | A metric: mono figure in ink over a short label |
+| `DecisionRecord` | The Home hero object. A hairline-framed surface that follows the theme; its one signal mark is the status square. Facts only |
 | `Signet` | The Merge Y, drawn from `brand-kit/brand.json`. `mono` for the all-ink version |
-| `CoverImage` | A generated blog or project cover in the active theme. Put it in `ybz-frame ybz-frame--cover` so the frame matches the cover's ground. Regenerate covers with `brand-kit/tools/build_covers.py` |
+| `CoverImage` | A generated blog or project cover in the active theme, for blog cards and social images. Never beside text that repeats it. Put it in `ybz-frame ybz-frame--cover`. Regenerate with `brand-kit/tools/build_covers.py` |
 | `Wordmark` | Merge Y + name + descriptor: the primary logo |
 
 ## Classes
@@ -56,11 +57,14 @@ does not exist, add it here first.
 | `ybz-display-2` | Section h2. 26 → 32px Plex Sans 600 |
 | `ybz-title` | Card and row titles. Plex Sans 500, 20px |
 | `ybz-lede` / `ybz-body` | 20px intro paragraph / 16px running text, line height 1.6 |
-| `ybz-eyebrow` | Section label. Plex Mono 13px, signal as text, sentence case |
+| `ybz-eyebrow` | Label. Plex Mono 13px, muted, sentence case |
+| `ybz-section-strip` | The section strip inside `SectionHeader`. Numbers come from a CSS counter reset on `<main>` |
 | `ybz-meta` | Mono, sentence case, muted. Periods, counters, short labels |
 | `ybz-source` | Mono, muted. URLs, stacks, citations |
-| `ybz-figure` | Mono numbers, tabular, signal as text |
-| `ybz-rule` | The headline marker: 2px × 32px, signal |
+| `ybz-figure` | Mono numbers, tabular, ink. `ybz-figure--key` adds the signal rule beside the one key figure on a page |
+| `ybz-rule` | The headline marker: 2px × 32px, signal. Page titles only |
+| `ybz-gridlines` | The 12 hairline columns drawn by `GridLines` |
+| `ybz-photo` | Portraits: greyscale, so a photograph never outshouts the signal |
 | `ybz-btn` + variant | Buttons. Use `Button` instead |
 | `ybz-input` | Form fields, same geometry as buttons |
 | `ybz-chip` | Filter toggles. Set `aria-pressed` |
@@ -73,12 +77,20 @@ does not exist, add it here first.
 
 - **Colour.** Only `--ybz-*` tokens or Tailwind's bridged names (`text-bone`,
   `text-slate-body`, `text-muted`, `text-accent`, `bg-ink`, `bg-obsidian`,
-  `bg-card`, `border-edge`, `border-hairline`). Signal on type is always
-  `text-accent` (`--ybz-accent-type`). Signal is never a fill behind text.
+  `bg-card`, `bg-raised`, `border-edge`, `border-hairline`, `border-mid`).
+  Signal on type is `text-accent` (`--ybz-accent-type`) and is rare: errors,
+  syntax, nothing structural. Labels, numbers, counters and hover states are
+  ink or muted. Signal is never a fill behind text.
+- **The grid.** Every multi-column block uses `md:grid-cols-12 md:gap-x-6`
+  inside the page container. Label and body rows are 3 / 7 (+ 2 for a trailing
+  link) or 3 / 9; figure rows are 4 / 4 / 4. No arbitrary column widths
+  (`grid-cols-[16rem_1fr]`), and no negative margins that push a hairline past
+  the container edge.
 - **Figure and ground.** A box never has the same fill as what sits behind it.
-  The tokens handle it: `--ybz-card` is surface on a paper section and paper on
-  a raised band (`.bg-obsidian` swaps it), and `--ybz-inset` is always the other
-  one. So use `ybz-card` / `bg-card` for boxes and `ybz-inset` / `bg-inset` for
+  The tokens handle it: `--ybz-card` is surface on a paper section and
+  `--ybz-raised` on a raised band (`.bg-obsidian` swaps it): paper in light, a
+  lighter step in dark, so a box on a band is always lifted, never a hole.
+  `--ybz-inset` is the other fill. So use `ybz-card` / `bg-card` for boxes and `ybz-inset` / `bg-inset` for
   boxes inside them. Never hard-code a box fill, and never leave a bordered box
   inside a card unfilled.
 - **Theme.** Light is the default and has no attribute. Dark sets

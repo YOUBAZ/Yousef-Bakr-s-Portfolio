@@ -32,7 +32,8 @@ const Footer = () => {
     <footer className="border-t border-hairline bg-ink text-slate-body">
       <div className="px-6 py-16 sm:px-10 lg:px-16">
         <div className="mx-auto max-w-6xl space-y-12">
-          <div className="grid gap-12 lg:grid-cols-[1.6fr_1fr_1fr]">
+          {/* Page grid: identity in columns 1–6, then 7–9 and 10–12. */}
+          <div className="grid gap-12 lg:grid-cols-12 lg:gap-x-6 lg:[&>*]:col-span-3 lg:[&>*:first-child]:col-span-6">
             <div className="space-y-6">
               <Link
                 to="/"
@@ -97,7 +98,7 @@ const Footer = () => {
             {index >= 0 && (
               <p className="ybz-meta">
                 Page{" "}
-                <span className="text-accent">
+                <span className="text-bone">
                   {pad(index + 1)} of {pad(NAV_ITEMS.length)}
                 </span>
               </p>

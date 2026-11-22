@@ -405,7 +405,10 @@ const ProjectDetail = () => {
       <Section className="pt-0">
         <div
           className={`grid gap-6 ${
-            showStats ? "lg:grid-cols-[1.5fr_1fr]" : ""
+            // Page grid: visual in columns 1–8, figures in 9–12.
+            showStats
+              ? "lg:grid-cols-12 lg:[&>*:first-child]:col-span-8 lg:[&>*:last-child]:col-span-4"
+              : ""
           }`}
         >
           {/* One real visual: the live product if it is public, otherwise how

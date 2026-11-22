@@ -14,7 +14,6 @@ import {
   SectionHeader,
   StackLine,
   TextLink,
-  CoverImage,
 } from "../components/ui";
 
 /* Production work has a case study or measured highlights. Everything else is
@@ -23,33 +22,16 @@ import {
 const isProduction = (project) =>
   Boolean(project.brief || project.highlights?.length);
 
-/* One production project. The flagship (first in the data) spans both columns
-   on lg and sets the screenshot beside the text. Only the flagship's case-study
-   button is filled, so the page has one primary action. */
-const ProjectCard = ({ project, flagship = false }) => (
-  <Card
-    as="article"
-    interactive
-    padded={false}
-    className={
-      flagship
-        ? "flex flex-col lg:col-span-2 lg:grid lg:grid-cols-[1.15fr_1fr]"
-        : "flex h-full flex-col"
-    }
-  >
-    <div
-      className={`ybz-frame ybz-frame--cover aspect-[16/10] ${
-        flagship
-          ? "lg:aspect-auto lg:border-b-0 lg:border-r lg:border-edge"
-          : ""
-      }`}
-    >
-      <CoverImage src={project.image} alt={project.title} />
-    </div>
-
-    <div className="flex flex-1 flex-col p-6">
+/* One production project, as a record on the page grid: name in columns 1–3,
+   the claim, its figures (columns 4, 7 and 10) and its links in 4–12. No
+   generated cover: the cover repeats the title and the figure at a size no one
+   can read, so the record already says everything it would. Only the first
+   record's case-study button is filled, so the page has one primary action. */
+const ProjectRecord = ({ project, lead = false }) => (
+  <li className="grid gap-y-6 border-b border-edge py-10 md:grid-cols-12 md:gap-x-6">
+    <div className="space-y-2 md:col-span-3">
       <p className="ybz-meta">{project.role}</p>
-      <h3 className="ybz-title mt-2">
+      <h3 className="ybz-title text-2xl">
         {project.brief ? (
           <Link
             to={`/projects/${project.id}`}
@@ -61,25 +43,28 @@ const ProjectCard = ({ project, flagship = false }) => (
           project.title
         )}
       </h3>
-      <p className="ybz-body mt-3">{project.summary}</p>
+    </div>
+
+    <div className="space-y-6 md:col-span-9">
+      <p className="ybz-body max-w-[var(--ybz-w-read)]">{project.summary}</p>
 
       {project.highlights?.length > 0 && (
-        <div className="mt-6 grid grid-cols-3 gap-4 border-y border-edge py-4">
+        <div className="grid grid-cols-3 gap-x-6 border-t border-edge pt-5">
           {project.highlights.map((h) => (
             <Figure key={h.label} value={h.value} label={h.label} />
           ))}
         </div>
       )}
 
-      <StackLine items={project.tech} className="mt-6" />
+      <StackLine items={project.tech} />
 
       {(project.brief || project.live || project.repo) && (
-        <div className="mt-auto flex flex-wrap gap-3 pt-8">
+        <div className="flex flex-wrap gap-3 pt-2">
           {project.brief && (
             <Button
               to={`/projects/${project.id}`}
               size="sm"
-              variant={flagship ? "primary" : "secondary"}
+              variant={lead ? "primary" : "secondary"}
               icon={ArrowRight}
             >
               Case study
@@ -110,27 +95,28 @@ const ProjectCard = ({ project, flagship = false }) => (
         </div>
       )}
     </div>
-  </Card>
+  </li>
 );
 
-ProjectCard.propTypes = {
+ProjectRecord.propTypes = {
   project: PropTypes.object.isRequired,
-  flagship: PropTypes.bool,
+  lead: PropTypes.bool,
 };
 
-/* An earlier build: one row in an index, no screenshot. */
+/* An earlier build: one row in an index, on the same 3 / 7 / 2 grid as the
+   Home work list. */
 const EarlierBuild = ({ project }) => (
-  <li className="grid gap-3 border-b border-edge py-6 sm:grid-cols-[14rem_1fr_auto] sm:gap-8">
-    <div className="min-w-0">
+  <li className="grid gap-3 border-b border-edge py-6 md:grid-cols-12 md:gap-x-6">
+    <div className="min-w-0 md:col-span-3">
       <h3 className="ybz-title">{project.title}</h3>
       <p className="ybz-meta mt-1">{project.role}</p>
     </div>
-    <div className="min-w-0 space-y-3">
+    <div className="min-w-0 space-y-3 md:col-span-7">
       <p className="ybz-body">{project.summary}</p>
       <StackLine items={project.tech} />
     </div>
     {(project.repo || project.live) && (
-      <div className="sm:pt-1">
+      <div className="md:col-span-2 md:justify-self-end md:pt-1">
         <TextLink href={project.repo || project.live}>
           {project.repo ? "Source" : "Live"}
         </TextLink>
@@ -247,40 +233,37 @@ const Projects = () => {
       />
       <PageHeader
         eyebrow="Projects"
-        title="Every card routes to the proof."
+        title="Every project routes to the proof."
         lede="Live systems link to the running product. Open-source work links to the repository. Where the code belongs to a client, the deployment is the claim."
       />
 
       <Section className="pt-0">
-        <div
-          className="grid gap-6 lg:grid-cols-2"
+        <ol
+          className="border-t border-edge"
           aria-busy={isLoadingProjects || undefined}
         >
           {isLoadingProjects &&
             Array.from({ length: 4 }).map((_, idx) => (
-              <div
+              <li
                 key={`skeleton-${idx}`}
-                className="ybz-card h-64 opacity-60"
+                className="h-56 border-b border-edge"
                 aria-hidden="true"
               />
             ))}
 
           {!isLoadingProjects &&
             production.map((project, index) => (
-              <ProjectCard
+              <ProjectRecord
                 key={project.id ?? project.title}
                 project={project}
-                // The first card leads; an odd card left at the end takes the
-                // same full-width layout rather than sitting beside a gap.
-                flagship={
-                  index === 0 ||
-                  (index === production.length - 1 && production.length % 2 === 0)
-                }
+                lead={index === 0}
               />
             ))}
+        </ol>
 
+        <div>
           {!isLoadingProjects && (loadError || projects.length === 0) && (
-            <Card className="lg:col-span-2">
+            <Card className="mt-8">
               <p className="ybz-body">
                 The project list did not load. The source for every project is
                 on GitHub in the meantime.

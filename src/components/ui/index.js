@@ -16,3 +16,4 @@ export { default as PageHeader } from "./PageHeader";
 export { default as StackLine } from "./StackLine";
 export { default as Figure } from "./Figure";
 export { default as DecisionRecord } from "./DecisionRecord";
+export { default as GridLines } from "./GridLines";

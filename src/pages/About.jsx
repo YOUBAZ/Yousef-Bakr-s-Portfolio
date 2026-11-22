@@ -109,9 +109,12 @@ const About = () => {
         eyebrow="About"
         title={`${BRAND.role} at ${BRAND.employer}. Founder of SafeStay.`}
       >
-        <div className="mt-10 grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
+        {/* Page grid: copy in columns 1–7, the portrait in 9–12. A narrower
+            portrait ends near where the copy ends, so no empty block opens up
+            beside it. */}
+        <div className="mt-10 grid gap-10 md:grid-cols-12 md:gap-x-6">
           {/* Section 11's About copy, which is already written and on-voice. */}
-          <div className="space-y-4">
+          <div className="space-y-4 md:col-span-7">
             <p className="ybz-lede">
               I build production software: APIs that carry real traffic,
               front-ends that survive contact with real users, and the
@@ -131,12 +134,16 @@ const About = () => {
             </p>
           </div>
 
-          {/* One portrait, cropped to fill its frame. */}
-          <Card padded={false} className="self-start overflow-hidden">
+          {/* One portrait, cropped to head and shoulders and set in grey, so
+              the background colour does not outshout the palette. */}
+          <Card
+            padded={false}
+            className="self-start overflow-hidden md:col-span-4 md:col-start-9"
+          >
             <img
               src="/images/about/profile.jpg"
               alt={BRAND.name}
-              className="aspect-4/5 w-full object-cover object-top"
+              className="ybz-photo aspect-square w-full object-cover object-[50%_15%]"
             />
           </Card>
         </div>
@@ -152,21 +159,23 @@ const About = () => {
           {principles.map((principle, index) => (
             <li
               key={principle.label}
-              className="grid gap-3 border-b border-edge py-8 md:grid-cols-[3rem_16rem_1fr] md:gap-8"
+              className="grid gap-3 border-b border-edge py-8 md:grid-cols-12 md:gap-x-6"
             >
-              <p className="ybz-meta pt-1">
-                {String(index + 1).padStart(2, "0")}
-              </p>
-              <h3 className="ybz-title">{principle.label}</h3>
-              <p className="ybz-body max-w-2xl">{principle.copy}</p>
+              <div className="flex gap-4 md:col-span-3">
+                <p className="ybz-meta pt-1">
+                  {String(index + 1).padStart(2, "0")}
+                </p>
+                <h3 className="ybz-title">{principle.label}</h3>
+              </div>
+              <p className="ybz-body md:col-span-7">{principle.copy}</p>
             </li>
           ))}
         </ol>
       </Section>
 
       <Section tone="raised" className="border-b-0">
-        <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-          <Card className="space-y-8">
+        <div className="grid gap-6 lg:grid-cols-12">
+          <Card className="space-y-8 lg:col-span-7">
             <p className="ybz-eyebrow">Timeline</p>
             <ol className="space-y-6">
               {timeline.map((entry) => (
@@ -206,7 +215,7 @@ const About = () => {
             </details>
           </Card>
 
-          <Card className="space-y-6 self-start">
+          <Card className="space-y-6 self-start lg:col-span-5">
             <p className="ybz-eyebrow">Toolset</p>
             <StackLine items={toolset} className="text-sm leading-7" />
             <p className="ybz-body border-t border-edge pt-6">
