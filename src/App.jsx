@@ -14,7 +14,6 @@ import useTheme from "./hooks/useTheme";
 const Home = lazy(() => import("./pages/Home"));
 const Projects = lazy(() => import("./pages/Projects"));
 const ProjectDetail = lazy(() => import("./pages/ProjectDetail"));
-const Certificates = lazy(() => import("./pages/Certificates"));
 const About = lazy(() => import("./pages/About"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Cv = lazy(() => import("./pages/CV"));
@@ -66,7 +65,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/projects" element={<Projects />} />
                 <Route path="/projects/:id" element={<ProjectDetail />} />
-                <Route path="/certificates" element={<Certificates />} />
+                <Route path="/certificates" element={<Navigate to="/cv#certificates" replace />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/lets-talk" element={<Navigate to="/contact" replace />} />

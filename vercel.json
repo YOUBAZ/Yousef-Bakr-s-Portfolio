@@ -5,7 +5,8 @@
   "outputDirectory": "dist",
   "devCommand": "npm run dev",
   "redirects": [
-    { "source": "/lets-talk", "destination": "/contact", "permanent": true }
+    { "source": "/lets-talk", "destination": "/contact", "permanent": true },
+    { "source": "/certificates", "destination": "/cv#certificates", "permanent": true }
   ],
   "rewrites": [
     {

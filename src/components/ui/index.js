@@ -8,6 +8,7 @@ export { default as TextLink } from "./TextLink";
 export { default as CoverImage } from "./CoverImage";
 export { default as SourceLink } from "./SourceLink";
 export { default as ArchitectureDiagram } from "./ArchitectureDiagram";
+export { default as ClosingCta } from "./ClosingCta";
 export { default as Card } from "./Card";
 export { default as Section } from "./Section";
 export { default as SectionHeader } from "./SectionHeader";

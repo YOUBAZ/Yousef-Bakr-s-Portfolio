@@ -411,8 +411,10 @@
     color: var(--ybz-bone); background: var(--ybz-card); border-color: var(--ybz-bone);
   }
 
-  /* Touch: every control reaches 44px where the pointer is a finger. */
-  @media (pointer: coarse){
+  /* Touch: every control reaches 44px where the pointer is a finger, and on
+     any phone-width screen, which is where fingers are even when a browser
+     does not report a coarse pointer. */
+  @media (pointer: coarse), (max-width: 767px){
     .ybz-chip, .ybz-btn--sm, .ybz-link{ min-height: 2.75rem; }
     nav[aria-label="Primary"] a, a.ybz-source, .ybz-record__foot a{
       display: inline-flex; align-items: center; min-height: 2.75rem;

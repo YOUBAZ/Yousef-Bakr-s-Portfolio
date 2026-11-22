@@ -22,9 +22,11 @@ const pad = (n) => String(n).padStart(2, "0");
  */
 const Footer = () => {
   const { pathname } = useLocation();
-  const index = NAV_ITEMS.findIndex((item) =>
-    item.path === "/" ? pathname === "/" : pathname.startsWith(item.path)
-  );
+  // The counter is a page's position in the primary navigation, so it shows
+  // only on those pages: a case study is not one of them.
+  const index = NAV_ITEMS.findIndex((item) => pathname === item.path);
+  // The Contact page lists every channel already; the footer would repeat it.
+  const onContact = pathname === "/contact";
 
   return (
     <footer className="border-t border-hairline bg-ink text-slate-body">
@@ -64,26 +66,28 @@ const Footer = () => {
               </ul>
             </nav>
 
-            <div>
-              <p className="ybz-eyebrow">Connect</p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {socialLinks.map((link) => (
-                  <Button
-                    key={link.label}
-                    href={link.href}
-                    variant="secondary"
-                    size="sm"
-                    icon={link.icon}
-                    iconPosition="start"
-                  >
-                    {link.label}
-                  </Button>
-                ))}
-              </div>
+            {!onContact && (
+              <div>
+                <p className="ybz-eyebrow">Connect</p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {socialLinks.map((link) => (
+                    <Button
+                      key={link.label}
+                      href={link.href}
+                      variant="secondary"
+                      size="sm"
+                      icon={link.icon}
+                      iconPosition="start"
+                    >
+                      {link.label}
+                    </Button>
+                  ))}
+                </div>
 
-              {/* The address as text, so it can be copied where mailto: does nothing. */}
-              <p className="ybz-source mt-4 select-all">{BRAND.email}</p>
-            </div>
+                {/* The address as text, so it can be copied where mailto: does nothing. */}
+                <p className="ybz-source mt-4 select-all">{BRAND.email}</p>
+              </div>
+            )}
           </div>
 
           <div className="flex items-center justify-between gap-4 border-t border-edge pt-6">

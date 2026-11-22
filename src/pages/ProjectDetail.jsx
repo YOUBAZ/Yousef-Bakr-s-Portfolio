@@ -14,6 +14,7 @@ import {
   StackLine,
   CoverImage,
   ArchitectureDiagram,
+  ClosingCta,
 } from "../components/ui";
 
 const LH_CATEGORIES = [
@@ -110,6 +111,16 @@ const ProjectDetail = () => {
   const { id } = useParams();
   const [projects, setProjects] = useState(null);
   const [loadError, setLoadError] = useState(null);
+  // Phones get the long reference sections folded; wider screens read them.
+  const [isPhone, setIsPhone] = useState(
+    () => window.matchMedia("(max-width: 767px)").matches
+  );
+  useEffect(() => {
+    const query = window.matchMedia("(max-width: 767px)");
+    const onChange = (e) => setIsPhone(e.matches);
+    query.addEventListener("change", onChange);
+    return () => query.removeEventListener("change", onChange);
+  }, []);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -132,8 +143,16 @@ const ProjectDetail = () => {
 
   const index = projects ? projects.findIndex((p) => p.id === id) : -1;
   const project = index >= 0 ? projects[index] : null;
+  // "Next project" loops through production case studies only, so the
+  // sequence never drops from shipped work to an earlier build.
+  const production = projects
+    ? projects.filter((p) => p.brief || p.highlights?.length)
+    : [];
+  const pIndex = production.findIndex((p) => p.id === id);
   const next =
-    projects && index >= 0 ? projects[(index + 1) % projects.length] : null;
+    pIndex >= 0 && production.length > 1
+      ? production[(pIndex + 1) % production.length]
+      : null;
 
   const schema = useMemo(() => {
     if (!project) return undefined;
@@ -229,6 +248,10 @@ const ProjectDetail = () => {
   /* The bands below the header, in reading order. Only the ones with data
      render, and tones alternate over what renders so two raised bands never
      touch. */
+  // Beside a screenshot, the figures sit in a column next to it. Beside a
+  // diagram, they would repeat what the diagram already says, so they go.
+  const showStats = Boolean(project.screenshot && project.highlights?.length);
+
   const bands = [
     project.brief && {
       key: "brief",
@@ -236,7 +259,9 @@ const ProjectDetail = () => {
       title: "What had to be solved",
       body: <p className="ybz-lede">{project.brief}</p>,
     },
-    metrics.length > 0 && {
+    // Numbers get their own section only when there is no stat column to
+    // hold them.
+    !showStats && metrics.length > 0 && {
       key: "numbers",
       eyebrow: "By the numbers",
       title: "At a glance",
@@ -252,6 +277,7 @@ const ProjectDetail = () => {
     },
     project.features?.length > 0 && {
       key: "features",
+      collapse: `Show the ${project.features?.length} features`,
       eyebrow: "What it does",
       title:
         project.status === "In production" ? "Features in production" : "Features",
@@ -302,7 +328,7 @@ const ProjectDetail = () => {
         <div className="space-y-6">
           <p className="ybz-body max-w-3xl text-muted">
             Lighthouse {lh.version} against{" "}
-            <span className="font-mono">{lh.url}</span>, run on{" "}
+            <span className="font-mono break-all">{lh.url}</span>, run on{" "}
             <span className="font-mono">{lh.date}</span>. Mobile uses simulated
             slow 4G and a throttled CPU, so it reads lower than desktop by
             design.
@@ -332,6 +358,7 @@ const ProjectDetail = () => {
     },
     project.stackProse && {
       key: "stack",
+      collapse: "Show the stack and architecture",
       eyebrow: "Stack",
       title: "What it runs on",
       body: (
@@ -378,7 +405,7 @@ const ProjectDetail = () => {
       <Section className="pt-0">
         <div
           className={`grid gap-6 ${
-            project.highlights?.length > 0 ? "lg:grid-cols-[1.5fr_1fr]" : ""
+            showStats ? "lg:grid-cols-[1.5fr_1fr]" : ""
           }`}
         >
           {/* One real visual: the live product if it is public, otherwise how
@@ -413,9 +440,9 @@ const ProjectDetail = () => {
             </Card>
           )}
 
-          {project.highlights?.length > 0 && (
+          {showStats && (
             <Card className="flex flex-col justify-center divide-y divide-edge py-2">
-              {project.highlights.map((h) => (
+              {[...project.highlights, ...metrics].map((h) => (
                 <Figure
                   key={h.label}
                   value={h.value}
@@ -443,26 +470,23 @@ const ProjectDetail = () => {
       {bands.map((band, i) => (
         <Section key={band.key} tone={i % 2 === 0 ? "raised" : "base"}>
           <SectionHeader eyebrow={band.eyebrow} title={band.title} />
-          {band.body}
+          {band.collapse && isPhone ? (
+            <details className="group">
+              <summary className="ybz-link min-h-11 cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                <span className="group-open:hidden">{band.collapse}</span>
+                <span className="hidden group-open:inline">Hide</span>
+              </summary>
+              <div className="pt-4">{band.body}</div>
+            </details>
+          ) : (
+            band.body
+          )}
         </Section>
       ))}
 
       {/* Close ---------------------------------------------------------- */}
       <Section tone={closeTone} className="border-b-0">
-        <Card className="p-8 sm:p-10">
-          <SectionHeader
-            eyebrow="Working together"
-            title="Hiring, or have a project?"
-            className="mb-6"
-          />
-          <p className="ybz-body max-w-2xl">
-            The CV has the dates and the details. For anything else, the
-            contact form reaches me directly.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Button to="/contact">Contact</Button>
-          </div>
-        </Card>
+        <ClosingCta />
 
         {next && next.id !== project.id && (
           <Link

@@ -5,8 +5,11 @@ import Seo from "../components/Seo";
 import { siteMeta } from "../config/seo";
 import { BRAND, PROOF_STACK } from "../config/brand";
 import GoldRule from "../components/GoldRule";
+import { FigureValue } from "../components/ui/Figure";
 import {
   Button,
+  ClosingCta,
+  CoverImage,
   DecisionRecord,
   Section,
   SectionHeader,
@@ -23,24 +26,29 @@ const featuredProjects = [
     copy: "Verified student housing across a NestJS API, a Next.js console and a Flutter app, with identity verification gating the flows.",
     tags: ["NestJS", "Next.js", "Flutter", "PostgreSQL"],
     link: "/projects/safestay",
+    // Not public yet: the thumbnail is its architecture diagram.
+    thumb: "/images/projects/safestay-diagram.png",
   },
   {
     title: "EduShift AI",
     copy: "LMS and business-simulation platform. Simulations are versioned, so a running cohort is never moved onto a changed prompt.",
     tags: ["TypeScript", "Next.js", "PostgreSQL", "Docker"],
     link: "/projects/edushift-ai",
+    thumb: "/images/projects/edushift-ai-screen.jpg",
   },
   {
     title: "MSP Tech Club system",
     copy: "Invite-only member system for a university club. Permissions, not role names, guard every route, so no member can promote themselves.",
     tags: ["Next.js", "NestJS", "PostgreSQL"],
     link: "/projects/msp-tech-club",
+    thumb: "/images/projects/msp-tech-club-screen.jpg",
   },
   {
     title: "AutoBusiness",
     copy: "Bilingual course store. Orders move through a state machine under row locks, so approving a payment twice cannot grant access twice.",
     tags: ["Next.js", "NestJS", "MariaDB"],
     link: "/projects/autobusiness",
+    thumb: "/images/projects/autobusiness-screen.jpg",
   },
 ];
 
@@ -167,7 +175,7 @@ const Home = () => {
                 <p
                   className={`ybz-figure text-4xl ${index === 0 ? "ybz-figure--key" : ""}`}
                 >
-                  {item.figure}
+                  <FigureValue value={item.figure} />
                 </p>
                 <p className="ybz-meta mt-2">{item.figureLabel}</p>
               </div>
@@ -193,9 +201,17 @@ const Home = () => {
           {featuredProjects.map((project) => (
             <li
               key={project.title}
-              className="group relative grid gap-3 border-b border-edge px-4 py-8 transition-colors duration-150 hover:bg-card md:grid-cols-[16rem_1fr_auto] md:gap-10"
+              className="group relative grid grid-cols-[6rem_1fr] gap-x-4 gap-y-3 border-b border-edge px-4 py-6 transition-colors duration-150 hover:bg-card md:grid-cols-[11rem_15rem_1fr_auto] md:gap-x-8 md:py-8"
             >
-              <div className="space-y-2">
+              {/* The product, or how it is built, so a skimmer sees the work. */}
+              <div className="ybz-frame aspect-[16/10] self-start overflow-hidden rounded-sm border border-edge">
+                <CoverImage
+                  src={project.thumb}
+                  alt=""
+                  className="!object-cover !object-top"
+                />
+              </div>
+              <div className="min-w-0 space-y-2">
                 <h3 className="ybz-title">
                   {/* The link covers the whole row; the title is its name. */}
                   <Link
@@ -207,10 +223,14 @@ const Home = () => {
                 </h3>
                 <StackLine items={project.tags} />
               </div>
-              <p className="ybz-body max-w-2xl">{project.copy}</p>
+              <p className="ybz-body col-span-2 max-w-2xl md:col-span-1">
+                {project.copy}
+              </p>
+              {/* Visible at every width: on a phone it is the cue that the
+                  row opens the case study. */}
               <span
                 aria-hidden="true"
-                className="hidden items-center gap-1.5 self-start text-sm font-medium text-bone md:flex"
+                className="col-span-2 flex min-h-11 items-center gap-1.5 self-start text-sm font-medium text-bone underline decoration-edge underline-offset-4 md:col-span-1 md:min-h-0 md:no-underline"
               >
                 Case study
                 <ArrowRight size={16} strokeWidth={1.75} />
@@ -222,6 +242,11 @@ const Home = () => {
         <div className="mt-8">
           <TextLink to="/projects">All projects</TextLink>
         </div>
+      </Section>
+
+      {/* The same close as every case study. */}
+      <Section tone="raised" className="border-b-0">
+        <ClosingCta />
       </Section>
     </>
   );
