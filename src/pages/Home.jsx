@@ -177,11 +177,11 @@ const Home = () => {
 
         {/* Three columns of four on the page grid, straight on the band: the
             figures are the content, so they get the size, not a box. */}
-        <dl className="grid gap-y-10 md:grid-cols-12 md:gap-x-6">
+        <dl className="grid grid-cols-1 gap-y-10 md:grid-cols-12 md:gap-x-6">
           {PROOF_STACK.map((item, index) => (
             <div
               key={item.claim}
-              className={`flex flex-col pt-6 md:col-span-4 ${
+              className={`flex min-w-0 flex-col pt-6 md:col-span-4 ${
                 index === 0 ? "ybz-key-rule" : "border-t border-mid"
               }`}
             >

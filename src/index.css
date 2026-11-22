@@ -449,9 +449,12 @@
      does not report a coarse pointer. */
   @media (pointer: coarse), (max-width: 767px){
     .ybz-chip, .ybz-btn--sm, .ybz-link{ min-height: 2.75rem; }
-    nav[aria-label="Primary"] a, a.ybz-source, .ybz-record__foot a{
+    nav[aria-label="Primary"] a, .ybz-record__foot a{
       display: inline-flex; align-items: center; min-height: 2.75rem;
     }
+    /* Source lines are long and must wrap: inline-block keeps the 44px
+       target without letting the whole line set its container's width. */
+    a.ybz-source{ display: inline-block; padding-block: .75rem; }
   }
 
   /* Skip link. Off-screen until focused, then lands as a primary action. */
