@@ -252,7 +252,8 @@ const ProjectDetail = () => {
     project.features?.length > 0 && {
       key: "features",
       eyebrow: "What it does",
-      title: "Features in production",
+      title:
+        project.status === "In production" ? "Features in production" : "Features",
       body: (
         <ul className="grid border-t border-edge md:grid-cols-2 md:gap-x-10">
           {project.features.map((f) => (
@@ -423,10 +424,7 @@ const ProjectDetail = () => {
             brief for one, and we will find the boundary that needs to hold.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Button to="/lets-talk">Book a call</Button>
-            <Button to="/contact" variant="secondary">
-              Send a brief
-            </Button>
+            <Button to="/contact">Contact</Button>
           </div>
         </Card>
 

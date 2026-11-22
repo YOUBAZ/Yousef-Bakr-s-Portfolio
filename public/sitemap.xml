@@ -31,6 +31,12 @@
     <priority>0.90</priority>
   </url>
   <url>
+    <loc>https://yousef-bakr-s-portfolio.vercel.app/projects/safestay</loc>
+    <lastmod>2026-11-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
     <loc>https://yousef-bakr-s-portfolio.vercel.app/projects/msp-tech-club</loc>
     <lastmod>2026-07-30</lastmod>
     <changefreq>weekly</changefreq>
@@ -56,12 +62,6 @@
   </url>
   <url>
     <loc>https://yousef-bakr-s-portfolio.vercel.app/contact</loc>
-    <lastmod>2026-07-30</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.70</priority>
-  </url>
-  <url>
-    <loc>https://yousef-bakr-s-portfolio.vercel.app/lets-talk</loc>
     <lastmod>2026-07-30</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.70</priority>

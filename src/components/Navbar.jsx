@@ -20,7 +20,7 @@ const Navbar = ({ toggleMobileMenu, theme, toggleTheme }) => (
           borderRadius: "var(--ybz-r-md)",
         }}
       >
-        <Link to="/" aria-label={`${BRAND.name}, home`}>
+        <Link to="/" aria-label={`${BRAND.name}, home`} className="flex min-h-11 items-center">
           <Wordmark descriptorClassName="hidden sm:block" />
         </Link>
 
@@ -28,7 +28,7 @@ const Navbar = ({ toggleMobileMenu, theme, toggleTheme }) => (
           className="hidden items-center gap-1 text-sm font-medium md:flex"
           aria-label="Primary"
         >
-          {NAV_ITEMS.map((item) => (
+          {NAV_ITEMS.filter((item) => item.path !== "/contact").map((item) => (
             <NavLink
               key={item.name}
               to={item.path}
@@ -55,10 +55,10 @@ const Navbar = ({ toggleMobileMenu, theme, toggleTheme }) => (
             </NavLink>
           ))}
           <Link
-            to="/lets-talk"
+            to="/contact"
             className="ybz-btn ybz-btn-accent ybz-btn--sm ml-3"
           >
-            Let&apos;s talk
+            Contact
           </Link>
           <ThemeToggle theme={theme} onToggle={toggleTheme} className="ml-2" />
         </nav>

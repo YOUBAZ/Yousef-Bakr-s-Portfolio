@@ -1,9 +1,12 @@
-import { useMemo } from "react";
-import { ArrowUpRight, Mail } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import Seo from "../components/Seo";
 import { siteMeta } from "../config/seo";
 import { BRAND, PROOF_STACK } from "../config/brand";
 import { experienceTimeline } from "../data/experience";
+import { formatDate, getBlogPosts } from "../utils/blogUtils";
+import { formatPeriod } from "../utils/formatPeriod";
 import GoldRule from "../components/GoldRule";
 import {
   Button,
@@ -11,36 +14,41 @@ import {
   DecisionRecord,
   Section,
   SectionHeader,
+  SourceLink,
   StackLine,
   TextLink,
 } from "../components/ui";
 
+/* Production work only; earlier builds live on /projects. Each line states a
+   different decision, so no sentence on this page says the same thing twice. */
 const featuredProjects = [
   {
     title: "SafeStay",
-    copy: "Three-tier platform for verified student housing. Server-side state machines drive multi-party contract signing, so a half-signed contract cannot exist in the database.",
+    copy: "Verified student housing across a NestJS API, a Next.js console and a Flutter app, with identity verification gating the flows.",
     tags: ["NestJS", "Next.js", "Flutter", "PostgreSQL"],
+    link: "/projects/safestay",
   },
   {
     title: "EduShift AI",
-    copy: "Configurable prompt-engineering platform with versioned AI simulations and automated competency scoring. One simulation became four production products.",
+    copy: "LMS and business-simulation platform. Simulations are versioned, so a running cohort is never moved onto a changed prompt.",
     tags: ["TypeScript", "Next.js", "PostgreSQL", "Docker"],
     link: "/projects/edushift-ai",
   },
   {
-    title: "Promptopia",
-    copy: "AI prompt-sharing platform. NextAuth sessions over MongoDB, with the create/browse/manage loop kept to a single social feed.",
-    tags: ["Next.js", "React", "NextAuth", "MongoDB"],
+    title: "MSP Tech Club system",
+    copy: "Invite-only member system for a university club. Permissions, not role names, guard every route, so no member can promote themselves.",
+    tags: ["Next.js", "NestJS", "PostgreSQL"],
+    link: "/projects/msp-tech-club",
   },
   {
-    title: "Blog Post",
-    copy: "Content dashboard separating posts, users and admin flows behind an Express API rather than letting the client hold authorisation.",
-    tags: ["React", "Node.js", "Express.js", "MongoDB"],
+    title: "AutoBusiness",
+    copy: "Bilingual course store. Orders move through a state machine under row locks, so approving a payment twice cannot grant access twice.",
+    tags: ["Next.js", "NestJS", "MariaDB"],
+    link: "/projects/autobusiness",
   },
 ];
 
-/* Every row is a fact already published on the site: the SafeStay project
-   copy, the About page's "how I work" and the proof stack. */
+/* The hero object. Every row is published on the SafeStay case study. */
 const heroRecord = {
   id: "Decision record",
   project: "SafeStay",
@@ -65,13 +73,31 @@ const heroRecord = {
   footer: (
     <>
       <span>3-tier platform</span>
-      <span>20+ table schema</span>
+      <Link
+        to="/projects/safestay"
+        className="inline-flex items-center gap-1 text-bone underline decoration-edge underline-offset-4 hover:decoration-[var(--ybz-signal)]"
+      >
+        Read the case study
+        <ArrowRight size={14} strokeWidth={1.75} aria-hidden="true" />
+      </Link>
     </>
   ),
 };
 
 const Home = () => {
-  const timeline = experienceTimeline.filter((entry) => entry.current);
+  // SafeStay is already the hero and a case study; it is not repeated under "Now".
+  const timeline = experienceTimeline.filter(
+    (entry) => entry.current && entry.companyLabel !== "SafeStay"
+  );
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    let live = true;
+    getBlogPosts().then((all) => live && setPosts(all.slice(0, 3)));
+    return () => {
+      live = false;
+    };
+  }, []);
 
   const homeSchema = useMemo(() => {
     const locale = (siteMeta.locale || "en_US").replace("_", "-");
@@ -80,7 +106,7 @@ const Home = () => {
         "@type": "WebPage",
         "@id": `${siteMeta.siteUrl}/#home`,
         url: `${siteMeta.siteUrl}/`,
-        name: `${BRAND.name} — ${BRAND.role}`,
+        name: siteMeta.title,
         description: BRAND.positioning,
         inLanguage: locale,
       },
@@ -101,7 +127,6 @@ const Home = () => {
   return (
     <>
       <Seo
-        title={BRAND.role}
         description={BRAND.positioning}
         keywords={[
           "software engineer",
@@ -114,32 +139,24 @@ const Home = () => {
         schema={homeSchema}
       />
 
-      {/* Hero. Text on the left, the decision record on the right: the claim
-          and the evidence for it, side by side. */}
-      <section className="relative isolate overflow-hidden px-6 pb-20 pt-16 sm:px-10 lg:px-16 lg:pb-28 lg:pt-24">
-
-        <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
+      {/* Hero. The claim on the left, the evidence for it on the right. */}
+      <section className="relative isolate overflow-hidden px-6 pb-16 pt-12 sm:px-10 sm:pt-16 lg:px-16 lg:pb-28 lg:pt-24">
+        <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
           <div className="ybz-enter space-y-6">
             <p className="ybz-eyebrow">{BRAND.descriptor}</p>
             <h1 className="ybz-display-1 lg:text-5xl">{BRAND.positioning}</h1>
             <GoldRule />
             <p className="ybz-lede">
-              {BRAND.tagline} I work across{" "}
-              <span className="text-bone">{BRAND.stackFull}</span>. The stack is
-              the least interesting part. What a boundary costs when it goes in
-              the wrong place is the part worth writing down.
+              Software engineer at {BRAND.employer} and founder of SafeStay. I
+              build the API, the data model and the front end, in TypeScript,
+              NestJS, Next.js and PostgreSQL.
             </p>
             <div className="flex flex-wrap items-center gap-3 pt-2">
-              <Button to="/lets-talk" icon={ArrowUpRight}>
-                Start a conversation
-              </Button>
-              <Button
-                to="/contact"
-                variant="secondary"
-                icon={Mail}
-                iconPosition="start"
-              >
+              <Button to="/contact" icon={ArrowUpRight}>
                 Contact
+              </Button>
+              <Button to="/projects" variant="secondary">
+                See the work
               </Button>
             </div>
           </div>
@@ -150,7 +167,8 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Proof, as a ledger. Every line carries its source — section 8. */}
+      {/* Proof, as a ledger. Every figure measures an outcome and links to
+          where it can be checked. */}
       <Section tone="raised">
         <SectionHeader
           eyebrow="Proof"
@@ -160,7 +178,7 @@ const Home = () => {
         <dl className="ybz-card divide-y divide-edge">
           {PROOF_STACK.map((item, index) => (
             <div
-              key={item.source}
+              key={item.claim}
               className="grid gap-2 px-6 py-6 sm:grid-cols-[10rem_1fr] sm:gap-8"
             >
               <div>
@@ -173,37 +191,48 @@ const Home = () => {
               </div>
               <div className="space-y-2">
                 <dt className="ybz-body text-bone">{item.claim}</dt>
-                <dd className="ybz-source">{item.source}</dd>
+                <dd>
+                  <SourceLink href={item.href}>{item.source}</SourceLink>
+                </dd>
               </div>
             </div>
           ))}
         </dl>
       </Section>
 
-      {/* Selected work, as an index: name and stack on the left, the decision
-          on the right. */}
+      {/* Selected work. Each row is one link to its case study. */}
       <Section>
         <SectionHeader
           eyebrow="Selected work"
           title="What I built, and the decision inside it."
         />
 
-        <ol className="border-t border-edge">
+        <ol className="-mx-4 border-t border-edge">
           {featuredProjects.map((project) => (
             <li
               key={project.title}
-              className="grid gap-3 border-b border-edge py-8 md:grid-cols-[16rem_1fr] md:gap-10"
+              className="group relative grid gap-3 border-b border-edge px-4 py-8 transition-colors duration-150 hover:bg-card md:grid-cols-[16rem_1fr_auto] md:gap-10"
             >
               <div className="space-y-2">
-                <h3 className="ybz-title">{project.title}</h3>
+                <h3 className="ybz-title">
+                  {/* The link covers the whole row; the title is its name. */}
+                  <Link
+                    to={project.link}
+                    className="underline-offset-4 after:absolute after:inset-0 after:content-[''] group-hover:underline"
+                  >
+                    {project.title}
+                  </Link>
+                </h3>
                 <StackLine items={project.tags} />
               </div>
-              <div className="space-y-3">
-                <p className="ybz-body max-w-2xl">{project.copy}</p>
-                {project.link && (
-                  <TextLink to={project.link}>Case study</TextLink>
-                )}
-              </div>
+              <p className="ybz-body max-w-2xl">{project.copy}</p>
+              <span
+                aria-hidden="true"
+                className="hidden items-center gap-1.5 self-start text-sm font-medium text-bone md:flex"
+              >
+                Case study
+                <ArrowUpRight size={16} strokeWidth={1.75} />
+              </span>
             </li>
           ))}
         </ol>
@@ -213,15 +242,49 @@ const Home = () => {
         </div>
       </Section>
 
+      {/* Writing: the decisions the headline says are published. */}
+      {posts.length > 0 && (
+        <Section tone="raised">
+          <SectionHeader
+            eyebrow="Writing"
+            title="The decisions, written down."
+          />
+          {/* Titles, not cards: the covers live on /blog, this keeps the page short. */}
+          <ol className="-mx-4 border-t border-edge">
+            {posts.map((post) => (
+              <li
+                key={post.id}
+                className="group relative grid gap-2 border-b border-edge px-4 py-6 transition-colors duration-150 hover:bg-card sm:grid-cols-[1fr_auto] sm:items-baseline sm:gap-8"
+              >
+                <h3 className="ybz-title">
+                  <Link
+                    to={`/blog/${post.id}`}
+                    className="underline-offset-4 after:absolute after:inset-0 after:content-[''] group-hover:underline"
+                  >
+                    {post.title}
+                  </Link>
+                </h3>
+                <p className="ybz-meta">
+                  {formatDate(post.publishDate)} · {post.readTime} min read
+                </p>
+              </li>
+            ))}
+          </ol>
+          <div className="mt-8">
+            <TextLink to="/blog">All writing</TextLink>
+          </div>
+        </Section>
+      )}
+
       {/* Where the work happens now. */}
-      <Section tone="raised" className="border-b-0">
+      <Section>
         <SectionHeader eyebrow="Now" title="Where the work happens." />
 
-        <div className="grid gap-6 lg:grid-cols-2">
+        <div className="grid gap-6 lg:grid-cols-3">
           {timeline.map((item) => (
             <Card key={item.title}>
               <div className="mb-6 flex items-center gap-4">
-                {item.companyLogo ? (
+                {item.companyLogo && (
                   <div className="ybz-plate h-14 w-14 p-2">
                     <img
                       src={item.companyLogo}
@@ -230,23 +293,15 @@ const Home = () => {
                       loading="lazy"
                     />
                   </div>
-                ) : (
-                  <div
-                    className="flex h-14 w-14 shrink-0 items-center justify-center border border-hairline font-mono text-sm text-muted"
-                    style={{ borderRadius: "var(--ybz-r-sm)" }}
-                  >
-                    {item.companyBadge}
-                  </div>
                 )}
                 <div className="min-w-0">
                   <p className="font-medium text-bone">{item.companyLabel}</p>
-                  <p className="ybz-meta">{item.period}</p>
+                  <p className="ybz-meta">{formatPeriod(item.period)}</p>
                 </div>
               </div>
 
               <h3 className="ybz-title">{item.role}</h3>
               <p className="ybz-body mt-2">{item.detail}</p>
-              <p className="ybz-source mt-4">{item.source}</p>
               {item.link && (
                 <TextLink to={item.link} className="mt-4">
                   Case study

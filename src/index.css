@@ -413,7 +413,10 @@
 
   /* Touch: every control reaches 44px where the pointer is a finger. */
   @media (pointer: coarse){
-    .ybz-chip, .ybz-btn--sm{ min-height: 2.75rem; }
+    .ybz-chip, .ybz-btn--sm, .ybz-link{ min-height: 2.75rem; }
+    nav[aria-label="Primary"] a, a.ybz-source, .ybz-record__foot a{
+      display: inline-flex; align-items: center; min-height: 2.75rem;
+    }
   }
 
   /* Skip link. Off-screen until focused, then lands as a primary action. */
@@ -522,6 +525,8 @@
 
 @media (max-width: 480px){
   .ybz-record__row{ grid-template-columns: 1fr; gap: 4px; }
+  /* Title on one line, status under it, rather than a mid-label wrap. */
+  .ybz-record__bar{ flex-direction: column; align-items: flex-start; gap: 6px; }
 }
 
 /* ---------- code syntax ramp: palette colours only ---------- */

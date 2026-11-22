@@ -1,3 +1,4 @@
+import { formatPeriod } from "../utils/formatPeriod";
 import { useEffect, useState } from "react";
 import Seo from "../components/Seo";
 import { siteMeta } from "../config/seo";
@@ -15,6 +16,7 @@ import {
   SectionHeader,
   StackLine,
   TextLink,
+  SourceLink,
 } from "../components/ui";
 
 /**
@@ -225,11 +227,13 @@ const About = () => {
         <dl className="grid border-t border-edge sm:grid-cols-2 sm:gap-x-10">
           {PROOF_STACK.map((item) => (
             <div
-              key={item.source}
+              key={item.claim}
               className="space-y-2 border-b border-edge py-6"
             >
               <dt className="ybz-body text-bone">{item.claim}</dt>
-              <dd className="ybz-source">{item.source}</dd>
+              <dd>
+                <SourceLink href={item.href}>{item.source}</SourceLink>
+              </dd>
             </div>
           ))}
         </dl>
@@ -266,7 +270,7 @@ const About = () => {
                   key={`${entry.title}-${entry.period}`}
                   className="border-l border-edge pl-5"
                 >
-                  <p className="ybz-meta">{entry.period}</p>
+                  <p className="ybz-meta">{formatPeriod(entry.period)}</p>
                   <h3 className="ybz-title mt-2">{entry.title}</h3>
                   <p className="ybz-body mt-2">{entry.detail}</p>
                   <p className="ybz-source mt-3">{entry.source}</p>

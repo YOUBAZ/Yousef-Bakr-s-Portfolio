@@ -1,5 +1,5 @@
 import { useState, useEffect, lazy, Suspense } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import MobileMenu from "./components/MobileMenu";
 import ErrorBoundary from "./components/ErrorBoundary";
@@ -17,7 +17,6 @@ const ProjectDetail = lazy(() => import("./pages/ProjectDetail"));
 const Certificates = lazy(() => import("./pages/Certificates"));
 const About = lazy(() => import("./pages/About"));
 const Contact = lazy(() => import("./pages/Contact"));
-const LetsTalk = lazy(() => import("./pages/LetsTalk"));
 const Cv = lazy(() => import("./pages/CV"));
 const BlogList = lazy(() => import("./pages/BlogList"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
@@ -70,7 +69,7 @@ function App() {
                 <Route path="/certificates" element={<Certificates />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
-                <Route path="/lets-talk" element={<LetsTalk />} />
+                <Route path="/lets-talk" element={<Navigate to="/contact" replace />} />
                 <Route path="/cv" element={<Cv />} />
 
                 {/* Blog Routes */}

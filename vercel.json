@@ -4,6 +4,9 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "devCommand": "npm run dev",
+  "redirects": [
+    { "source": "/lets-talk", "destination": "/contact", "permanent": true }
+  ],
   "rewrites": [
     {
       "source": "/((?!sitemap.xml|robots.txt).*)",

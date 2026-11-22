@@ -1,8 +1,8 @@
 import { BRAND } from "./brand";
 
 export const siteMeta = {
-  siteName: "Yousef Bakr — Software Engineer",
-  title: "Yousef Bakr — Software Engineer",
+  siteName: "Yousef Bakr",
+  title: "Yousef Bakr · Software Engineer",
   description: BRAND.positioning,
   siteUrl: BRAND.siteUrl,
   locale: "en_US",

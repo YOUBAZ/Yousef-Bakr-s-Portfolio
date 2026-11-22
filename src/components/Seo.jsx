@@ -32,8 +32,9 @@ const Seo = ({
   lastModified,
   author,
 }) => {
+  // "Projects · Yousef Bakr" on inner pages; the home page uses siteMeta.title.
   const pageTitle = title
-    ? `${title} | ${siteMeta.siteName}`
+    ? `${title} · ${siteMeta.siteName}`
     : siteMeta.title;
   const pageDescription = description || siteMeta.description;
   const canonicalUrl = toAbsoluteUrl(url);
