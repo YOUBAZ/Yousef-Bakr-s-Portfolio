@@ -38,7 +38,7 @@ const BlogCard = ({ blog }) => {
         <h3 className="ybz-title line-clamp-2">
           <Link
             to={href}
-            className="transition-colors duration-150 hover:text-accent"
+            className="underline decoration-transparent underline-offset-4 transition-colors duration-150 hover:decoration-[var(--ybz-signal)]"
           >
             {blog.title}
           </Link>

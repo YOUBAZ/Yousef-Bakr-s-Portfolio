@@ -20,6 +20,8 @@ export const BRAND = {
   descriptor: "Software Engineer",
 
   tagline: "Engineering that earns its complexity.",
+  /** The header strip's revision mark, BRAND.md section 6. Bump on a visible redesign. */
+  revision: "Rev 2026.11",
   positioning:
     "I build production software — and publish the architecture decisions behind it.",
 

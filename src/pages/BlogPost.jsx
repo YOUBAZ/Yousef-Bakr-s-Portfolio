@@ -264,7 +264,7 @@ const BlogPost = () => {
                   </div>
                 )}
                 <div className="p-6">
-                  <h3 className="ybz-title line-clamp-2 transition-colors duration-150 group-hover:text-accent">
+                  <h3 className="ybz-title line-clamp-2 underline decoration-transparent underline-offset-4 transition-colors duration-150 group-hover:decoration-[var(--ybz-signal)]">
                     {relatedBlog.title}
                   </h3>
                   <p className="ybz-body mt-2 line-clamp-2">

@@ -1,6 +1,6 @@
 # CLAUDE.md — Yousef Bakr
 
-Read `brand-kit/BRAND.md` (v3.0) before producing anything. `brand-kit/brand.json`
+Read `brand-kit/BRAND.md` (v3.1) before producing anything. `brand-kit/brand.json`
 has the exact values; never guess a hex. Only `brand.json` is in git (the site needs
 it); the rest of `brand-kit/` is a local folder, rebuilt with
 `brand-kit/tools/build_kit.py`. The v2.4 kit is retired and deleted.
@@ -47,7 +47,8 @@ the Merge Y from `brand.json`.
 
 ## Layout
 Spec sheet: a header strip, a visible 12-column hairline grid on heroes and covers,
-a short signal marker under headlines, mono margin notes, and a footer strip with the
+numbered section strips, a short signal marker under page headlines
+(not section headlines), mono margin notes, and a footer strip with the
 Merge Y + name + role + counter. Left-aligned. Radii 2/4/8; square is the default.
 
 ## Voice

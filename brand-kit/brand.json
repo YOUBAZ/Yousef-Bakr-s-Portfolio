@@ -1,6 +1,6 @@
 {
-  "version": "3.0.0",
-  "date": "2026-11-19",
+  "version": "3.1.0",
+  "date": "2026-11-22",
   "territory": "Spec sheet, with the Merge Y as the symbol",
   "identity": {
     "name": "Yousef Bakr",
@@ -22,21 +22,25 @@
   "palette": {
     "light": {
       "ground":      { "hex": "#F4F3EF", "role": "Page background. Warm paper, never pure white." },
-      "surface":     { "hex": "#EAE8E2", "role": "Cards, code blocks, table headers." },
+      "surface":     { "hex": "#E5E2DA", "role": "Raised bands, cards, code blocks, table headers. 5.9 L* below ground, so a band reads as a plane." },
+      "raised":      { "hex": "#F4F3EF", "role": "A box on a surface band. In light this is the ground: lighter than the band, so it reads as lifted." },
       "ink":         { "hex": "#15171B", "role": "Headlines and body text. 16.2:1 on ground." },
-      "muted":       { "hex": "#5E626A", "role": "Secondary text, captions, margin notes. 5.5:1 on ground." },
-      "rule":        { "hex": "#D3D0C8", "role": "Hairlines and grid lines only. Never text." },
-      "signal":      { "hex": "#D2481C", "role": "Graphics only: markers, glyph node, key figure rules. 4.0:1, fails as body text." },
-      "signal_type": { "hex": "#A8360E", "role": "Signal colour when it must be text: section numbers, key figures. 5.9:1 on ground." }
+      "muted":       { "hex": "#5F5B54", "role": "Secondary text, captions, margin notes, section numbers. Warm, like the paper. 6.1:1 on ground, 5.2:1 on surface." },
+      "mid":         { "hex": "#A29D92", "role": "The mid-tone. Strong hairlines, hover borders, grid major lines, inactive marks. Never text." },
+      "rule":        { "hex": "#CCC8BE", "role": "Hairlines and grid lines only. Never text. Holds on ground and on surface." },
+      "signal":      { "hex": "#D2481C", "role": "Graphics only: the Merge Y branch, headline markers, key-figure rules, status squares. 4.0:1, fails as body text." },
+      "signal_type": { "hex": "#A8360E", "role": "Signal as text. Rare: one key figure per page at most, never beside a signal graphic. 5.9:1 on ground." }
     },
     "dark": {
       "ground":      { "hex": "#121417", "role": "Page background. Never pure black." },
-      "surface":     { "hex": "#24282D", "role": "Cards, code blocks, table headers. 9.7 L* above ground: dark needs a larger step than light to read as a separate box." },
+      "surface":     { "hex": "#282826", "role": "Raised bands, cards, code blocks, table headers. 9.8 L* above ground: dark needs a larger step than light. Near-neutral, so it sits with the cool ground." },
+      "raised":      { "hex": "#343432", "role": "A box on a surface band. Lighter than the band, so it reads as lifted, not cut out." },
       "ink":         { "hex": "#ECEBE6", "role": "Headlines and body text. 15.5:1 on ground." },
-      "muted":       { "hex": "#9A9EA5", "role": "Secondary text, captions, margin notes. 6.9:1 on ground." },
-      "rule":        { "hex": "#363B42", "role": "Hairlines and grid lines only. Never text. Visible on ground and on surface." },
-      "signal":      { "hex": "#E2582B", "role": "Graphics: markers, glyph node, key figure rules. 5.0:1 on ground." },
-      "signal_type": { "hex": "#EE7A52", "role": "Signal colour as text. 6.6:1 on ground." }
+      "muted":       { "hex": "#A29F99", "role": "Secondary text, captions, margin notes, section numbers. 7.0:1 on ground, 4.7:1 on raised." },
+      "mid":         { "hex": "#6E6C68", "role": "The mid-tone. Strong hairlines, hover borders, grid major lines, inactive marks. Never text." },
+      "rule":        { "hex": "#484745", "role": "Hairlines and grid lines only. Never text. Holds on ground, surface and raised." },
+      "signal":      { "hex": "#E2582B", "role": "Graphics: the Merge Y branch, markers, key-figure rules, status squares. 5.0:1 on ground." },
+      "signal_type": { "hex": "#EE7A52", "role": "Signal as text. Rare, as in light. 6.6:1 on ground." }
     }
   },
   "type": {

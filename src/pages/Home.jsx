@@ -8,6 +8,7 @@ import GoldRule from "../components/GoldRule";
 import {
   Button,
   DecisionRecord,
+  GridLines,
   Section,
   SectionHeader,
   SourceLink,
@@ -121,19 +122,26 @@ const Home = () => {
         schema={homeSchema}
       />
 
-      {/* Hero. The claim on the left, the evidence for it on the right. */}
-      <section className="relative isolate overflow-hidden px-6 pb-16 pt-12 sm:px-10 sm:pt-16 lg:px-16 lg:pb-28 lg:pt-24">
-        <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
-          <div className="ybz-enter space-y-6">
+      {/* Hero, on the visible 12-column grid. The claim runs across ten
+          columns at full display size; under it, the lede in columns 1–5 and
+          the evidence for the claim in columns 7–12. Text blocks sit on the
+          ground colour, so the grid shows between them, never through text. */}
+      <section className="relative isolate overflow-hidden px-6 pb-16 pt-12 sm:px-10 sm:pt-16 lg:px-16 lg:pb-24 lg:pt-20">
+        <GridLines />
+        <div className="mx-auto grid max-w-6xl gap-y-10 md:grid-cols-12 md:gap-x-6 lg:gap-y-14">
+          <div className="ybz-enter space-y-6 bg-ink md:col-span-12 lg:col-span-10">
             <p className="ybz-eyebrow">{BRAND.descriptor}</p>
-            <h1 className="ybz-display-1 lg:text-5xl">{BRAND.positioning}</h1>
+            <h1 className="ybz-display-1">{BRAND.positioning}</h1>
             <GoldRule />
+          </div>
+
+          <div className="ybz-enter space-y-8 self-start bg-ink md:col-span-12 lg:col-span-5">
             <p className="ybz-lede">
               Software engineer at {BRAND.employer} and founder of SafeStay. I
               build the API, the data model and the front end, in TypeScript,
               NestJS, Next.js and PostgreSQL.
             </p>
-            <div className="flex flex-wrap items-center gap-3 pt-2">
+            <div className="flex flex-wrap items-center gap-3">
               <Button to="/contact" icon={ArrowRight}>
                 Contact
               </Button>
@@ -143,7 +151,10 @@ const Home = () => {
             </div>
           </div>
 
-          <div className="ybz-enter" style={{ animationDelay: "60ms" }}>
+          <div
+            className="ybz-enter md:col-span-12 lg:col-span-6 lg:col-start-7"
+            style={{ animationDelay: "60ms" }}
+          >
             <DecisionRecord {...heroRecord} />
           </div>
         </div>
@@ -157,26 +168,24 @@ const Home = () => {
           title="Three claims, each with a source."
         />
 
-        <dl className="ybz-card divide-y divide-edge">
+        {/* Three columns of four on the page grid, straight on the band: the
+            figures are the content, so they get the size, not a box. */}
+        <dl className="grid gap-y-10 md:grid-cols-12 md:gap-x-6">
           {PROOF_STACK.map((item, index) => (
             <div
               key={item.claim}
-              className="grid gap-2 px-6 py-6 sm:grid-cols-[10rem_1fr] sm:gap-8"
+              className="flex flex-col border-t border-mid pt-6 md:col-span-4"
             >
-              <div>
-                <p
-                  className={`ybz-figure text-4xl ${index === 0 ? "ybz-figure--key" : ""}`}
-                >
-                  {item.figure}
-                </p>
-                <p className="ybz-meta mt-2">{item.figureLabel}</p>
-              </div>
-              <div className="space-y-2">
-                <dt className="ybz-body text-bone">{item.claim}</dt>
-                <dd>
-                  <SourceLink href={item.href}>{item.source}</SourceLink>
-                </dd>
-              </div>
+              <p
+                className={`ybz-figure text-5xl leading-none ${index === 0 ? "ybz-figure--key" : ""}`}
+              >
+                {item.figure}
+              </p>
+              <p className="ybz-meta mt-3">{item.figureLabel}</p>
+              <dt className="ybz-body mt-6 text-bone">{item.claim}</dt>
+              <dd className="mt-3">
+                <SourceLink href={item.href}>{item.source}</SourceLink>
+              </dd>
             </div>
           ))}
         </dl>
@@ -186,16 +195,19 @@ const Home = () => {
       <Section>
         <SectionHeader
           eyebrow="Selected work"
+          note="Production only"
           title="What I built, and the decision inside it."
         />
 
-        <ol className="-mx-4 border-t border-edge">
+        {/* Rows on the page grid (3 / 7 / 2), flush with the container edge
+            like every other block. */}
+        <ol className="border-t border-edge">
           {featuredProjects.map((project) => (
             <li
               key={project.title}
-              className="group relative grid gap-3 border-b border-edge px-4 py-8 transition-colors duration-150 hover:bg-card md:grid-cols-[16rem_1fr_auto] md:gap-10"
+              className="group relative grid gap-3 border-b border-edge py-8 md:grid-cols-12 md:gap-x-6"
             >
-              <div className="space-y-2">
+              <div className="space-y-2 md:col-span-3">
                 <h3 className="ybz-title">
                   {/* The link covers the whole row; the title is its name. */}
                   <Link
@@ -207,10 +219,10 @@ const Home = () => {
                 </h3>
                 <StackLine items={project.tags} />
               </div>
-              <p className="ybz-body max-w-2xl">{project.copy}</p>
+              <p className="ybz-body md:col-span-7">{project.copy}</p>
               <span
                 aria-hidden="true"
-                className="hidden items-center gap-1.5 self-start text-sm font-medium text-bone md:flex"
+                className="hidden items-center gap-1.5 self-start justify-self-end text-sm font-medium text-bone underline decoration-edge underline-offset-4 transition-colors duration-150 group-hover:decoration-[var(--ybz-signal)] md:col-span-2 md:flex"
               >
                 Case study
                 <ArrowRight size={16} strokeWidth={1.75} />

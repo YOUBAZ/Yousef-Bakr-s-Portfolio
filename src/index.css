@@ -21,7 +21,8 @@
 :root{
   /* ---------- ground and surfaces ---------- */
   --ybz-ink:        #F4F3EF;  /* paper — page ground, never pure white */
-  --ybz-surface:    #EAE8E2;  /* the second neutral */
+  --ybz-surface:    #E5E2DA;  /* raised bands: 5.9 L* below paper, so a band reads as a plane */
+  --ybz-raised:     #F4F3EF;  /* a box on a raised band: lighter than the band */
   --ybz-obsidian:   var(--ybz-surface);  /* alternate (raised) sections */
 
   /* Box fills. A box must always differ from what sits behind it: a card on a
@@ -29,13 +30,14 @@
      below), and a box nested inside a card takes the other one (--ybz-inset). */
   --ybz-card:       var(--ybz-surface);
   --ybz-inset:      var(--ybz-ink);
-  --ybz-edge:       #D3D0C8;  /* hairlines and grid lines, never text */
-  --ybz-hairline:   #D3D0C8;
+  --ybz-edge:       #CCC8BE;  /* hairlines and grid lines, never text */
+  --ybz-hairline:   #CCC8BE;
+  --ybz-mid:        #A29D92;  /* the mid-tone: strong hairlines, hover borders. Never text */
 
   /* ---------- type ---------- */
   --ybz-bone:       #15171B;  /* headlines and body  16.2:1 on paper */
   --ybz-slate:      #15171B;
-  --ybz-muted:      #5E626A;  /* secondary text       5.5:1 */
+  --ybz-muted:      #5F5B54;  /* secondary text, warm  6.1:1, 5.2:1 on surface */
 
   /* ---------- the one signal colour ---------- */
   --ybz-signal:      #D2481C;  /* graphics only: markers, the Merge Y branch. 4.0:1 */
@@ -53,9 +55,9 @@
   --ybz-r-md: 4px;
   --ybz-r-lg: 8px;
 
-  /* ---------- translucent chrome: the ground at partial opacity ---------- */
-  --ybz-chrome:  rgba(234,232,226,.92);  /* sticky navbar: surface, so the bar reads as a box */
-  --ybz-scrim:   rgba(21,23,27,.45);     /* mobile menu backdrop */
+  /* Mobile menu backdrop: ink at partial opacity. The header strip is solid
+     ground, no translucency. */
+  --ybz-scrim:   rgba(21,23,27,.45);
 
   /* A plate behind third-party logos, which are drawn for light grounds. Stays
      light in both themes. */
@@ -79,22 +81,23 @@
 
 [data-theme="dark"]{
   --ybz-ink:        #121417;  /* never pure black */
-  --ybz-surface:    #24282D;
+  --ybz-surface:    #282826;  /* near-neutral; 9.8 L* above ground */
+  --ybz-raised:     #343432;  /* a box on a raised band: lighter, so it lifts, never a hole */
   --ybz-obsidian:   var(--ybz-surface);
   --ybz-card:       var(--ybz-surface);
   --ybz-inset:      var(--ybz-ink);
-  --ybz-edge:       #363B42;
-  --ybz-hairline:   #363B42;
+  --ybz-edge:       #484745;
+  --ybz-hairline:   #484745;
+  --ybz-mid:        #6E6C68;
 
   --ybz-bone:       #ECEBE6;  /* 15.5:1 */
   --ybz-slate:      #ECEBE6;
-  --ybz-muted:      #9A9EA5;  /* 6.9:1 */
+  --ybz-muted:      #A29F99;  /* 7.0:1, 4.7:1 on raised */
 
   --ybz-signal:      #E2582B;  /* 5.0:1 */
   --ybz-accent-type: #EE7A52;  /* 6.6:1 */
   --ybz-accent-rule: #E2582B;
 
-  --ybz-chrome:  rgba(36,40,45,.92);     /* surface #24282D */
   --ybz-scrim:   rgba(18,20,23,.80);
 
   color-scheme: dark;
@@ -102,13 +105,14 @@
 
 /* ==========================================================================
    FIGURE AND GROUND
-   On a raised band the band is surface, so boxes on it flip to paper, and
-   boxes nested inside those flip back to surface. Every box keeps a fill that
-   differs from what is behind it, in both themes, without per-page overrides.
+   On a raised band the band is surface, so boxes on it take --ybz-raised:
+   lighter than the band in both themes (paper in light, a lifted step in dark),
+   so a box always reads as on top of the band, never cut into it. Boxes nested
+   inside those take surface again.
    ========================================================================== */
 
 .bg-obsidian{
-  --ybz-card:  var(--ybz-ink);
+  --ybz-card:  var(--ybz-raised);
   --ybz-inset: var(--ybz-surface);
 }
 
@@ -131,8 +135,9 @@
   --color-muted:      var(--ybz-muted);
   --color-accent:     var(--ybz-accent-type);
   --color-edge:       var(--ybz-edge);
+  --color-mid:        var(--ybz-mid);
+  --color-raised:     var(--ybz-raised);
   --color-hairline:   var(--ybz-hairline);
-  --color-chrome:     var(--ybz-chrome);
   --color-scrim:      var(--ybz-scrim);
   --color-logo-plate: var(--ybz-logo-plate);
 
@@ -250,12 +255,31 @@
     color: var(--ybz-accent-type);
   }
 
-  /* Section label: mono, signal as text, sentence case. Sits where the
-     section number sits in the kit's layout signature. */
+  /* Label: mono, muted, sentence case. Labels are metadata, not signal: the
+     signal colour is kept for the few marks that mean something. */
   .ybz-eyebrow{
     font-family: var(--ybz-mono); font-weight: 500; font-size: .8125rem;
-    line-height: 1.5; color: var(--ybz-accent-type);
+    line-height: 1.5; color: var(--ybz-muted);
   }
+
+  /* The section strip: number, label, a hairline to the margin, and an
+     optional margin note. BRAND.md section 6. Numbers count per page with a
+     CSS counter, so no page has to pass them in. */
+  .ybz-section-strip{
+    display: flex; align-items: baseline; gap: 12px;
+    font-family: var(--ybz-mono); font-weight: 500; font-size: .8125rem;
+    line-height: 1.5; color: var(--ybz-muted);
+  }
+  .ybz-section-strip__num{ color: var(--ybz-bone); font-variant-numeric: tabular-nums; }
+  .ybz-section-strip__num::before{
+    counter-increment: ybz-section;
+    content: counter(ybz-section, decimal-leading-zero);
+  }
+  .ybz-section-strip__line{
+    flex: 1 1 auto; align-self: center; height: 1px; min-width: 24px;
+    background: var(--ybz-edge);
+  }
+  .ybz-section-strip__note{ font-weight: 400; text-align: right; }
 
   /* Mono metadata: periods, counters, short tags. Sentence case. */
   .ybz-meta{
@@ -276,8 +300,15 @@
     font-family: var(--ybz-mono); font-weight: 500;
     color: var(--ybz-bone);
     font-variant-numeric: tabular-nums;
+    /* A mono space is 0.6em; pull "3 days" back to a normal word gap. */
+    word-spacing: -0.25em;
   }
-  .ybz-figure--key{ color: var(--ybz-accent-type); }
+  /* The one key figure on a page: ink, with a signal rule beside it. The rule
+     is the signal, so the digits never sit in a second red next to it. */
+  .ybz-figure--key{
+    border-left: 2px solid var(--ybz-signal);
+    padding-left: 12px;
+  }
 
   /* Links are ink with an underline. The underline turns signal on hover. */
   .ybz-link{
@@ -375,7 +406,7 @@
     background: transparent; color: var(--ybz-bone);
     border-color: var(--ybz-edge);
   }
-  .ybz-btn-ghost:hover{ border-color: var(--ybz-bone); }
+  .ybz-btn-ghost:hover{ border-color: var(--ybz-mid); }
 
   /* The persistent navigation CTA: outlined in ink, one step below the
      primary fill so it never competes with the page's own action. */
@@ -394,7 +425,7 @@
     transition: border-color var(--ybz-dur-fast) var(--ybz-ease);
   }
   .ybz-input::placeholder{ color: var(--ybz-muted); }
-  .ybz-input:hover{ border-color: var(--ybz-muted); }
+  .ybz-input:hover{ border-color: var(--ybz-mid); }
   .ybz-input:focus{ outline: none; border-color: var(--ybz-accent-rule); }
 
   /* Filter chips. Selected is a surface step plus an ink edge. */
@@ -406,7 +437,7 @@
                 color var(--ybz-dur-fast) var(--ybz-ease),
                 background-color var(--ybz-dur-fast) var(--ybz-ease);
   }
-  .ybz-chip:hover{ color: var(--ybz-bone); border-color: var(--ybz-muted); }
+  .ybz-chip:hover{ color: var(--ybz-bone); border-color: var(--ybz-mid); }
   .ybz-chip[aria-pressed="true"]{
     color: var(--ybz-bone); background: var(--ybz-card); border-color: var(--ybz-bone);
   }
@@ -430,6 +461,30 @@
     left: 1rem; top: 1rem;
   }
 }
+
+/* ==========================================================================
+   THE PAGE GRID
+   BRAND.md section 6: 12 columns, 24px gutters, inside the max-w-6xl
+   container. Every two-column block snaps to it (label 3, body 9; or 4 / 8),
+   so second columns start on the same line on every page.
+   .ybz-gridlines draws the columns as hairlines behind heroes; it is hidden
+   in running text and below md, where 12 lines would be noise.
+   ========================================================================== */
+
+main{ counter-reset: ybz-section; }
+
+.ybz-gridlines{ display: none; height: 100%; }
+@media (min-width: 768px){
+  .ybz-gridlines{
+    display: grid; grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 24px;
+  }
+}
+.ybz-gridlines > span{ border-left: 1px solid var(--ybz-edge); }
+.ybz-gridlines > span:last-child{ border-right: 1px solid var(--ybz-edge); }
+
+/* Portraits sit in the palette: no colour photograph outshouts the signal. */
+.ybz-photo{ filter: grayscale(1) contrast(1.05); }
 
 /* ==========================================================================
    THE CODE BLOCK
@@ -466,25 +521,18 @@
 /* ==========================================================================
    THE DECISION RECORD
    The Home hero object, laid out like a spec-sheet record: a header strip, a
-   list of fields, a footer strip. It follows the theme. The rail is the one
-   signal mark.
+   list of fields, a footer strip. It follows the theme. The status square is
+   its one signal mark; the frame is a hairline, not a callout bar.
    ========================================================================== */
 
 .ybz-record{
   position: relative; margin: 0;
-  padding-left: 4px;
   border-radius: var(--ybz-r-md);
   border: 1px solid var(--ybz-edge);
   background: var(--ybz-card);
   color: var(--ybz-slate);
   overflow: hidden;
 }
-
-.ybz-record__rail{
-  position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
-  display: flex; flex-direction: column; gap: 6px; padding: 24px 0;
-}
-.ybz-record__rail > span{ background: var(--ybz-signal); }
 
 .ybz-record__bar{
   display: flex; align-items: center; justify-content: space-between; gap: 16px;
@@ -493,7 +541,7 @@
   border-bottom: 1px solid var(--ybz-edge);
 }
 .ybz-record__status{
-  color: var(--ybz-accent-type);
+  color: var(--ybz-bone);
 }
 .ybz-record__status::before{
   content: ""; display: inline-block; width: 6px; height: 6px; margin-right: 8px;

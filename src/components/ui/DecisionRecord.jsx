@@ -10,11 +10,6 @@ import PropTypes from "prop-types";
  */
 const DecisionRecord = ({ id, project, status, rows, footer }) => (
   <figure className="ybz-record" aria-label={`Decision record: ${project}`}>
-    {/* One signal marker down the leading edge: the record's status line. */}
-    <span className="ybz-record__rail" aria-hidden="true">
-      <span style={{ flexGrow: 1 }} />
-    </span>
-
     <figcaption className="ybz-record__bar">
       <span>
         {id} · {project}
