@@ -77,7 +77,7 @@ const MobileMenu = ({ isOpen, toggleMenu }) => {
           className="flex flex-col gap-1 text-lg font-medium"
           aria-label="Primary"
         >
-          {NAV_ITEMS.map((item) => (
+          {NAV_ITEMS.filter((item) => item.path !== "/contact").map((item) => (
             <Link
               key={item.name}
               to={item.path}
@@ -92,11 +92,11 @@ const MobileMenu = ({ isOpen, toggleMenu }) => {
         <div className="mt-auto space-y-4">
           <GoldRule />
           <Link
-            to="/lets-talk"
+            to="/contact"
             onClick={toggleMenu}
             className="ybz-btn ybz-btn-accent w-full"
           >
-            Let&apos;s talk
+            Contact
           </Link>
         </div>
       </div>

@@ -2,8 +2,8 @@ import { Github, Linkedin, Mail } from "lucide-react";
 import { BRAND } from "./brand";
 
 /**
- * Contact channels and the kind of work worth writing about, shared by the
- * Contact and Let's talk pages.
+ * Contact channels, call windows and the kind of work worth writing about.
+ * The Contact page is the one way in; /lets-talk redirects to it.
  *
  * The phone number is deliberately absent: brand.json marks it "Business card
  * only". The location is absent too — section 1 keeps it to the structured
@@ -36,4 +36,13 @@ export const COLLABORATION_NOTES = [
   "A boundary that is leaking — service seams, data ownership, or state that drifted to the client",
   "API design and migrations where the rollback plan matters more than the rewrite",
   "Production work on TypeScript, NestJS, Next.js and PostgreSQL systems",
+];
+
+/** Call windows, in GMT. Shown on the Contact page next to the form. */
+export const AVAILABILITY = [
+  { day: "Monday", slots: "09:00 – 13:00" },
+  { day: "Tuesday", slots: "09:00 – 13:00" },
+  { day: "Wednesday", slots: "09:00 – 13:00" },
+  { day: "Thursday", slots: "09:00 – 13:00" },
+  { day: "Friday", slots: "On request" },
 ];

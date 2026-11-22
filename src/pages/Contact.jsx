@@ -2,7 +2,7 @@ import ContactForm from "../components/ContactForm";
 import Seo from "../components/Seo";
 import { siteMeta } from "../config/seo";
 import { BRAND } from "../config/brand";
-import { CONTACT_CHANNELS, COLLABORATION_NOTES } from "../config/contact";
+import { CONTACT_CHANNELS, COLLABORATION_NOTES, AVAILABILITY } from "../config/contact";
 import { Card, PageHeader, Section } from "../components/ui";
 
 const Contact = () => {
@@ -62,10 +62,11 @@ const Contact = () => {
         <div className="grid items-start gap-6 lg:grid-cols-2">
           {/* The form leads on small screens: it is the page's one action. */}
           <Card className="lg:order-2">
-            <h2 className="ybz-title">Project details</h2>
+            <h2 className="ybz-title">Write to me</h2>
             <p className="ybz-body mt-2">
-              Timeline, the decision you are weighing, and what you have ruled
-              out already.
+              The decision you are weighing, your timeline, and what you have
+              ruled out already. If a call is easier, name a window from the
+              list and I will send an invite.
             </p>
             <div className="mt-6">
               <ContactForm />
@@ -87,6 +88,21 @@ const Contact = () => {
                   </li>
                 ))}
               </ul>
+            </Card>
+
+            <Card>
+              <h2 className="ybz-title">Call windows</h2>
+              <p className="ybz-source mt-1">All hours in GMT</p>
+              <dl className="mt-4 grid gap-3 sm:grid-cols-2">
+                {AVAILABILITY.map((slot) => (
+                  <div key={slot.day} className="ybz-inset p-3">
+                    <dt className="ybz-meta">{slot.day}</dt>
+                    <dd className="mt-1 font-mono text-sm tabular-nums text-bone">
+                      {slot.slots}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
             </Card>
 
             <ul className="grid gap-4">

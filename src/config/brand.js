@@ -59,23 +59,27 @@ export const LOCATION_RULE = "structured-data-only";
 export const PROOF_STACK = [
   {
     claim:
-      "Scaled EduShift AI from a single simulation into 4 production learning products, adopted by 6+ organisations including the She's Next Entrepreneurship Competition.",
-    source: "edushiftai.com · MindShift MENA, 2025–2026",
+      "Scaled EduShift AI from a single simulation into 4 production learning products.",
+    source: "edushiftai.com · MindShift MENA, Sep 2025 – Present",
+    href: "https://edushiftai.com",
     figure: "4",
     figureLabel: "production products",
   },
   {
-    claim: "Best Team Award, DECI Bootcamp.",
-    source: "IBM, 2023",
-    figure: "2023",
-    figureLabel: "IBM DECI Bootcamp",
+    claim:
+      "EduShift AI is used by 6+ organisations to train teams, including the She's Next Entrepreneurship Competition.",
+    source: "edushiftai.com · MindShift MENA, Sep 2025 – Present",
+    href: "https://edushiftai.com",
+    figure: "6+",
+    figureLabel: "organisations",
   },
   {
     claim:
-      "Architected SafeStay: 3-tier platform, 20+ table schema, server-side state machines for multi-party contract signing.",
-    source: "NestJS · Next.js · Flutter, 2026–",
-    figure: "20+",
-    figureLabel: "table schema",
+      "Took the MSP Tech Club member system from first commit to live in three days, with QR check-in at the door.",
+    source: "msp-helwan.vercel.app · Nov 2026",
+    href: "https://msp-helwan.vercel.app/",
+    figure: "3 days",
+    figureLabel: "first commit to live",
   },
 ];
 

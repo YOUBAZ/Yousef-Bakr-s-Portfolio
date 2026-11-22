@@ -95,6 +95,63 @@
       ]
     },
     {
+      "id": "safestay",
+      "title": "SafeStay",
+      "summary": "Three-tier platform for verified student housing: a NestJS API, a Next.js console and a Flutter app. Contract signing runs as a server-side state machine, so several parties can sign one contract at different times without it ever being half-signed.",
+      "tech": [
+        "NestJS",
+        "Next.js",
+        "Flutter",
+        "PostgreSQL"
+      ],
+      "role": "Founder",
+      "year": "Building",
+      "live": null,
+      "repo": null,
+      "image": "/images/projects/safestay.png",
+      "tagline": "Verified student housing, where a contract signed by several parties can never be left half-signed.",
+      "context": "SafeStay",
+      "engagement": "Founder",
+      "timeline": "2026 – Present",
+      "status": "Building",
+      "brief": "SafeStay is a platform for verified student housing. One housing contract is signed by several parties, at different times, from two different clients: a Flutter app and a Next.js console. The platform had to keep that contract consistent whichever order the signatures arrive in, and keep the flows behind identity verification.",
+      "features": [
+        "Multi-party contract signing across the Flutter app and the Next.js console",
+        "Identity verification (KYC) gating",
+        "Scheduled payment reminders, run on the server",
+        "One API serving both clients, over a 20+ table schema"
+      ],
+      "decisions": [
+        {
+          "title": "The server owns the contract's state",
+          "body": "Signing runs as a state machine in the API. Each client renders the current state and asks for a transition; neither client holds the state itself, so the two clients cannot disagree about where a contract stands.",
+          "outcome": "A half-signed contract cannot exist in the database."
+        },
+        {
+          "title": "Verification sits in front of the flows",
+          "body": "Identity verification (KYC) gates the platform's flows instead of being a profile badge, so the checks happen before a user can act, not after.",
+          "outcome": "Only verified users reach the gated flows."
+        },
+        {
+          "title": "Reminders are scheduled on the server",
+          "body": "Payment reminders run as cron jobs in the API rather than depending on a client being open.",
+          "outcome": "Reminders go out whether or not anyone has the app open."
+        }
+      ],
+      "metrics": [
+        {
+          "label": "Tiers: API, console, app",
+          "value": "3"
+        },
+        {
+          "label": "Tables in the schema",
+          "value": "20+"
+        }
+      ],
+      "users": null,
+      "stackProse": "NestJS for the API, Next.js for the console, Flutter for the mobile app, and PostgreSQL underneath."
+    },
+    {
       "id": "autobusiness",
       "title": "AutoBusiness",
       "summary": "Freelance build: a bilingual Arabic and English store for courses and templates. Orders move through a server-side state machine under row locks, so approving a payment twice cannot grant access twice.",

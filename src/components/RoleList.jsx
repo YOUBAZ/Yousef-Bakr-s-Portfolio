@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { formatPeriod } from "../utils/formatPeriod";
 
 /**
  * Compact list of roles: period, title, optional one-line detail.
@@ -14,7 +15,7 @@ const RoleList = ({ eyebrow, roles, compact = false }) => (
           key={`${role.title}-${role.period}`}
           className={compact ? "" : "border-l border-edge pl-5"}
         >
-          <p className="ybz-meta">{role.period}</p>
+          <p className="ybz-meta">{formatPeriod(role.period)}</p>
           <p className="mt-1 text-sm font-medium text-bone">{role.title}</p>
           {!compact && role.detail && (
             <p className="ybz-body mt-1">{role.detail}</p>
